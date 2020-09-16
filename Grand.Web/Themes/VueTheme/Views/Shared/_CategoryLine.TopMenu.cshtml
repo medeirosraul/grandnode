@@ -1,0 +1,138 @@
+﻿@model TopMenuModel.CategoryLineModel
+
+@if (Model.Category.IncludeInTopMenu)
+{
+    @if (Model.Category.SubCategories.Count() == 0)
+    {
+        <text>
+            <b-nav-item id="@Model.Category.Id-menu" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                @if (!string.IsNullOrEmpty(Model.Category.Icon))
+                {
+                    <span class="category-icon @Model.Category.Icon"></span>
+                }
+                <span class="title">@Model.Category.Name</span>
+                @if (Model.Category.SubCategories.Count() > 0)
+                {
+                    <span class="mdi mdi-chevron-down arrow-down"></span>
+                }
+                @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
+                {
+                    <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
+                }
+        </text>
+
+    }
+    else
+    {
+        <text>
+            <b-nav-item-dropdown id="@Model.Category.Id-menu" text="@Model.Category.Name" lazy>
+                <template slot="button-content">
+                    @if (!string.IsNullOrEmpty(Model.Category.Icon))
+                    {
+                        <span class="category-icon @Model.Category.Icon"></span>
+                    }
+                    <span class="title">@Model.Category.Name</span>
+                    @if (Model.Category.SubCategories.Count() > 0)
+                    {
+                        <span class="mdi mdi-chevron-down arrow-down"></span>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
+                    {
+                        <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
+                    }
+                    <b-icon icon="chevron-down"></b-icon>
+                </template>
+        </text>
+    }
+
+    //subcategories
+    var subCategories =
+        Model.Category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+    var levelClass = "";
+    if (Model.Level == 0)
+    {
+        levelClass = "first-level";
+        if (subCategories.Any())
+        {
+            
+                @if (!string.IsNullOrEmpty(Model.Category.ImageUrl))
+                {
+                    string str = Model.Category.ImageUrl;
+
+                    if (!str.Contains("default-image"))
+                    {
+                        <b-dropdown-group id="@Model.Category.SeName-image">
+                            <b-dropdown-item class="menu-image" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                                    <picture>
+                                        <source media="(max-width: 991px)" sizes="1px" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 1w" />
+                                        <b-img src="@Model.Category.ImageUrl" alt="" />
+                                    </picture>
+                            </b-dropdown-item>
+                        </b-dropdown-group>
+                    }
+                }
+                <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
+                        <li class="nav-item cat-back d-lg-none d-inline-flex">
+                            <a class="nav-link justify-content-start align-items-center">
+                                <span class="mdi mdi-arrow-left"></span>
+                                <span>@T("Mobile.Categories.Back")</span>
+                            </a>
+                        </li>
+                        <li class="nav-item d-lg-none d-inline-flex sub-cat-name-container">
+                            <a class="nav-link sub-cat-name" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                                <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
+                            </a>
+                        </li>
+                        @foreach (var subCategory in subCategories)
+                        {
+                            var categoryLineModel = new TopMenuModel.CategoryLineModel
+                            {
+                                Category = subCategory,
+                                Level = Model.Level + 1,
+                                ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                            };
+                            <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+                        }
+                </b-dropdown-group>
+            
+        }
+    }
+    if (Model.Level >= 1 && subCategories.Any())
+    {
+        levelClass = "next-level";
+        <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
+            <li class="nav-item cat-back d-lg-none d-inline-flex">
+                <a class="nav-link justify-content-start align-items-center">
+                    <span class="mdi mdi-arrow-left"></span>
+                    <span>@T("Mobile.Categories.Back")</span>
+                </a>
+            </li>
+            <li class="nav-item d-lg-none d-inline-flex sub-cat-name-container">
+                <a class="nav-link sub-cat-name" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                    <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
+                </a>
+            </li>
+            @foreach (var subCategory in subCategories)
+            {
+                var categoryLineModel = new TopMenuModel.CategoryLineModel
+                {
+                    Category = subCategory,
+                    Level = Model.Level + 1,
+                    ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                };
+                <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+            }
+        </b-dropdown-group>
+    }
+
+    @if (Model.Category.SubCategories.Count() == 0)
+    {
+        @Html.Raw("</b-nav-item>")
+    }
+    else
+    {
+        @Html.Raw("</b-nav-item-dropdown>")
+    }
+}
+
