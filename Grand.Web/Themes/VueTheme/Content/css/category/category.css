@@ -1,0 +1,8 @@
+﻿.categoryGrid a {
+    color: #333;
+    text-decoration: none;
+}
+.categoryGrid .card-img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
