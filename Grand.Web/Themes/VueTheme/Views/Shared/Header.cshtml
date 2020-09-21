@@ -34,7 +34,7 @@
     var themeName = themeContext.WorkingThemeName;
     if (supportRtl)
     {
-        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/header/header.css", themeName));
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/header/header.rtl.css", themeName));
     }
     else
     {
@@ -44,20 +44,15 @@
 <div>
     <b-navbar type="light">
         <b-container>
+            <b-navbar-toggle target="main_nav" class="d-lg-none d-block mr-lg-0 mr-3"></b-navbar-toggle>
             @await Component.InvokeAsync("Logo")
-
-                <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
-                    @*<b-nav-form>
-                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-                        </b-nav-form>*@
+                <b-navbar-nav>
                     <b-nav-item>
-                        <b-icon icon="gear" font-scale="2" variant="dark" v-b-toggle.sidebar-right></b-icon>
+                        <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
                     </b-nav-item>
                     <template>
                         <div>
-                            <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop lazy>
+                            <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
                                 @await Component.InvokeAsync("TaxTypeSelector")
                                 @await Component.InvokeAsync("CurrencySelector")
                                 @await Component.InvokeAsync("LanguageSelector")
@@ -73,8 +68,7 @@
     </b-navbar>
     <b-navbar toggleable="lg" type="light" variant="light" class="main-nav">
         <b-container>
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-            <b-collapse id="nav-collapse" is-nav>
+            <b-collapse id="main_nav" is-nav>
             <b-navbar-nav>
                 @await Component.InvokeAsync("TopMenu")
             </b-navbar-nav>

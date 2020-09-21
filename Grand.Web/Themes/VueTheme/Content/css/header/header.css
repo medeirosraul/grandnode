@@ -1,6 +1,9 @@
 ﻿.b-icon {
     outline: none;
 }
+.nav-link .b-icon.bi {
+    font-size: 24px;
+}
 .dropdown-toggle::after {
     display: none;
 }
@@ -10,7 +13,7 @@
 .qty-indicator {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,6 +23,10 @@
     font-size: 12px;
     background: #17a2b8;
     border-radius: 100%;
+}
+.b-sidebar.slide {
+    -webkit-transition: transform 1s cubic-bezier(.19,1,.22,1);
+    transition: transform 1s cubic-bezier(.19,1,.22,1);
 }
 .b-sidebar-body {
     padding: 15px;
@@ -62,6 +69,7 @@
 .main-nav .dropdown-toggle .bi-chevron-down  {
     font-size: 14px;
 }
+
 @media (min-width: 576px) {
     .b-sidebar {
         width: 450px;
@@ -79,5 +87,10 @@
     }
     .main-nav.navbar-light .navbar-nav > .nav-item > .dropdown-menu.show {
         display: inline-flex;
+    }
+}
+@media (max-width: 991px) {
+    .main-nav {
+        padding: 0 15px;
     }
 }

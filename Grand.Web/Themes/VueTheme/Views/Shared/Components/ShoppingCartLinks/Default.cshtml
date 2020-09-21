@@ -2,7 +2,7 @@
 
 @if (Model.WishlistEnabled)
 {
-    <b-nav-item href="@Url.RouteUrl("Wishlist")"><b-icon icon="heart" variant="dark" font-scale="2"></b-icon><div class="qty-indicator">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</div></b-nav-item>
+    <b-nav-item href="@Url.RouteUrl("Wishlist")"><b-icon icon="heart" variant="dark"></b-icon><div class="qty-indicator">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</div></b-nav-item>
 }
 @if (Model.ShoppingCartEnabled)
 {
@@ -10,7 +10,7 @@
     @if (Model.MiniShoppingCartEnabled)
     {
         <b-nav-item>
-            <b-icon icon="cart2" font-scale="2" variant="dark" v-b-toggle.sidebar-cart></b-icon>
+            <b-icon icon="handbag" variant="dark" v-b-toggle.sidebar-cart></b-icon>
             <div class="qty-indicator">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</div>
         </b-nav-item>
         @await Component.InvokeAsync("FlyoutShoppingCart")
@@ -18,7 +18,7 @@
     else
     {
         <b-nav-item href="@Url.RouteUrl("ShoppingCart")">
-            <b-icon icon="cart2" variant="dark" font-scale="2"></b-icon>
+            <b-icon icon="handbag" variant="dark"></b-icon>
             <div class="qty-indicator">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</div>
         </b-nav-item>
     }

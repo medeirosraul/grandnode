@@ -8,6 +8,15 @@
     var supportRtl = workContext.WorkingLanguage.Rtl;
     var themeName = themeContext.WorkingThemeName;
 
+    if (supportRtl)
+    {
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/common/common.rtl.css", themeName));
+    }
+    else
+    {
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/common/common.css", themeName));
+    }
+
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, "~/content/custom/style.css");
     //add browser specific CSS files
     //pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/materialdesigniconsSlim.min.css", themeName));
@@ -16,8 +25,6 @@
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/animate.min.css", themeName));
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/bootstrap-vue/bootstrap-vue.min.css", themeName));
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/bootstrap-vue/bootstrap.min.css", themeName));
-
-
 
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/vue/bootstrap-vue-icons.min.js", themeName));
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/vue/bootstrap-vue.min.js", themeName));
