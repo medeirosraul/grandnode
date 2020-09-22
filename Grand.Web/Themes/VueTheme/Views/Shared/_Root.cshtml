@@ -30,7 +30,12 @@
             showAlert() {
                 return this.name.length > 4 ? true : false
             }
-        }
+        },
+        data() {
+            return {
+                show: false
+            }
+        },
     })
 </script>
 @*<a class="js-offcanvas-trigger filter-button d-none" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi mdi-tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>

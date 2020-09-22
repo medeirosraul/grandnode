@@ -53,11 +53,13 @@
                     <template>
                         <div>
                             <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
-                                @await Component.InvokeAsync("TaxTypeSelector")
-                                @await Component.InvokeAsync("CurrencySelector")
-                                @await Component.InvokeAsync("LanguageSelector")
-                                @await Component.InvokeAsync("StoreSelector")
-                                @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
+                                <div class="mb-2">
+                                    @await Component.InvokeAsync("TaxTypeSelector")
+                                    @await Component.InvokeAsync("CurrencySelector")
+                                    @await Component.InvokeAsync("LanguageSelector")
+                                    @await Component.InvokeAsync("StoreSelector")
+                                    @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
+                                </div>
                                 @await Component.InvokeAsync("HeaderLinks")
                             </b-sidebar>
                         </div>
