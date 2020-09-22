@@ -70,6 +70,7 @@
     display: inline-flex;
     align-items: center;
     white-space: nowrap;
+    width: 100%;
 }
 .product-box .rating .b-rating + span {
     position: relative;
@@ -83,6 +84,7 @@
 .product-box .prices {
     display: inline-flex;
     align-items: flex-end;
+    flex-wrap: wrap;
 }
 .product-box .actual-price {
     color: #17a2b8;
@@ -197,4 +199,21 @@ footer .list-group-item span:first-child {
 footer .list-group-item span:last-child {
     font-size: 14px;
     font-weight: 400;
+}
+
+/* media */
+
+@media (max-width: 991px) {
+    footer .list-group-item:not(.list-group-item-action) {
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+        text-align: right;
+    }
+}
+@media (max-width: 575px) {
+    .product-box .rating .b-rating-value,
+    .product-box .rating output + span {
+        display: none;
+    }
 }
