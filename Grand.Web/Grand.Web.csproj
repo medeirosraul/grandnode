@@ -38,6 +38,7 @@
     <Compile Remove="Plugins\**" />
     <EmbeddedResource Remove="Plugins\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Themes\VueTheme\Content\css\catalog\catalog.css" />
     <None Remove="Themes\VueTheme\Content\css\category\category.css" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
