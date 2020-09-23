@@ -74,7 +74,7 @@
     }
 }
 <div class="page category-page">
-    <h1 class="generalTitle">@Model.Name</h1>
+    <h1 class="generalTitle h2">@Model.Name</h1>
     @await Component.InvokeAsync("Widget", new { widgetZone = "categorydetails_top", additionalData = Model.Id })
     @*description*@
     @if (!String.IsNullOrWhiteSpace(Model.Description))

@@ -33,7 +33,7 @@
             <div class="d-inline-flex flex-wrap viewBox">
                 @foreach (var item in Model.Items)
                 {
-                    <b-button size="sm" variant="light" class="mb-2" href="@item.FilterUrl"><h6 class="mb-0">@Html.Raw(FormatPriceRangeText(item))</h6></b-button>
+                    <b-button size="sm" variant="light" class="mb-2 mr-2" href="@item.FilterUrl"><h6 class="mb-0">@Html.Raw(FormatPriceRangeText(item))</h6></b-button>
                 }
             </div>
         </div>
@@ -51,7 +51,7 @@
                     <strong>@Html.Raw(FormatPriceRangeText(selectedItem))</strong>
                 </div>
                 <div class="remove-filter">
-                    <b-button variant="danger" href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</b-button>
+                    <b-button size="sm" variant="danger" href="@Model.RemoveFilterUrl">@T("Filtering.PriceRangeFilter.Remove")</b-button>
                 </div>
             </b-card>
         </div>

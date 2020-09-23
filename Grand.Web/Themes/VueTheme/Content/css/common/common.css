@@ -40,8 +40,6 @@ a:hover {
     border-radius: .25rem;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
 }
 .product-box:hover::before {
     border-color: rgba(0,0,0,.2);
@@ -127,8 +125,6 @@ a:hover {
     border: 0;
     padding: 0;
     z-index: 2;
-    transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
 }
 .product-box:hover .card-footer {
     opacity: 1;
