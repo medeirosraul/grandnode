@@ -11,9 +11,32 @@
                 @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { @class = "form-control custom-select", onchange = "setLocation(this.value);" })
             </div>
         }
-        <div class="d-sm-flex d-none align-items-center mx-auto order-2" id="items_statistics">
+        <div class="item-statistics d-sm-flex d-none align-items-center mx-auto order-2" id="items_statistics">
             <div class="items-page-size d-none">@Model.PageSize</div>
-            <div class="items-per-page d-lg-inline-flex"><span>@T("catalog.selectors.items")</span><span class="number"></span></div>
+            <div class="items-per-page d-lg-inline-flex"><span>@T("catalog.selectors.items")</span>
+                <span class="number">
+                @{ 
+                    var totalpages = Model.TotalPages;
+                    var totalitems = Model.TotalItems;
+                    var pagenumber = Model.PageNumber;
+                    var pagesize = Model.PageSize;
+
+                    int result;
+                    int result2;
+                } 
+                    @if (totalpages == pagenumber)
+                    {
+                        result = totalitems;
+                        result2 = (pagesize * pagenumber) - pagesize + 1;
+                        @result2 <text>-</text> @result
+                    } else
+                    {
+                        result = (pagesize * pagenumber);
+                        result2 = (pagesize * pagenumber) - pagesize + 1;
+                        @result2 <text>-</text> @result
+                    }
+                </span>
+            </div>
             <div class="items-separator">@T("catalog.selectors.of")</div>
             <div class="items-total">@Model.TotalItems</div>
         </div>

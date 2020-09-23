@@ -68,9 +68,34 @@
 
 /* catalog right side */
 
+.sort-container {
+    display: inline-flex;
+    align-items: center;
+}
 .sort-container:not(:last-child) {
-    margin: 0 5px 0 0;
+    margin: 0 10px 0 0;
 }
 .sort-container .col-form-label {
+    margin: 0 5px 0 0;
     font-weight: 500;
+    white-space: nowrap;
+}
+.item-statistics {
+    font-weight: 500;
+}
+.item-statistics .items-per-page span,
+.item-statistics .items-separator {
+    margin: 0 5px 0 0;
+}
+
+/* pagintaion */
+
+.pagination .page-link {
+    color: #000;
+    font-weight: 500;
+    background-color: #f8f9fa;
+}
+.pagination .current-page.page-item .page-link {
+    color: #fff;
+    background-color: #17a2b8;
 }
