@@ -7,6 +7,28 @@ a:hover {
     color: #02899C;
     text-decoration: none;
 }
+.dropdown-menu {
+    min-width: unset;
+}
+
+/* buttons */
+
+.btn-secondary {
+    background-color: #333;
+    border-color: #333;
+}
+.btn-secondary:hover, .btn-secondary.focus, .btn-secondary:focus, .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+    background-color: #000;
+    border-color: #000;
+}
+.btn-outline-secondary {
+    color: #333;
+    border-color: #333;
+}
+.btn-outline-secondary:hover {
+    background-color: #333;
+    border-color: #333;
+}
 
 /* headings */
 

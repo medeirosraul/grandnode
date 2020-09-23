@@ -4,7 +4,7 @@
     <b-form-row>
         @foreach (var item in Model)
         {
-            <b-col xl="@order.CF_c_Xl" lg="@order.CF_c_Lg" md="@order.CF_c_Md" sm="@order.CF_c_Sm" cols="@order.CF_c_Col" class="mb-3">
+            <b-col xl="@order.CF_c_Xl" lg="@order.CF_c_Lg" md="@order.CF_c_Md" sm="@order.CF_c_Sm" cols="@order.CF_c_Col" class="categoryGrid mb-3">
                 <b-link href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
                     <b-card no-body
                             tag="article">

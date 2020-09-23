@@ -94,7 +94,7 @@
             </b-card-body>
             <template v-slot:footer>
                 <div class="desc">
-                    @Model.ShortDescription
+                    @Html.Raw(Model.ShortDescription)
                 </div>
                 <b-button-group>
                     @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
@@ -115,7 +115,7 @@
                         {
                             addToCartText = T("ShoppingCart.PreOrder").Text;
                         }
-                        <b-button class="btn btn-info justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
+                        <b-button variant="info" class="justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
                             <span class="add-cart-text">@(addToCartText)</span>
                             <span class="sr-only">AddToCart</span>
                         </b-button>
@@ -125,7 +125,7 @@
                         if (Model.ProductType == ProductType.Auction)
                         {
                             var addToCartText = T("ShoppingCart.Bids").Text;
-                            <b-button class="btn btn-info justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
+                            <b-button variant="info" class="justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
                                 <span class="add-cart-text">@(addToCartText)</span>
                                 <span class="sr-only">AddToCart</span>
                             </b-button>
