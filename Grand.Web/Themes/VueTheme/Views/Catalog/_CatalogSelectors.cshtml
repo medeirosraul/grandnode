@@ -45,7 +45,7 @@
         {
             <div class="sort-container">
                 <label class="col-form-label">@T("Catalog.PageSize")</label>
-                @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { @class = "custom-select form-control", onchange = "setLocation(this.value);" })
+                @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { @class = "custom-select form-control", onchange = "window.location.replace(this.value);" })
             </div>
         }
         @*view mode*@
