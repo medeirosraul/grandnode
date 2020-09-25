@@ -48,7 +48,7 @@
             @await Component.InvokeAsync("Logo")
                 <b-navbar-nav>
                     <b-nav-item class="d-lg-block d-none">
-                        <b-icon :variant="[fluid ? 'info' : 'dark']" v-model="fluid" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
+                        <b-icon :variant="[fluid ? 'info' : 'dark']" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
                     </b-nav-item>
                     <b-nav-item>
                         <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
