@@ -33,12 +33,8 @@
                                             }
                                             else
                                             {
-                                                <b-button size="sm" variant="light" class="mb-1 mr-1" href="@spec.FilterUrl">
-                                                    <div class="color-squares">
-                                                        <span class="color-container" title="@spec.SpecificationAttributeOptionName">
-                                                            <span class="color" style="background-color: @(spec.SpecificationAttributeOptionColorRgb);">&nbsp;</span>
-                                                        </span>
-                                                    </div>
+                                                <b-button size="sm" variant="light" class="color-container mb-1 mr-1" href="@spec.FilterUrl">
+                                                    <span class="color" title="@spec.SpecificationAttributeOptionName" style="background-color: @(spec.SpecificationAttributeOptionColorRgb);">&nbsp;</span>
                                                 </b-button>
                                             }
 

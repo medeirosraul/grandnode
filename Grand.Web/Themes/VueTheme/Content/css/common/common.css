@@ -196,19 +196,6 @@ a:hover {
     font-size: 13px;
     font-weight: 400;
 }
-.product-box .attr-value .btn.color-container {
-    margin: 0 3px 3px 0;
-    padding: 0;
-    border: 0;
-    background-color: transparent;
-    border-radius: 100%;
-}
-.product-box .attr-value .btn .color {
-    display: flex;
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-}
 .product-box .desc {
     position: relative;
     color: #777;
@@ -250,6 +237,23 @@ a:hover {
 }
 .product-box.list .btn-group {
     width: auto;
+}
+
+/* color container */
+
+.btn.color-container {
+    margin: 0 3px 3px 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    border-radius: 100%;
+}
+.color-container .color {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #efefef;
+    border-radius: 100%;
 }
 
 /* breadcrumb */
