@@ -43,10 +43,13 @@
 }
 <div class="header-nav">
     <b-navbar type="light">
-        <b-container>
+        <b-container :fluid="fluid">
             <b-navbar-toggle target="main_nav" class="d-lg-none d-block mr-lg-0 mr-3"></b-navbar-toggle>
             @await Component.InvokeAsync("Logo")
                 <b-navbar-nav>
+                    <b-nav-item class="d-lg-block d-none">
+                        <b-icon :variant="[fluid ? 'info' : 'dark']" v-model="fluid" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
+                    </b-nav-item>
                     <b-nav-item>
                         <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
                     </b-nav-item>
@@ -69,7 +72,7 @@
         </b-container>
     </b-navbar>
     <b-navbar toggleable="lg" type="light" variant="light" class="main-nav">
-        <b-container>
+        <b-container :fluid="fluid">
             <b-collapse id="main_nav" is-nav>
             <b-navbar-nav>
                 @await Component.InvokeAsync("TopMenu")
