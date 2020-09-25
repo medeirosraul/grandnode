@@ -71,6 +71,19 @@ a:hover {
     position: relative;
     overflow: hidden;
 }
+.product-box .hover-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.product-box:hover .hover-img {
+    opacity: 1;
+    visibility: visible;
+}
 .product-box .card-body {
     padding: 10px 0;
 }
@@ -171,6 +184,31 @@ a:hover {
 .product-box:hover .card-footer::before {
     border-color: rgba(0,0,0,.2);
 }
+.product-box .attr-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+.product-box .attr-value {
+    margin: 0 0 0 5px;
+}
+.product-box .attr-value .btn {
+    margin: 0 0 3px 0;
+    font-size: 13px;
+    font-weight: 400;
+}
+.product-box .attr-value .btn.color-container {
+    margin: 0 3px 3px 0;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    border-radius: 100%;
+}
+.product-box .attr-value .btn .color {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+}
 .product-box .desc {
     position: relative;
     color: #777;
@@ -187,6 +225,31 @@ a:hover {
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
+}
+
+/* product box list */
+
+.product-box.list {
+    flex-direction: row;
+    width: 100%;
+}
+.product-box.list .picture-container {
+    flex: 1
+}
+.product-box.list .card-body {
+    flex: 3;
+    padding: 0 0 0 10px;
+}
+.product-box.list::before {
+    border-bottom: 1px solid transparent;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+.product-box.list:hover::before {
+    border-bottom-color: rgba(0,0,0,.2);
+}
+.product-box.list .btn-group {
+    width: auto;
 }
 
 /* breadcrumb */
