@@ -41,6 +41,10 @@
             <div class="picture-container">
                 <b-link href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
                     <b-card-img-lazy alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title"></b-card-img-lazy>
+                    @if (!string.IsNullOrEmpty(Model.SecondPictureModel.ImageUrl))
+                    { 
+                        <b-card-img-lazy class="hover-img" alt="@Model.SecondPictureModel.AlternateText" src="@Model.SecondPictureModel.ImageUrl"></b-card-img-lazy>
+                    }
                 </b-link>
                 <b-button title="@T("Products.QuickView")" class="btn btn-secondary quick-view-button" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl')">
                     <b-icon icon="search"></b-icon>
@@ -93,6 +97,56 @@
                 </div>
             </b-card-body>
             <template v-slot:footer>
+                @if (Model.ProductAttributeModels.Any())
+                {
+                    <div class="attr-container">
+                        <table>
+                            <tbody>
+                                @foreach (var item in Model.ProductAttributeModels)
+                                {
+                                    <tr class="attr">
+                                        <td>
+                                            <div class="attr-name">
+                                                @item.Name
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="attr-value">
+                                                @foreach (var spec in item.Values)
+                                                {
+                                                    switch (item.AttributeControlType)
+                                                    {
+                                                        case AttributeControlType.DropdownList:
+                                                        case AttributeControlType.RadioList:
+                                                        case AttributeControlType.Checkboxes:
+                                                        case AttributeControlType.ReadonlyCheckboxes:
+                                                            <b-button variant="light" size="sm" class="name" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
+                                                                @Html.Raw(spec.Name)
+                                                            </b-button>
+                                                            break;
+                                                        case AttributeControlType.ColorSquares:
+                                                            <b-button variant="light" size="sm" class="name color-container" title="@spec.Name" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
+                                                                <span class="color" style="background-color:@spec.ColorSquaresRgb;">&nbsp;</span>
+                                                            </b-button>
+                                                            break;
+                                                        case AttributeControlType.ImageSquares:
+                                                            <b-button variant="light" size="sm" class="name image-container" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
+                                                                <img src="@spec.ImageSquaresPictureModel?.ImageUrl" />
+                                                            </b-button>
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                }
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
                 <div class="desc">
                     @Html.Raw(Model.ShortDescription)
                 </div>
