@@ -7,7 +7,7 @@
 <partial name="_OldInternetExplorerWarning" />
 <div id="app">
     <partial name="Header" />
-    <b-container :fluid="fluid">
+    <b-container :fluid="fluid" class="main-container">
         @await Component.InvokeAsync("Widget", new { widgetZone = "content_before" })
         @if (IsSectionDefined("Breadcrumb"))
         {
@@ -40,6 +40,13 @@
         watch: {
             fluid(newName) {
                 localStorage.fluid = newName;
+            }
+        },
+        methods: {
+            productImage: function (event) {
+                var Imagesrc = event.target.parentElement.getAttribute('data-href');
+                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
+                Image.setAttribute('src', Imagesrc);
             }
         }
     })
