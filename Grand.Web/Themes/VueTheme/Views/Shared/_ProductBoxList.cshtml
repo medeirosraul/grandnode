@@ -140,13 +140,13 @@
                                                         case AttributeControlType.ImageSquares:
                                                             if ((spec.PictureModel.FullSizeImageUrl).Length > 0)
                                                             {
-                                                                <b-button variant="light" size="sm" class="name image-container" v-on:click='productImage' data-href="@spec.PictureModel.FullSizeImageUrl">
+                                                                <b-button variant="light" size="sm" class="p-1 name image-container" v-on:click='productImage' data-href="@spec.PictureModel.FullSizeImageUrl">
                                                                     <img src="@spec.ImageSquaresPictureModel?.ImageUrl" />
                                                                 </b-button>
                                                             }
                                                             else
                                                             {
-                                                                <b-button variant="light" size="sm" class="name image-container" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
+                                                                <b-button variant="light" size="sm" class="p-1 name image-container" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
                                                                     <img src="@spec.ImageSquaresPictureModel?.ImageUrl" />
                                                                 </b-button>
                                                             }
