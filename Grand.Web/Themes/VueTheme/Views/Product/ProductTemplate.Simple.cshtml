@@ -205,58 +205,39 @@
                 </b-row>
             </b-container>
 
-            <div class="col-12 mt-2 mb-2 px-0">
-                <ul class="nav nav-tabs product-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="desc-tab" data-toggle="tab" href="#desc" role="tab" aria-controls="desc" aria-selected="true"><span class="d-none d-md-block">@T("Products.Description")</span><span class="mdi mdi-clipboard-text-outline d-md-none"></span></a>
-                    </li>
-                    @if (Model.ProductTags.Any())
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" id="tags-tab" data-toggle="tab" href="#tags" role="tab" aria-controls="tags" aria-selected="false"><span class="d-none d-md-block">@T("Products.Tags")</span><span class="mdi mdi-tag-multiple d-md-none"></span></a>
-                        </li>
-                    }
-                    @if (Model.ProductSpecifications.Any())
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" id="spec-tab" data-toggle="tab" href="#spec" role="tab" aria-controls="spec" aria-selected="false"><span class="d-none d-md-block">@T("Products.Specs")</span><span class="mdi mdi-file-document-edit-outline d-md-none"></span></a>
-                        </li>
-                    }
-                    @if (Model.ProductReviewOverview.AllowCustomerReviews)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false"><span class="d-none d-md-block">@T("Products.Reviews") (@Model.ProductReviewOverview.TotalReviews)</span><span class="mdi mdi-account-star d-md-none"></span></a>
-                        </li>
-                    }
-                    @if (Model.AskQuestionOnProduct)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><span class="d-none d-md-block">@T("Products.ContactUs")</span><span class="mdi mdi-message-draw d-md-none"></span></a>
-                        </li>
-                    }
-                </ul>
-                <div class="tab-content" id="product_tab_content">
-                    <div class="tab-pane fade show active" id="desc" role="tabpanel" aria-labelledby="desc-tab" itemprop="description">@Html.Raw(Model.FullDescription)</div>
-                    @if (Model.ProductTags.Any())
-                    {
-                        <div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags-tab"><partial name="_ProductTags" model="Model.ProductTags" /></div>
-                    }
-                    @if (Model.ProductSpecifications.Any())
-                    {
-                        <div class="tab-pane fade" id="spec" role="tabpanel" aria-labelledby="spec-tab"><partial name="_ProductSpecifications" model="Model.ProductSpecifications" /></div>
-                    }
-                    @if (Model.ProductReviewOverview.AllowCustomerReviews)
-                    {
-                        <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                            @await Component.InvokeAsync("ProductReviews", new { productId = Model.Id })
-                        </div>
-                    }
-                    @if (Model.AskQuestionOnProduct)
-                    {
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><partial name="_AskQuestionOnProduct" model="Model.ProductAskQuestion" /></div>
-                    }
+            <b-col cols="12" class="px-0 my-3">
+                <div>
+                    <b-tabs content-class="mt-3" align="center">
+                        <b-tab title="@T("Products.Description")" active>
+                            @Html.Raw(Model.FullDescription)
+                        </b-tab>
+                        @if (Model.ProductTags.Any())
+                        {
+                            <b-tab title="@T("Products.Tags")">
+                                <partial name="_ProductTags" model="Model.ProductTags" />
+                            </b-tab>
+                        }
+                        @if (Model.ProductSpecifications.Any())
+                        {
+                            <b-tab title="@T("Products.Specs")">
+                                <partial name="_ProductSpecifications" model="Model.ProductSpecifications" />
+                            </b-tab>
+                        }
+                        @if (Model.ProductReviewOverview.AllowCustomerReviews)
+                        {
+                            <b-tab title="@T("Products.Reviews")">
+                                @await Component.InvokeAsync("ProductReviews", new { productId = Model.Id })
+                            </b-tab>
+                        }
+                        @if (Model.AskQuestionOnProduct)
+                        {
+                            <b-tab title="@T("Products.ContactUs")">
+                                <partial name="_AskQuestionOnProduct" model="Model.ProductAskQuestion" />
+                            </b-tab>
+                        }
+                    </b-tabs>
                 </div>
-            </div>
+            </b-col>
             <vc:products-also-purchased product-id="@Model.Id" product-thumb-picture-size="null"></vc:products-also-purchased>
             <vc:related-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:related-products>
             <vc:similar-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:similar-products>
