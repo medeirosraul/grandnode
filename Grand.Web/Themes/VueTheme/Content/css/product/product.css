@@ -1,0 +1,12 @@
+﻿.product-details-page .gallery {
+    display: inline-flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.product-details-page .gallery img.image:first-child {
+    max-width: 100%;
+    margin: 0 0 15px 0;
+}
+.product-details-page .gallery img.image:not(:first-child) {
+    max-width: 100px;
+}

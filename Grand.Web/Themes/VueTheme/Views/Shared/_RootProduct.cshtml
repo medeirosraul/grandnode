@@ -19,39 +19,7 @@
     @await Component.InvokeAsync("Footer")
 </div>
 
-<!-- Start running your app -->
-<script type="module" asp-location="Footer">
-    window.app = new Vue({
-        el: '#app',
-        data: {
-            name: 'Vue Theme'
-        },
-        data() {
-            return {
-                show: false,
-                fluid: false,
-                hover: false,
-            }
-        },
-        mounted() {
-            if (localStorage.fluid == "true") this.fluid = "fluid";
-            if (localStorage.fluid == "fluid") this.fluid = "fluid";
-            if (localStorage.fluid == "") this.fluid = "false";
-        },
-        watch: {
-            fluid(newName) {
-                localStorage.fluid = newName;
-            }
-        },
-        methods: {
-            productImage: function (event) {
-                var Imagesrc = event.target.parentElement.getAttribute('data-href');
-                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
-                Image.setAttribute('src', Imagesrc);
-            },
-        },
-    })
-</script>
+
 @*<a class="js-offcanvas-trigger filter-button d-none" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi mdi-tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>
     <aside class="js-offcanvas mobile-filters d-lg-none d-flex flex-column" data-offcanvas-options='{"modifiers":"left,overlay","modal":true,"resize":false}' id="leftSide">
         <div class="user-panel-head d-lg-none d-flex order-1">

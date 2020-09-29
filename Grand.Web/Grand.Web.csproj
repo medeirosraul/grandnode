@@ -40,6 +40,8 @@
     <None Remove="Plugins\**" />
     <None Remove="Themes\VueTheme\Content\css\catalog\catalog.css" />
     <None Remove="Themes\VueTheme\Content\css\category\category.css" />
+    <None Remove="Themes\VueTheme\Content\css\product\product.css" />
+    <None Remove="Themes\VueTheme\Content\script\vue-gallery-slideshow.min.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
