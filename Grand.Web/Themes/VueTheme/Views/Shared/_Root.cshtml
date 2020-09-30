@@ -41,7 +41,7 @@
         watch: {
             fluid(newName) {
                 localStorage.fluid = newName;
-            }
+            },
         },
         methods: {
             productImage: function (event) {
@@ -49,8 +49,25 @@
                 var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                 Image.setAttribute('src', Imagesrc);
             },
+            //function(link) {
+            //    axios.post(link).then(function (response) {
+            //        // handle success
+            //        console.log(response);
+            //        if (response.data.redirect) {
+            //            location.href = response.data.redirect;
+            //            return true;
+            //        }
+            //    })
+            //    .catch(function (error) {
+            //        // handle error
+            //        console.log(error);
+            //    })    
+            //},
         },
     })
+</script>
+<script asp-location="Footer">
+    AxiosCart.init('.cart-qty', '.wishlist-qty', '.flyout-cart');
 </script>
 @*<a class="js-offcanvas-trigger filter-button d-none" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi mdi-tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>
     <aside class="js-offcanvas mobile-filters d-lg-none d-flex flex-column" data-offcanvas-options='{"modifiers":"left,overlay","modal":true,"resize":false}' id="leftSide">

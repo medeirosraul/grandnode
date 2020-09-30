@@ -3,8 +3,8 @@
 @await Component.InvokeAsync("Widget", new { widgetZone = "flyout_shopping_cart_before_content", additionalData = Model })
 
 <template>
-    <div>
-        <b-sidebar id="sidebar-cart" body-class="flyout-cart" right backdrop lazy
+    <div class="flyout-cart">
+        <b-sidebar id="sidebar-cart" right backdrop
                    title="
                     @if (Model.TotalProducts == 0)
                     {
