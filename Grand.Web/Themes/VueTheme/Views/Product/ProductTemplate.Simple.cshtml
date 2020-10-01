@@ -103,7 +103,7 @@
                         <partial name="_SKU_Man_GTIN_Ven" model="Model" />
                         <!--delivery-->
                         @if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(Model.DeliveryDate)
-                || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
+                        || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
                         {
                             <partial name="_DeliveryInfo" model="Model" />
                         }
@@ -225,7 +225,7 @@
                         }
                         @if (Model.ProductReviewOverview.AllowCustomerReviews)
                         {
-                            <b-tab title="@T("Products.Reviews")">
+                            <b-tab id="review-tab" title="@T("Products.Reviews")" :active="active ? true : false">
                                 @await Component.InvokeAsync("ProductReviews", new { productId = Model.Id })
                             </b-tab>
                         }
