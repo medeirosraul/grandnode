@@ -1,11 +1,13 @@
 ﻿@model MiniShoppingCartModel
-
 @await Component.InvokeAsync("Widget", new { widgetZone = "flyout_shopping_cart_before_content", additionalData = Model })
-
-<template>
-    <div class="flyout-cart">
-        <b-sidebar id="sidebar-cart" right backdrop
-                   title="
+    <template>
+        <div class="flyout-cart">
+            <b-nav-item>
+                <b-icon icon="handbag" variant="dark" v-b-toggle.sidebar-cart></b-icon>
+                <div class="qty-indicator cart-qty">@T("ShoppingCart.HeaderQuantity",Model.TotalProducts)</div>
+            </b-nav-item>
+            <b-sidebar id="sidebar-cart" right backdrop
+                       title="
                     @if (Model.TotalProducts == 0)
                     {
                         @T("ShoppingCart.Mini.NoItems")
@@ -14,72 +16,71 @@
                     {
                       <text>  @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, string.Format("{1}", Url.RouteUrl("ShoppingCart"), string.Format(T("ShoppingCart.Mini.Items").Text, Model.TotalProducts)))) </text>
                     }">
-            @if (Model.TotalProducts > 0)
-            {
-                @for (int i = 0; i < Model.Items.Count; i++)
+                @if (Model.TotalProducts > 0)
                 {
-                    var item = Model.Items[i];
-                    <div class="item d-inline-flex no-wrap @(i == 0 ? "first" : null)">
-                        @if (Model.ShowProductImages)
-                        {
-                            <b-link href="@Url.RouteUrl("Product", new { SeName=item.ProductSeName })" title="@item.Picture.Title">
-                                <b-img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" fluid></b-img>
-                            </b-link>
-                        }
-                        <b-col>
-                            <b-link href="@Url.RouteUrl("Product", new { SeName=item.ProductSeName })">@item.ProductName</b-link>
-                            @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        var item = Model.Items[i];
+                        <div class="item d-inline-flex no-wrap @(i == 0 ? "first" : null)">
+                            @if (Model.ShowProductImages)
                             {
-                                <div class="attributes">
-                                    @Html.Raw(item.AttributeInfo)
-                                </div>
+                                <b-link href="@Url.RouteUrl("Product", new { SeName=item.ProductSeName })" title="@item.Picture.Title">
+                                    <b-img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" fluid></b-img>
+                                </b-link>
                             }
-                            <div class="price"><span>@T("ShoppingCart.Mini.UnitPrice"):</span> <strong>@item.UnitPrice</strong></div>
-                            <div class="quantity"><span>@T("ShoppingCart.Mini.Quantity"):</span> <strong>@item.Quantity</strong></div>
-                        </b-col>
-                        <div>
-                            <b-icon icon="trash" class="deletecartitem" variant="danger" onclick="deletecartitem('@Url.RouteUrl("DeleteCartItem", new { id=item.Id })')"></b-icon>
+                            <b-col>
+                                <b-link href="@Url.RouteUrl("Product", new { SeName=item.ProductSeName })">@item.ProductName</b-link>
+                                @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                {
+                                    <div class="attributes">
+                                        @Html.Raw(item.AttributeInfo)
+                                    </div>
+                                }
+                                <div class="price"><span>@T("ShoppingCart.Mini.UnitPrice"):</span> <strong>@item.UnitPrice</strong></div>
+                                <div class="quantity"><span>@T("ShoppingCart.Mini.Quantity"):</span> <strong>@item.Quantity</strong></div>
+                            </b-col>
+                            <div>
+                                <b-icon icon="trash" class="deletecartitem" variant="danger" onclick="deletecartitem('@Url.RouteUrl("DeleteCartItem", new { id=item.Id })')"></b-icon>
+                            </div>
                         </div>
+                    }
+                    <template v-slot:footer>
+                        <b-col cols="12" class="p-3 bg-dark">
+                            <b-row>
+                                <b-col lg="6" cols="5" class="text-center text-white d-flex flex-column">@T("ShoppingCart.Totals.SubTotal"):<strong>@Model.SubTotal</strong></b-col>
+                                <b-col lg="6" cols="7" class="text-center d-flex justify-content-center align-items-center">
+                                    @if (Model.DisplayShoppingCartButton)
+                                    {
+                                        <b-button class="btn btn-outline btn-block cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("ShoppingCart.Mini.ViewCart")</b-button>
+                                    }
+                                    @if (Model.DisplayCheckoutButton)
+                                    {
+                                        var checkoutUrl = "";
+                                        if (Model.AnonymousCheckoutAllowed && Model.CurrentCustomerIsGuest)
+                                        {
+                                            checkoutUrl = Url.RouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
+                                        }
+                                        else
+                                        {
+                                            checkoutUrl = Url.RouteUrl("Checkout");
+                                        }
+                                        <b-button class="btn btn-outline btn-block checkout-button" onclick="setLocation('@checkoutUrl')">@T("Checkout.Button")</b-button>
+                                    }
+                                </b-col>
+                            </b-row>
+                        </b-col>
+                    </template>
+                }
+                else
+                {
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <b-icon icon="cart-x" font-scale="7.5" variant="secondary"></b-icon>
+                        <div class="text-center text-muted mt-3">@T("ShoppingCart.Mini.NoDataText")</div>
                     </div>
                 }
-                <template v-slot:footer>
-                    <b-col cols="12" class="p-3 bg-dark">
-                        <b-row>
-                            <b-col lg="6" cols="5" class="text-center text-white d-flex flex-column">@T("ShoppingCart.Totals.SubTotal"):<strong>@Model.SubTotal</strong></b-col>
-                            <b-col lg="6" cols="7" class="text-center d-flex justify-content-center align-items-center">
-                                @if (Model.DisplayShoppingCartButton)
-                                {
-                                    <b-button class="btn btn-outline btn-block cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("ShoppingCart.Mini.ViewCart")</b-button>
-                                }
-                                @if (Model.DisplayCheckoutButton)
-                                {
-                                    var checkoutUrl = "";
-                                    if (Model.AnonymousCheckoutAllowed && Model.CurrentCustomerIsGuest)
-                                    {
-                                        checkoutUrl = Url.RouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
-                                    }
-                                    else
-                                    {
-                                        checkoutUrl = Url.RouteUrl("Checkout");
-                                    }
-                                    <b-button class="btn btn-outline btn-block checkout-button" onclick="setLocation('@checkoutUrl')">@T("Checkout.Button")</b-button>
-                                }
-                            </b-col>
-                        </b-row>
-                    </b-col>
-                </template>
-            }
-            else
-            {
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                    <b-icon icon="cart-x" font-scale="7.5" variant="secondary"></b-icon>
-                    <div class="text-center text-muted mt-3">@T("ShoppingCart.Mini.NoDataText")</div>
-                </div>
-            }
-        </b-sidebar>
-    </div>
-</template>
-
+            </b-sidebar>
+        </div>
+    </template>
 @*<aside class="js-offcanvas flycart-container" data-offcanvas-options='{"modifiers":"right,overlay","modal":true,"resize":false}' id="right">
     <div class="flyout-cart">
         <div class="flyout-cart-header">

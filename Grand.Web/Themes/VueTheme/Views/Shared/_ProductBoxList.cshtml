@@ -170,7 +170,7 @@
                 <b-button-group>
                     @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
                     {
-                        <b-button data-toggle="title" title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;">
+                        <b-button data-toggle="title" title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" @@click="AxiosCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;" @*onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;"*@>
                             <b-icon icon="heart"></b-icon>
                             <span class="sr-only">AddToWishlist</span>
                         </b-button>
@@ -186,7 +186,7 @@
                         {
                             addToCartText = T("ShoppingCart.PreOrder").Text;
                         }
-                        <b-button variant="info" class="justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
+                        <b-button variant="info" class="justify-content-center w-100" @@click="AxiosCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
                             <span class="add-cart-text">@(addToCartText)</span>
                             <span class="sr-only">AddToCart</span>
                         </b-button>
@@ -196,7 +196,7 @@
                         if (Model.ProductType == ProductType.Auction)
                         {
                             var addToCartText = T("ShoppingCart.Bids").Text;
-                            <b-button variant="info" class="justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
+                            <b-button variant="info" class="justify-content-center w-100" @@click="AxiosCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
                                 <span class="add-cart-text">@(addToCartText)</span>
                                 <span class="sr-only">AddToCart</span>
                             </b-button>
@@ -204,7 +204,7 @@
                     }
                     @if (!Model.ProductPrice.DisableAddToCompareListButton && Model.ProductType == ProductType.SimpleProduct)
                     {
-                        <b-button data-tooltip="title" title="@T("ShoppingCart.AddToCompareList")" class="btn btn-secondary" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;">
+                        <b-button data-tooltip="title" title="@T("ShoppingCart.AddToCompareList")" class="btn btn-secondary" @@click="AxiosCart.addproducttocomparelist('@addtocomparelink');return false;">
                             <span class="sr-only">AddToCompareList</span>
                             <b-icon icon="shuffle"></b-icon>
                         </b-button>
