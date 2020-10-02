@@ -42,6 +42,15 @@ a:hover {
     line-height: 1.3;
 }
 
+/* modals */
+
+.modal-place .b-overlay-wrap {
+    position: fixed !important;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+}
+
 /* rating */
 
 .b-rating {

@@ -36,7 +36,9 @@ function displayPopupAddToCart(html) {
             },
             render: function (createElement) {
                 if (!this.template) {
-                    return createElement('div', 'Loading...');
+                    return createElement('b-overlay', {
+                        attrs: { show: 'true' }
+                    });
                 } else {
                     return this.template();
                 }
