@@ -11,13 +11,16 @@
 }
 
 <b-col xl="7" lg="6" md="5" cols="12" class="gallery col-12 col-md-6 mt-md-0 mt-3 px-0">
-    <img class="image" v-for="(image, i) in images" :src="image" @@click="index = i">
-    <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
-    <script asp-location="Footer">
-        window.app = new Vue({
+    <template>
+        <img class="image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+        <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
+    </template>
+    <!-- Start running your app -->
+    <script type="module" asp-location="Footer">
+        new Vue({
             el: '#app',
             data: {
-                name: 'Vue Theme'
+                name: 'Vue Theme',
             },
             data() {
                 return {
@@ -26,19 +29,20 @@
                     hover: false,
                     active: false,
                     images: [
-                        @if (Model.PictureModels.Count > 1)
+                        @foreach (var picture in Model.PictureModels)
                         {
-                            @foreach (var picture in Model.PictureModels)
+                            if (Model.PictureModels.First() == picture)
                             {
                                 <text>
                                     '@picture.FullSizeImageUrl',
                                 </text>
+                            } else
+                            {
+                                <text>
+                                    '@picture.ImageUrl',
+                                </text>
                             }
-                        } else
-                        {
-                            <text>
-                                '@Model.DefaultPictureModel.FullSizeImageUrl',
-                            </text>
+
                         }
                     ],
                     index: null
@@ -52,34 +56,34 @@
             watch: {
                 fluid(newName) {
                     localStorage.fluid = newName;
-                }
+                },
             },
             methods: {
                 productImage: function (event) {
                     var Imagesrc = event.target.parentElement.getAttribute('data-href');
                     var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                     Image.setAttribute('src', Imagesrc);
-                },
+                }
             },
             components: {
-                VueGallerySlideshow,
+                VueGallerySlideshow
             },
-        })
+        });
     </script>
 
 
     @*<div class="zoom picture-@Model.Id mb-1">
-        <a title="@Model.DefaultPictureModel.Title"
-           id="main-product-img-anchor-@Model.Id">
-            <img class="img-fluid"
-                 alt="@Model.DefaultPictureModel.AlternateText"
-                 src="@Model.DefaultPictureModel.ImageUrl"
-                 data-fullsize="@Model.DefaultPictureModel.FullSizeImageUrl"
-                 title="@Model.DefaultPictureModel.Title"
-                 itemprop="image"
-                 id="main-product-img-@Model.Id" />
-        </a>
-    </div>*@
+            <a title="@Model.DefaultPictureModel.Title"
+               id="main-product-img-anchor-@Model.Id">
+                <img class="img-fluid"
+                     alt="@Model.DefaultPictureModel.AlternateText"
+                     src="@Model.DefaultPictureModel.ImageUrl"
+                     data-fullsize="@Model.DefaultPictureModel.FullSizeImageUrl"
+                     title="@Model.DefaultPictureModel.Title"
+                     itemprop="image"
+                     id="main-product-img-@Model.Id" />
+            </a>
+        </div>*@
     @*@if (Model.PictureModels.Count > 1)
         {
             <div class="picture-thumbs-@Model.Id thumbnails">

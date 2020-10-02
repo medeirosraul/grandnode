@@ -21,7 +21,7 @@
 
 <!-- Start running your app -->
 <script type="module" asp-location="Footer">
-    window.app = new Vue({
+   new Vue({
         el: '#app',
         data: {
             name: 'Vue Theme',
@@ -30,7 +30,8 @@
             return {
                 show: false,
                 fluid: false,
-                hover: false
+                hover: false,
+                active: false,
             }
         },
         mounted() {
@@ -49,7 +50,7 @@
                 var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                 Image.setAttribute('src', Imagesrc);
             }
-        },
+       }
     });
 </script>
 <script asp-location="Footer">

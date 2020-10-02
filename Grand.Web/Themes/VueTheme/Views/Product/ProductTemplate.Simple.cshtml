@@ -12,7 +12,7 @@
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/product/product.css", themeName));
 }
 @{
-    Layout = "_ColumnsProduct";
+    Layout = "_RootProduct";
 
     //title, meta
     pagebuilder.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
