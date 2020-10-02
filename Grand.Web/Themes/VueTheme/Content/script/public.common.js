@@ -1,7 +1,4 @@
-﻿
-function deletecartitem(href) {
-    var flyoutcartselector = AxiosCart.flyoutcartselector;
-    var topcartselector = AxiosCart.topcartselector;
+﻿function deletecartitem(href) {
     axios({
         method: "post",
         url: href
@@ -24,9 +21,37 @@ function deletecartitem(href) {
                 self.template = Vue.compile(flyoutcart).render;
             }
         });
-        document.querySelector(topcartselector).innerHTML = response.data.totalproducts;
     }).catch(function (xhr, ajaxOptions, thrownError) {
         console.log('Failed to retrieve Flyout Shopping Cart.');
     });
     return false;
+}
+
+function displayPopupAddToCart(html) {
+    document.querySelector('.modal-place').innerHTML = html;
+        new Vue({
+            el: '#ModalAddToCart',
+            data: {
+                template: null,
+            },
+            render: function (createElement) {
+                if (!this.template) {
+                    return createElement('div', 'Loading...');
+                } else {
+                    return this.template();
+                }
+            },
+            methods: {
+                showModal() {
+                    this.$refs['ModalAddToCart'].show()
+                }
+            },
+            mounted() {
+                var self = this;
+                self.template = Vue.compile(html).render;
+            },
+            updated: function () {
+                this.showModal();
+            }
+        });
 }

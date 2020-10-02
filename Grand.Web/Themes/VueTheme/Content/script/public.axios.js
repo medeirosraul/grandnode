@@ -164,8 +164,8 @@ var AxiosCart = {
             //display notification
             if (response.data.success == true) {
                 //success
-                $("#ModalQuickView .close").click();
-                displayPopupAddToCart(response.data.innerHTML);
+                //$("#ModalQuickView .close").click();
+                displayPopupAddToCart(response.data.html);
 
                 if (response.data.refreshreservation == true) {
                     var param = "";

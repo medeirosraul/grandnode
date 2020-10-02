@@ -2,10 +2,10 @@
     Layout = "_Root.Head";
 }
 @await Component.InvokeAsync("Widget", new { widgetZone = "body_start_html_tag_after" })
-<partial name="_Notifications" />
-<partial name="_JavaScriptDisabledWarning" />
-<partial name="_OldInternetExplorerWarning" />
 <div id="app">
+    <partial name="_Notifications" />
+    <partial name="_JavaScriptDisabledWarning" />
+    <partial name="_OldInternetExplorerWarning" />
     <partial name="Header" />
     <b-container :fluid="fluid" class="main-container">
         @await Component.InvokeAsync("Widget", new { widgetZone = "content_before" })
@@ -24,13 +24,13 @@
     window.app = new Vue({
         el: '#app',
         data: {
-            name: 'Vue Theme'
+            name: 'Vue Theme',
         },
         data() {
             return {
                 show: false,
                 fluid: false,
-                hover: false,
+                hover: false
             }
         },
         mounted() {
@@ -48,21 +48,7 @@
                 var Imagesrc = event.target.parentElement.getAttribute('data-href');
                 var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                 Image.setAttribute('src', Imagesrc);
-            },
-            //function(link) {
-            //    axios.post(link).then(function (response) {
-            //        // handle success
-            //        console.log(response);
-            //        if (response.data.redirect) {
-            //            location.href = response.data.redirect;
-            //            return true;
-            //        }
-            //    })
-            //    .catch(function (error) {
-            //        // handle error
-            //        console.log(error);
-            //    })    
-            //},
+            }
         },
     });
 </script>
