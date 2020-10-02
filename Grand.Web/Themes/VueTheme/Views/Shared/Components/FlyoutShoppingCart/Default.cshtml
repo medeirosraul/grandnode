@@ -40,7 +40,7 @@
                                 <div class="quantity"><span>@T("ShoppingCart.Mini.Quantity"):</span> <strong>@item.Quantity</strong></div>
                             </b-col>
                             <div>
-                                <b-icon icon="trash" class="deletecartitem" variant="danger" onclick="deletecartitem('@Url.RouteUrl("DeleteCartItem", new { id=item.Id })')"></b-icon>
+                                <b-icon icon="trash" class="deletecartitem" variant="danger" @@click="deletecartitem('@Url.RouteUrl("DeleteCartItem", new { id=item.Id })')"></b-icon>
                             </div>
                         </div>
                     }

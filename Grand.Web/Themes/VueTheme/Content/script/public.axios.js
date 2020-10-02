@@ -126,7 +126,7 @@ var AxiosCart = {
             new Vue({
                 el: '.flyout-cart',
                 data: {
-                    template: null
+                    template: null,
                 },
                 render: function (createElement) {
                     if (!this.template) {
