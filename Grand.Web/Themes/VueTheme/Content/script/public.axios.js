@@ -29,7 +29,7 @@ var AxiosCart = {
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function (response) {
-            this.AxiosCart.resetLoadWaiting(response);
+            this.AxiosCart.resetLoadWaiting();
         });  
     },
 
@@ -57,7 +57,7 @@ var AxiosCart = {
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function (response) {
-            this.AxiosCart.resetLoadWaiting(response);
+            this.AxiosCart.resetLoadWaiting();
         });  
     },
 
@@ -69,17 +69,16 @@ var AxiosCart = {
         this.setLoadWaiting(true);
         var form = document.querySelector(formselector);
         var data = new FormData(form);
-        console.log(data);
         axios({
             url: urladd,
             data: data,
             method: 'post',
         }).then(function (response) {
-            this.AxiosCart.success_process(response);
+            this.AxiosCart.success_process(response); 
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
-            this.AxiosCart.resetLoadWaiting(response);
+            this.AxiosCart.resetLoadWaiting();
         });  
     },
 
@@ -96,7 +95,7 @@ var AxiosCart = {
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
-            this.AxiosCart.resetLoadWaiting(response);
+            this.AxiosCart.resetLoadWaiting();
         });  
     },
     //add a product to compare list
@@ -114,7 +113,7 @@ var AxiosCart = {
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
-            this.AxiosCart.resetLoadWaiting(response);
+            this.AxiosCart.resetLoadWaiting();
         });  
     },
 

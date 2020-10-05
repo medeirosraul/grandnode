@@ -11,7 +11,7 @@
         addToWishlistText = T("ShoppingCart.AddToWishlist").Text;
     }
 
-    <b-button variant="secondary" id="add-to-wishlist-button-@Model.ProductId" class="add-to-wishlist-button mr-1" data-productid="@Model.ProductId" @@click="AxiosCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;" title="@addToWishlistText">
+    <b-button variant="secondary" id="add-to-wishlist-button-@Model.ProductId" class="add-to-wishlist-button mr-1" data-productid="@Model.ProductId" onclick="AxiosCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;" title="@addToWishlistText">
         <span class="sr-only">@addToWishlistText</span>
         <b-icon icon="heart"></b-icon>
     </b-button>

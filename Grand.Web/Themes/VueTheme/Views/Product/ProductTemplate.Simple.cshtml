@@ -60,12 +60,12 @@
     <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
     <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
         <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
-            <b-container>
+            <b-container class="position-relative">
                 <b-row>
                     @if (!string.IsNullOrEmpty(Model.Flag))
                     {
-                        <div class="product-labels">
-                            <span class="product-label badge bg-info text-white">@Model.Flag</span>
+                        <div class="product-label">
+                            <b-badge variant="info">@Model.Flag</b-badge>
                         </div>
                     }
                     <vc:widget widget-zone="productdetails_before_pictures" additional-data="@Model.Id"></vc:widget>

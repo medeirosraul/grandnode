@@ -88,3 +88,32 @@ function displayPopupQuickView(html) {
         }
     });
 }
+
+
+function displayBarNotification(message, messagetype, timeout) {
+    new Vue({
+        el: "#app",
+        methods: {
+            toast(append = false) {
+                if (messagetype == 'error') {
+                    this.$bvToast.toast(message, {
+                        title: messagetype,
+                        variant: 'danger',
+                        autoHideDelay: timeout,
+                        appendToast: append
+                    })
+                } else {
+                    this.$bvToast.toast(message, {
+                        title: messagetype,
+                        variant: 'info',
+                        autoHideDelay: timeout,
+                        appendToast: append
+                    })
+                }
+            }
+        },
+        mounted: function () {
+            this.toast();
+        }
+    });
+}
