@@ -47,11 +47,14 @@
                     <template v-slot:footer>
                         <b-col cols="12" class="p-3 bg-dark">
                             <b-row>
-                                <b-col lg="6" cols="5" class="text-center text-white d-flex flex-column">@T("ShoppingCart.Totals.SubTotal"):<strong>@Model.SubTotal</strong></b-col>
+                                <b-col lg="6" cols="5" class="text-center text-white d-flex flex-column">
+                                    <span class="h5 mb-0">@T("ShoppingCart.Totals.SubTotal"):</span>
+                                    <span class="h4 mb-0">@Model.SubTotal</span>
+                                </b-col>
                                 <b-col lg="6" cols="7" class="text-center d-flex justify-content-center align-items-center">
                                     @if (Model.DisplayShoppingCartButton)
                                     {
-                                        <b-button class="btn btn-outline btn-block cart-button" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("ShoppingCart.Mini.ViewCart")</b-button>
+                                        <b-button variant="light" class="cart-button w-100 h-100 text-uppercase" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("ShoppingCart.Mini.ViewCart")</b-button>
                                     }
                                     @if (Model.DisplayCheckoutButton)
                                     {
@@ -64,7 +67,7 @@
                                         {
                                             checkoutUrl = Url.RouteUrl("Checkout");
                                         }
-                                        <b-button class="btn btn-outline btn-block checkout-button" onclick="setLocation('@checkoutUrl')">@T("Checkout.Button")</b-button>
+                                        <b-button variant="light" class="checkout-button w-100 h-100 text-uppercase" onclick="setLocation('@checkoutUrl')">@T("Checkout.Button")</b-button>
                                     }
                                 </b-col>
                             </b-row>

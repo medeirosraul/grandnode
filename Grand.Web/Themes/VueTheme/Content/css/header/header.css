@@ -50,6 +50,10 @@
     padding: 0;
     border-bottom: 0;
 }
+.flyout-cart .item .attributes {
+    font-size: 14px;
+    color: #888;
+}
 .flyout-cart .item .deletecartitem {
     position: absolute;
     top: 0;
