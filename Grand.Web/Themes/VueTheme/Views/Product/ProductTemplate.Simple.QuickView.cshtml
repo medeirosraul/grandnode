@@ -12,7 +12,7 @@
         <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
         <div class="page product-details-page product-standard">
             <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
-            <b-form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+            <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
                 <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
                     <b-container class="position-relative">
                         <b-row>
@@ -57,7 +57,7 @@
                                 <partial name="_SKU_Man_GTIN_Ven" model="Model" />
                                 <!--delivery-->
                                 @if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(Model.DeliveryDate)
-                              || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
+                             || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
                                 {
                                     <partial name="_DeliveryInfo" model="Model" />
                                 }
@@ -193,12 +193,12 @@
                         </div>
                     </b-col>
                     @*<vc:products-also-purchased product-id="@Model.Id" product-thumb-picture-size="null"></vc:products-also-purchased>
-                    <vc:related-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:related-products>
-                    <vc:similar-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:similar-products>*@
+            <vc:related-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:related-products>
+            <vc:similar-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:similar-products>*@
                 </div>
-            </b-form>
-            <vc:widget widget-zone="productdetails_bottom" additional-data="@Model.Id"></vc:widget>
-        </div>
+                </form>
+                <vc:widget widget-zone="productdetails_bottom" additional-data="@Model.Id"></vc:widget>
+</div>
 </b-modal>
 @*<script>
     $(document).ready(function () {

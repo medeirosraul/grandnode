@@ -29,6 +29,8 @@
                     fluid: false,
                     hover: false,
                     active: false,
+                    scTimer: 0,
+                    scY: 0,
                     images: [
                         @foreach (var picture in Model.PictureModels)
                         {
@@ -53,6 +55,7 @@
                 if (localStorage.fluid == "true") this.fluid = "fluid";
                 if (localStorage.fluid == "fluid") this.fluid = "fluid";
                 if (localStorage.fluid == "") this.fluid = "false";
+                window.addEventListener('scroll', this.handleScroll);
             },
             watch: {
                 fluid(newName) {
@@ -64,7 +67,21 @@
                     var Imagesrc = event.target.parentElement.getAttribute('data-href');
                     var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                     Image.setAttribute('src', Imagesrc);
-                }
+                },
+                handleScroll: function () {
+                    if (this.scTimer) return;
+                    this.scTimer = setTimeout(() => {
+                        this.scY = window.scrollY;
+                        clearTimeout(this.scTimer);
+                        this.scTimer = 0;
+                    }, 100);
+                },
+                toTop: function () {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                },
             },
             components: {
                 VueGallerySlideshow
