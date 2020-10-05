@@ -216,7 +216,9 @@
     </b-container>
     @await Component.InvokeAsync("Widget", new { widgetZone = "footer" })
 </footer>
-<a href="#" id="back-to-top" title="Back to top">
-    <span class="mdi mdi-chevron-up"></span>
-    <span class="sr-only">back to top</span>
-</a>
+<transition name="custom-classes-transition" enter-active-class="animate__animated  animate__bounceInUp" leave-active-class="animate__animated  animate__bounceOutDown">
+    <div id="pagetop" class="back-to-top" v-show="scY > 300" @@click="toTop">
+        <b-icon variant="white" icon="chevron-up"></b-icon>
+        <span class="sr-only">back to top</span>
+    </div>
+</transition>
