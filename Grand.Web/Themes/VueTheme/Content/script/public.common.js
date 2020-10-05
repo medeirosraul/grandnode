@@ -57,3 +57,34 @@ function displayPopupAddToCart(html) {
             }
         });
 }
+
+function displayPopupQuickView(html) {
+    document.querySelector('.modal-place').innerHTML = html;
+    new Vue({
+        el: '#ModalQuickView',
+        data: {
+            template: null,
+        },
+        render: function (createElement) {
+            if (!this.template) {
+                return createElement('b-overlay', {
+                    attrs: { show: 'true' }
+                });
+            } else {
+                return this.template();
+            }
+        },
+        methods: {
+            showModal() {
+                this.$refs['ModalQuickView'].show()
+            }
+        },
+        mounted() {
+            var self = this;
+            self.template = Vue.compile(html).render;
+        },
+        updated: function () {
+            this.showModal();
+        }
+    });
+}

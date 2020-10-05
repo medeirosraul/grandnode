@@ -2,7 +2,10 @@
     Layout = "_Root.Head";
 }
 @await Component.InvokeAsync("Widget", new { widgetZone = "body_start_html_tag_after" })
-<div id="app">
+<div id="app" v-cloak>
+    <div class="page-loader-container">
+        <div class="page-loader"></div>
+    </div>
     <partial name="_Notifications" />
     <partial name="_JavaScriptDisabledWarning" />
     <partial name="_OldInternetExplorerWarning" />

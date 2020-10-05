@@ -21,13 +21,16 @@ var AxiosCart = {
     },
 
     quickview_product: function (quickviewurl) {
-        this.setLoadWaiting(true);
         axios({
             url: quickviewurl,
-            success: this.success_process,
-            complete: this.resetLoadWaiting,
-            error: this.axiosFailure
-        })
+            method: 'post',
+        }).then(function (response) {
+            this.AxiosCart.success_process(response);
+        }).catch(function (error) {
+            error.axiosFailure;
+        }).then(function (response) {
+            this.AxiosCart.resetLoadWaiting(response);
+        });  
     },
 
     //add a product to the cart/wishlist from the catalog pages
@@ -64,14 +67,17 @@ var AxiosCart = {
             return;
         }
         this.setLoadWaiting(true);
+        var form = document.querySelector(formselector);
+        var data = new FormData(form);
+        console.log(data);
         axios({
             url: urladd,
-            data: formselector.serialize(),
+            data: data,
             method: 'post',
         }).then(function (response) {
             this.AxiosCart.success_process(response);
         }).catch(function (error) {
-            error.axiosFailure
+            error.axiosFailure;
         }).then(function () {
             this.AxiosCart.resetLoadWaiting(response);
         });  
@@ -83,11 +89,9 @@ var AxiosCart = {
             return;
         }
         this.setLoadWaiting(true);
-        axios({
-            url: urladd,
-            data: formselector.serialize(),
-            method: 'post'
-        }).then(function (response) {
+        var data = new FormData(formselector);
+        axios.post(urladd, data)
+        .then(function (response) {
             this.AxiosCart.success_process(response);
         }).catch(function (error) {
             error.axiosFailure;
@@ -156,8 +160,7 @@ var AxiosCart = {
         }
         if (response.data.product) {
             if (response.data.success == true) {
-                $("#ModalQuickView .product-quickview").remove();
-                displayPopupQuickView(response.data.innerHTML);
+                displayPopupQuickView(response.data.html);
             }
         }
         if (response.data.message) {
