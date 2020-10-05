@@ -47,7 +47,7 @@
                     }
                     <b-card-img v-if="hover" class="hover-img img-second"></b-card-img>
                 </b-link>
-                <b-button title="@T("Products.QuickView")" class="btn btn-secondary quick-view-button" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl')">
+                <b-button title="@T("Products.QuickView")" variant="secondary" class="quick-view-button" data-target="ModalQuickView" onclick="AxiosCart.quickview_product('@quickviewurl')">
                     <b-icon icon="search"></b-icon>
                     <span>@T("Products.QuickView")</span>
                 </b-button>

@@ -58,7 +58,7 @@
 <vc:widget widget-zone="productdetails_after_breadcrumb" additional-data="@Model.Id"></vc:widget>
 <div class="page product-details-page product-standard">
     <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
-    <b-form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+    <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
         <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
             <b-container>
                 <b-row>
@@ -162,7 +162,7 @@
                                     <partial name="_ProductPrice" model="Model.ProductPrice" view-data="dataDictPrice" />
                                 }
                             </div>
-                            <div class="col-lg-12 generalAdToCart px-0 my-3">
+                            <div class="generalMarginSupporter">
                                 <!--auction-->
                                 @if (Model.ProductType == ProductType.Auction)
                                 {
@@ -176,8 +176,8 @@
                                     var dataDictAddToCart = new ViewDataDictionary(ViewData);
                                     dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
                                 }
-                                <div class="btn-group product-simple-share my-2 d-inline-flex flex-wrap w-100">
-                                    <partial name="_AddToCart" model="Model.AddToCart" view-data="dataDictAddToCart" />
+                                <partial name="_AddToCart" model="Model.AddToCart" view-data="dataDictAddToCart" />
+                                <b-btn-group class="mt-2 mb-3">
                                     @if (Model.ProductType == ProductType.SimpleProduct || Model.ProductType == ProductType.BundledProduct)
                                     {
                                         <partial name="_AddToWishlist" model="Model.AddToCart" view-data="dataDictAddToWishlist" />
@@ -191,7 +191,7 @@
                                     {
                                         <partial name="_ProductAskQuestionButton" model="Model" />
                                     }
-                                </div>
+                                </b-btn-group>
                             </div>
                         </div>
                         @if (!String.IsNullOrWhiteSpace(Model.PageShareCode))
@@ -242,7 +242,7 @@
             <vc:related-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:related-products>
             <vc:similar-products product-id="@Model.Id" product-thumb-picture-size="null"></vc:similar-products>
         </div>
-    </b-form>
+    </form>
     <vc:widget widget-zone="productdetails_bottom" additional-data="@Model.Id"></vc:widget>
 </div>
 <script asp-location="Footer">

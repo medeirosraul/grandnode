@@ -10,13 +10,14 @@
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/vue-gallery-slideshow.min.js", themeName));
 }
 
-<b-col xl="7" lg="6" md="5" cols="12" class="gallery col-12 col-md-6 mt-md-0 mt-3 px-0">
-    <template>
-        <img class="image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
-        <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
-    </template>
-    <!-- Start running your app -->
-    <script type="module" asp-location="Footer">
+<b-col xl="7" lg="6" md="5" cols="12" class="mt-md-0 mt-3 px-0">
+    <div class="gallery">
+        <template>
+            <img class="image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+            <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
+        </template>
+        <!-- Start running your app -->
+        <script type="module" asp-location="Footer">
         new Vue({
             el: '#app',
             data: {
@@ -69,7 +70,8 @@
                 VueGallerySlideshow
             },
         });
-    </script>
+        </script>
+    </div>
 
 
     @*<div class="zoom picture-@Model.Id mb-1">

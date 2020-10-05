@@ -1,0 +1,5 @@
+﻿@model ProductDetailsModel
+<b-button variant="secondary" class="email-a-friend-button mr-1" onclick="setLocation('@Url.RouteUrl("ProductEmailAFriend", new { productId = Model.Id })')" data-toggle="tooltip" data-placement="bottom" title="@T("Products.EmailAFriend")">
+    <b-icon icon="envelope"></b-icon>
+    <span class="sr-only">@T("Products.EmailAFriend")</span>
+</b-button>

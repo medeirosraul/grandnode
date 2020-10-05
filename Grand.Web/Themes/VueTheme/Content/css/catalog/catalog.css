@@ -68,6 +68,10 @@
 .generalLeftSide .btn.color-container {
     margin: 0 5px 5px 0;
 }
+.generalLeftSide .btn.color-container:focus, .generalLeftSide .btn.color-container:active {
+    box-shadow: none;
+    border-radius: 100%;
+}
 .generalLeftSide .btn.color-container .color {
     width: 32px;
     height: 32px;
