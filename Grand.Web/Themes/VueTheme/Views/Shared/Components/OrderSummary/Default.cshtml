@@ -1,6 +1,15 @@
 @model ShoppingCartModel
 @inject IWebHelper webHelper
+@inject SeoSettings seoSettings
+@using Grand.Framework.Themes
+@using Grand.Framework.UI
 @inject IWorkContext workContext
+@inject IThemeContext themeContext
+@inject IPageHeadBuilder pagebuilder
+@{
+    var themeName = themeContext.WorkingThemeName;
+    pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
+}
 
 <div class="order-summary-content mt-3" id="ordersummarypagecart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
@@ -27,7 +36,7 @@
             <div class="shopping-cart-container">
                 <template>
                     <div>
-                        <b-table :fields="fields" :items="items" id="cart-table">
+                        <b-table :fields="fields" :items="items" id="cart-table" class="shopping-cart">
                             <!-- A custom formatted data column cell -->
                             <template v-slot:cell(allow)="data">
                                 <b-form-checkbox :id="data.value.id" :checked="data.value.checked" :data-href="data.value.href" switch></b-form-checkbox>
