@@ -170,7 +170,7 @@
                 <b-button-group>
                     @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
                     {
-                        <b-button data-toggle="title" title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AxiosCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;" @*onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;"*@>
+                        <b-button v-b-tooltip.hover.bottom title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AxiosCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;" @*onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;"*@>
                             <b-icon icon="heart"></b-icon>
                             <span class="sr-only">AddToWishlist</span>
                         </b-button>
@@ -204,7 +204,7 @@
                     }
                     @if (!Model.ProductPrice.DisableAddToCompareListButton && Model.ProductType == ProductType.SimpleProduct)
                     {
-                        <b-button data-tooltip="title" title="@T("ShoppingCart.AddToCompareList")" class="btn btn-secondary" onclick="AxiosCart.addproducttocomparelist('@addtocomparelink');return false;">
+                        <b-button v-b-tooltip.hover.bottom title="@T("ShoppingCart.AddToCompareList")" class="btn btn-secondary" onclick="AxiosCart.addproducttocomparelist('@addtocomparelink');return false;">
                             <span class="sr-only">AddToCompareList</span>
                             <b-icon icon="shuffle"></b-icon>
                         </b-button>

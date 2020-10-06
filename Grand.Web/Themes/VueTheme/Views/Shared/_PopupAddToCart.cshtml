@@ -150,15 +150,15 @@
                     }
                     @if (Model.CartType == ShoppingCartType.ShoppingCart || Model.CartType == ShoppingCartType.OnHoldCart)
                     {
-                        <b-button variant="info" class="text-uppercase" @@click="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("AddToCart.ViewCart")</b-button>
+                        <b-button variant="info" class="text-uppercase" @@click="location='@(Url.RouteUrl("ShoppingCart"))'">@T("AddToCart.ViewCart")</b-button>
                     }
                     else if (Model.CartType == ShoppingCartType.Wishlist)
                     {
-                        <b-button variant="info" class="text-uppercase" @@click="setLocation('@(Url.RouteUrl("Wishlist"))')">@T("AddToCart.ViewWishlist")</b-button>
+                        <b-button variant="info" class="text-uppercase" @@click="location='@(Url.RouteUrl("Wishlist"))'">@T("AddToCart.ViewWishlist")</b-button>
                     }
                     else if (Model.CartType == ShoppingCartType.Auctions)
                     {
-                        <b-button variant="info" class="text-uppercase" @@click="setLocation('@(Url.RouteUrl("CustomerAuctions"))')">@T("AddToCart.ViewAuctions")</b-button>
+                        <b-button variant="info" class="text-uppercase" @@click="location='@(Url.RouteUrl("CustomerAuctions"))'">@T("AddToCart.ViewAuctions")</b-button>
                     }
                 </b-button-group>
             </template>

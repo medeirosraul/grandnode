@@ -54,7 +54,7 @@
                                 <b-col lg="6" cols="7" class="text-center d-flex justify-content-center align-items-center">
                                     @if (Model.DisplayShoppingCartButton)
                                     {
-                                        <b-button variant="light" class="cart-button w-100 h-100 text-uppercase" onclick="setLocation('@(Url.RouteUrl("ShoppingCart"))')">@T("ShoppingCart.Mini.ViewCart")</b-button>
+                                        <b-button variant="light" class="cart-button w-100 h-100 text-uppercase" onclick="location='@(Url.RouteUrl("ShoppingCart"))'">@T("ShoppingCart.Mini.ViewCart")</b-button>
                                     }
                                     @if (Model.DisplayCheckoutButton)
                                     {
@@ -67,7 +67,7 @@
                                         {
                                             checkoutUrl = Url.RouteUrl("Checkout");
                                         }
-                                        <b-button variant="light" class="checkout-button w-100 h-100 text-uppercase" onclick="setLocation('@checkoutUrl')">@T("Checkout.Button")</b-button>
+                                        <b-button variant="light" class="checkout-button w-100 h-100 text-uppercase" onclick="location='@checkoutUrl'">@T("Checkout.Button")</b-button>
                                     }
                                 </b-col>
                             </b-row>
