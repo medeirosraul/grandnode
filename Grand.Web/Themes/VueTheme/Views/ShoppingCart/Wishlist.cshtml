@@ -70,9 +70,7 @@
                                     <div v-html="data.value.subtotal"></div>
                                 </template>
                                 <template v-slot:cell(remove)="data">
-                                    <b-button variant="link" class="text-secondary deleteshoppingcartitem" @@click="deleteitem(data.value.href)">
-                                        <b-icon icon="trash"></b-icon>
-                                    </b-button>
+                                    <div v-html="data.value.href"></div>
                                 </template>
                             </b-table>
                         </div>
@@ -407,7 +405,7 @@
                                         {
                                             <text>
                                             remove: {
-                                                href: '@Url.RouteUrl("DeleteCartItem", new { id = item.Id, shoppingcartpage = true })'
+                                                href: '<input type="checkbox" id="@T("Remove")-@(item.Id)" name="removefromcart" class="custom-control mx-auto custom-checkbox" value="@(item.Id)">'
                                             }
                                             </text>
                                         }
