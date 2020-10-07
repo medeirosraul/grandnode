@@ -36,11 +36,10 @@
         <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
             <div class="shopping-cart-container">
                 <template>
-                    <div>
+                    <div class="static-cart">
                         <b-table :fields="fields" :items="items" id="cart-table" class="shopping-cart">
-                            <!-- A custom formatted data column cell -->
                             <template v-slot:cell(allow)="data">
-                                <b-form-checkbox :id="data.value.id" :checked="data.value.checked" :data-href="data.value.href" switch></b-form-checkbox>
+                                <b-form-checkbox :id="data.value.id" :checked="data.value.checked" class="changeshoppingcartitem" :data-href="data.value.href" switch></b-form-checkbox>
                             </template>
                             <template v-slot:cell(picture)="data">
                                 <b-link :href="data.value.href" :title="data.value.title">
@@ -80,7 +79,7 @@
             @if (Model.IsEditable)
             {
                 <div class="common-buttons btn-group btn-group-sm mb-3">
-                    <button type="button" onclick="setLocation('@(Url.RouteUrl("ClearCart"))')" class="btn btn-danger d-flex justify-content-center removeAll-cart-button"><span class="mdi mdi-delete-forever-outline pr-1"></span><span class="d-sm-block">@T("shoppingcart.clearcart")</span></button>
+                    <b-button onclick="location='@(Url.RouteUrl("ClearCart"))'" variant="danger" class="removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></b-button>
                 </div>
             }
             <div class="cart-options">
@@ -188,8 +187,9 @@
             @T("ShoppingCart.CartIsEmpty")
         </div>
     }
-    <!-- Start running your app -->
+
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
+
     @*<script asp-location="Footer">
 
             function ChangeShoppingCart() {
@@ -401,10 +401,10 @@
                                     <text>
                                         showMsgBoxOne() {
                                             const h = this.$createElement
-                                            // Using HTML string
+
                                             const titleVNode = h('div', { domProps: { innerHTML: '<h5>@T("Checkout.TermsOfService.IAccept")</h5>' } })
-                                            const messageVNode = h('div', { domProps: { innerHTML: '@T("Checkout.TermsOfService.PleaseAccept") <a href="@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse })">@T("Checkout.TermsOfService.Read")</a>' } })
-                                            // We must pass the generated VNodes as arrays
+                                const messageVNode = h('div', { domProps: { innerHTML: '@T("Checkout.TermsOfService.PleaseAccept") <a href="@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse })" target="popup" onclick="window.open(@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse }))">@T("Checkout.TermsOfService.Read")</a>' } })
+
                                             this.$bvModal.msgBoxConfirm([messageVNode], {
                                               title: [titleVNode],
                                                 centered: true,
@@ -424,7 +424,7 @@
                                                 }
                                             })
                                             .catch(err => {
-                                                // An error occurred
+
                                             })
                                         },
                                     </text>
@@ -451,4 +451,5 @@
                             },
                         }
                     });
+
 </script>
