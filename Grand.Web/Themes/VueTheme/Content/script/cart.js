@@ -33,13 +33,14 @@
     })
 }
 
-function ChangeShoppingCart() {
+function ChangeShoppingCart(e) {
+    var href = e.getAttribute('data-href');
     var form = document.getElementById('shopping-cart-form');
     var data = new FormData(form);
     axios({
         method: 'post',
         data: data,
-        url: '/updatecart',
+        url: href,
     }).then(function (response) {
         var cartChange = response.data.cart;
         document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
