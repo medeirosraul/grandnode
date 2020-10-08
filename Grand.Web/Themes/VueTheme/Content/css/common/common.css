@@ -20,6 +20,9 @@ a:hover {
     color: #dc3545;
     font-weight: 500;
 }
+.custom-control {
+    cursor: pointer;
+}
 [v-cloak] .page-loader-container::before {
     content: '';
     position: fixed;
