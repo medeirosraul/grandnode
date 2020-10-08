@@ -17,21 +17,11 @@
             <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
         </template>
         <!-- Start running your app -->
-        <script type="module" asp-location="Footer">
-        new Vue({
-            el: '#app',
-            data: {
-                name: 'Vue Theme',
-            },
-            data() {
-                return {
-                    show: false,
-                    fluid: false,
-                    hover: false,
-                    active: false,
-                    scTimer: 0,
-                    scY: 0,
-                    images: [
+        <script>
+            var mix = {
+                data: function () {
+                    return {
+                        images: [
                         @foreach (var picture in Model.PictureModels)
                         {
                             if (Model.PictureModels.First() == picture)
@@ -49,44 +39,12 @@
                         }
                     ],
                     index: null
-                }
-            },
-            mounted() {
-                if (localStorage.fluid == "true") this.fluid = "fluid";
-                if (localStorage.fluid == "fluid") this.fluid = "fluid";
-                if (localStorage.fluid == "") this.fluid = "false";
-                window.addEventListener('scroll', this.handleScroll);
-            },
-            watch: {
-                fluid(newName) {
-                    localStorage.fluid = newName;
+                    }
                 },
-            },
-            methods: {
-                productImage: function (event) {
-                    var Imagesrc = event.target.parentElement.getAttribute('data-href');
-                    var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
-                    Image.setAttribute('src', Imagesrc);
+                components: {
+                    VueGallerySlideshow
                 },
-                handleScroll: function () {
-                    if (this.scTimer) return;
-                    this.scTimer = setTimeout(() => {
-                        this.scY = window.scrollY;
-                        clearTimeout(this.scTimer);
-                        this.scTimer = 0;
-                    }, 100);
-                },
-                toTop: function () {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    });
-                },
-            },
-            components: {
-                VueGallerySlideshow
-            },
-        });
+            }
         </script>
     </div>
 

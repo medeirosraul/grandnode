@@ -22,6 +22,59 @@
     @await Component.InvokeAsync("Footer")
 </div>
 
+<!-- Start running your app -->
+<script>
+    new Vue({
+        el: '#app',
+        mixins: [mix],
+        data: {
+            name: 'Vue Theme',
+        },
+        data() {
+            return {
+                show: false,
+                fluid: false,
+                hover: false,
+                active: false,
+                value: 5,
+                scTimer: 0,
+                scY: 0,
+            }
+        },
+        mounted() {
+            if (localStorage.fluid == "true") this.fluid = "fluid";
+            if (localStorage.fluid == "fluid") this.fluid = "fluid";
+            if (localStorage.fluid == "") this.fluid = "false";
+            window.addEventListener('scroll', this.handleScroll);
+        },
+        watch: {
+            fluid(newName) {
+                localStorage.fluid = newName;
+            },
+        },
+        methods: {
+            productImage: function (event) {
+                var Imagesrc = event.target.parentElement.getAttribute('data-href');
+                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
+                Image.setAttribute('src', Imagesrc);
+            },
+            handleScroll: function () {
+                if (this.scTimer) return;
+                this.scTimer = setTimeout(() => {
+                    this.scY = window.scrollY;
+                    clearTimeout(this.scTimer);
+                    this.scTimer = 0;
+                }, 100);
+            },
+            toTop: function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            },
+        }
+    });
+</script>
 <script asp-location="Footer">
     AxiosCart.init('.cart-qty', '.wishlist-qty', '.flyout-cart');
 </script>
