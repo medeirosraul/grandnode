@@ -4,6 +4,9 @@
         url: href,
     }).then(function (response) {
         var flyoutcart = response.data.flyoutshoppingcart;
+        var cartChange = response.data.cart;
+        var delButtons = document.querySelector('.remove-from-cart');
+        document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
         new Vue({
             el: '.flyout-cart',
             data: {
@@ -21,7 +24,10 @@
                 self.template = Vue.compile(flyoutcart).render;
             }
         });
-        window.location.reload();
+        new Vue({
+            el: '.checkout-buttons',
+            mixins: [mix]
+        });
     }).catch(function (error) {
         alert('Failed to retrieve Shopping Cart Page.');
     })
@@ -36,61 +42,12 @@ function ChangeShoppingCart() {
         url: '/updatecart',
     }).then(function (response) {
         var cartChange = response.data.cart;
-        //new Vue({
-        //    el: '.static-cart',
-        //    data: {
-        //        template: null
-        //    },
-        //    render: function (createElement) {
-        //        if (!this.template) {
-
-        //        } else {
-        //            return this.template();
-        //        }
-        //    },
-        //    mounted() {
-        //        var self = this;
-        //        self.template = Vue.compile(cartChange).render;
-        //    }
-        //});
-        window.location.reload();
+        document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
+        new Vue({
+            el: '.checkout-buttons',
+            mixins: [mix] 
+        });
     }).catch(function (error) {
         alert('Failed to retrieve Shopping Cart Page.');
     })
 }
-//setTimeout(function () {
-//    var button = document.querySelectorAll(".changeshoppingcartitem");
-//    button.forEach(function () {
-//        this.addEventListener("click", function (e) {
-//            var self = this;
-//            var href = self.querySelectorAll('.custom-control-input').getAttribute('data-href');
-//            axios({
-//                method: 'post',
-//                data: data,
-//                url: href,
-//            }).then(function (response) {
-//                var cartChange = response.data.cart;
-//                //new Vue({
-//                //    el: '.static-cart',
-//                //    data: {
-//                //        template: null
-//                //    },
-//                //    render: function (createElement) {
-//                //        if (!this.template) {
-
-//                //        } else {
-//                //            return this.template();
-//                //        }
-//                //    },
-//                //    mounted() {
-//                //        var self = this;
-//                //        self.template = Vue.compile(cartChange).render;
-//                //    }
-//                //});
-//                window.location.reload();
-//            }).catch(function (error) {
-//                alert('Failed to retrieve Shopping Cart Page.');
-//            })
-//        }, false);
-//    });
-//}, 300);
