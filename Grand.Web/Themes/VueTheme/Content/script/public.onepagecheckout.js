@@ -474,40 +474,23 @@ var ConfirmOrder = {
     save: function () {
         if (Checkout.loadWaiting != false) return;
         
-        //terms of service
-        //var termOfServiceOk = true;
-        //if ($('#termsofservice').length > 0) {
-        //    //terms of service element exists
-        //    if (!$('#termsofservice').is(':checked')) {
-        //        $("#terms-of-service-warning-box").modal('show');
-        //        termOfServiceOk = false;
-        //    } else {
-        //        termOfServiceOk = true;
-        //    }
-        //}
-        //if (termOfServiceOk) {
-        //    Checkout.setLoadWaiting('confirm-order');
-        //    $.ajax({
-        //        cache: false,
-        //        url: this.saveUrl,
-        //        type: 'post',
-        //        success: this.nextStep,
-        //        complete: this.resetLoadWaiting,
-        //        error: Checkout.ajaxFailure
-        //    });
-        //} else {
-        //    return false;
-        //}
-        axios({
-            url: this.saveUrl,
-            method: 'post',
-        }).then(function (response) {
-            this.ConfirmOrder.nextStep(response);
-        }).catch(function (error) {
-            error.axiosFailure;
-        }).then(function () {
-            this.ConfirmOrder.resetLoadWaiting()
-        }); 
+        // terms of service
+        var termOfServiceOk = true;
+        if (termOfServiceOk) {
+            Checkout.setLoadWaiting('confirm-order');
+            axios({
+                url: this.saveUrl,
+                method: 'post',
+            }).then(function (response) {
+                this.ConfirmOrder.nextStep(response);
+            }).catch(function (error) {
+                error.axiosFailure;
+            }).then(function () {
+                this.ConfirmOrder.resetLoadWaiting()
+            }); 
+        } else {
+            return false;
+        }
     },
     
     resetLoadWaiting: function (transport) {

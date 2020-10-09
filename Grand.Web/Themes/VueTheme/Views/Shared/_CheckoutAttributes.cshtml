@@ -291,36 +291,9 @@
                     document.querySelector('.total-info').innerHTML = response.data.htmlordertotal
                 }
                 if (response.data.checkoutattributeinfo) {
-                    console.log(response.data.checkoutattributeinfo);
                     document.querySelector('.selected-checkout-attributes').innerHTML = response.data.checkoutattributeinfo
                 }
             })
-            @*$.ajax({
-                cache: false,
-                url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
-                data: $('#shopping-cart-form').serialize(),
-                type: 'post',
-                success: function(data) {
-                    if (data.enabledattributeids) {
-                        for (var i = 0; i < data.enabledattributeids.length; i++) {
-                            $('#checkout_attribute_label_' + data.enabledattributeids[i]).show();
-                            $('#checkout_attribute_input_' + data.enabledattributeids[i]).show();
-                        }
-                    }
-                    if (data.disabledattributeids) {
-                        for (var i = 0; i < data.disabledattributeids.length; i++) {
-                            $('#checkout_attribute_label_' + data.disabledattributeids[i]).hide();
-                            $('#checkout_attribute_input_' + data.disabledattributeids[i]).hide();
-                        }
-                    }
-                    if (data.htmlordertotal) {
-                        $('.total-info').replaceWith(data.htmlordertotal);
-                    }
-                    if (data.checkoutattributeinfo) {
-                        $('.selected-checkout-attributes').html(data.checkoutattributeinfo);
-                    }
-                }
-            });*@
         }
     </script>
 }

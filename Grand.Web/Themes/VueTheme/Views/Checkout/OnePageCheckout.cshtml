@@ -42,10 +42,6 @@
         confirmOrderStepNumber--;
     }
 }
-<script asp-location="Footer">
-    $(".opc li.active").prev("li").removeClass("dontGo");
-    $(".opc li.active").nextAll("li").addClass("dontGo");
-</script>
 <div class="page checkout-page">
     <h1 class="generalTitle h2">@T("Checkout")</h1>
     @await Component.InvokeAsync("Widget", new { widgetZone = "opc_content_before" })
@@ -194,7 +190,7 @@
                         </script>
                         <div class="col-12 buttons pt-1 pb-1 px-0 my-3" id="confirm-order-buttons-container">
                             <a class="btn btn-secondary" href="#" id="back-confirm_order" onclick="Checkout.back(); return false;">@T("Common.Back")</a>
-                            <input type="button" class="btn btn-info confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
+                            <input type="button" class="btn btn-info confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" disabled />
                             <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
                         </div>
                     </b-card-body>
