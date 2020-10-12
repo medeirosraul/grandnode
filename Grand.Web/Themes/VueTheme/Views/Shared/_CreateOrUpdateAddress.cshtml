@@ -13,13 +13,13 @@
                 axios({
                     method: 'get',
                     url: "@(Url.RouteUrl("GetStatesByCountryId"))",
-                    data: { "countryId": selectedItem, "addSelectStateItem": "true" },
+                    params: { "countryId": selectedItem, "addSelectStateItem": "true" },
                 }).then(function (response) {
                     ddlStates.innerHTML = '';
                     response.data.forEach(function (id, option) {
                         elChild = document.createElement('option');
-                        elChild.setAttribute('value', option.id);
-                        elChild.innerHTML = option.name;
+                        elChild.setAttribute('value', id.id);
+                        elChild.innerHTML = id.name;
                         ddlStates.appendChild(elChild);
                     });
                     //statesProgress.hide();
