@@ -20,14 +20,6 @@
                 </div>
             </div>
         </div>
-        <script asp-location="Footer">
-            document.body.addEventListener('keydown', function (event) {
-                if (event.keyCode == 13) {
-                    document.querySelector('#applygiftcardcouponcode').click();
-                    return false;
-                }
-            });
-        </script>
         @if (!String.IsNullOrEmpty(Model.Message))
         {
             <div class="alert @(Model.IsApplied ? "alert-success message-success" : "alert-danger message-failure") text-center">
