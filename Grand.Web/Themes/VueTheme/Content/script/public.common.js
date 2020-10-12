@@ -115,3 +115,17 @@ function displayBarNotification(message, messagetype, timeout) {
         }
     });
 }
+
+// CSRF (XSRF) security
+function addAntiForgeryToken(data) {
+    //if the object is undefined, create a new one.
+    if (!data) {
+        data = {};
+    }
+    //add token
+    var tokenInput = document.querySelector('input[name=__RequestVerificationToken]');
+    if (tokenInput) {
+        data.__RequestVerificationToken = tokenInput.value;
+    }
+    return data;
+};
