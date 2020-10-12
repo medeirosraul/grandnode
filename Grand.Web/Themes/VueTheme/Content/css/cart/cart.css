@@ -32,6 +32,19 @@
     max-width: 75px;
     margin: 0 auto;
 }
+
+/* checkout */
+
+.opc .card-header .btn:not(.allow) {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.opc .card.active ~ .card:not(.active),
+.opc .card.active ~ .card:not(.active) .btn.allow {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+}
+
 @media (max-width: 991px) {
     .shopping-cart thead {
         display: none;

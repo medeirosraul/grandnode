@@ -1,8 +1,6 @@
 /*
 ** one page checkout
 */
-
-
 var Checkout = {
     loadWaiting: false,
     failureUrl: false,
@@ -11,7 +9,7 @@ var Checkout = {
         this.loadWaiting = false;
         this.failureUrl = failureUrl;
 
-        Accordion.disallowAccessToNextSections = true;
+        //Accordion.disallowAccessToNextSections = true;
     },
 
     ajaxFailure: function () {
@@ -61,9 +59,8 @@ var Checkout = {
     },
 
     gotoSection: function (section) {
-        section = document.querySelector('#opc-' + section);
-        section.classList.add('allow');
-        //Accordion.openSection(section);
+        section = document.querySelector('#button-' + section);
+        section.classList.add("allow");
     },
 
     back: function () {
@@ -77,20 +74,19 @@ var Checkout = {
         }
         if (response.data.allow_sections) {
             response.data.allow_sections.forEach(function (e) {
-                document.querySelector('#opc-' + e).classList.add('allow');
+                document.querySelector('#button-' + e).classList.add('allow');
             });
         }
         
-        //TODO move it to a new method
-        if (document.querySelector("#billing-address-select").length > 0) {
+        if (document.querySelector("#billing-address-select")) {
             Billing.newAddress(!document.querySelector('#billing-address-select').value);
         }
-        if (document.querySelector("#shipping-address-select").length > 0) {
+        if (document.querySelector("#shipping-address-select")) {
             Shipping.newAddress(!document.querySelector('#shipping-address-select').value);
         }
 
-        if (response.data.goto_section) {
-            Checkout.gotoSection(response.data.goto_section);
+        if (response.data.update_section) {
+            Checkout.gotoSection(response.data.update_section.name);
             return true;
         }
         if (response.data.redirect) {
@@ -145,6 +141,8 @@ var Billing = {
             data: data,
         }).then(function (response) {
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
+            console.log(document.querySelector('#opc-' + response.data.update_section.name).parentElement);
+            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             this.Billing.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
@@ -236,6 +234,7 @@ var Shipping = {
             data: data,
         }).then(function (response) {
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
+            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             this.Shipping.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
@@ -304,6 +303,7 @@ var ShippingMethod = {
                 data: data,
             }).then(function (response) {
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
+                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 this.ShippingMethod.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;
@@ -381,6 +381,7 @@ var PaymentMethod = {
                 data: data,
             }).then(function (response) {
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-method").click()');
+                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 this.PaymentMethod.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;
@@ -432,6 +433,7 @@ var PaymentInfo = {
             data: data,
         }).then(function (response) {
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
+            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             this.PaymentInfo.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
@@ -482,6 +484,7 @@ var ConfirmOrder = {
                 url: this.saveUrl,
                 method: 'post',
             }).then(function (response) {
+                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 this.ConfirmOrder.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;

@@ -42,10 +42,16 @@
     <None Remove="Themes\VueTheme\Content\css\category\category.css" />
     <None Remove="Themes\VueTheme\Content\css\product\cart.css" />
     <None Remove="Themes\VueTheme\Content\css\product\product.css" />
+    <None Remove="Themes\VueTheme\Content\script\public.accordion.js" />
     <None Remove="Themes\VueTheme\Content\script\public.axios.js" />
     <None Remove="Themes\VueTheme\Content\script\vue-gallery-slideshow.min.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Themes\VueTheme\Content\script\public.accordion.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
   <ItemGroup>
