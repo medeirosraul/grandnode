@@ -61,6 +61,45 @@ var Checkout = {
     gotoSection: function (section) {
         section = document.querySelector('#button-' + section);
         section.classList.add("allow");
+        var m_title = document.getElementById('confirm-data-modal').getAttribute('data-title');
+        var m_body = document.getElementById('confirm-data-modal').getAttribute('data-body');
+        var m_terms = document.getElementById('confirm-data-modal').getAttribute('data-terms');
+        var m_link = document.getElementById('confirm-data-modal').getAttribute('data-link');
+        var m_linkname = document.getElementById('confirm-data-modal').getAttribute('data-linkname');
+        var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
+        new Vue({
+            el: '.order-summary-content',
+            methods: {
+                    showMsgBoxOne() {
+                        const h = this.$createElement
+
+                    const titleVNode = h('div', { domProps: { innerHTML: '<h5>' + m_title + '</h5>' } })
+                    const messageVNode = h('div', { domProps: { innerHTML: '' + m_terms + ' <a href="' + m_link + '" target="popup" onclick="window.open(' + m_link + ')">' + m_linkname + '</a>' } })
+
+                        this.$bvModal.msgBoxConfirm([messageVNode], {
+                            title: [titleVNode],
+                            centered: true,
+                            size: 'md',
+                            okVariant: 'info',
+                            okTitle: 'Ok',
+                            cancelTitle: 'Cancel',
+                            cancelVariant: 'danger',
+                            footerClass: 'p-2',
+                            hideHeaderClose: false,
+                        })
+                            .then(value => {
+                                this.boxOne = value
+                                if (value == true) {
+                                    ConfirmOrder.save()
+                                }
+                            })
+                            .catch(err => {
+
+                            })
+                    },
+            }
+        });
+        document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
     },
 
     back: function () {
@@ -141,7 +180,6 @@ var Billing = {
             data: data,
         }).then(function (response) {
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
-            console.log(document.querySelector('#opc-' + response.data.update_section.name).parentElement);
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             this.Billing.nextStep(response);
         }).catch(function (error) {
@@ -484,7 +522,6 @@ var ConfirmOrder = {
                 url: this.saveUrl,
                 method: 'post',
             }).then(function (response) {
-                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 this.ConfirmOrder.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;
