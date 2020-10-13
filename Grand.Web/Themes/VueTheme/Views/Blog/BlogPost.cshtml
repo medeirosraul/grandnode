@@ -90,7 +90,7 @@
                 <div class="comments">
                     @foreach (var comment in Model.Comments)
                     {
-                        <b-card class="card comment blog-comment text-center text-sm-left">
+                        <b-card class="mb-3">
                             <template v-slot:header>
                                 <div class="d-inline-flex w-100">
                                     @if (comment.AllowViewingProfiles)
@@ -117,12 +117,12 @@
                                                 @if (comment.AllowViewingProfiles)
                                                 {
                                                     <b-link href="@Url.RouteUrl("CustomerProfile", new {id = comment.CustomerId})" class="avatar-img-link">
-                                                        <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img" alt="avatar" />
+                                                        <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
                                                     </b-link>
                                                 }
                                                 else
                                                 {
-                                                    <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img" alt="avatar" />
+                                                    <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
                                                 }
                                             </div>
                                         </b-col>
