@@ -9,6 +9,7 @@
                 <script>
                     var date = new Date("@Model.EndTime.Value.ToString("MM/dd/yyyy HH:mm:ss")"); // some mock date
                     var milliseconds = date.getTime();
+                    console.log(milliseconds);
                 </script>
                 <countdown :end-time="milliseconds">
                     <template v-slot:process="{ timeObj }">
@@ -43,10 +44,3 @@
         }
     </div>
 </div>
-<script>
-    var mix = {
-        components: {
-            vueAwesomeCountdown
-        },
-    }
-</script>
