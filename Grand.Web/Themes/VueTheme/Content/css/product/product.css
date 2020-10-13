@@ -64,6 +64,13 @@
     font-size: 24px;
     font-weight: 700;
 }
+.product-details-page .overview .old-price {
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: line-through;
+}
 
 /* product add to cart */
 

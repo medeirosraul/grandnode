@@ -44,6 +44,8 @@
     <None Remove="Themes\VueTheme\Content\css\product\product.css" />
     <None Remove="Themes\VueTheme\Content\script\public.accordion.js" />
     <None Remove="Themes\VueTheme\Content\script\public.axios.js" />
+    <None Remove="Themes\VueTheme\Content\script\public.reservation.js" />
+    <None Remove="Themes\VueTheme\Content\script\vue-awesome-countdown.umd.min.js" />
     <None Remove="Themes\VueTheme\Content\script\vue-gallery-slideshow.min.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -51,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Update="Themes\VueTheme\Content\script\public.accordion.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Themes\VueTheme\Content\script\public.reservation.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
