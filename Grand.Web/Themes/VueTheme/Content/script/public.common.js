@@ -129,3 +129,60 @@ function addAntiForgeryToken(data) {
     }
     return data;
 };
+
+function newsletter_subscribe(subscribe) {
+    var subscribeProgress = document.getElementById("subscribe-loading-progress");
+    subscribeProgress.style.display = "block";
+    var postData = {
+        subscribe: subscribe,
+        email: document.getElementById("newsletter-email").value
+    };
+    var href = document.getElementById("newsletterbox").getAttribute('data-href');
+    axios({
+        url: href,
+        params: postData,
+        method: 'post',
+    }).then(function (response) {
+        subscribeProgress.style.display = "none";
+        document.getElementById("newsletter-result-block").innerHTML = response.data.Result;
+        console.log(response);
+        if (response.data.Success) {
+            document.querySelector('.newsletter-inputs .input-group').style.display = "none";
+            document.getElementById('newsletter-result-block').classList.add("d-block").style.bottom = "unset";
+            if (data.response.Showcategories) {
+                document.getElementById('#nc_modal_form').innerHTML = response.data.ResultCategory;
+                window.setTimeout(function () {
+                    //document.querySelector('.nc-action-form').magnificPopup('open');
+                }, 100);
+            }
+        } else {
+            window.setTimeout(function () {
+                document.getElementById('newsletter-result-block').style.display = "none"
+            }, 2000);
+        }
+    }).catch(function (error) {
+        subscribeProgress.style.display = "none";
+    })
+}
+window.onload = function () {
+    var el = document.getElementById('newsletter-subscribe-button');
+    el.onclick = function () {
+        var allowToUnsubscribe = document.getElementById("newsletterbox").getAttribute('data-allowtounsubscribe').toLowerCase();
+        if (allowToUnsubscribe == 'true') {
+            if (document.getElementById('newsletter_subscribe').checked) {
+                newsletter_subscribe('true');
+            }
+            else {
+                newsletter_subscribe('false');
+            }
+        }
+        else {
+            newsletter_subscribe('true');
+        }
+    };
+    document.getElementById("newsletter-email").addEventListener("keyup", function (event) {
+        if (event.keyCode == 13) {
+            document.getElementById("newsletter-subscribe-button").click();
+        }
+    });
+}

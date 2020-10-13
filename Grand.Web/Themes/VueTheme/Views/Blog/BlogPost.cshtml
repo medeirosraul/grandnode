@@ -117,12 +117,12 @@
                                                 @if (comment.AllowViewingProfiles)
                                                 {
                                                     <b-link href="@Url.RouteUrl("CustomerProfile", new {id = comment.CustomerId})" class="avatar-img-link">
-                                                        <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
+                                                        <b-img rounded src="@(comment.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
                                                     </b-link>
                                                 }
                                                 else
                                                 {
-                                                    <b-img rounded="circle" src="@(comment.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
+                                                    <b-img rounded src="@(comment.CustomerAvatarUrl)" class="avatar-img img-fluid border" alt="avatar" />
                                                 }
                                             </div>
                                         </b-col>
