@@ -56,7 +56,7 @@
                                             attributeValue.Name :
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li>
-                                            <b-form-radio itemid="@(controlId)_@(attributeValue.Id)" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected">@attributeName</b-form-radio>
+                                            <b-form-radio id="@(controlId)_@(attributeValue.Id)" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected">@attributeName</b-form-radio>
                                         </li>
                                     }
                                 </ul>
@@ -160,8 +160,8 @@
                                     </div>
                                 </script>
                                 <script asp-location="Footer">
-                                        $(document).ready(function() {
-                                            $("#@(controlId)uploader").fineUploader({
+                                    window.onload = function () {
+                                        document.getElementById("#@(controlId)uploader").fineUploader({
                                                 request: {
                                                     endpoint: '@(Url.RouteUrl("UploadFileProductAttribute", new { attributeId = attribute.Id, productId = attribute.ProductId }))'
                                                 },
@@ -171,22 +171,22 @@
                                                     allowedExtensions: [@Html.Raw(allowedFileExtensions)]
                                                 }
                                             }).on("complete", function(event, id, name, responseJSON, xhr) {
-                                                $("#@(controlId)").val(responseJSON.downloadGuid);
+                                                document.getElementById("#@(controlId)").value = responseJSON.downloadGuid;
                                                 if (responseJSON.success) {
-                                                    $("#@(controlId + "downloadurl")").html("<a href='" + responseJSON.downloadUrl + "'>@T("Common.FileUploader.DownloadUploadedFile")</a>");
-                                                    $("#@(controlId + "remove")").show();
+                                                    document.getElementById("#@(controlId + "downloadurl")").innerHTML = "<a href='" + responseJSON.downloadUrl + "'>@T("Common.FileUploader.DownloadUploadedFile")</a>";
+                                                    document.getElementById("#@(controlId + "remove")").style.display = "block";
                                                 }
                                                 if (responseJSON.message) {
                                                     alert(responseJSON.message);
                                                 }
                                             });
 
-                                            $("#@(controlId + "remove")").click(function(e) {
-                                                $("#@(controlId + "downloadurl")").html("");
-                                                $("#@(controlId)").val('');
-                                                $(this).hide();
+                                            document.getElementById("#@(controlId + "remove")").addEventListener("click",function(e) {
+                                                document.getElementById("#@(controlId + "downloadurl")").innerHTML = "";
+                                                document.getElementById("#@(controlId)").value = '';
+                                                document.querySelector(this).style.display = "none";
                                             });
-                                        });
+                                        }
                                 </script>
                                 <div id="@(controlId + "downloadurl")">
                                     @if (download != null)
@@ -226,12 +226,14 @@
                                     }
                                 </ul>
                                 <script asp-location="Footer">
-                                        $(document).ready(function() {
-                                            $('.attributes #color-squares-@(attribute.Id)').delegate('input', 'click', function(event) {
-                                                $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
-                                                $(this).closest('li').addClass('selected-value');
-                                            });
+                                    var btnContainer = document.getElementById("color-squares-@(attribute.Id)");
+                                    var btns = btnContainer.getElementsByTagName("li");
+                                    for (var i = 0; i < btns.length; i++) {
+                                        btns[i].addEventListener("click", function () {
+                                            (document.querySelector('.selected-value')) ? document.querySelector('.selected-value').classList.remove('selected-value') : '';
+                                            this.classList.add('selected-value');
                                         });
+                                    }
                                 </script>
                             }
                             break;
@@ -252,23 +254,18 @@
                                                 </span>
                                                 <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                             </label>
-                                            <script asp-location="Footer">
-                                                $('[data-toggle="tooltip"]').tooltip({
-                                                    animated: 'fade',
-                                                    placement: 'right',
-                                                    html: true
-                                                });
-                                            </script>
                                         </li>
                                     }
                                 </ul>
                                 <script asp-location="Footer">
-	                                    $(document).ready(function() {
-	                                        $('.attributes #color-squares-@(attribute.Id)').delegate('input', 'click', function(event) {
-	                                            $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
-	                                            $(this).closest('li').addClass('selected-value');
-	                                        });
-	                                    });
+                                    var btnContainer = document.getElementById("color-squares-@(attribute.Id)");
+                                    var btns = btnContainer.getElementsByTagName("li");
+                                    for (var i = 0; i < btns.length; i++) {
+                                        btns[i].addEventListener("click", function () {
+                                            (document.querySelector('.selected-value')) ? document.querySelector('.selected-value').classList.remove('selected-value') : '';
+                                            this.classList.add('selected-value');
+                                        });
+                                    }
                                 </script>
                             }
                             break;
@@ -297,7 +294,7 @@
             {
                 case AttributeControlType.DropdownList:
                     {
-                        attributeChangeScriptsBuilder.AppendFormat("$('#{0}').change(function(){{{1}();}});\n", controlId, attributeChangeHandlerFuncName);
+                        attributeChangeScriptsBuilder.AppendFormat("document.querySelector('#{0}').addEventListener('change', function (){{{1}();}});\n", controlId, attributeChangeHandlerFuncName);
                     }
                     break;
                 case AttributeControlType.RadioList:
@@ -306,7 +303,7 @@
                     {
                         foreach (var attributeValue in attribute.Values)
                         {
-                            attributeChangeScriptsBuilder.AppendFormat("$('#{0}_{1}').click(function(){{{2}();}});\n", controlId, attributeValue.Id, attributeChangeHandlerFuncName);
+                            attributeChangeScriptsBuilder.AppendFormat("document.querySelector('#{0}_{1}').addEventListener('click',function(e){{{2}();}},false);\n", controlId, attributeValue.Id, attributeChangeHandlerFuncName);
                         }
                     }
                     break;
@@ -315,7 +312,7 @@
                     {
                         foreach (var attributeValue in attribute.Values)
                         {
-                            attributeChangeScriptsBuilder.AppendFormat("$('#{0}_{1}').click(function(){{{2}();}});\n", controlId, attributeValue.Id, attributeChangeHandlerFuncName);
+                            attributeChangeScriptsBuilder.AppendFormat("document.querySelector('#{0}_{1}').addEventListener('click',function(e){{{2}();}},false);\n", controlId, attributeValue.Id, attributeChangeHandlerFuncName);
                         }
                     }
                     break;
@@ -324,72 +321,69 @@
             }
         }
         //render scripts
-        <script asp-location="Footer">
-            function @(attributeChangeHandlerFuncName)() {
-                $.ajax({
-                    cache: false,
+    <script asp-location="Footer">
+        function @(attributeChangeHandlerFuncName)() {
+                var form = document.getElementById('product-details-form');
+                var data = new FormData(form);
+                axios({
                     url: '@Html.Raw(Url.Action("productdetails_attributechange", "product", new { productId = productId, validateAttributeConditions = attributesHaveConditions, loadPicture = attributesHaveAssociatedPictures }))',
-                    data: $('#product-details-form').serialize(),
-                    type: 'post',
-                    context: { product: '@productId' },
-                    success: function (data, url) {
-                        if (data.price) {
-                            $('.price-value-@productId').text(data.price);
+                    data: data,
+                    method: 'post',
+                    params: { product: '@productId' },
+                }).then(function (response, url) {
+                        if (response.data.price) {
+                           document.querySelector('.price-value-@productId').innerText = response.data.price;
                         }
-                        if (data.sku) {
-                            $('#sku-@productId').text(data.sku);
+                        if (response.data.sku) {
+                            document.querySelector('#sku-@productId').innerText = response.data.sku;
                         }
-                        if (data.mpn) {
-                            $('#mpn-@productId').text(data.mpn);
+                        if (response.data.mpn) {
+                            document.querySelector('#mpn-@productId').innerText = response.data.mpn;
                         }
-                        if (data.gtin) {
-                            $('#gtin-@productId').text(data.gtin);
+                        if (response.data.gtin) {
+                            document.querySelector('#gtin-@productId').innerText = response.data.gtin;
                         }
-                        if (data.stockAvailability) {
-                            $('#stock-availability-value-@productId').text(data.stockAvailability);
+                        if (response.data.stockAvailability) {
+                            document.querySelector('#stock-availability-value-@productId').innerText = response.data.stockAvailability;
                         }
-                        if (data.backInStockSubscription) {
-                            $('#back-in-stock-subscribe-@productId').show();
+                        if (response.data.backInStockSubscription) {
+                            document.querySelector('#back-in-stock-subscribe-@productId').style.display = "block";
                         }
-                        else {
-                            $('#back-in-stock-subscribe-@productId').hide();
+                        if (response.data.buttonTextBackInStockSubscription) {
+                            document.querySelector('#back-in-stock-subscribe-@productId').value = response.data.buttonTextBackInStockSubscription;
                         }
-                        if (data.buttonTextBackInStockSubscription) {
-                            $('#back-in-stock-subscribe-@productId').val(data.buttonTextBackInStockSubscription);
-                        }
-                        if (data.enabledattributemappingids) {
-                            for (var i = 0; i < data.enabledattributemappingids.length; i++) {
-                                $('#product_attribute_label_' + data.enabledattributemappingids[i]).show();
-                                $('#product_attribute_input_' + data.enabledattributemappingids[i]).show();
+                        if (response.data.enabledattributemappingids) {
+                            for (var i = 0; i < response.data.enabledattributemappingids.length; i++) {
+                                document.querySelector('#product_attribute_label_' + response.data.enabledattributemappingids[i]).style.display = "block";
+                                document.querySelector('#product_attribute_input_' + response.data.enabledattributemappingids[i]).style.display = "block";
                             }
                         }
-                        if (data.disabledattributemappingids) {
-                            for (var i = 0; i < data.disabledattributemappingids.length; i++) {
-                                $('#product_attribute_label_' + data.disabledattributemappingids[i]).hide();
-                                $('#product_attribute_input_' + data.disabledattributemappingids[i]).hide();
+                        if (response.data.disabledattributemappingids) {
+                            for (var i = 0; i < response.data.disabledattributemappingids.length; i++) {
+                                document.querySelector('#product_attribute_label_' + response.data.disabledattributemappingids[i]).style.display = "none";
+                                document.querySelector('#product_attribute_input_' + response.data.disabledattributemappingids[i]).style.display = "none";
                             }
                         }
-                        @*var product = this.product;
+                        var product = this.product;
                         setTimeout(function () {
-                            if (data.pictureDefaultSizeUrl) {
-                                if ($(".product-grouped").length == 0) {
-                                    $('#main-product-img-@productId').attr("src", data.pictureDefaultSizeUrl);
-                                    if ($(".zoomImg").length) {
-                                        $(".zoomImg").attr("src", data.pictureFullSizeUrl)
-                                    }
+                            if (response.data.pictureDefaultSizeUrl) {
+                                if (document.querySelector(".product-grouped")) {
+                                    document.getElementById('main-product-img-' + product).setAttribute("src", response.data.pictureDefaultSizeUrl);
                                 }
                                 else {
-                                    $('#main-product-img-'+product).attr("src", data.pictureDefaultSizeUrl);
+                                    document.getElementById('main-product-img-@productId').setAttribute("src", response.data.pictureDefaultSizeUrl);
+                                    //if (document.querySelector(".zoomImg")) {
+                                    //    document.querySelector(".zoomImg").setAttribute("src", data.pictureFullSizeUrl)
+                                    //}
                                 }
 
-                            }}, 100);*@
-                    }
+                            }}, 100);
                 });
             }
-            $(document).ready(function() {
+            window.onload = function () {
                 @(attributeChangeHandlerFuncName)();
                 @Html.Raw(attributeChangeScriptsBuilder.ToString())
-            });
-        </script>
+            }
+    </script>
         }
     }
