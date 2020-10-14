@@ -62,14 +62,3 @@ else
 {
     <p class="text-muted">@T("Products.Reviews.Empty")</p>
 }
-
-<script asp-location="Footer">
-    $(document).ready(function () {
-        $(".rating-options .custom-radio").click(function () {
-            $(".custom-radio").removeClass("full-star");
-            $(".custom-radio").removeClass("empty-star");
-            $(this).prevAll(".custom-radio").addClass("full-star");
-            $(this).nextAll(".custom-radio").addClass("empty-star");
-        });
-    });
-</script>
