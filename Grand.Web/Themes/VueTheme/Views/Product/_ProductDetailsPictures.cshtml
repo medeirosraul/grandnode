@@ -58,10 +58,11 @@
         {
             @if (Model.PictureModels.Count > 1)
             {
-                <img id="main-product-img-@Model.Id" class="image main-image"
+                <img id="main-product-img-@Model.Id" class="image main-image zoom"
                      src="@Model.DefaultPictureModel.ImageUrl"
                      alt="@Model.DefaultPictureModel.AlternateText"
-                     title="@Model.DefaultPictureModel.Title" />
+                     title="@Model.DefaultPictureModel.Title"
+                     onclick="document.querySelector('.thumb-image').click()"/>
                 <template>
                     <img class="image thumb-image zoom" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
                     <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
