@@ -12,44 +12,115 @@
 
 <b-col xl="7" lg="6" md="5" cols="12" class="mt-md-0 mt-3 px-0">
     <div class="gallery">
-        <img id="main-product-img-@Model.Id" class="image main-image"
-             src="@Model.DefaultPictureModel.ImageUrl"
-             alt="@Model.DefaultPictureModel.AlternateText"
-             title="@Model.DefaultPictureModel.Title"/>
-        <template>
-            <img class="image thumb-image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
-            <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
-        </template>
-        <!-- Start running your app -->
-        <script>
-            var mix = {
-                data: function () {
-                    return {
-                        images: [
-                        @foreach (var picture in Model.PictureModels)
-                        {
-                            if (Model.PictureModels.First() == picture)
+        @if (Model.PictureModels.Count == 1)
+        {
+            @if (Model.DefaultPictureZoomEnabled)
+            {
+                <template>
+                    <img class="image main-image zoom" id="main-product-img-@Model.Id" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+                    <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
+                </template>
+                <script>
+                var mix = {
+                    data: function () {
+                        return {
+                            images: [
+                            @foreach (var picture in Model.PictureModels)
                             {
-                                <text>
-                                    '@picture.FullSizeImageUrl',
-                                </text>
-                            } else
-                            {
-                                <text>
-                                    '@picture.ImageUrl',
-                                </text>
+                                    <text>
+                                        '@picture.ImageUrl',
+                                    </text>
                             }
-
+                        ],
+                        index: null
                         }
-                    ],
-                    index: null
-                    }
-                },
-                components: {
-                    VueGallerySlideshow
-                },
+                    },
+                    components: {
+                        VueGallerySlideshow
+                    },
+                }
+                </script>
             }
-        </script>
+            else
+            {
+                <img id="main-product-img-@Model.Id" class="image main-image"
+                     src="@Model.DefaultPictureModel.ImageUrl"
+                     alt="@Model.DefaultPictureModel.AlternateText"
+                     title="@Model.DefaultPictureModel.Title" />
+                <script>
+                    var mix = {
+                        data: function () { }
+                    }
+                </script>
+            }
+        }
+        @if (Model.DefaultPictureZoomEnabled)
+        {
+            @if (Model.PictureModels.Count > 1)
+            {
+                <img id="main-product-img-@Model.Id" class="image main-image"
+                     src="@Model.DefaultPictureModel.ImageUrl"
+                     alt="@Model.DefaultPictureModel.AlternateText"
+                     title="@Model.DefaultPictureModel.Title" />
+                <template>
+                    <img class="image thumb-image zoom" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+                    <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
+                </template>
+                <!-- Start running your app -->
+                <script>
+                var mix = {
+                    data: function () {
+                        return {
+                            images: [
+                            @foreach (var picture in Model.PictureModels)
+                            {
+                                if (Model.PictureModels.First() == picture)
+                                {
+                                    <text>
+                                        '@picture.FullSizeImageUrl',
+                                    </text>
+                                }
+                                else
+                                {
+                                    <text>
+                                        '@picture.ImageUrl',
+                                    </text>
+                                }
+
+                            }
+                        ],
+                        index: null
+                        }
+                    },
+                    components: {
+                        VueGallerySlideshow
+                    },
+                }
+                </script>
+            }
+        }
+        else
+        {
+            @if (Model.PictureModels.Count > 1)
+            {
+                <img id="main-product-img-@Model.Id" class="image main-image"
+                     src="@Model.DefaultPictureModel.ImageUrl"
+                     alt="@Model.DefaultPictureModel.AlternateText"
+                     title="@Model.DefaultPictureModel.Title" />
+                @foreach (var picture in Model.PictureModels)
+                {
+                    <img class="image thumb-image"
+                         src="@picture.ThumbImageUrl"
+                         alt="@picture.AlternateText"
+                         title="@picture.Title" />
+                }
+                <script>
+                    var mix = {
+                        data: function () { }
+                    }
+                </script>
+            }
+        }
     </div>
 
     @*<div class="zoom picture-@Model.Id mb-1">

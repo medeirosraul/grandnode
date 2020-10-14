@@ -6,9 +6,6 @@
     width: 100%;
     flex-wrap: wrap;
 }
-.product-details-page .gallery img.image {
-    cursor: pointer;
-}
 .product-details-page .gallery img.image.main-image {
     max-width: 100%;
     margin: 0 0 15px 0;
@@ -17,6 +14,9 @@
     max-width: 100px;
     margin: 0 7px 7px 0;
     border: 1px solid #ddd;
+}
+.product-details-page .gallery img.image.zoom {
+    cursor: pointer;
 }
 
 /* product overview */
