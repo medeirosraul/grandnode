@@ -28,7 +28,6 @@
 }
 
 function displayPopupAddToCart(html) {
-    document.querySelector('.modal-place').innerHTML = html;
         new Vue({
             el: '#ModalAddToCart',
             data: {
@@ -59,7 +58,6 @@ function displayPopupAddToCart(html) {
 }
 
 function displayPopupQuickView(html) {
-    document.querySelector('.modal-place').innerHTML = html;
     new Vue({
         el: '#ModalQuickView',
         data: {
