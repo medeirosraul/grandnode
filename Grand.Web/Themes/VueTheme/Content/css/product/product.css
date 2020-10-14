@@ -9,11 +9,11 @@
 .product-details-page .gallery img.image {
     cursor: pointer;
 }
-.product-details-page .gallery img.image:first-child {
+.product-details-page .gallery img.image.main-image {
     max-width: 100%;
     margin: 0 0 15px 0;
 }
-.product-details-page .gallery img.image:not(:first-child) {
+.product-details-page .gallery img.image.thumb-image {
     max-width: 100px;
     margin: 0 7px 7px 0;
     border: 1px solid #ddd;

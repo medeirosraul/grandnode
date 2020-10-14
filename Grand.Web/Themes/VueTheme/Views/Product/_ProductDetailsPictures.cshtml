@@ -12,8 +12,12 @@
 
 <b-col xl="7" lg="6" md="5" cols="12" class="mt-md-0 mt-3 px-0">
     <div class="gallery">
+        <img id="main-product-img-@Model.Id" class="image main-image"
+             src="@Model.DefaultPictureModel.ImageUrl"
+             alt="@Model.DefaultPictureModel.AlternateText"
+             title="@Model.DefaultPictureModel.Title"/>
         <template>
-            <img class="image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+            <img class="image thumb-image" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
             <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
         </template>
         <!-- Start running your app -->
@@ -47,7 +51,6 @@
             }
         </script>
     </div>
-
 
     @*<div class="zoom picture-@Model.Id mb-1">
             <a title="@Model.DefaultPictureModel.Title"
