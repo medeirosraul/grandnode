@@ -105,15 +105,3 @@
     }
     @await Component.InvokeAsync("Widget", new { widgetZone = "productreviews_page_bottom", additionalData = Model.ProductId })
 </div>
-
-<script asp-location="Footer">
-    $(document).ready(function () {
-        $('.rating-options .custom-radio').on("click", function () {
-            if (!$(this).find('input').is(':checked')) {
-                $(this).find('.custom-control-label').html('&#9733;');
-                $(this).prevAll('.custom-radio').find('.custom-control-label').html('&#9733;');
-                $(this).nextAll('.custom-radio').find('.custom-control-label').html('&#x2606;');
-            }
-        });
-    });
-</script>

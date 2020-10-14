@@ -76,22 +76,25 @@
             }
 
             //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
-            <script asp-location="Footer">
-                $(document).ready(function () {
-                    $("#@Html.IdFor(model => model.EnteredQuantity)").keydown(function (event) {
+<script asp-location="Footer">
+                    if (document.getElementById("@Html.IdFor(model => model.EnteredQuantity)")) {
+                        document.getElementById("@Html.IdFor(model => model.EnteredQuantity)").addEventListener("keyup", function (event) {
+                            if (event.keyCode == 13) {
+                                document.getElementById("add-to-cart-button-@Model.ProductId").click();
+                                return false;
+                            }
+                        });
+                    }
+                    if (document.getElementById("@Html.IdFor(model => model.CustomerEnteredPrice)")) {
+                        document.getElementById("@Html.IdFor(model => model.CustomerEnteredPrice)").addEventListener("keyup", function (event) {
                         if (event.keyCode == 13) {
-                            $("#add-to-cart-button-@Model.ProductId").trigger("click");
+                            document.getElementById("add-to-cart-button-@Model.ProductId").click();
                             return false;
                         }
-                    });
-                    $("#@Html.IdFor(model => model.CustomerEnteredPrice)").keydown(function (event) {
-                        if (event.keyCode == 13) {
-                            $("#add-to-cart-button-@Model.ProductId").trigger("click");
-                            return false;
-                        }
-                    });
-                });
-            </script>
+                        });
+                    }
+
+</script>
             <b-input-group-append>
             <button type="button" id="add-to-cart-button-@Model.ProductId" class="btn btn-info w-100 add-to-cart-button d-inline-flex" data-productid="@Model.ProductId" onclick="AxiosCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)shoppingCartType })', '#product-details-form');return false;">
                 <span>@addToCartText</span>
