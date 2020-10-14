@@ -88,8 +88,13 @@ var AxiosCart = {
             return;
         }
         this.setLoadWaiting(true);
-        var data = new FormData(formselector);
-        axios.post(urladd, data)
+        var form = document.querySelector(formselector);
+        var data = new FormData(form);
+        axios({
+            url: urladd,
+            data: data,
+            method: 'post',
+        })
         .then(function (response) {
             this.AxiosCart.success_process(response);
         }).catch(function (error) {
