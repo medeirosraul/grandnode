@@ -6,17 +6,13 @@
 @inject IThemeContext themeContext
 @inject IPageHeadBuilder pagebuilder
 @using System.Globalization
-@{
-    var themeName = themeContext.WorkingThemeName;
-
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, string.Format("~/Themes/{0}/Content/script/public.reservation.js", themeName));
-    pagebuilder.AddCssFileParts(ResourceLocation.Head, "~/content/jquery-ui-themes/smoothness/jquery-ui.calendar.min.css");
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/scripts/jquery-migrate-3.0.1.min.js");
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js");
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/scripts/jquery.validate.unobtrusive.min.js");
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/scripts/jquery.validate.min.js");
-    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/scripts/jquery-3.3.1.min.js");
-}
+<script asp-location="Footer" src="/scripts/jquery-3.3.1.min.js"></script>
+<script asp-location="Footer" src="/scripts/jquery.validate.min.js"></script>
+<script asp-location="Footer" src="/scripts/jquery.validate.unobtrusive.min.js"></script>
+<script asp-location="Footer" src="/scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script asp-location="Footer" src="/scripts/jquery-migrate-3.0.1.min.js"></script>
+<script asp-location="Footer" src="/Themes/VueTheme/Content/script/public.reservation.js"></script>
+<link href="~/content/jquery-ui-themes/smoothness/jquery-ui.calendar.min.css" rel="stylesheet" type="text/css"/>
 <div>
     @if (Model.Parameters.Any())
     {
