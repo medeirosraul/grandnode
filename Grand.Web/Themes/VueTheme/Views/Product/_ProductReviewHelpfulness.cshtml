@@ -9,8 +9,6 @@
         (<span id="helpfulness-vote-yes-@(Model.ProductReviewId)">@(Model.HelpfulYesTotal)</span>/<span id="helpfulness-vote-no-@(Model.ProductReviewId)">@(Model.HelpfulNoTotal)</span>)
     </span>
     <span id="helpfulness-vote-result-@(Model.ProductReviewId)" class="result alert alert-info mx-1 mb-0" style="display:none;"></span>
-
-    
     <script asp-location="Footer">
      
             document.getElementById('vote-yes-@(Model.ProductReviewId)').addEventListener("click",function(e){

@@ -275,7 +275,6 @@
         }
     </table>
 </div>
-
 @{
     //dynamic update support
     var attributesHaveConditions = Model.Any(x => x.HasCondition);
@@ -380,10 +379,10 @@
                             }}, 100);
                 });
             }
-            window.onload = function () {
+       
                 @(attributeChangeHandlerFuncName)();
                 @Html.Raw(attributeChangeScriptsBuilder.ToString())
-            }
+            
     </script>
         }
     }

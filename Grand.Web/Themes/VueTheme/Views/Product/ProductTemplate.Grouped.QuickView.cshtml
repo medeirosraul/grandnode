@@ -7,8 +7,7 @@
         <link href="~/content/jquery-ui-themes/smoothness/jquery-ui.calendar.min.css" rel="stylesheet" type="text/css" />*@
 }
 @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_quickview_after_breadcrumb", additionalData = Model.Id })
-<resources asp-type="ScriptHeader" />
-<b-modal ref="ModalQuickView" id="ModalQuickView" size="xl" centered hide-footer hide-header>
+<b-modal ref="ModalQuickView" id="ModalQuickView" @@show="onShow" size="xl" centered hide-footer hide-header>
     <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
     <div class="page product-details-page product-standard product-grouped">
         @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_top", additionalData = Model.Id })
@@ -196,4 +195,7 @@
         @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_bottom", additionalData = Model.Id })
     </div>
 </b-modal>
-<resources asp-type="ScriptFooter" />
+<div class="script-tag">
+    <resources asp-type="ScriptHeader" />
+    <resources asp-type="ScriptFooter" />
+</div>
