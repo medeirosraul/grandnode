@@ -63,6 +63,7 @@ function displayPopupQuickView(html) {
         el: '#ModalQuickView',
         data: {
             template: null,
+            hover: false
         },
         render: function (createElement) {
             if (!this.template) {
