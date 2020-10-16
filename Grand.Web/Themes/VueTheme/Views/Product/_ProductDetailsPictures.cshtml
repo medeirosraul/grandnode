@@ -54,6 +54,18 @@
                 </script>
             }
         }
+        @if (Model.PictureModels.Count == 0)
+        {
+            <img id="main-product-img-@Model.Id" class="image main-image"
+                 src="@Model.DefaultPictureModel.ImageUrl"
+                 alt="@Model.DefaultPictureModel.AlternateText"
+                 title="@Model.DefaultPictureModel.Title" />
+            <script>
+                var mix = {
+                    data: function () { }
+                }
+            </script>
+        }
         @if (Model.DefaultPictureZoomEnabled)
         {
             @if (Model.PictureModels.Count > 1)
@@ -62,7 +74,7 @@
                      src="@Model.DefaultPictureModel.ImageUrl"
                      alt="@Model.DefaultPictureModel.AlternateText"
                      title="@Model.DefaultPictureModel.Title"
-                     onclick="document.querySelector('.thumb-image').click()"/>
+                     onclick="document.querySelector('.thumb-image').click()" />
                 <template>
                     <img class="image thumb-image zoom" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
                     <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
