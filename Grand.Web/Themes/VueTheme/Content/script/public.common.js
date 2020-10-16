@@ -78,9 +78,14 @@ function displayPopupQuickView(html) {
             showModal() {
                 this.$refs['ModalQuickView'].show()
             },
-            onShow() {
-                setTimeout(function () { runScripts(document.querySelector('.script-tag')) }, 300);
-            }
+            onShown() {
+                runScripts(document.querySelector('.script-tag'))
+            },
+            productImage: function (event) {
+                var Imagesrc = event.target.parentElement.getAttribute('data-href');
+                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
+                Image.setAttribute('src', Imagesrc);
+            },
         },
         mounted() {
             var self = this;
@@ -281,4 +286,81 @@ function runScripts($container) {
     // insert the script tags sequentially
     // to preserve execution order
     seq(runList, scriptsDone)
+}
+
+function sendcontactusform(urladd) {
+    if (document.getElementById("product-details-form").checkValidity()) {
+        var contactData = {
+            AskQuestionEmail: document.getElementById('AskQuestionEmail').value,
+            AskQuestionFullName: document.getElementById('AskQuestionFullName').value,
+            AskQuestionPhone: document.getElementById('AskQuestionPhone').value,
+            AskQuestionMessage: document.getElementById('AskQuestionMessage').value,
+            Id: document.getElementById('AskQuestionProductId').value,
+        };
+        addAntiForgeryToken(contactData);
+        var bodyFormData = new FormData();
+        bodyFormData.append('AskQuestionEmail', document.getElementById('AskQuestionEmail').value);
+        bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+        axios({
+            url: urladd,
+            data: bodyFormData,
+            method: 'post',
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }).then(function (response) {
+            console.log(response);
+            if (response.data.success) {
+                document.getElementById('contact-us-product').style.display = "none";
+                document.querySelector('.product-contact-error').style.display = "none";
+                document.querySelector('.product-contact-send').innerHTML = response.data.message;
+                document.querySelector('.product-contact-send').style.display = "block";
+            }
+            else {
+                document.querySelector('.product-contact-error').innerHTML = response.data.message;
+                document.querySelector('.product-contact-error').style.display = "block";
+            }
+        }).catch(function (error) {
+            alert(error);
+        });
+    }
+}
+
+function GetPrivacyPreference(href) {
+    axios({
+        url: href,
+        method: 'post',
+    }).then(function (response) {
+        displayPopupPrivacyPreference(response.data.html)
+    }).catch(function (error) {
+        alert(error);
+    });
+}
+function SavePrivacyPreference(href) {
+    var form = document.querySelector('#frmPrivacyPreference');
+    var data = new FormData(form);
+    axios({
+        url: href,
+        method: 'post',
+        data: data
+    }).then(function (response) {
+        console.log(response);
+        //$('#ModalPrivacyPreference').modal('hide');
+    }).catch(function (error) {
+        alert(error);
+    });
+}
+
+function newAddress(isNew) {
+    if (isNew) {
+        this.resetSelectedAddress();
+        document.getElementById('pickup-new-address-form').style.display = "block";
+    } else {
+        document.getElementById('pickup-new-address-form').style.display = "none";
+    }
+}
+
+function resetSelectedAddress() {
+    var selectElement = document.getElementById('pickup-address-select');
+    if (selectElement) {
+        selectElement.value = "";
+    }
 }
