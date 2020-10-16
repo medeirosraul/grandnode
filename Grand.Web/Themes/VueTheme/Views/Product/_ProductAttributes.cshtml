@@ -353,8 +353,8 @@
                         }
                         if (response.data.enabledattributemappingids) {
                             for (var i = 0; i < response.data.enabledattributemappingids.length; i++) {
-                                document.querySelector('#product_attribute_label_' + response.data.enabledattributemappingids[i]).style.display = "block";
-                                document.querySelector('#product_attribute_input_' + response.data.enabledattributemappingids[i]).style.display = "block";
+                                document.querySelector('#product_attribute_label_' + response.data.enabledattributemappingids[i]).style.display = "table-cell";
+                                document.querySelector('#product_attribute_input_' + response.data.enabledattributemappingids[i]).style.display = "table-cell";
                             }
                         }
                         if (response.data.disabledattributemappingids) {
