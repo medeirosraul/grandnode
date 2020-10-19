@@ -507,4 +507,7 @@ footer .list-group-item span:last-child {
     .product-box .quick-view-button {
         font-size: 14px;
     }
+    .b-sidebar > .b-sidebar-header {
+        font-size: 16px;
+    }
 }

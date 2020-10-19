@@ -46,6 +46,9 @@
 }
 
 @media (max-width: 991px) {
+    .shopping-cart {
+        border-bottom: 0;
+    }
     .shopping-cart thead {
         display: none;
     }
@@ -69,10 +72,15 @@
         flex-direction: column;
         text-align: center;
         border: 1px solid #ddd;
+        border-left: 2px solid #000;
+        border-right: 2px solid #000;
         border-top: 0;
     }
     .shopping-cart.table td:first-child {
-        border-top: 1px solid #ddd;
+        border-top: 2px solid #000;
+    }
+    .shopping-cart.table td:last-child {
+        border-bottom: 2px solid #000;
     }
 }
 @media (max-width: 767px) {

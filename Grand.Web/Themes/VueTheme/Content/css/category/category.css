@@ -6,3 +6,12 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+@media (max-width: 768px) {
+    .categoryGrid .card .card-body {
+        padding: 6px;
+    }
+    .categoryGrid .card .card-body h5 {
+        font-size: 18px;
+        margin: 0;
+    }
+}
