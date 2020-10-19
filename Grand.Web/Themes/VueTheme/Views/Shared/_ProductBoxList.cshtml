@@ -218,7 +218,8 @@
                             addToCartText = T("ShoppingCart.PreOrder").Text;
                         }
                         <b-button variant="info" class="justify-content-center w-100" onclick="AxiosCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
-                            <span class="add-cart-text">@(addToCartText)</span>
+                            <b-icon icon="cart2" class="mx-auto d-sm-none d-block"></b-icon>
+                            <span class="add-cart-text d-sm-block d-none">@(addToCartText)</span>
                             <span class="sr-only">AddToCart</span>
                         </b-button>
                     }
@@ -228,7 +229,8 @@
                         {
                             var addToCartText = T("ShoppingCart.Bids").Text;
                             <b-button variant="info" class="justify-content-center w-100" onclick="AxiosCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
-                                <span class="add-cart-text">@(addToCartText)</span>
+                                <b-icon icon="hammer" class="mx-auto d-sm-none d-block"></b-icon>
+                                <span class="add-cart-text d-sm-block d-none">@(addToCartText)</span>
                                 <span class="sr-only">AddToCart</span>
                             </b-button>
                         }

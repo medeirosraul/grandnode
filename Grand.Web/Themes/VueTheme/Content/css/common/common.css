@@ -470,6 +470,11 @@ footer .list-group-item span:last-child {
     }
 }
 @media (min-width: 1200px) {
+    .main-container.container-fluid .categoryGrid .col-md-4 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
     .main-container.container-fluid .product-grid .product-container.col-xl-3 {
         -ms-flex: 0 0 16.666667%;
         flex: 0 0 16.666667%;
@@ -489,9 +494,17 @@ footer .list-group-item span:last-child {
         text-align: right;
     }
 }
+@media (max-width: 768px) {
+    .product-box.list .picture-container {
+        flex: 2;
+    }
+}
 @media (max-width: 575px) {
     .product-box .rating .b-rating-value,
     .product-box .rating output + span {
         display: none;
+    }
+    .product-box .quick-view-button {
+        font-size: 14px;
     }
 }
