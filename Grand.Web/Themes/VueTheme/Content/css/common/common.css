@@ -23,6 +23,9 @@ a:hover {
 .custom-control {
     cursor: pointer;
 }
+.disabled {
+    pointer-events: none;
+}
 [v-cloak] .page-loader-container::before {
     content: '';
     position: fixed;

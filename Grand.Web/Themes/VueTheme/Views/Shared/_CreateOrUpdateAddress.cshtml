@@ -9,7 +9,7 @@
                 var selectedItem = this.value;
                 var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
                 var statesProgress = document.getElementById("states-loading-progress");
-                //statesProgress.show();
+                statesProgress.style.display = "block";
                 axios({
                     method: 'get',
                     url: "@(Url.RouteUrl("GetStatesByCountryId"))",
@@ -21,9 +21,11 @@
                         elChild.setAttribute('value', id.id);
                         elChild.innerHTML = id.name;
                         ddlStates.appendChild(elChild);
-                    });
-                    //statesProgress.hide();
-                })
+                    })
+                    statesProgress.style.display = "none";
+                }).catch(function (error) {
+                    alert(error);
+                });
             }
             @*$("#@Html.IdFor(model => model.CountryId)").change(function () {
                 var selectedItem = $(this).val();
