@@ -59,7 +59,27 @@
 {
     @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_manufacturer", additionalData = Model.Id })
 }
-<b-row class="custom-container">
+<b-row id="TwoColumns" class="custom-container">
+    <template v-if="isMobile()">
+        <div>
+            <b-col cols="12">
+                <b-button variant="outline-info" v-b-toggle.sidebar-mobile><b-icon icon="layout-sidebar-inset"></b-icon> @T("catalog.selectors.fiters")</b-button>
+            </b-col>
+            <b-sidebar id="sidebar-mobile"
+                       backdrop
+                       left
+                       shadow>
+                <script asp-location="Footer">
+                    var leftSide = document.querySelector('.generalLeftSide');
+                    if (document.getElementById('sidebar-mobile')) {
+                        document.querySelector("#sidebar-mobile .b-sidebar-body").appendChild(leftSide);
+                    } else {
+                        document.getElementById("TwoColumns").appendChild(leftSide);
+                    }
+                </script>
+            </b-sidebar>
+        </div>
+    </template>
     <b-col lg="3" md="12" class="generalLeftSide">
         @if (IsSectionDefined("left"))
         {
