@@ -6,9 +6,9 @@
     pagebuilder.AddTitleParts(T("PageTitle.ShipmentDetails").Text);
 }
 <div class="page shipment-details-page">
-    <h2 class="generalTitle text-center">@string.Format(T("Order.Shipments.Information").Text, Model.ShipmentNumber)</h2>
-    <div class="shipment-details-area card">
-        <div class="card-body row">
+    <h1 class="generalTitle h2 text-center">@string.Format(T("Order.Shipments.Information").Text, Model.ShipmentNumber)</h1>
+    <b-card class="shipment-details-area" no-header no-footer>
+        <b-row class="row">
             <ul class="shipping-details col-md-6 col-12">
                 <li class="title">
                     <h5 class="generalTitle">
@@ -125,8 +125,8 @@
                     }
                 }
             </ul>
-        </div>
-    </div>
+        </b-row>
+    </b-card>
     @if (Model.Items.Any())
     {
         <div class="section products">
