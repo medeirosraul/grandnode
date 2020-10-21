@@ -1,6 +1,6 @@
 ﻿@model EstimateShippingResultModel
 @if (Model.ShippingOptions.Any())
-            {
+{
     <ul class="shipping-results list-group">
         @foreach (var shippingOption in Model.ShippingOptions)
         {
@@ -17,7 +17,7 @@
 }
 else if (Model.Warnings.Any())
 {
-    <div class="message-error">
+    <div class="message-error alert alert-danger my-3">
         <ul>
             @foreach (var error in Model.Warnings)
             {
