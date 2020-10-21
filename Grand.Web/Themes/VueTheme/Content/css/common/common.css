@@ -26,6 +26,13 @@ a:hover {
 .disabled {
     pointer-events: none;
 }
+.eu-cookie-bar-notification {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+}
 [v-cloak] .page-loader-container::before {
     content: '';
     position: fixed;
