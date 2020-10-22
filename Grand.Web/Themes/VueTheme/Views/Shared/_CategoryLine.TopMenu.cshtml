@@ -25,17 +25,13 @@
     else
     {
         <text>
-            <b-nav-item-dropdown id="@Model.Category.Id-menu" text="@Model.Category.Name" lazy>
+            <b-nav-item-dropdown @if (Model.Level == 0) { <text>data-level='first'</text> } else { <text>data-level='next'</text> } id="@Model.Category.Id-menu" text="@Model.Category.Name">
                 <template slot="button-content">
                     @if (!string.IsNullOrEmpty(Model.Category.Icon))
                     {
                         <span class="category-icon @Model.Category.Icon"></span>
                     }
                     <span class="title">@Model.Category.Name</span>
-                    @if (Model.Category.SubCategories.Count() > 0)
-                    {
-                        <span class="mdi mdi-chevron-down arrow-down"></span>
-                    }
                     @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
                     {
                         <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
@@ -58,20 +54,9 @@
             
                 <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
                         <li class="nav-item">
-                            <a class="nav-link h6 mb-0" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                                @Model.Category.Name
+                            <a class="nav-link text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                                <strong>@Model.Category.Name</strong>
                             </a> 
-                        </li>
-                        <li class="nav-item cat-back d-lg-none d-inline-flex">
-                            <a class="nav-link justify-content-start align-items-center">
-                                <span class="mdi mdi-arrow-left"></span>
-                                <span>@T("Mobile.Categories.Back")</span>
-                            </a>
-                        </li>
-                        <li class="nav-item d-lg-none d-inline-flex sub-cat-name-container">
-                            <a class="nav-link sub-cat-name" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                                <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
-                            </a>
                         </li>
                         @foreach (var subCategory in subCategories)
                         {
@@ -90,29 +75,23 @@
     if (Model.Level >= 1 && subCategories.Any())
     {
         levelClass = "next-level";
-        <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
-            <li class="nav-item cat-back d-lg-none d-inline-flex">
-                <a class="nav-link justify-content-start align-items-center">
-                    <span class="mdi mdi-arrow-left"></span>
-                    <span>@T("Mobile.Categories.Back")</span>
-                </a>
-            </li>
-            <li class="nav-item d-lg-none d-inline-flex sub-cat-name-container">
-                <a class="nav-link sub-cat-name" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                    <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
-                </a>
-            </li>
-            @foreach (var subCategory in subCategories)
-            {
-                var categoryLineModel = new TopMenuModel.CategoryLineModel
+            <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
+                <li class="nav-item">
+                    <a class="nav-link text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                        <strong>@Model.Category.Name</strong>
+                    </a>
+                </li>
+                @foreach (var subCategory in subCategories)
                 {
-                    Category = subCategory,
-                    Level = Model.Level + 1,
-                    ResponsiveMobileMenu = Model.ResponsiveMobileMenu
-                };
-                <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
-            }
-        </b-dropdown-group>
+                    var categoryLineModel = new TopMenuModel.CategoryLineModel
+                    {
+                        Category = subCategory,
+                        Level = Model.Level + 1,
+                        ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                    };
+                    <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+                }
+            </b-dropdown-group>
     }
 
     @if (Model.Category.SubCategories.Count() == 0)
