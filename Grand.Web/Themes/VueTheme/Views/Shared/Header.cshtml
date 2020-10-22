@@ -46,29 +46,30 @@
         <b-container :fluid="fluid">
             <b-navbar-toggle target="main_nav" class="d-lg-none d-block mr-lg-0 mr-3"></b-navbar-toggle>
             @await Component.InvokeAsync("Logo")
-                <b-navbar-nav>
-                    <b-nav-item class="d-lg-block d-none">
-                        <b-icon :variant="[fluid ? 'info' : 'dark']" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
-                    </b-nav-item>
-                    <b-nav-item>
-                        <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
-                    </b-nav-item>
-                    <template>
-                        <div>
-                            <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
-                                <div class="mb-2">
-                                    @await Component.InvokeAsync("TaxTypeSelector")
-                                    @await Component.InvokeAsync("CurrencySelector")
-                                    @await Component.InvokeAsync("LanguageSelector")
-                                    @await Component.InvokeAsync("StoreSelector")
-                                    @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
-                                </div>
-                                @await Component.InvokeAsync("HeaderLinks")
-                            </b-sidebar>
-                        </div>
-                    </template>
-                    @await Component.InvokeAsync("ShoppingCartLinks")
-                </b-navbar-nav>
+            @await Component.InvokeAsync("SearchBox")
+            <b-navbar-nav>
+                <b-nav-item class="d-lg-block d-none">
+                    <b-icon :variant="[fluid ? 'info' : 'dark']" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
+                </b-nav-item>
+                <b-nav-item>
+                    <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
+                </b-nav-item>
+                <template>
+                    <div>
+                        <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
+                            <div class="mb-2">
+                                @await Component.InvokeAsync("TaxTypeSelector")
+                                @await Component.InvokeAsync("CurrencySelector")
+                                @await Component.InvokeAsync("LanguageSelector")
+                                @await Component.InvokeAsync("StoreSelector")
+                                @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
+                            </div>
+                            @await Component.InvokeAsync("HeaderLinks")
+                        </b-sidebar>
+                    </div>
+                </template>
+                @await Component.InvokeAsync("ShoppingCartLinks")
+            </b-navbar-nav>
         </b-container>
     </b-navbar>
     <b-navbar toggleable="lg" type="light" variant="light" class="main-nav">
