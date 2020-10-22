@@ -47,6 +47,7 @@
     <None Remove="Themes\VueTheme\Content\script\public.reservation.js" />
     <None Remove="Themes\VueTheme\Content\script\vue-awesome-countdown.umd.min.js" />
     <None Remove="Themes\VueTheme\Content\script\vue-gallery-slideshow.min.js" />
+    <None Remove="Themes\VueTheme\Content\script\VueBootstrapTypeahead.umd.min.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
