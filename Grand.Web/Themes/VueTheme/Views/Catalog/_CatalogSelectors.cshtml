@@ -8,7 +8,7 @@
         {
             <div class="sort-container">
                 <label class="col-form-label">@T("Catalog.OrderBy")</label>
-                @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { @class = "form-control custom-select", onchange = "setLocation(this.value);" })
+                @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { @class = "form-control custom-select", onchange = "location = (this.value);" })
             </div>
         }
         <div class="item-statistics d-sm-flex d-none align-items-center mx-auto order-2" id="items_statistics">

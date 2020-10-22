@@ -189,9 +189,7 @@
     }
 </div>
 <script asp-location="Footer">
-    $(document).ready(function () {
-        if ($("#pickup-address-select option:selected").val() != "") {
+    if (document.getElementById("pickup-address-select option:selected").value != "") {
             newAddress(false);
-        }
-    });
+    }
 </script>
