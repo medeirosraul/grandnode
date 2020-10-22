@@ -23,15 +23,13 @@
                     @if (Model.RewardPointsEnoughToPayForOrder)
                     {
                         <script asp-location="Footer">
-                            $(document).ready(function () {
-                                $("#@Html.IdFor(model => model.UseRewardPoints)").on('change', toggleUseRewardPoints);
-                                toggleUseRewardPoints();
-                            });
+                            document.getElementById("@Html.IdFor(model => model.UseRewardPoints)").addEventListener('change', toggleUseRewardPoints);
+                            toggleUseRewardPoints();
                             function toggleUseRewardPoints() {
-                                if ($('#@Html.IdFor(model => model.UseRewardPoints)').is(':checked')) {
-                                    $('#payment-method-block').hide();
+                                if (document.getElementById('@Html.IdFor(model => model.UseRewardPoints)').checked) {
+                                    document.getElementById('payment-method-block').style.display = "none";
                                 } else {
-                                    $('#payment-method-block').show();
+                                    document.getElementById('payment-method-block').style.display = "block";
                                 }
                             }
                         </script>

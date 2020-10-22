@@ -27,18 +27,16 @@
                     @T("Checkout.PickupPoints.Description")
                 </div>
                 <script asp-location="Footer">
-                    $(document).ready(function () {
-                        $("#@Html.IdFor(model => model.PickUpInStore)").on('change', togglePickUpInStore);
+                        document.getElementById("@Html.IdFor(model => model.PickUpInStore)").addEventListener('change', togglePickUpInStore);
                         togglePickUpInStore();
-                    });
 
                     function togglePickUpInStore() {
-                        if ($('#@Html.IdFor(model => model.PickUpInStore)').is(':checked')) {
-                            $('#pickup-points-form').show();
-                            $('#shipping-addresses-form').hide();
+                        if (document.getElementById('@Html.IdFor(model => model.PickUpInStore)').checked) {
+                            document.getElementById('pickup-points-form').style.display = "block";
+                            document.getElementById('shipping-addresses-form').style.display = "none";
                         } else {
-                            $('#pickup-points-form').hide();
-                            $('#shipping-addresses-form').show();
+                            document.getElementById('pickup-points-form').style.display = "none";
+                            document.getElementById('shipping-addresses-form').style.display = "block";
                         }
                     }
                 </script>
@@ -202,7 +200,7 @@
                                                 </ul>
                                             </div>
                                             <div class="card-footer select-button">
-                                                <input type="button" value="@T("Checkout.ShipToThisAddress")" class="btn btn-secondary select-shipping-address-button" onclick="setLocation('@Url.RouteUrl("CheckoutSelectShippingAddress", new { addressid = item.Id })') " />
+                                                <input type="button" value="@T("Checkout.ShipToThisAddress")" class="btn btn-secondary select-shipping-address-button" onclick="location = ('@Url.RouteUrl("CheckoutSelectShippingAddress", new { addressid = item.Id })') " />
                                             </div>
                                         </div>
                                     </div>

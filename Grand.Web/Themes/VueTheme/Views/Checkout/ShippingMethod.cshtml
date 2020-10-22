@@ -33,9 +33,7 @@
                 if (selectedShippingMethod != null)
                 {
                     <script asp-location="Footer">
-                            $(document).ready(function () {
                                 loadPartialView('@(selectedShippingMethod.Name)___@(selectedShippingMethod.ShippingRateComputationMethodSystemName)');
-                            });
                     </script>
                 }
 

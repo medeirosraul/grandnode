@@ -10,33 +10,6 @@
     @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Confirm })
     <div class="confirm-order">
         <form asp-route="CheckoutConfirm" method="post" id="confirm-order-form">
-            @*<script asp-location="Footer">
-                $(document).ready(function () {
-                    $('.confirm-order-next-step-button').click(function () {
-                        //terms of service
-                        var termOfServiceOk = true;
-                        if ($('#termsofservice').length > 0) {
-                            //terms of service element exists
-                            if (!$('#termsofservice').is(':checked')) {
-                                $('#terms-of-service-warning-box').modal('show')
-                                termOfServiceOk = false;
-                                $("body.modal-open").removeAttr("style");
-                                $(".navUp.modal-open").removeAttr("style");
-                            } else {
-                                termOfServiceOk = true;
-                            }
-                        }
-                        if (termOfServiceOk) {
-                            $('#confirm-order-form').submit();
-                            $('.confirm-order-next-step-button').attr('disabled', 'disabled');
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-                });
-            </script>*@
-
             <h2 class="text-center generalTitle">@T("Checkout.ConfirmYourOrder")</h2>
             <div class="page-body checkout-data">
                 @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_confirm_top" })
@@ -101,10 +74,10 @@
                     </div>
                 </div>
                 <script asp-location="Footer">
-                    $('#confirm-order-form').on('submit', function () {
-                        var button = $(this).find('input[type="submit"][name="nextstep"]');
+                    document.getElementById('confirm-order-form').addEventListener('submit', function () {
+                        var button = this.querySelectorAll('input[type="submit"][name="nextstep"]');
                         setTimeout(function () {
-                            button.attr('disabled', 'disabled');
+                            button.setAttribute('disabled', 'disabled');
                         }, 0);
                     });
                 </script>
