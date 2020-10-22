@@ -11,12 +11,12 @@
 <script asp-location="Footer">
     function loadPartialView(arg_value) {
         var url = '@(storeLocation)checkout/GetShippingFormPartialView?shippingOption=' + arg_value;
-        $.ajax({
+        axios({
             url: url,
-            success: function (data) {
-                $('#shipping_form').html(data);
-            }
-        });
+            method: 'post',
+        }).then(function (response) {
+            document.getElementById('shipping_form').innerHTML = response;
+        })
     }
 </script>
 

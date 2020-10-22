@@ -56,23 +56,12 @@
         if (subCategories.Any())
         {
             
-                @if (!string.IsNullOrEmpty(Model.Category.ImageUrl))
-                {
-                    string str = Model.Category.ImageUrl;
-
-                    if (!str.Contains("default-image"))
-                    {
-                        <b-dropdown-group id="@Model.Category.SeName-image">
-                            <b-dropdown-item class="menu-image" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                                    <picture>
-                                        <source media="(max-width: 991px)" sizes="1px" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 1w" />
-                                        <b-img src="@Model.Category.ImageUrl" alt="" />
-                                    </picture>
-                            </b-dropdown-item>
-                        </b-dropdown-group>
-                    }
-                }
                 <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
+                        <li class="nav-item">
+                            <a class="nav-link h6 mb-0" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                                @Model.Category.Name
+                            </a> 
+                        </li>
                         <li class="nav-item cat-back d-lg-none d-inline-flex">
                             <a class="nav-link justify-content-start align-items-center">
                                 <span class="mdi mdi-arrow-left"></span>

@@ -21,8 +21,8 @@
                 self.template = Vue.compile(flyoutcart).render;
             }
         });
-    }).catch(function (xhr, ajaxOptions, thrownError) {
-        console.log('Failed to retrieve Flyout Shopping Cart.');
+    }).catch(function (error) {
+        console.log(error);
     });
     return false;
 }

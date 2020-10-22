@@ -110,10 +110,10 @@
                             @if (Model.IsEditable)
                             {
                                 //little hack here with empty "value" element
-                                <button type="button" name="removegiftcard"
+                                <button type="button" name="removegiftcard" id="remove-gift-card-button" onclick="removeGiftCard(this)"
                                         data-href="@Url.RouteUrl("RemoveGiftCardCode", new { giftCardId = gc.Id})"
                                         title="@T("Common.Remove")" class="btn btn-sm btn-secondary remove-gift-card-button">
-                                    <span class="mdi mdi-close" aria-hidden="true"></span>
+                                    @T("Common.Remove")
                                 </button>
                             }
                         </td>
@@ -161,25 +161,3 @@
         </tbody>
     </table>
 </div>
-@if (Model.GiftCards.Any() && Model.IsEditable)
-{
-    <script asp-location="Footer">
-        $(document).ready(function () {
-            $(".remove-gift-card-button").click(function () {
-                var href = $(this).closest('[data-href]').data('href');
-                $.ajax({
-                    cache: false,
-                    type: "POST",
-                    data: addAntiForgeryToken(),
-                    url: href,
-                    success: function (data) {
-                        $('#ordersummarypagecart').replaceWith(data.cart);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert('Failed to retrieve Shopping Cart Page.');
-                    }
-                });
-            });
-        });
-    </script>
-}

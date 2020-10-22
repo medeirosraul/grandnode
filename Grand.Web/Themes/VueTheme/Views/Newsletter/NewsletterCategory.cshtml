@@ -38,33 +38,12 @@
             }).then(function (response) {
                 if (response.data.Success) {
                     alert(response);
-                    //var magnificPopup = $.magnificPopup.instance;
-                    //magnificPopup.close();
                 } else {
                     alert(response.data.Message);
                 }
             }).catch(function (error) {
                 alert(error);
             })
-            @*$.ajax({
-                cache: false,
-                type: "POST",
-                url: "@(Url.RouteUrl("SubscribeNewsletterCategory"))",
-                data: $('#newsletter-category-method-form').serialize(),
-                success: function(data) {
-                    if (data.Success) {
-                        var magnificPopup = $.magnificPopup.instance;
-                        magnificPopup.close();
-                    } else {
-                        alert(data.Message);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert('Failed to assignt to categories.');
-                    var magnificPopup = $.magnificPopup.instance;
-                    magnificPopup.close();
-                }
-            });*@
         }
             document.getElementById('newsletter-category-button').addEventListener('click', function () {
                 newsletter_subscribe_category();

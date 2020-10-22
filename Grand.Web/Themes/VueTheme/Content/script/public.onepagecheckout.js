@@ -12,10 +12,10 @@ var Checkout = {
         //Accordion.disallowAccessToNextSections = true;
     },
 
-    ajaxFailure: function () {
-        location.href = Checkout.failureUrl;
+    axiosFailure: function () {
+        location = Checkout.failureUrl;
     },
-    
+
     _disableEnableAll: function (element, isDisabled) {
         var descendants = element.querySelectorAll('*');
         descendants.forEach(function(d) {

@@ -20,14 +20,3 @@
     </div>
     @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox" })
 </form>
-
-<div>
-    <vue-bootstrap-typeahead class="w-100"
-                             v-model="query"
-                             :data="products"
-                             placeholder="Enter a product"
-                             @@hit="searchProducts"/>
-    <p class="lead">
-        Selected Product: <strong>{{query}}</strong>
-    </p>
-</div>

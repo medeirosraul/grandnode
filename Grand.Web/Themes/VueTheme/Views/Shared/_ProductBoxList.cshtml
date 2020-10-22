@@ -1,6 +1,6 @@
 ﻿@model ProductOverviewModel
 @{
-    //prepare "Add to cart" AJAX link
+    //prepare "Add to cart" Axios link
     string addtocartlink = "";
     string addtowishlistlink = "";
     string quickviewurl = Url.RouteUrl("QuickView-Product", new { productId = Model.Id });
@@ -201,7 +201,7 @@
                 <b-button-group>
                     @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
                     {
-                        <b-button v-b-tooltip.hover.bottom title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AxiosCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;" @*onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;"*@>
+                        <b-button v-b-tooltip.hover.bottom title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AxiosCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;">
                             <b-icon icon="heart"></b-icon>
                             <span class="sr-only">AddToWishlist</span>
                         </b-button>
