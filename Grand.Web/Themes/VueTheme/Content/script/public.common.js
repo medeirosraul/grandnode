@@ -86,6 +86,9 @@ function displayPopupQuickView(html) {
                 var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
                 Image.setAttribute('src', Imagesrc);
             },
+            showModalBackInStock() {
+                this.$refs['back-in-stock'].show()
+            },
         },
         mounted() {
             var self = this;
