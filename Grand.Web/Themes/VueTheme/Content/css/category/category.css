@@ -6,6 +6,13 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+@media (min-width: 1400px) {
+    .categoryGrid .col-xl-4 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
 @media (max-width: 768px) {
     .categoryGrid .card .card-body {
         padding: 6px;
