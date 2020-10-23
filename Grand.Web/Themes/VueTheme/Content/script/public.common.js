@@ -303,6 +303,10 @@ function sendcontactusform(urladd) {
         addAntiForgeryToken(contactData);
         var bodyFormData = new FormData();
         bodyFormData.append('AskQuestionEmail', document.getElementById('AskQuestionEmail').value);
+        bodyFormData.append('AskQuestionFullName', document.getElementById('AskQuestionFullName').value);
+        bodyFormData.append('AskQuestionPhone', document.getElementById('AskQuestionPhone').value);
+        bodyFormData.append('AskQuestionMessage', document.getElementById('AskQuestionMessage').value);
+        bodyFormData.append('AskQuestionProductId', document.getElementById('AskQuestionProductId').value);
         bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
         axios({
             url: urladd,

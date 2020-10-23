@@ -22,26 +22,25 @@
                 <b-col class="col-lg-6 col-md-6 col-12">
                     <b-card>
                         <template v-slot:header>
-                            <h6 class="card-header">
-                                <strong>@string.Format(T("Account.CustomerReturnRequests.Title").Text, item.ReturnNumber, item.ReturnRequestStatus)</strong>
-                            </h6>
+                            <h5 class="mb-0">
+                                @string.Format(T("Account.CustomerReturnRequests.Title").Text, item.ReturnNumber, item.ReturnRequestStatus)
+                            </h5>
                         </template>
-                            <ul class="details px-0 date">
-                                <li class="date">
-                                    <label>@T("Account.CustomerReturnRequests.Date")</label>
-                                    <span>@item.CreatedOn.ToString()</span>
-                                </li>
-                            </ul>
-                            <ul class="details px-0">
-                                <li>
-                                    <span>@string.Format(@T("Account.CustomerReturnRequests.Totals").Text, item.ProductsCount, item.ReturnTotal)</span>
-                                </li>
-                            </ul>
-                        <div class="card-footer">
-                            <b-button class="btn btn-sm btn-info" onclick="location = ('@Url.RouteUrl("ReturnRequestDetails", new { returnRequestId = item.Id })')">
+                        <div class="d-inline-flex align-items-center flex-wrap mb-3">
+                            <b-icon icon="calendar2-check" variant="info" class="mx-2"></b-icon>
+                            <small class="date text-muted">
+                                <label class="mb-0">@T("Account.CustomerReturnRequests.Date")</label>
+                                <span>@item.CreatedOn.ToString()</span>
+                            </small>
+                        </div>
+                        <div class="alert alert-info mb-0">
+                            @string.Format(@T("Account.CustomerReturnRequests.Totals").Text, item.ProductsCount, item.ReturnTotal)
+                        </div>
+                        <template v-slot:footer>
+                            <b-button variant="info" size="sm" onclick="location = ('@Url.RouteUrl("ReturnRequestDetails", new { returnRequestId = item.Id })')">
                                 @T("Account.CustomerReturnRequests.Details")
                             </b-button>
-                        </div>
+                        </template>
                     </b-card>
                 </b-col>
             }
@@ -49,7 +48,7 @@
     }
     else
     {
-        <div class="no-data alert alert-info">
+        <div class="no-data alert alert-info my-3">
             @T("Account.CustomerReturnRequests.NoReturnRequests")
         </div>
     }
