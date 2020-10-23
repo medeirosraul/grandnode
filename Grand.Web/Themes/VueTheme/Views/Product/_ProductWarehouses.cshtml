@@ -34,16 +34,18 @@
                     method: 'post',
                 }).then(function (response) {
                     if (response.data.stockAvailability) {
-                        document.getElementById('stock-availability-value-@Model.Id').innerText = response.data.stockAvailability
+                        if (document.getElementById('stock-availability-value-@Model.Id')) {
+                            document.getElementById('stock-availability-value-@Model.Id').innerText = response.data.stockAvailability
+                        }
                     }
                 })
-                
+
             }
                 document.getElementById('WarehouseId').addEventListener('change', function() {
                     warehouse_change_handler();
                 });
                 warehouse_change_handler();
-         
+
 </script>
     }
 }
