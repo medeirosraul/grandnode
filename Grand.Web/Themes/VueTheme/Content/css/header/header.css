@@ -95,6 +95,9 @@
 
 /* main nav */
 
+.main-nav .navbar-nav {
+    flex-wrap: wrap;
+} 
 .main-nav.navbar-light .navbar-nav .nav-link .title {
     color: #333;
     font-weight: 500;
