@@ -5,9 +5,17 @@
 
         document.getElementById('select-all-inbox').addEventListener('click', function () {
             if (document.querySelector('#pm-inbox-table .rowcheckbox').checked) {
-                document.querySelector('#pm-inbox-table .rowcheckbox').checked = false
+                var items = document.getElementsByClassName('rowcheckbox');
+                for (var i = 0, len = items.length; i < len; i++) {
+                    var item = items[i];
+                    item.checked = false;
+                }
             } else {
-                document.querySelector('#pm-inbox-table .rowcheckbox').checked = true
+                var items = document.getElementsByClassName('rowcheckbox');
+                for (var i = 0, len = items.length; i < len; i++) {
+                    var item = items[i];
+                    item.checked = true;
+                }
             }
         });
 

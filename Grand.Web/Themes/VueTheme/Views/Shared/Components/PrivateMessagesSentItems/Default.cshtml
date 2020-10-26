@@ -4,9 +4,17 @@
     <script asp-location="Footer">
         document.getElementById('selectall-sent').addEventListener('click', function () {
             if (document.querySelector('#pm-sent-table .rowcheckbox').checked) {
-                document.querySelector('#pm-sent-table .rowcheckbox').checked = false
+                var items = document.getElementsByClassName('rowcheckbox');
+                for (var i = 0, len = items.length; i < len; i++) {
+                    var item = items[i];
+                    item.checked = false;
+                }
             } else {
-                document.querySelector('#pm-sent-table .rowcheckbox').checked = true
+                var items = document.getElementsByClassName('rowcheckbox');
+                for (var i = 0, len = items.length; i < len; i++) {
+                    var item = items[i];
+                    item.checked = true;
+                }
             }
         });
 
