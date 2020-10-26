@@ -10,7 +10,7 @@
     <h1 class="generalTitle h2">@T("Products.RecentlyViewedProducts")</h1>
     @if (Model.Any())
     {
-        <b-form-row>
+        <b-form-row class="product-grid">
             @foreach (var product in Model)
             {
                 <b-col lg="4" sm="6" cols="6" class="product-container mb-2">
