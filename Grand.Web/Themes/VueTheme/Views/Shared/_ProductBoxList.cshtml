@@ -53,8 +53,10 @@
                 </b-button>
             </div>
             <b-card-body>
-                <h5 class="card-title">
-                    @Model.Name
+                <h5 class="card-title mb-0">
+                    <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">
+                        @Model.Name
+                    </a>
                 </h5>
                 @if (Model.ShowSku && !string.IsNullOrEmpty(Model.Sku))
                 {
