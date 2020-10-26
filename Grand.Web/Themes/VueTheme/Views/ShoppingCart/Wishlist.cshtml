@@ -76,190 +76,6 @@
                         </div>
                     </template>
                 </div>
-                @*<div class="shopping-cart-container">
-                        <table class="shopping-cart">
-                            <colgroup>
-                                <col span="1">
-                                <col span="1">
-                                <col span="1">
-                                <col>
-                                <col span="1">
-                                <col span="1">
-                                <col span="1">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    @if (Model.IsEditable || Model.DisplayAddToCart)
-                                    {
-                                        @if (Model.IsEditable)
-                                        {
-                                            <th class="remove-from-cart text-center">
-                                                @T("Remove")
-                                            </th>
-                                        }
-                                        @if (Model.DisplayAddToCart)
-                                        {
-                                            <th class="remove-from-cart text-center">
-                                                Add To Cart
-                                            </th>
-                                        }
-
-                                    }
-                                    @if (Model.ShowProductImages)
-                                    {
-                                        <th class="product-picture text-center">
-                                            @T("ShoppingCart.Image")
-                                        </th>
-                                    }
-                                    <th class="product text-center">
-                                        @T("ShoppingCart.Product(s)")
-                                    </th>
-                                    <th class="unit-price text-center">
-                                        @T("ShoppingCart.UnitPrice")
-                                    </th>
-                                    <th class="quantity text-center">
-                                        @T("ShoppingCart.Quantity")
-                                    </th>
-                                    <th class="subtotal text-center">
-                                        @T("ShoppingCart.ItemTotal")
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Items)
-                                {
-                                    <tr class="item-container">
-                                        @if (Model.IsEditable || Model.DisplayAddToCart)
-                                        {
-                                            @if (Model.IsEditable)
-                                            {
-                                                <td class="remove-from-cart">
-                                                    <input type="checkbox" id="@T("Remove")-@(item.Id)" name="removefromcart" class="d-none checkbox-u" value="@(item.Id)">
-                                                    <label for="@T("Remove")-@(item.Id)"></label>
-                                                    <p class="remove">@T("Remove")</p>
-                                                </td>
-                                            }
-                                            @if (Model.DisplayAddToCart)
-                                            {
-                                                <td class="remove-from-cart add-to-cart">
-                                                    <input type="checkbox" id="account.shoppingcart-@(item.Id)" name="addtocart" class="d-none checkbox-u" value="@(item.Id)">
-                                                    <label for="account.shoppingcart-@(item.Id)"></label>
-
-                                                    <p class="remove">@T("addToCart")</p>
-                                                </td>
-                                            }
-                                        }
-
-                                        @if (Model.ShowProductImages)
-                                        {
-                                            <td class="product-picture text-center">
-                                                <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /></a>
-                                            </td>
-                                        }
-                                        <td class="product">
-                                            <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" class="product-name">@item.ProductName</a>
-                                            @if (Model.ShowSku && !string.IsNullOrEmpty(item.Sku))
-                                            {
-                                                <div class="sku">
-                                                    <span class="sku-number mt-1">@item.Sku</span>
-                                                </div>
-                                            }
-                                            @if (!string.IsNullOrEmpty(item.AttributeInfo))
-                                            {
-                                                <div class="attributes small">
-                                                    @Html.Raw(item.AttributeInfo)
-                                                </div>
-                                            }
-                                            @if (!string.IsNullOrEmpty(item.RecurringInfo))
-                                            {
-                                                <div class="recurring-info">
-                                                    @Html.Raw(item.RecurringInfo)
-                                                </div>
-                                            }
-                                            @if (!string.IsNullOrEmpty(item.RentalInfo))
-                                            {
-                                                <div class="rental-info">
-                                                    @Html.Raw(item.RentalInfo)
-                                                </div>
-                                            }
-                                            @if (Model.IsEditable && item.AllowItemEditing)
-                                            {
-                                                var editCartItemUrl = Url.RouteUrl("Product", new { SeName = item.ProductSeName }, Context.Request.Scheme);
-                                                editCartItemUrl = webHelper.ModifyQueryString(editCartItemUrl, "updatecartitemid", item.Id);
-                                                <div class="edit-item mb-1 mt-1 text-center text-xl-left">
-                                                    <a class="btn btn-sm btn-secondary" href="@editCartItemUrl">@T("Common.Edit")</a>
-                                                </div>
-                                            }
-                                            @if (item.Warnings.Count > 0)
-                                            {
-                                                <div class="message-error">
-                                                    <ul>
-                                                        @foreach (var warning in item.Warnings)
-                                                        {
-                                                            <li>@warning</li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            }
-                                        </td>
-                                        <td class="unit-price">
-                                            <span class="unit-price-text">@T("ShoppingCart.UnitPrice"):</span>
-                                            <span class="product-unit-price price">@item.UnitPrice</span>
-                                        </td>
-                                        @if (Model.IsEditable)
-                                        {
-                                            if (item.AllowedQuantities.Count > 0)
-                                            {
-                                                <td class="quantity">
-                                                    <select id="itemqty@(item.Id)" name="itemqty@(item.Id)" class="custom-select form-control qty-dropdown">
-                                                        @foreach (var qty in item.AllowedQuantities)
-                                                        {
-                                                            <option id="itemqty@(item.Id)" selected="@qty.Selected" value="@qty.Value">@qty.Value</option>
-                                                        }
-                                                    </select>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td class="quantity">
-                                                    <div class="d-inline-flex">
-                                                        <div class="minus" onclick="$(this).parent().find('.qty-input').val(function (i, oldval) {if(oldval>1){ return --oldval; } else { return oldval}})"></div>
-                                                        <input id="itemquantity@(item.Id)" name="itemquantity@(item.Id)" type="text" value="@(item.Quantity)" class="qty-input form-control text-center" />
-                                                        <div class="plus" onclick="$(this).parent().find('.qty-input').val(function (i, oldval) {return ++oldval;})"></div>
-                                                    </div>
-                                                </td>
-                                            }
-
-                                        }
-                                        else
-                                        {
-                                            <td class="quantity">
-                                                <input id="itemquantity@(item.Id)" name="itemquantity@(item.Id)" type="text" value="@(item.Quantity)" class="qty-input-ro form-control text-center" readonly />
-                                            </td>
-                                        }
-                                        <td class="subtotal">
-                                            @if (!String.IsNullOrEmpty(item.Discount))
-                                            {
-                                                <span class="subtotal-text">@T("ShoppingCart.ItemTotal"):</span>
-                                                <div class="d-flex flex-column">
-                                                    <p class="mb-0 prod-total">@item.SubTotal</p>
-                                                    <div class="discount text-success text-center">
-                                                        <span>@T("ShoppingCart.ItemYouSave"): </span>
-                                                        <span>@item.Discount</span>
-                                                    </div>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <span class="subtotal-text">@T("ShoppingCart.ItemTotal"):</span>
-                                                <p class="mb-0 prod-total">@item.SubTotal</p>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>*@
                 @if (Model.Items.Any() && Model.DisplayTaxShippingInfo)
                 {
                     var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
@@ -329,13 +145,13 @@
                                 fields: [
                                     @if (Model.ShowProductImages){
                                         <text>
-                                            { key: 'picture', label: '@T("ShoppingCart.Image")' },
+                                            { key: 'picture', label: '@T("ShoppingCart.Image")',class: 'text-center' },
                                         </text>
                                     }
-                                    { key: 'product', label: '@T("ShoppingCart.Product(s)")' },
-                                    { key: 'unit', label: '@T("ShoppingCart.UnitPrice")', sortable: true },
-                                    { key: 'qty', label: '@T("ShoppingCart.Quantity")', sortable: true  },
-                                    { key: 'total', label: '@T("ShoppingCart.ItemTotal")', sortable: true  },
+                                    { key: 'product', label: '@T("ShoppingCart.Product(s)")', class: 'text-center' },
+                                    { key: 'unit', label: '@T("ShoppingCart.UnitPrice")', sortable: true, class: 'text-center' },
+                                    { key: 'qty', label: '@T("ShoppingCart.Quantity")', sortable: true, class: 'text-center'  },
+                                    { key: 'total', label: '@T("ShoppingCart.ItemTotal")', sortable: true, class: 'text-center'  },
                                     @if (Model.IsEditable){
                                         <text>
                                             { key: 'remove', label: '@T("Remove")' },

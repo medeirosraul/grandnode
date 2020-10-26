@@ -1,9 +1,17 @@
 @model OrderDetailsModel
+@inject IWebHelper webHelper
+@inject SeoSettings seoSettings
+@using Grand.Framework.Themes
+@using Grand.Framework.UI
+@inject IWorkContext workContext
+@inject IThemeContext themeContext
 @inject IPageHeadBuilder pagebuilder
 @{
     if (!Model.PrintMode)
     {
         Layout = "_ColumnsMix";
+        var themeName = themeContext.WorkingThemeName;
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
     }
     else
     {
@@ -15,7 +23,7 @@
 @if (Model.PrintMode)
 {
     <script asp-location="Footer">
-            window.print();
+        window.print();
     </script>
 }
 <div class="page order-details-page mb-3">
@@ -366,7 +374,7 @@ Model.BillingAddress.ZipPostalCodeEnabled)
             <h5 class="generalTitle">@T("Order.Product(s)")</h5>
             <div class="mt-1">
                 <div class="shopping-cart-container">
-                    <b-table :fields="fields" :items="items">
+                    <b-table :fields="fields" :items="items" class="shopping-cart">
                         <template v-slot:cell(picture)="data">
                             <div v-html="data.value.picture"></div>
                         </template>
@@ -388,11 +396,11 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                                 data() {
                                     return {
                                         fields: [
-                                            { key: 'picture', label: '@T("Order.Product(s).Picture")' },
-                                            { key: 'product', label: '@T("Order.Product(s).Name")', sortable: true },
-                                            { key: 'unitprice', label: '@T("Order.Product(s).Price")', sortable: true  },
-                                            { key: 'quantity', label: '@T("Order.Product(s).Quantity")', sortable: true },
-                                            { key: 'subtotal', label: '@T("Order.Product(s).Total")', sortable: true },
+                                            { key: 'picture', label: '@T("Order.Product(s).Picture")', class: 'text-center' },
+                                            { key: 'product', label: '@T("Order.Product(s).Name")', sortable: true, class: 'text-center' },
+                                            { key: 'unitprice', label: '@T("Order.Product(s).Price")', sortable: true, class: 'text-center'  },
+                                            { key: 'quantity', label: '@T("Order.Product(s).Quantity")', sortable: true, class: 'text-center' },
+                                            { key: 'subtotal', label: '@T("Order.Product(s).Total")', sortable: true, class: 'text-center' },
                                         ],
                                         items: [
                                              @foreach (var item in Model.Items)
@@ -406,13 +414,13 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                                                     product: '@if (!Model.PrintMode){<em><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a></em>}else{@item.ProductName}@if (Model.ShowSku){<div class="sku w-100 text-center text-md-left">@item.Sku</div>}@if (!string.IsNullOrEmpty(item.AttributeInfo)){<div class="attributes">@Html.Raw(item.AttributeInfo)</div>}@if (!string.IsNullOrEmpty(item.RentalInfo)){<div class="rental-info">@Html.Raw(item.RentalInfo)</div>}@if (!String.IsNullOrEmpty(item.DownloadId)){<div class="download"><a href="@Url.RouteUrl("GetDownload", new { orderItemId = item.OrderItemGuid })">@T("DownloadableProducts.Fields.Download")</a></div>}@if (!String.IsNullOrEmpty(item.LicenseId)){<div class="download license"><a href="@Url.RouteUrl("GetLicense", new {orderItemId = item.OrderItemGuid})">@T("DownloadableProducts.Fields.DownloadLicense")</a></div>}@await Component.InvokeAsync("Widget", new { widgetZone = "orderdetails_product_line", additionalData = item.Id })'
                                                 },
                                                 unitprice: {
-                                                    unitprice: '<span class="unit-price-text">@T("ShoppingCart.UnitPrice"):</span><span class="product-unit-price price">@item.UnitPrice</span>@if (item.UnitPriceWithoutDiscountValue != item.UnitPriceValue && item.UnitPriceWithoutDiscountValue > 0){<div class="text-center"><del class="small text-danger">(@item.UnitPriceWithoutDiscount)</del></div>}'
+                                                    unitprice: '<span class="product-unit-price price">@item.UnitPrice</span>@if (item.UnitPriceWithoutDiscountValue != item.UnitPriceValue && item.UnitPriceWithoutDiscountValue > 0){<div class="text-center"><del class="small text-danger">(@item.UnitPriceWithoutDiscount)</del></div>}'
                                                 },
                                                 quantity: {
                                                     quantity: '<span class="d-inline-block d-xl-none mr-1">@T("shoppingcart.quantity"):</span> @item.Quantity',
                                                 },
                                                 subtotal: {
-                                                    subtotal: '<span class="subtotal-text">@T("ShoppingCart.ItemTotal"):</span><span class="product-subtotal price">@item.SubTotal</span>@if (!string.IsNullOrEmpty(item.Discount)) {<div class="discount text-success text-center"><span>@T("ShoppingCart.Discount"): </span><span>@item.Discount</span></div>}',
+                                                    subtotal: '<span class="product-subtotal price prod-total">@item.SubTotal</span>@if (!string.IsNullOrEmpty(item.Discount)) {<div class="discount text-success text-center"><span>@T("ShoppingCart.Discount"): </span><span>@item.Discount</span></div>}',
                                                 }
                                              },
                                             </text>
@@ -443,7 +451,7 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                 }
                 @if (!Model.PrintMode)
                 {
-                    <div class="actions">
+                    <div class="actions mb-3">
                         @if (Model.IsReOrderAllowed)
                         {
                             <input type="button" value="@T("Order.Reorder")" class="btn btn-outline-info re-order-button" onclick="location = ('@Url.RouteUrl("ReOrder", new { orderId = Model.Id })    ')" />
@@ -576,7 +584,8 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                 </div>
             </div>
         </div>
-    } else
+    }
+    else
     {
         <script>var mix = {}</script>
     }
