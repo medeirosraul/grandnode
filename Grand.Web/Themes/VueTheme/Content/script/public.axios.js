@@ -36,7 +36,7 @@ var AxiosCart = {
     //add a product to the cart/wishlist from the catalog pages
     addproducttocart_catalog: function (urladd, showqty, productid) {
         if (showqty.toLowerCase() == 'true') {
-            var qty = document.querySelector('#addtocart_' + productid + '_EnteredQuantity').value();
+            var qty = document.querySelector('#addtocart_' + productid + '_EnteredQuantity').value;
             if (urladd.indexOf("forceredirection") != -1) {
                 urladd += '&quantity=' + qty;
             }

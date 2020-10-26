@@ -60,73 +60,73 @@
                 {
                     <span class="sku">@Model.Sku</span>
                 }
-            <div class="prices-rating">
-                @if (Model.ReviewOverviewModel.AllowCustomerReviews)
-                {
-                    decimal ratingValue = 0;
-                    if (Model.ReviewOverviewModel.TotalReviews != 0)
+                <div class="prices-rating">
+                    @if (Model.ReviewOverviewModel.AllowCustomerReviews)
                     {
-                        ratingValue = Convert.ToDecimal(((Model.ReviewOverviewModel.RatingSum * (double)100) / Model.ReviewOverviewModel.TotalReviews) / (double)100);
+                        decimal ratingValue = 0;
+                        if (Model.ReviewOverviewModel.TotalReviews != 0)
+                        {
+                            ratingValue = Convert.ToDecimal(((Model.ReviewOverviewModel.RatingSum * (double)100) / Model.ReviewOverviewModel.TotalReviews) / (double)100);
+                        }
+                        <template>
+                            <div class="rating">
+                                <b-form-rating id="rating-inline-list-@Model.Id" class="p-0" variant="warning" no-border size="sm" show-value precision="2" readonly inline value="@(ratingValue)"></b-form-rating>
+                                <span>@Model.ReviewOverviewModel.TotalReviews @T("Reviews.Overview.Reviews")</span>
+                            </div>
+                        </template>
                     }
-                    <template>
-                        <div class="rating">
-                            <b-form-rating id="rating-inline-list-@Model.Id" class="p-0" variant="warning" no-border size="sm" show-value precision="2" readonly inline value="@(ratingValue)"></b-form-rating>
-                            <span>@Model.ReviewOverviewModel.TotalReviews @T("Reviews.Overview.Reviews")</span>
-                        </div>
-                    </template>
-                }
-                @if (Model.ProductType == ProductType.Auction)
-                {
+                    @if (Model.ProductType == ProductType.Auction)
+                    {
 
-                    @if (Model.EndTime.HasValue)
-                    {
-                        <div class="countdown-box alert alert-info w-100 mb-1">
-                            @if (Model.EndTime > DateTime.UtcNow)
-                            {
-                                <countdown :end-time="@Model.EndTime.Value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds">
-                                    <template v-slot:process="{ timeObj }">
-                                        <span class="col-form-label">@T("AddToCart.Timeleft"):</span>
-                                        <span>{{ `${timeObj.d}` }} </span>
-                                        <span>: {{ `${timeObj.h}` }} </span>
-                                        <span>: {{ `${timeObj.m}` }} </span>
-                                        <span>: {{ `${timeObj.s}` }}</span>
-                                    </template>
-                                    <template v-slot:finish>
-                                        <span>@T("ShoppingCart.Auctionends")</span>
-                                    </template>
-                                </countdown>
-                            }
-                            else
-                            {
-                                <div class="d-inline-flex flex-wrap justify-content-center">
-                                    <label class="ended-label">@T("ShoppingCart.Auctionends"):</label>
-                                    <div class="count-date">@Model.EndTimeLocalTime.Value.ToString()</div>
-                                </div>
-                            }
-                        </div>
+                        @if (Model.EndTime.HasValue)
+                        {
+                            <div class="countdown-box alert alert-info w-100 mb-1">
+                                @if (Model.EndTime > DateTime.UtcNow)
+                                {
+                                    <countdown :end-time="@Model.EndTime.Value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds">
+                                        <template v-slot:process="{ timeObj }">
+                                            <span class="col-form-label">@T("AddToCart.Timeleft"):</span>
+                                            <span>{{ `${timeObj.d}` }} </span>
+                                            <span>: {{ `${timeObj.h}` }} </span>
+                                            <span>: {{ `${timeObj.m}` }} </span>
+                                            <span>: {{ `${timeObj.s}` }}</span>
+                                        </template>
+                                        <template v-slot:finish>
+                                            <span>@T("ShoppingCart.Auctionends")</span>
+                                        </template>
+                                    </countdown>
+                                }
+                                else
+                                {
+                                    <div class="d-inline-flex flex-wrap justify-content-center">
+                                        <label class="ended-label">@T("ShoppingCart.Auctionends"):</label>
+                                        <div class="count-date">@Model.EndTimeLocalTime.Value.ToString()</div>
+                                    </div>
+                                }
+                            </div>
+                        }
                     }
-                }
-                <div class="prices @if (Model.ProductType == ProductType.Reservation) { <text>reservation-price</text> } ">
-                    @if (Model.ProductType != ProductType.Auction)
-                    {
-                        <div class="actual-price price">
-                            @Model.ProductPrice.Price
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="actual-price price">
-                            @(Model.ProductPrice.HighestBidValue > 0 ? Model.ProductPrice.HighestBid : Model.ProductPrice.StartPrice)
-                        </div>
-                    }
-                    @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-                    {
-                        <div class="old-price price">
-                            @Model.ProductPrice.OldPrice
-                        </div>
-                    }
+                    <div class="prices @if (Model.ProductType == ProductType.Reservation) { <text>reservation-price</text> } ">
+                        @if (Model.ProductType != ProductType.Auction)
+                        {
+                            <div class="actual-price price">
+                                @Model.ProductPrice.Price
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="actual-price price">
+                                @(Model.ProductPrice.HighestBidValue > 0 ? Model.ProductPrice.HighestBid : Model.ProductPrice.StartPrice)
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                        {
+                            <div class="old-price price">
+                                @Model.ProductPrice.OldPrice
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
                 @if (Model.ProductAttributeModels.Any())
                 {
                     <div class="attr-container">
@@ -198,6 +198,11 @@
                 <div class="desc">
                     @Html.Raw(Model.ShortDescription)
                 </div>
+                @if (Model.ShowQty)
+                {
+                    var qtyId = "addtocart_" + @Model.Id + "_EnteredQuantity";
+                    <input class="form-control input-group-addon catalog-quantity" type="number" id="@qtyId" name="@qtyId" value="1">
+                }
                 <b-button-group>
                     @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
                     {

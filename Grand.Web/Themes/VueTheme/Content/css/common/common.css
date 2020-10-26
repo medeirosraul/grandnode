@@ -365,6 +365,9 @@ dl, ol, ul {
     font-weight: 500;
     text-transform: uppercase;
 }
+.product-box .catalog-quantity {
+    max-width: 60px;
+}
 
 /* product box list */
 
