@@ -6,19 +6,19 @@
 
         @foreach (var item in Model.Posts)
         {
-            <div class="topic pt-1">
-                <div class="topic-title">
+            <b-card class="topic mb-3">
+                <template v-slot:header>
                     <label><strong>@T("Profile.Topic"):</strong></label>
                     <strong>@Html.RouteLink(item.ForumTopicTitle, "TopicSlug", new { id = item.ForumTopicId, slug = item.ForumTopicSlug })</strong>
-                </div>
+                </template>
                 <div class="topic-body">
                     <p>@Html.Raw(item.ForumPostText)</p>
                 </div>
-                <div class="topic-data">
-                    <label>@T("Profile.PostedOn"):</label>
-                    <span>@item.Posted</span>
-                </div>
-            </div>
+                <template v-slot:footer>
+                    <b-icon variant="info" icon="calendar2-check" class="mx-1"></b-icon>
+                    <small class="text-muted">@T("Profile.PostedOn"): @item.Posted</small>
+                </template>
+            </b-card>
         }
     </div>
 }

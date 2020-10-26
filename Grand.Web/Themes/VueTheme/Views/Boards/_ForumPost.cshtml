@@ -47,7 +47,8 @@
                             }
                             @Html.RouteLink(T("Forum.QuotePost").Text, "PostCreateQuote", new { id = Model.ForumTopicId, quote = Model.Id }, new { @class = "btn btn-secondary quote-post-button" })
 
-                            <a id="@Model.Id" title="@T("Forum.PostLinkTitle")" class="btn btn-secondary btn-sm post-link-button" href="@(thisPageUrl)#@(Model.Id)"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
+                            <a id="link-@Model.Id" title="@T("Forum.PostLinkTitle")" onclick="CopyLink(this)" class="btn btn-secondary btn-sm post-link-button"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
+                            <input type="text" class="sr-only" id="LinkHref-@Model.Id" value="@(thisPageUrl)#@(Model.Id)" />
                         </div>
                     </b-row>
                 </b-col>
@@ -149,6 +150,13 @@
 @if (Model.AllowPostVoting)
 {
 <script asp-location="Footer">
+        function CopyLink(e) {
+            var copyText = e.nextElementSibling;
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+        }
+
         var post = '#post-vote-' + '@Model.Id';
         document.querySelector('#post-vote-@Model.Id span.vote').addEventListener('click', function () {
                     var postData = {
