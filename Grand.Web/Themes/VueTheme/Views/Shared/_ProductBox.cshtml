@@ -127,6 +127,13 @@
                     }
                 </div>
             </div>
+            @if (Model.ProductPrice.DisplayTaxShippingInfo)
+            {
+                var inclTax = Model.TaxDisplayType == TaxDisplayType.IncludingTax;
+                <div class="tax-shipping-info">
+                    @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Shippinginfo }))
+                </div>
+            }
             </b-card-body>
             <template v-slot:footer>
                 @if (Model.ProductAttributeModels.Any())
