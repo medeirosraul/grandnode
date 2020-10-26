@@ -27,6 +27,37 @@
     return false;
 }
 
+function displayPopupPrivacyPreference(html) {
+    document.querySelector('.modal-place').innerHTML = html;
+    new Vue({
+        el: '#ModalPrivacyPreference',
+        data: {
+            template: null,
+        },
+        render: function (createElement) {
+            if (!this.template) {
+                return createElement('b-overlay', {
+                    attrs: { show: 'true' }
+                });
+            } else {
+                return this.template();
+            }
+        },
+        methods: {
+            showModal() {
+                this.$refs['ModalPrivacyPreference'].show()
+            }
+        },
+        mounted() {
+            var self = this;
+            self.template = Vue.compile(html).render;
+        },
+        updated: function () {
+            this.showModal();
+        }
+    });
+}
+
 function displayPopupAddToCart(html) {
         new Vue({
             el: '#ModalAddToCart',
