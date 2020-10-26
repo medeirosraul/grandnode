@@ -58,18 +58,18 @@
             <b-col lg="2" md="3" cols="12" class="text-center text-md-left forum-post">
                 @if (!String.IsNullOrEmpty(Model.CustomerAvatarUrl))
                 {
-                    <div class="avatar mb-1">
-                        @if (Model.AllowViewingProfiles)
-                        {
-                            <a href="@Url.RouteUrl("CustomerProfile", new { id = Model.CustomerId })" class="avatar-img-link">
-                                <b-avatar src="@(Model.CustomerAvatarUrl)" size="6rem"></b-avatar>
-                            </a>
-                        }
-                        else
-                        {
-                            <b-avatar src="@(Model.CustomerAvatarUrl)" size="6rem"></b-avatar>
-                        }
-                    </div>
+                <div class="avatar mb-1">
+                    @if (Model.AllowViewingProfiles)
+                    {
+                        <b-link href="@Url.RouteUrl("CustomerProfile", new {id = Model.CustomerId})" class="avatar-img-link">
+                            <b-img rounded src="@(Model.CustomerAvatarUrl)" class="avatar-img border" alt="avatar" />
+                        </b-link>
+                    }
+                    else
+                    {
+                        <b-img rounded src="@(Model.CustomerAvatarUrl)" class="avatar-img img-fluid border" alt="avatar" />
+                    }
+                </div>
                 }
                 <ul class="user-stats pl-0 mb-0">
                     <li class="post-time d-md-none small">
