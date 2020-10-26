@@ -37,7 +37,7 @@
                             <bbc-code asp-name="Text" />
                         </div>
                     }
-                    <textarea asp-for="Text" class="form-control card-text" ></textarea>
+                    <textarea asp-for="Text" class="form-control card-text" rows="6" ></textarea>
                     <span asp-validation-for="Text"></span>
                 </div>
                 @if (Model.IsCustomerAllowedToSubscribe)
@@ -51,7 +51,7 @@
                 </fieldset>
                 }
         </b-card>
-        <b-btn-group>
+        <b-btn-group class="mt-3">
             <input type="submit" value="@T("Forum.Submit")" class="btn btn-secondary submit-post-button" />
             <input type="button" class="btn btn-secondary cancel-post-button" value="@T("Forum.Cancel")" onclick="setLocation('@Url.RouteUrl("TopicSlug", new { id = Model.ForumTopicId, slug = Model.ForumTopicSeName })')" />
         </b-btn-group>

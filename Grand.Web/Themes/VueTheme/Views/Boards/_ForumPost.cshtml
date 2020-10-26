@@ -27,12 +27,12 @@
                     }
                 </b-col>
                 <b-col lg="10" md="9" cols="12" class="forum-media-header">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 post-time d-none d-md-block">
+                    <b-row>
+                        <b-col lg="5" md="6" class="post-time d-none d-md-block">
                             <b-icon variant="info" icon="calendar2-check"></b-icon>
                             <small class="text-muted">@T("Forum.Posted"):</small>
                             <small class="stat-value text-muted">@Model.PostCreatedOnStr</small>
-                        </div>
+                        </b-col>
                         <div class="d-flex align-items-center float-right btn-group btn-group-sm text-sm-right manage-post ml-auto">
                             @if (Model.IsCurrentCustomerAllowedToEditPost)
                             {
@@ -49,12 +49,12 @@
 
                             <a id="@Model.Id" title="@T("Forum.PostLinkTitle")" class="btn btn-secondary btn-sm post-link-button" href="@(thisPageUrl)#@(Model.Id)"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
                         </div>
-                    </div>
+                    </b-row>
                 </b-col>
             </div>
         </template>
-        <div class="card-body row flex-row mb-3">
-            <div class="col-lg-2 col-md-3 col-12 text-center text-md-left forum-post">
+        <b-form-row class="mb-3">
+            <b-col lg="2" md="3" cols="12" class="text-center text-md-left forum-post">
                 @if (!String.IsNullOrEmpty(Model.CustomerAvatarUrl))
                 {
                     <div class="avatar mb-1">
@@ -110,17 +110,17 @@
                         @Html.RouteLink(T("Forum.PrivateMessages.PM").Text, "SendPM", new { toCustomerId = Model.CustomerId }, new { @class = "btn btn-sm btn-primary pm-button" })
                     </div>
                 }
-            </div>
-            <div class="col-lg-9 col-md-7 col-9">
+            </b-col>
+            <b-col lg="9" md="7" cols="9" class="col-lg-9 col-md-7 col-9">
                 <div class="post-text pt-2">
                     @Html.Raw(Model.FormattedText)
                     @Html.Hidden("Id", Model.Id)
                 </div>
 
-            </div>
+            </b-col>
             @if (Model.AllowPostVoting)
             {
-                <div class="col-3 col-sm-2 col-lg-1 ml-auto text-center px-0" id="@String.Format("post-vote-{0}", Model.Id)">
+                <b-col lg="1" sm="2" cols="3"  class="ml-auto text-center px-0" id="@String.Format("post-vote-{0}", Model.Id)">
                     <span class="col vote up @if (Model.VoteIsUp.HasValue && (bool)Model.VoteIsUp)
                     {<text>selected</text>}"
                           title="This post/answer is useful">
@@ -132,9 +132,9 @@
                           title="This post/answer is not useful">
                         <b-icon variant="danger" icon="hand-thumbs-down"></b-icon>
                     </span>
-                </div>
+                </b-col>
             }
-        </div>
+        </b-form-row>
         @if (Model.SignaturesEnabled & !String.IsNullOrEmpty(Model.FormattedSignature))
         {
             <template v-slot:footer>

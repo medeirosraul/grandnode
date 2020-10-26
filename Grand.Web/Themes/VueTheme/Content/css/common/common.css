@@ -480,6 +480,14 @@ footer .list-group-item span:last-child {
     font-weight: 400;
 }
 
+/* forum */
+
+.quote {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px dashed #ddd;
+}
+ 
 /* media */
 
 @media (min-width: 992px) {

@@ -1,7 +1,7 @@
 ﻿@model ActiveDiscussionsModel
 @inject Grand.Services.Localization.ILocalizationService localizationService
 <div class="forums-table-section topic-group active-discussions">
-    <div class="forums-table-section-title">
+    <div class="forums-table-section-title mb-3">
         @if (Model.ActiveDiscussionsFeedEnabled)
         {
             <b-button variant="secondary" size="sm" href="@Url.RouteUrl("ActiveDiscussionsRSS")" class="link-rss" title="@T("Forum.ActiveDiscussionsRSSLinkTitle")">@T("Forum.RSS")</b-button>
