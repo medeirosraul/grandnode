@@ -126,12 +126,12 @@
                     </b-list-group>
                 </div>
             </b-col>
-            <ol class="d-flex flex-row list-group justify-content-center w-100 flex-wrap social-icons list-pad pb-0">
+            <ol class="d-flex flex-row list-group justify-content-center w-100 flex-wrap social-icons list-pad pb-0 mb-3">
                 @if (!string.IsNullOrEmpty(Model.FacebookLink))
                 {
                     <li class="list-group-item facebook">
                         <a title="facebook" href="@Model.FacebookLink" rel="noopener" target="_blank">
-                            <span class="mdi mdi-facebook"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/facebook.svg" />
                             <span class="sr-only">Facebook</span>
 
                         </a>
@@ -141,7 +141,7 @@
                 {
                     <li class="list-group-item twitter">
                         <a title="twitter" href="@Model.TwitterLink" rel="noopener" target="_blank">
-                            <span class="mdi  mdi-twitter"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/twitter.svg" />
                             <span class="sr-only">twitter</span>
                         </a>
                     </li>
@@ -150,7 +150,7 @@
                 {
                     <li class="list-group-item rss">
                         <a title="rss" href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})" rel="noopener" target="_blank">
-                            <span class="mdi mdi-rss"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/rss.svg" />
                             <span class="sr-only">@T("NewsRSS")</span>
                         </a>
                     </li>
@@ -159,7 +159,7 @@
                 {
                     <li class="list-group-item youtube">
                         <a title="youtube" href="@Model.YoutubeLink" rel="noopener" target="_blank">
-                            <span class="mdi mdi-youtube"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/youtube.svg" />
                             <span class="sr-only">youtube</span>
                         </a>
                     </li>
@@ -168,7 +168,7 @@
                 {
                     <li class="list-group-item instagram">
                         <a href="@Model.InstagramLink" rel="noopener" target="_blank">
-                            <span class="mdi mdi-instagram"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/instagram.svg" />
                             <span class="sr-only">instagram</span>
                         </a>
                     </li>
@@ -177,7 +177,7 @@
                 {
                     <li class="list-group-item linkedin">
                         <a href="@Model.LinkedInLink" rel="noopener" target="_blank">
-                            <span class="mdi mdi-linkedin"></span>
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/linkedin.svg" />
                             <span class="sr-only">linkedin</span>
                         </a>
                     </li>
@@ -186,8 +186,8 @@
                 {
                     <li class="list-group-item pinterest">
                         <a href="@Model.PinterestLink" rel="noopener" target="_blank">
+                            <img height="32" width="32" src="/Themes/VueTheme/Content/images/pinterest.svg" />
                             <span class="sr-only">pinterest</span>
-                            <span class="mdi mdi-pinterest"></span>
                         </a>
                     </li>
                 }
