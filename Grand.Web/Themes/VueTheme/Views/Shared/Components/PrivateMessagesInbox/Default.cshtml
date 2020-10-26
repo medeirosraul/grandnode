@@ -22,7 +22,7 @@
             document.querySelector('#pm-inbox-table .rowcheckbox').addEventListener('change', function (e) {
                 var numChkBoxes = document.querySelector('#pm-inbox-table .rowcheckbox').length;
                 var numChkBoxesChecked = document.querySelector('#pm-inbox-table .rowcheckbox:checked').length;
-                document.querySelector('#pm-inbox-table .rowcheckbox'.setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0 ))
+                document.querySelector('#pm-inbox-table .rowcheckbox').setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0 )
             });
     </script>
     @if (Model.Messages.Any())
