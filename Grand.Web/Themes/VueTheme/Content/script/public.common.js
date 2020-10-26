@@ -133,23 +133,17 @@ function displayPopupQuickView(html) {
 
 
 function displayBarNotification(message, messagetype, timeout) {
+    if (messagetype == 'error') {
+        toastHTML = '<b-toast id="grandToast" variant="danger" title=' + messagetype +'>'+ message +'</b-toast>'
+    } else {
+        toastHTML = '<b-toast id="grandToast" variant="info" title=' + messagetype+'>' + message + '</b-toast>'
+    }
+    document.querySelector('.modal-place').innerHTML = toastHTML;
     new Vue({
-        el: "#app",
+        el: ".modal-place",
         methods: {
             toast() {
-                if (messagetype == 'error') {
-                    this.$bvToast.toast(message, {
-                        title: messagetype,
-                        variant: 'danger',
-                        autoHideDelay: timeout,
-                    })
-                } else {
-                    this.$bvToast.toast(message, {
-                        title: messagetype,
-                        variant: 'info',
-                        autoHideDelay: timeout,
-                    })
-                }
+                this.$bvToast.show('grandToast')
             }
         },
         mounted: function () {
