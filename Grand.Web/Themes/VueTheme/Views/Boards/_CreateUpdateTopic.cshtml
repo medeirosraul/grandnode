@@ -12,50 +12,53 @@
     {
         <h1 class="generalTitle h2">@T("Forum.NewTopic")</h1>
     }
-    <div asp-validation-summary="ModelOnly" class="message-error"></div>
+    <div asp-validation-summary="ModelOnly" class="message-error alert alert-danger my-3"></div>
     <input asp-for="Id" type="hidden" />
     <input asp-for="ForumId" type="hidden" />
-    <div class="form-fields">
-        <fieldset class="form-group">
-            <label class="col-form-label">@T("Forum.ForumName"):</label>
+
+    <b-card>
+        <template v-slot:header>
+            <h5>@T("Forum.ForumName"):</h5>
             <strong>@Model.ForumName</strong>
-        </fieldset>
-        <fieldset class="form-group">
-            <label class="col-form-label">@T("Forum.TopicTitle"):</label>
-            <input asp-for="Subject" class="form-control forum-topic-title-text" />
-            <span asp-validation-for="Subject"></span>
-        </fieldset>
-        <fieldset class="form-group">
-            @if (Model.ForumEditor == EditorType.BBCodeEditor)
+        </template>
+        <div class="form-fields">
+            <fieldset class="form-group">
+                <label class="col-form-label">@T("Forum.TopicTitle"):</label>
+                <input asp-for="Subject" class="form-control forum-topic-title-text" />
+                <span asp-validation-for="Subject"></span>
+            </fieldset>
+            <fieldset class="form-group">
+                @if (Model.ForumEditor == EditorType.BBCodeEditor)
+                {
+                    <label class="col-12 col-form-label text-sm-right">
+                        <bbc-code asp-name="Text" />
+                    </label>
+                }
+                <textarea asp-for="Text" class="form-control forum-post-text"></textarea>
+                <span asp-validation-for="Text"></span>
+            </fieldset>
+            @if (Model.IsCustomerAllowedToSetTopicPriority)
             {
-                <label class="col-12 col-form-label text-sm-right">
-                    <bbc-code asp-name="Text" />
-                </label>
+                <fieldset class="form-group">
+                    <label class="col-form-label">@T("Forum.Priority"):</label>
+                    @Html.DropDownList("TopicTypeId", new SelectList(Model.TopicPriorities, "Value", "Text", Model.TopicTypeId), new { @class = "custom-select" })
+                </fieldset>
             }
-            <textarea asp-for="Text" class="form-control forum-post-text"></textarea>
-            <span asp-validation-for="Text"></span>
-        </fieldset>
-        @if (Model.IsCustomerAllowedToSetTopicPriority)
-        {
-            <fieldset class="form-group">
-                <label class="col-form-label">@T("Forum.Priority"):</label>
-                @Html.DropDownList("TopicTypeId", new SelectList(Model.TopicPriorities, "Value", "Text", Model.TopicTypeId), new { @class = "custom-select" })
+            @if (Model.IsCustomerAllowedToSubscribe)
+            {
+                <fieldset class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input class="custom-control-input" id="Subscribed" type="checkbox" name="Subscribed" value="true" @(Model.Subscribed ? Html.Raw("checked") : Html.Raw("")) />
+                        <span class="custom-control-label"></span>
+                        <span class="custom-control-description">@T("Forum.NotifyWhenSomeonePostsInThisTopic")</span>
+                    </label>
+                </fieldset>
+            }
+            <fieldset class="form-group mb-0">
+                <input type="submit" value="@T("Forum.Submit")" class="btn btn-success submit-topic-button" />
+                <input type="button" class="btn btn-outline-danger cancel-topic-button" value="@T("Forum.Cancel")" onclick="setLocation('@Url.RouteUrl("ForumSlug", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
             </fieldset>
-        }
-        @if (Model.IsCustomerAllowedToSubscribe)
-        {
-            <fieldset class="form-group">
-                <label class="custom-control custom-checkbox">
-                    <input class="custom-control-input" id="Subscribed" type="checkbox" name="Subscribed" value="true" @(Model.Subscribed ? Html.Raw("checked") : Html.Raw("")) />
-                    <span class="custom-control-label"></span>
-                    <span class="custom-control-description">@T("Forum.NotifyWhenSomeonePostsInThisTopic")</span>
-                </label>
-            </fieldset>
-        }
-        <fieldset class="form-group">
-            <input type="submit" value="@T("Forum.Submit")" class="btn btn-success submit-topic-button" />
-            <input type="button" class="btn btn-outline-danger cancel-topic-button" value="@T("Forum.Cancel")" onclick="setLocation('@Url.RouteUrl("ForumSlug", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
-        </fieldset>
-    </div>
+        </div>
+    </b-card>
 </div>
 

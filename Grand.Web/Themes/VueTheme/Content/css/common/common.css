@@ -468,6 +468,9 @@ footer .list-group-item:not(.list-group-item-action) {
     border: 0;
     background-color: #f8f9fa;
 }
+footer .list-group.social-icons .list-group-item {
+    background-color: transparent;
+}
 footer .list-group-item span:first-child {
     font-size: 14px;
     font-weight: 500;

@@ -62,7 +62,7 @@
             </div>
         </form>
     </div>
-    <div class="search-error text-danger pt-1 pb-1 text-center">
+    <div class="text-danger my-3">
         @Model.Error
     </div>
     <div class="search-results">
@@ -99,10 +99,8 @@
         }
         @if (Model.NoResultsVisisble)
         {
-            <div class="card text-white card-warning text-center pb-0 mb-0">
-                <div class="card-body">
-                    <span><strong>@T("Forum.SearchNoResultsText")</strong></span>
-                </div>
+            <div class="alert alert-info text-center my-3">
+                @T("Forum.SearchNoResultsText")
             </div>
 
 

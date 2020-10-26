@@ -8,48 +8,51 @@
 
 <div class="topic-post" id="@Html.Encode(String.Format("post{0}", Model.Id))">
     <b-card class="mb-3">
-        <div class="flex-column flex-md-row d-flex card-header user-info">
-            <b-col lg="2" md="3" sm="3" class="text-center text-md-left forum-media-header">
-                @if (Model.AllowViewingProfiles && !string.IsNullOrEmpty(Model.CustomerName))
-                {
-                    <strong>
-                        @Html.RouteLink(Model.CustomerName, "CustomerProfile", new { id = Model.CustomerId }, new { @class = "username" })
-                    </strong>
-                }
-                else
-                {
-                    <h5 class="username">
+        <template v-slot:header>
+            <div class="flex-column flex-md-row d-flex user-info">
+                <b-col lg="2" md="3" sm="3" class="text-center text-md-left forum-media-header">
+                    @if (Model.AllowViewingProfiles && !string.IsNullOrEmpty(Model.CustomerName))
+                    {
                         <strong>
-                            @Model.CustomerName
+                            @Html.RouteLink(Model.CustomerName, "CustomerProfile", new { id = Model.CustomerId }, new { @class = "username h5 mb-0" })
                         </strong>
-                    </h5>
-                }
-            </b-col>
-            <b-col lg="10" md="9" cols="12" class="forum-media-header">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 post-time d-none d-md-block">
-                        <span>@T("Forum.Posted"):</span>
-                        <span class="stat-value">@Model.PostCreatedOnStr</span>
-                    </div>
-                    <div class="float-right btn-group btn-group-sm text-sm-right manage-post ml-auto">
-                        @if (Model.IsCurrentCustomerAllowedToEditPost)
-                        {
-                            @Html.RouteLink(T("Forum.EditPost").Text, "PostEdit", new { id = Model.Id }, new { @class = "btn btn-secondary edit-post-button" })
-                        }
-                        @if (Model.IsCurrentCustomerAllowedToDeletePost)
-                        {
-                            <a href="#" class="btn btn-secondary delete-post-button" onclick="deletepost('@(Model.Id)')">
-                                <i class="mdi mdi-delete d-lg-none" aria-hidden="true"></i>
-                                <span class="d-none d-lg-block">@T("Forum.DeletePost").Text</span>
-                            </a>
-                        }
-                        @Html.RouteLink(T("Forum.QuotePost").Text, "PostCreateQuote", new { id = Model.ForumTopicId, quote = Model.Id }, new { @class = "btn btn-secondary quote-post-button" })
+                    }
+                    else
+                    {
+                        <h5 class="username mb-0">
+                            <strong>
+                                @Model.CustomerName
+                            </strong>
+                        </h5>
+                    }
+                </b-col>
+                <b-col lg="10" md="9" cols="12" class="forum-media-header">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 post-time d-none d-md-block">
+                            <b-icon variant="info" icon="calendar2-check"></b-icon>
+                            <small class="text-muted">@T("Forum.Posted"):</small>
+                            <small class="stat-value text-muted">@Model.PostCreatedOnStr</small>
+                        </div>
+                        <div class="d-flex align-items-center float-right btn-group btn-group-sm text-sm-right manage-post ml-auto">
+                            @if (Model.IsCurrentCustomerAllowedToEditPost)
+                            {
+                                @Html.RouteLink(T("Forum.EditPost").Text, "PostEdit", new { id = Model.Id }, new { @class = "btn btn-secondary edit-post-button" })
+                            }
+                            @if (Model.IsCurrentCustomerAllowedToDeletePost)
+                            {
+                                <a href="#" class="btn btn-secondary delete-post-button" onclick="deletepost('@(Model.Id)')">
+                                    <b-icon icon="trash" class="mx-1 d-lg-none"></b-icon>
+                                    <span class="d-none d-lg-block">@T("Forum.DeletePost").Text</span>
+                                </a>
+                            }
+                            @Html.RouteLink(T("Forum.QuotePost").Text, "PostCreateQuote", new { id = Model.ForumTopicId, quote = Model.Id }, new { @class = "btn btn-secondary quote-post-button" })
 
-                        <a id="@Model.Id" title="@T("Forum.PostLinkTitle")" class="btn btn-secondary btn-sm post-link-button" href="@(thisPageUrl)#@(Model.Id)"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
+                            <a id="@Model.Id" title="@T("Forum.PostLinkTitle")" class="btn btn-secondary btn-sm post-link-button" href="@(thisPageUrl)#@(Model.Id)"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
+                        </div>
                     </div>
-                </div>
-            </b-col>
-        </div>
+                </b-col>
+            </div>
+        </template>
         <div class="card-body row flex-row mb-3">
             <div class="col-lg-2 col-md-3 col-12 text-center text-md-left forum-post">
                 @if (!String.IsNullOrEmpty(Model.CustomerAvatarUrl))
@@ -58,12 +61,12 @@
                         @if (Model.AllowViewingProfiles)
                         {
                             <a href="@Url.RouteUrl("CustomerProfile", new { id = Model.CustomerId })" class="avatar-img-link">
-                                <img src="@(Model.CustomerAvatarUrl)" class="avatar-img" alt="Avatar" />
+                                <b-avatar src="@(Model.CustomerAvatarUrl)" size="6rem"></b-avatar>
                             </a>
                         }
                         else
                         {
-                            <img src="@(Model.CustomerAvatarUrl)" class="avatar-img" alt="Avatar" />
+                            <b-avatar src="@(Model.CustomerAvatarUrl)" size="6rem"></b-avatar>
                         }
                     </div>
                 }
@@ -75,35 +78,35 @@
                     @if (Model.IsCustomerForumModerator)
                     {
                         <li class="status">
-                            <label>@T("Forum.Status"):</label>
+                            <label class="col-form-label py-0">@T("Forum.Status"):</label>
                             <span>@T("Forum.Moderator")</span>
                         </li>
                     }
                     @if (Model.ShowCustomersPostCount)
                     {
                         <li class="total-posts">
-                            <label>@T("Forum.TotalPosts"):</label>
+                            <label class="col-form-label py-0">@T("Forum.TotalPosts"):</label>
                             <span>@Model.ForumPostCount</span>
                         </li>
                     }
                     @if (Model.ShowCustomersJoinDate)
                     {
                         <li class="joined">
-                            <label>@T("Forum.Joined"):</label>
+                            <label class="col-form-label py-0">@T("Forum.Joined"):</label>
                             <span>@Model.CustomerJoinDate.ToString("d")</span>
                         </li>
                     }
                     @if (Model.ShowCustomersLocation && !String.IsNullOrEmpty(Model.CustomerLocation))
                     {
                         <li class="location">
-                            <label>@T("Forum.Location"):</label>
+                            <label class="col-form-label py-0">@T("Forum.Location"):</label>
                             <span>@Model.CustomerLocation</span>
                         </li>
                     }
                 </ul>
                 @if (Model.AllowPrivateMessages)
                 {
-                    <div class="send-pm pb-1">
+                    <div class="send-pm pt-3">
                         @Html.RouteLink(T("Forum.PrivateMessages.PM").Text, "SendPM", new { toCustomerId = Model.CustomerId }, new { @class = "btn btn-sm btn-primary pm-button" })
                     </div>
                 }
@@ -121,13 +124,13 @@
                     <span class="col vote up @if (Model.VoteIsUp.HasValue && (bool)Model.VoteIsUp)
                     {<text>selected</text>}"
                           title="This post/answer is useful">
-                        <i class="mdi mdi-chevron-up" aria-hidden="true"></i>
+                        <b-icon variant="success" icon="hand-thumbs-up"></b-icon>
                     </span>
-                    <div class="col vote-count-post btn btn-sm btn-block btn-secondary"> @Model.VoteCount </div>
+                    <div class="col vote-count-post btn btn-sm btn-block btn-outline-info"> @Model.VoteCount </div>
                     <span class="col vote down @if (Model.VoteIsUp.HasValue && (bool)!Model.VoteIsUp)
                     { <text>selected</text> }"
                           title="This post/answer is not useful">
-                        <i class="mdi mdi-chevron-down" aria-hidden="true"></i>
+                        <b-icon variant="danger" icon="hand-thumbs-down"></b-icon>
                     </span>
                 </div>
             }

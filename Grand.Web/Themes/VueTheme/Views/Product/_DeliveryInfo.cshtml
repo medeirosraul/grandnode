@@ -13,12 +13,12 @@
     }
     @if (Model.NotReturnable)
     {
-        <div class="d-inline-flex align-items-center w-100"><span class="mdi mdi-truck mr-2"></span> @T("Products.NotReturnable")</div>
+        <div class="d-inline-flex align-items-center w-100"><b-icon icon="truck" class="mr-2"></b-icon>  @T("Products.NotReturnable")</div>
     }
     @if (Model.AdditionalShippingCharge > 0 && !Model.IsFreeShipping)
     {
         <div class="additional-shipping-charge btn btn-sm btn-secondary">
-            <span class="mdi mdi-truck"></span>
+            <b-icon icon="truck" class="mr-2"></b-icon>
             <span class="label">@T("Products.AdditionalShippingCharge")</span>
             <span class="value">@Model.AdditionalShippingChargeStr</span>
         </div>

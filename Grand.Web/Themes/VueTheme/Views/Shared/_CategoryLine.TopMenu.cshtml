@@ -11,10 +11,6 @@
                     <span class="category-icon @Model.Category.Icon"></span>
                 }
                 <span class="title">@Model.Category.Name</span>
-                @if (Model.Category.SubCategories.Count() > 0)
-                {
-                    <span class="mdi mdi-chevron-down arrow-down"></span>
-                }
                 @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
                 {
                     <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>

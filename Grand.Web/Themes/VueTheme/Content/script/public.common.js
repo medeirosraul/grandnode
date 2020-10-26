@@ -293,13 +293,24 @@ function runScripts($container) {
 
 function sendcontactusform(urladd) {
     if (document.getElementById("product-details-form").checkValidity()) {
-        var contactData = {
-            AskQuestionEmail: document.getElementById('AskQuestionEmail').value,
-            AskQuestionFullName: document.getElementById('AskQuestionFullName').value,
-            AskQuestionPhone: document.getElementById('AskQuestionPhone').value,
-            AskQuestionMessage: document.getElementById('AskQuestionMessage').value,
-            Id: document.getElementById('AskQuestionProductId').value,
-        };
+        if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
+            var contactData = {
+                AskQuestionEmail: document.getElementById('AskQuestionEmail').value,
+                AskQuestionFullName: document.getElementById('AskQuestionFullName').value,
+                AskQuestionPhone: document.getElementById('AskQuestionPhone').value,
+                AskQuestionMessage: document.getElementById('AskQuestionMessage').value,
+                Id: document.getElementById('AskQuestionProductId').value,
+                'g-recaptcha-response-value': document.querySelector("textarea[id^='g-recaptcha-response']").value
+            };
+        } else {
+            var contactData = {
+                AskQuestionEmail: document.getElementById('AskQuestionEmail').value,
+                AskQuestionFullName: document.getElementById('AskQuestionFullName').value,
+                AskQuestionPhone: document.getElementById('AskQuestionPhone').value,
+                AskQuestionMessage: document.getElementById('AskQuestionMessage').value,
+                Id: document.getElementById('AskQuestionProductId').value
+            };
+        }
         addAntiForgeryToken(contactData);
         var bodyFormData = new FormData();
         bodyFormData.append('AskQuestionEmail', document.getElementById('AskQuestionEmail').value);
@@ -308,13 +319,15 @@ function sendcontactusform(urladd) {
         bodyFormData.append('AskQuestionMessage', document.getElementById('AskQuestionMessage').value);
         bodyFormData.append('AskQuestionProductId', document.getElementById('AskQuestionProductId').value);
         bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+        if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
+            bodyFormData.append('g-recaptcha-response-value', document.querySelector("textarea[id^='g-recaptcha-response']").value);
+        }
         axios({
             url: urladd,
             data: bodyFormData,
             method: 'post',
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(function (response) {
-            console.log(response);
             if (response.data.success) {
                 document.getElementById('contact-us-product').style.display = "none";
                 document.querySelector('.product-contact-error').style.display = "none";
