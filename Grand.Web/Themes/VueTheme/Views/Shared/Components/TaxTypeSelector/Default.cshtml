@@ -16,7 +16,7 @@
         Selected = Model.CurrentTaxType == TaxDisplayType.ExcludingTax
     });
 }
-<b-dropdown text="@taxTypes.FirstOrDefault(x => x.Selected).Text">
+<b-dropdown class="mr-2" text="@taxTypes.FirstOrDefault(x => x.Selected).Text">
     @foreach (var item in taxTypes)
     {
         var className = item.Selected ? "active" : "";

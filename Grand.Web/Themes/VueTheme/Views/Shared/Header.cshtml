@@ -47,7 +47,7 @@
                 <template>
                     <div>
                         <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
-                            <div class="mb-2">
+                            <div class="d-inline-flex flex-wrap mb-2">
                                 @await Component.InvokeAsync("TaxTypeSelector")
                                 @await Component.InvokeAsync("CurrencySelector")
                                 @await Component.InvokeAsync("LanguageSelector")
