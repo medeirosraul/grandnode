@@ -1,4 +1,9 @@
 ﻿@model MiniShoppingCartModel
+@using Grand.Core;
+@inject IWorkContext workContext
+@{ 
+    var supportRtl = workContext.WorkingLanguage.Rtl;
+}
 @await Component.InvokeAsync("Widget", new { widgetZone = "flyout_shopping_cart_before_content", additionalData = Model })
     <template>
         <div class="flyout-cart">
@@ -6,7 +11,7 @@
                 <b-icon icon="handbag" variant="dark" v-b-toggle.sidebar-cart></b-icon>
                 <div class="qty-indicator cart-qty">@T("ShoppingCart.HeaderQuantity",Model.TotalProducts)</div>
             </b-nav-item>
-            <b-sidebar id="sidebar-cart" right backdrop
+            <b-sidebar id="sidebar-cart" @if (supportRtl) { <text>left</text> } else { <text>right</text> } backdrop
                        title="
                     @if (Model.TotalProducts == 0)
                     {

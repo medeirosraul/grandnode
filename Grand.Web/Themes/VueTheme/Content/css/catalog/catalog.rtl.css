@@ -1,5 +1,8 @@
 ﻿/* catalog left side */
 
+.generalLeftSide {
+    text-align: right;
+}
 .generalLeftSide .viewBox {
     margin: 15px 0;
 }
@@ -7,7 +10,7 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    padding-left: 0;
+    padding-right: 0;
     list-style-type: none;
 }
 .generalLeftSide .viewBox > .list > li.active {
@@ -34,7 +37,7 @@
 }
 .generalLeftSide li a .total {
     position: relative;
-    right: -5px;
+    left: -5px;
     font-size: 14px;
     font-weight: 400;
     opacity: .5;

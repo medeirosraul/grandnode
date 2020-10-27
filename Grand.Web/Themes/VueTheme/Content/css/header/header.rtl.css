@@ -42,6 +42,7 @@
     width: 100%;
     margin: 0 0 7.5px 0;
     padding: 0 0 7.5px 0;
+    text-align: right;
     border-bottom: 1px solid #efefef;
 }
 .flyout-cart .item:last-child,
@@ -57,7 +58,7 @@
 .flyout-cart .item .deletecartitem {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     cursor: pointer;
 }
 .flyout-cart .item .col a {
@@ -97,6 +98,7 @@
 
 .main-nav .navbar-nav {
     flex-wrap: wrap;
+    padding-right: 0;
 } 
 .main-nav.navbar-light .navbar-nav .nav-link .title {
     color: #333;

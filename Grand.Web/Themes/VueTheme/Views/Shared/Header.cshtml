@@ -46,7 +46,7 @@
                 </b-nav-item>
                 <template>
                     <div>
-                        <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" right backdrop>
+                        <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" @if (supportRtl) { <text>left</text> } else { <text>right</text> } backdrop>
                             <div class="d-inline-flex flex-wrap mb-2">
                                 @await Component.InvokeAsync("TaxTypeSelector")
                                 @await Component.InvokeAsync("CurrencySelector")

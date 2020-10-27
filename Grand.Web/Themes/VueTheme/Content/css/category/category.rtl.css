@@ -1,5 +1,6 @@
 ﻿.categoryGrid a {
     color: #333;
+    text-align: right;
     text-decoration: none;
 }
 .categoryGrid .card-img {
