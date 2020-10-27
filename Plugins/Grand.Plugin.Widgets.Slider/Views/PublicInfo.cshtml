@@ -27,11 +27,25 @@
     {
         if (string.IsNullOrEmpty(item.PictureUrl))
         {
-            <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description"></b-carousel-slide>
+            if (item.FullWidth)
+            {
+                <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
+            }
+            else
+            {
+                <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
+            }
         }
         else
         {
-            <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description"></b-carousel-slide>
+            if (item.FullWidth)
+            {
+                <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
+            }
+            else
+            {
+                <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
+            }
         }
     }
 </b-carousel>
