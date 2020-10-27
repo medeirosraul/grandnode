@@ -10,14 +10,14 @@
     </span>
     <span id="helpfulness-vote-result-@(Model.ProductReviewId)" class="result alert alert-info mx-1 mb-0" style="display:none;"></span>
     <script asp-location="Footer">
-     
+
             document.getElementById('vote-yes-@(Model.ProductReviewId)').addEventListener("click",function(e){
                 setProductReviewHelpfulness@(Model.ProductReviewId)('true');
             });
             document.getElementById('vote-no-@(Model.ProductReviewId)').addEventListener("click",function(e){
                 setProductReviewHelpfulness@(Model.ProductReviewId)('false');
             });
-        
+
 
         function setProductReviewHelpfulness@(Model.ProductReviewId)(wasHelpful) {
                 axios({
@@ -28,9 +28,23 @@
                 .then(function (response) {
                     document.getElementById("helpfulness-vote-yes-@(Model.ProductReviewId)").innerHTML = response.data.TotalYes
                     document.getElementById("helpfulness-vote-no-@(Model.ProductReviewId)").innerHTML = response.data.TotalNo;
-                    document.getElementById("helpfulness-vote-result-@(Model.ProductReviewId)").innerHTML = response.data.Result;
-                    document.getElementById('helpfulness-vote-result-@(Model.ProductReviewId)').style.display = "block";
-                    setTimeout(function () { document.getElementById('helpfulness-vote-result-@(Model.ProductReviewId)').style.display = "none"; }, 1000);
+                    console.log(response);
+                    new Vue({
+                        el: ".modal-place",
+                        methods: {
+                            toast() {
+                                this.$bvToast.toast(response.data.Result, {
+                                    title: '@T("Reviews.Helpfulness.WasHelpful?")',
+                                    variant: 'info',
+                                    autoHideDelay: 3000,
+                                    solid: true
+                                })
+                            }
+                        },
+                        mounted: function () {
+                            this.toast();
+                        }
+                    });
                 }).catch(function (error) {
                     alert(error);
                 })
