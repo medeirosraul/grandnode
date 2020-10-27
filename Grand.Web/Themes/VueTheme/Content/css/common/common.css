@@ -272,12 +272,13 @@ dl, ol, ul {
 .product-box .b-rating .b-rating-star {
     padding: 0 2px;
 }
-.product-box .rating .b-rating + span {
+.product-box .rating .b-rating + a {
+    color: #212529;
     position: relative;
     font-size: 14px;
     font-weight: 500;
 }
-.product-box .rating .b-rating + span::before {
+.product-box .rating .b-rating + a::before {
     content: "/";
     margin: 0 3px;
 }

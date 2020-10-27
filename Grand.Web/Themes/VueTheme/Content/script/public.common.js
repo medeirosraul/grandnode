@@ -22,13 +22,12 @@
             }
         });
     }).catch(function (error) {
-        alert(error)
+        alert(error);
     });
     return false;
 }
 
 function displayPopupPrivacyPreference(html) {
-    document.querySelector('.modal-place').innerHTML = html;
     new Vue({
         el: '#ModalPrivacyPreference',
         data: {

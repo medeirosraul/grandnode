@@ -11,7 +11,7 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "contactvendor_top" })
     @if (Model.SuccessfullySent)
     {
-        <div class="result alert alert-info my-3">
+        <div class="result alert alert-info text-center my-3">
             @Model.Result
         </div>
     }
