@@ -17,7 +17,7 @@
                         }
                         @if (Model.PrivacyPreference)
                         {
-                            <b-list-group-item id="btnPrivacyPreference" href="@Url.RouteUrl("PrivacyPreference")" onclick="GetPrivacyPreference(this.href); return false;">@T("PrivacyPreference")</b-list-group-item>
+                            <b-list-group-item id="btnPrivacyPreference" href="#" onclick="GetPrivacyPreference('@Url.RouteUrl("PrivacyPreference")'); return false;">@T("PrivacyPreference")</b-list-group-item>
                         }
                         @foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterRow1).ToList())
                         {

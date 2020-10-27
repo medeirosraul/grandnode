@@ -22,7 +22,7 @@
             }
         });
     }).catch(function (error) {
-        console.log(error);
+        alert(error)
     });
     return false;
 }
@@ -134,9 +134,9 @@ function displayPopupQuickView(html) {
 
 function displayBarNotification(message, messagetype, timeout) {
     if (messagetype == 'error') {
-        toastHTML = '<b-toast id="grandToast" variant="danger" title=' + messagetype +'>'+ message +'</b-toast>'
+        toastHTML = '<b-toast id="grandToast" auto-hide-delay=' + timeout +' variant="danger" title=' + messagetype +'>'+ message +'</b-toast>'
     } else {
-        toastHTML = '<b-toast id="grandToast" variant="info" title=' + messagetype+'>' + message + '</b-toast>'
+        toastHTML = '<b-toast id="grandToast" auto-hide-delay=' + timeout +' variant="info" title=' + messagetype+'>' + message + '</b-toast>'
     }
     document.querySelector('.modal-place').innerHTML = toastHTML;
     new Vue({
@@ -372,7 +372,7 @@ function sendcontactusform(urladd) {
 function GetPrivacyPreference(href) {
     axios({
         url: href,
-        method: 'post',
+        method: 'get',
     }).then(function (response) {
         displayPopupPrivacyPreference(response.data.html)
     }).catch(function (error) {
@@ -387,8 +387,7 @@ function SavePrivacyPreference(href) {
         method: 'post',
         data: data
     }).then(function (response) {
-        console.log(response);
-        //$('#ModalPrivacyPreference').modal('hide');
+        
     }).catch(function (error) {
         alert(error);
     });
