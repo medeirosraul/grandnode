@@ -1,0 +1,135 @@
+﻿@model VendorAddressModel
+@if (Model.CountryEnabled && Model.StateProvinceEnabled)
+{
+<script asp-location="Footer">
+            document.getElementById("@Html.IdFor(model => model.CountryId)").addEventListener('change',function () {
+                var selectedItem = this.value;
+                var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+                var statesProgress = document.getElementById("states-loading-progress");
+                statesProgress.style.display = "show";
+                axios({
+                    method: 'get',
+                    url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                    params: { "countryId": selectedItem, "addSelectStateItem": "true" },
+                }).then(function (response) {
+                    ddlStates.innerHTML = '';
+                    response.data.forEach(function (id, option) {
+                        elChild = document.createElement('option');
+                        elChild.setAttribute('value', id.id);
+                        elChild.innerHTML = id.name;
+                        ddlStates.appendChild(elChild);
+                    })
+                    statesProgress.style.display = "none";
+                }).catch(function (error) {
+                    alert(error);
+                    statesProgress.style.display = "none";
+                });
+            });
+</script>
+}
+<input asp-for="Id" type="hidden" />
+<b-row class="edit-address">
+    @if (Model.CompanyEnabled)
+    {
+        <b-col sm="12" class="form-group">
+            <label asp-for="Company" class="col-form-label">@T("Address.Fields.Company"):</label>
+            @if (Model.CompanyRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="Company" class="form-control" />
+            <span asp-validation-for="Company"></span>
+        </b-col>
+    }
+    @if (Model.CountryEnabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="CountryId" class="col-form-label">@T("Address.Fields.Country"):</label>
+            <span class="required">*</span>
+            <select asp-for="CountryId" asp-items="Model.AvailableCountries" class="custom-select form-control"></select>
+            <span asp-validation-for="CountryId"></span>
+        </b-col>
+    }
+
+    @if (Model.CountryEnabled && Model.StateProvinceEnabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="StateProvinceId" class="col-form-label">@T("Address.Fields.StateProvince"):</label>
+            <select asp-for="StateProvinceId" class="custom-select form-control" asp-items="Model.AvailableStates"></select>
+            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
+            <span asp-validation-for="StateProvinceId"></span>
+        </b-col>
+    }
+    @if (Model.CityEnabled)
+    {
+        <b-col sm="12" class="form-group">
+            <label asp-for="City" class="col-form-label">@T("Address.Fields.City"):</label>
+            @if (Model.CityRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City"></span>
+        </b-col>
+    }
+    @if (Model.StreetAddressEnabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="Address1" class="col-form-label">@T("Address.Fields.Address1"):</label>
+            @if (Model.StreetAddressRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="Address1" class="form-control" />
+            <span asp-validation-for="Address1"></span>
+        </b-col>
+    }
+    @if (Model.StreetAddress2Enabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="Address2" class="col-form-label">@T("Address.Fields.Address2"):</label>
+            @if (Model.StreetAddress2Required)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="Address2" class="form-control" />
+            <span asp-validation-for="Address2"></span>
+        </b-col>
+    }
+    @if (Model.ZipPostalCodeEnabled)
+    {
+        <b-col sm="12" class="form-group">
+            <label asp-for="ZipPostalCode" class="col-form-label">@T("Address.Fields.ZipPostalCode"):</label>
+            @if (Model.ZipPostalCodeRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="ZipPostalCode" class="form-control" />
+            <span asp-validation-for="ZipPostalCode"></span>
+        </b-col>
+    }
+    @if (Model.PhoneEnabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="PhoneNumber" class="col-form-label">@T("Address.Fields.PhoneNumber"):</label>
+            @if (Model.PhoneRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber"></span>
+        </b-col>
+    }
+    @if (Model.FaxEnabled)
+    {
+        <b-col md="6" sm="12" class="form-group">
+            <label asp-for="FaxNumber" class="col-form-label">@T("Address.Fields.FaxNumber"):</label>
+            @if (Model.FaxRequired)
+            {
+                <span class="required">*</span>
+            }
+            <input asp-for="FaxNumber" class="form-control" />
+            <span asp-validation-for="FaxNumber"></span>
+        </b-col>
+    }
+</b-row>

@@ -1,0 +1,99 @@
+﻿@model CheckoutConfirmModel
+@inject IPageHeadBuilder pagebuilder
+@{
+    Layout = "_ColumnsMix";
+
+    //title
+    pagebuilder.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+<div class="page checkout-page order-confirm-page">
+    @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Confirm })
+    <div class="confirm-order">
+        <form asp-route="CheckoutConfirm" method="post" id="confirm-order-form">
+            <h2 class="text-center generalTitle">@T("Checkout.ConfirmYourOrder")</h2>
+            <div class="page-body checkout-data">
+                @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_confirm_top" })
+                <div class="order-summary">
+                    @await Component.InvokeAsync("OrderSummary", new { prepareAndDisplayOrderReviewData = true })
+                </div>
+                @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_confirm_bottom" })
+            </div>
+
+            @if (!String.IsNullOrEmpty(Model.MinOrderTotalWarning))
+            {
+                <span class="min-order-warning">@Model.MinOrderTotalWarning</span>
+            }
+            else
+            {
+                <div class="row m-0">
+                    <div class="col-lg-1 col-sm-2 col-12  ml-auto mb-1 buttons">
+                        <div class="row">
+                            @if (Model.TermsOfServiceOnOrderConfirmPage)
+                            {
+                                <input type="submit" name="nextstep" @@click="showMsgBoxOne" value="@T("Checkout.ConfirmButton")" class="btn btn-info btn-block confirm-order-next-step-button" />
+                                <script>
+                                    var mix = {
+                                            methods: {
+                                                showMsgBoxOne() {
+                                                    const h = this.$createElement
+
+                                                    const titleVNode = h('div', { domProps: { innerHTML: '<h5>@T("Checkout.TermsOfService.IAccept")</h5>' } })
+                                                    const messageVNode = h('div', { domProps: { innerHTML: '@T("Checkout.TermsOfService.PleaseAccept") <a href="@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse })" target="popup" onclick="window.open(@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse }))">@T("Checkout.TermsOfService.Read")</a>' } })
+
+                                                    this.$bvModal.msgBoxConfirm([messageVNode], {
+                                                        title: [titleVNode],
+                                                        centered: true,
+                                                        size: 'md',
+                                                        okVariant: 'info',
+                                                        okTitle: 'Ok',
+                                                        cancelTitle: 'Cancel',
+                                                        cancelVariant: 'danger',
+                                                        footerClass: 'p-2',
+                                                        hideHeaderClose: false,
+                                                    })
+                                                    .then(value => {
+                                                        this.boxOne = value
+                                                        if (value == true) {
+                                                            document.querySelector('#confirm-order-form').submit();
+                                                        }
+                                                    })
+                                                    .catch(err => {
+
+                                                    })
+                                                },
+                                            }
+
+                                    };
+                                </script>
+                            }
+                            else
+                            {
+                                <input type="submit" name="nextstep" @@click="document.querySelector('#confirm-order-form').submit();" value="@T("Checkout.ConfirmButton")" class="btn btn-info btn-block confirm-order-next-step-button" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <script asp-location="Footer">
+                    document.getElementById('confirm-order-form').addEventListener('submit', function () {
+                        var button = this.querySelectorAll('input[type="submit"][name="nextstep"]');
+                        setTimeout(function () {
+                            button.setAttribute('disabled', 'disabled');
+                        }, 0);
+                    });
+                </script>
+            }
+            @if (Model.Warnings.Any())
+            {
+                <div class="message-error">
+                    <ul>
+                        @foreach (var warning in Model.Warnings)
+                        {
+                            <li>@warning</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </form>
+    </div>
+
+</div>

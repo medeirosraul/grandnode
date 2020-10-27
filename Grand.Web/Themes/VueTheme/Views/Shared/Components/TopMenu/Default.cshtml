@@ -1,0 +1,83 @@
+﻿@model TopMenuModel
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
+@if (Model.DisplayHomePageMenu)
+{
+    <b-nav-item href="@Url.RouteUrl("HomePage")"><span class="title">@T("HomePage")</span></b-nav-item>
+}
+@{
+    var rootCategories = Model.Categories.ToList();
+}
+@foreach (var category in rootCategories)
+{
+    var categoryLineModel = new TopMenuModel.CategoryLineModel
+    {
+        Category = category
+    };
+    <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+}
+
+@foreach (var topic in Model.Topics)
+{
+    <b-nav-item href="@Url.RouteUrl("Topic", new { SeName=topic.SeName })"><span class="title">@topic.Name</span></b-nav-item>
+}
+@if (Model.Manufacturers.Any())
+{
+
+    <b-nav-item-dropdown id="menufacturer-menu" text="@T("Manufacturers.Menu")">
+        <template slot="button-content">
+            <span class="title">@T("Manufacturers.Menu")</span>
+            <b-icon icon="chevron-down"></b-icon>
+        </template>
+        <b-dropdown-group>
+            <li class="nav-item">
+                <a class="nav-link text-info" href="@Url.RouteUrl("ManufacturerList")">
+                    <strong>@T("Manufacturers.List")</strong>
+                </a>
+            </li>
+            @foreach (var manuf in Model.Manufacturers)
+            {
+                <b-nav-item href="@Url.RouteUrl("Manufacturer", new { SeName = manuf.SeName })">
+                    <span class="title">@manuf.Name</span>
+                    @if (!string.IsNullOrEmpty(manuf.Icon))
+                    {
+                        <span class="category-icon @manuf.Icon"></span>
+                    }
+                </b-nav-item>
+            }
+        </b-dropdown-group>
+    </b-nav-item-dropdown>
+}
+@if (Model.DisplaySearchMenu | Model.DisplayNewProductsMenu | Model.DisplayCustomerMenu | Model.DisplayBlogMenu | Model.DisplayForumsMenu | Model.DisplayContactUsMenu)
+{
+    @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("NewProducts")" class="solo-link-item"><span class="title">@T("Products.NewProducts")</span></b-nav-item>
+    }
+    @if (Model.DisplaySearchMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("ProductSearch")" class="solo-link-item"><span class="title">@T("Search")</span></b-nav-item>
+    }
+    @if (Model.DisplayCustomerMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("CustomerInfo")" class="solo-link-item"><span class="title">@T("Account.MyAccount")</span></b-nav-item>
+    }
+    @if (Model.BlogEnabled && Model.DisplayBlogMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("Blog")" class="solo-link-item"><span class="title">@T("Blog")</span></b-nav-item>
+    }
+    @if (Model.ForumEnabled && Model.DisplayForumsMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("Boards")" class="solo-link-item"><span class="title">@T("Forum.Forums")</span></b-nav-item>
+    }
+    @if (Model.DisplayContactUsMenu)
+    {
+        <b-nav-item href="@Url.RouteUrl("ContactUs")" class="solo-link-item"><span class="title">@T("ContactUs")</span></b-nav-item>
+    }
+}
+@await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_after" })
+
+@{
+    var rootCategoriesResponsive = Model.Categories.ToList();
+    //name it "Categories" if we have only categories. Otherwise, "Menu"
+    var responsiveMenuTitle = (rootCategoriesResponsive.Any() && Model.Topics.Any()) ? T("Categories") : T("Menu");
+}

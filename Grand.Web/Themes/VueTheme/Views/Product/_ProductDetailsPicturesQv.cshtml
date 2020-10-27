@@ -1,0 +1,12 @@
+﻿@model ProductDetailsModel
+<b-col xl="5" lg="4" md="12" cols="12" class="mt-md-0 mt-3 px-0">
+    <div class="gallery">
+        <b-img-lazy class="img-fluid"
+                    alt="@Model.DefaultPictureModel.AlternateText"
+                    src="@Model.DefaultPictureModel.ImageUrl"
+                    data-fullsize="@Model.DefaultPictureModel.FullSizeImageUrl"
+                    title="@Model.DefaultPictureModel.Title"
+                    itemprop="image"
+                    id="main-product-img-@Model.Id" />
+    </div>
+</b-col>

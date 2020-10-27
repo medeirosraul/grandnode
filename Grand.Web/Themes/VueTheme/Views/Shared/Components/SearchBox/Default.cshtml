@@ -1,0 +1,22 @@
+﻿@model SearchBoxModel
+@using System.Text.Encodings.Web
+<form asp-route="ProductSearch" method="get" id="small-search-box-form" class="searchBox w-100 px-3 order-2">
+    <input type="hidden" asp-for="Box" value="true" />
+    <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
+    <div class="input-group flex-row">
+        <input type="search" class="form-control search-box-text" id="small-searchterms" autocomplete="on" name="q" placeholder="@T("Search.SearchBox.Tooltip")">
+        @if (Model.AvailableCategories.Any())
+        {
+            <select asp-for="SearchCategoryId" asp-items="Model.AvailableCategories" class="search-box-select custom-select input-group-addon"></select>
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox_before_search_button" })
+
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-info search-box-button float-sm-right d-inline-flex">
+                <span class="sr-only">@T("Search.SearchBox.Tooltip")</span>
+                <b-icon icon="search"></b-icon>
+            </button>
+        </div>
+    </div>
+    @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox" })
+</form>
