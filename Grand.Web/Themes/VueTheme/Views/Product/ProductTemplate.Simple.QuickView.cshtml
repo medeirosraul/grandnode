@@ -1,5 +1,11 @@
 ﻿@model ProductDetailsModel
 @inject SeoSettings seoSettings
+@using Grand.Core;
+@using Grand.Framework.Themes
+@using Grand.Framework.UI
+@inject IWorkContext workContext
+@inject IThemeContext themeContext
+@inject IPageHeadBuilder pagebuilder
 
 @{
     Layout = "";
@@ -8,7 +14,17 @@
 }
 @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_quickview_after_breadcrumb", additionalData = Model.Id })
 <b-modal ref="ModalQuickView" id="ModalQuickView" @@shown="onShown" size="xl" centered hide-footer hide-header>
-    <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
+    @{
+        var supportRtl = workContext.WorkingLanguage.Rtl;
+        if (supportRtl)
+        {
+            <link href="~/Themes/VueTheme/Content/css/product/product.rtl.css" rel="stylesheet" type="text/css" />
+        }
+        else
+        {
+            <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
+        }
+    }
     <div class="page product-details-page product-standard">
         <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
         <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
@@ -56,7 +72,7 @@
                             <partial name="_SKU_Man_GTIN_Ven" model="Model" />
                             <!--delivery-->
                             @if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(Model.DeliveryDate)
-                    || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
+|| Model.NotReturnable || Model.AdditionalShippingCharge > 0)
                             {
                                 <partial name="_DeliveryInfo" model="Model" />
                             }

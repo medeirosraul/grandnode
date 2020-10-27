@@ -9,7 +9,15 @@
 
 @{
     var themeName = themeContext.WorkingThemeName;
-    pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/product/product.css", themeName));
+    var supportRtl = workContext.WorkingLanguage.Rtl;
+    if (supportRtl)
+    {
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/product/product.rtl.css", themeName));
+    }
+    else
+    {
+        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/product/product.css", themeName));
+    }
 }
 @{
     Layout = "_ColumnsMix";
