@@ -4,14 +4,15 @@
 @inject IPageHeadBuilder pagebuilder
 @{
     var supportRtl = workContext.WorkingLanguage.Rtl;
+
+    pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.Slider/Content/slider.js");
+
     if (supportRtl)
     {
-        pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.Slider/Content/slider.rtl.js");
         pagebuilder.AddCssFileParts(ResourceLocation.Head, "~/Plugins/Widgets.Slider/Content/style.rtl.css");
     }
     else
     {
-        pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.Slider/Content/slider.js");
         pagebuilder.AddCssFileParts(ResourceLocation.Head, "~/Plugins/Widgets.Slider/Content/style.css");
     }
 }
@@ -27,25 +28,11 @@
     {
         if (string.IsNullOrEmpty(item.PictureUrl))
         {
-            if (item.FullWidth)
-            {
-                <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
-            }
-            else
-            {
-                <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
-            }
+            <b-carousel-slide height="500" img-blank img-alt="Blank image" caption-html="@item.Description" @if (item.FullWidth) { <text>data-width="full"</text> } @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
         }
         else
         {
-            if (item.FullWidth)
-            {
-                <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
-            }
-            else
-            {
-                <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description" @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
-            }
+            <b-carousel-slide img-src="@item.PictureUrl" text-html="@item.Description" @if (item.FullWidth) { <text>data-width="full"</text> } @if (!string.IsNullOrEmpty(item.Link)) { <text> class="link" onclick="window.location='@item.Link'" </text> }></b-carousel-slide>
         }
     }
 </b-carousel>
