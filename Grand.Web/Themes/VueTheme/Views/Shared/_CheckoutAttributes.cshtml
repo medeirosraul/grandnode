@@ -47,7 +47,7 @@
                         break;
                     case AttributeControlType.RadioList:
                         {
-                            <ul class="option-list pl-0">
+                            <ul class="option-list px-0">
                                 @foreach (var attributeValue in attribute.Values)
                                 {
                                     var attributeName = String.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
@@ -75,7 +75,7 @@
                         {
                             <fieldset>
                                 <legend></legend>
-                                <ul class="option-list pl-0">
+                                <ul class="option-list px-0">
                                     @foreach (var attributeValue in attribute.Values)
                                     {
                                         var attributeName = String.IsNullOrEmpty(attributeValue.PriceAdjustment) ?

@@ -28,7 +28,6 @@
                 .then(function (response) {
                     document.getElementById("helpfulness-vote-yes-@(Model.ProductReviewId)").innerHTML = response.data.TotalYes
                     document.getElementById("helpfulness-vote-no-@(Model.ProductReviewId)").innerHTML = response.data.TotalNo;
-                    console.log(response);
                     new Vue({
                         el: ".modal-place",
                         methods: {

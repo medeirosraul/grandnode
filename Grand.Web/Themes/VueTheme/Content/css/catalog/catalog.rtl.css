@@ -80,6 +80,13 @@
     height: 32px;
 }
 
+/* catalog selectors */
+
+.viewmode-icon.grid {
+    margin-right: 0 !important;
+    margin-left: 1.5rem;
+}
+
 /* catalog right side */
 
 .sort-container {
