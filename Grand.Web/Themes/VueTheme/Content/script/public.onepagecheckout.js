@@ -98,6 +98,38 @@ var Checkout = {
                             })
                     },
             }
+        });    
+        new Vue({
+            el: '.section.new-shipping-address',
+            methods: {
+                showMsgBoxOne() {
+                    const h = this.$createElement
+
+                    const titleVNode = h('div', { domProps: { innerHTML: '<h5>' + m_title + '</h5>' } })
+                    const messageVNode = h('div', { domProps: { innerHTML: '' + m_terms + ' <a href="' + m_link + '" target="popup" onclick="window.open(' + m_link + ')">' + m_linkname + '</a>' } })
+
+                    this.$bvModal.msgBoxConfirm([messageVNode], {
+                        title: [titleVNode],
+                        centered: true,
+                        size: 'md',
+                        okVariant: 'info',
+                        okTitle: 'Ok',
+                        cancelTitle: 'Cancel',
+                        cancelVariant: 'danger',
+                        footerClass: 'p-2',
+                        hideHeaderClose: false,
+                    })
+                        .then(value => {
+                            this.boxOne = value
+                            if (value == true) {
+                                ConfirmOrder.save()
+                            }
+                        })
+                        .catch(err => {
+
+                        })
+                },
+            }
         });
         document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
     },
@@ -200,6 +232,7 @@ var Billing = {
             response.wrong_billing_address = false;
         }
         if (Billing.disableBillingAddressCheckoutStep) {
+            console.log(response.data)
             if (response.data.wrong_billing_address) {
                 Accordion.showSection('#opc-billing');
             } else {
