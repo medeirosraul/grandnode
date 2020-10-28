@@ -250,8 +250,8 @@ dl, ol, ul {
     border-radius: 0;
     transform: translateY(100%);
     -webkit-transform: translateY(100%);
-    transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
+    transition: all .1s ease;
+    -webkit-transition: all .1s ease;
 }
 .product-box:hover .quick-view-button {
     transform: translateY(0);
@@ -310,6 +310,8 @@ dl, ol, ul {
     visibility: hidden;
     transform: translateY(100%);
     -webkit-transform: translateY(100%);
+    transition: all .1s ease;
+    -webkit-transition: all .1s ease;
     background: #fff;
     border: 0;
     padding: 0;
@@ -333,6 +335,8 @@ dl, ol, ul {
     border-radius: .25rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    transition: all .1s ease;
+    -webkit-transition: all .1s ease;
     z-index: -1;
 }
 .product-box:hover .card-footer::before {

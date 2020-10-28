@@ -258,7 +258,11 @@
                         methods: {
                             productImage: function (event) {
                                 var Imagesrc = event.target.parentElement.getAttribute('data-href');
-                                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".img-second")[0];
+                                if (event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".hover-img")) {
+                                    var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".hover-img")[0];
+                                } else {
+                                    var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".main-product-img")[0];
+                                }
                                 Image.setAttribute('src', Imagesrc);
                             },
                             handleScroll: function () {
