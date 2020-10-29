@@ -36,8 +36,14 @@
                         if (ddlStates.length > 1) {
                             if (ddlStates.options[0].selected = true) {
                                 ddlStates.nextSibling.nextElementSibling.style.display = "block";
+                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                                }
                             } else {
                                 ddlStates.nextSibling.nextElementSibling.style.display = "none";
+                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                                }
                             }
                         } else {
                             ddlStates.nextSibling.nextElementSibling.style.display = "none";

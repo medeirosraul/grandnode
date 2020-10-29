@@ -9,6 +9,19 @@
 @if (Model.CountryEnabled && Model.StateProvinceEnabled)
 {
 <script asp-location="Footer">
+        var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
+                if (document.getElementById("@Html.IdFor(model => model.StateProvinceId)")) {
+                    var state_element = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+                    var ddlStates2 = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+                    state_element.onchange = function () {
+                        if (ddlStates2.options[0].selected) {
+                            ddlStates2.nextSibling.nextElementSibling.style.display = "block";
+                        } else {
+                            ddlStates2.nextSibling.nextElementSibling.style.display = "none";
+                        }
+                    }
+                }
+
         document.getElementById("@Html.IdFor(model => model.CountryId)").addEventListener('change',function () {
                 var selectedItem = this.value;
                 var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
@@ -26,6 +39,21 @@
                         elChild.innerHTML = id.name;
                         ddlStates.appendChild(elChild);
                     })
+                    if (ddlStates.length > 1) {
+                        if (ddlStates.options[0].selected = true) {
+                            ddlStates.nextSibling.nextElementSibling.style.display = "block";
+                            if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                                ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                            }
+                        } else {
+                            ddlStates.nextSibling.nextElementSibling.style.display = "none";
+                            if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                                ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                            }
+                        }
+                    } else {
+                        ddlStates.nextSibling.nextElementSibling.style.display = "none";
+                    }
                     statesProgress.style.display = "none";
                 }).catch(function (error) {
                     alert(error);
@@ -86,13 +114,17 @@
                     <fieldset class="col-sm-6 col-12 form-group">
                         <legend class="sr-only">@T("account.fields.firstname")</legend>
                         <label asp-for="FirstName" class="col-form-label">@T("Account.Fields.FirstName"):</label>
-                        <input asp-for="FirstName" class="form-control" />
+                        <span class="required">*</span>
+                        <input asp-for="FirstName" class="form-control" v-validate="'required'" />
+                        <span class="field-validation-error" style="display: none;">@T("account.fields.firstname.required")</span>
                         <span asp-validation-for="FirstName"></span>
                     </fieldset>
                     <fieldset class="col-sm-6 col-12 form-group">
                         <legend class="sr-only">@T("account.fields.lastname")</legend>
                         <label asp-for="LastName" class="col-form-label">@T("Account.Fields.LastName"):</label>
-                        <input asp-for="LastName" class="form-control" />
+                        <span class="required">*</span>
+                        <input asp-for="LastName" class="form-control" v-validate="'required'" />
+                        <span class="field-validation-error" style="display: none;">@T("account.fields.lastname.required")</span>
                         <span asp-validation-for="LastName"></span>
                     </fieldset>
                 </div>
@@ -124,7 +156,9 @@
                     <legend class="sr-only">@T("account.fields.email")</legend>
                     <div class="row">
                         <label asp-for="Email" class="col-form-label">@T("Account.Fields.Email"):</label>
-                        <input asp-for="Email" class="form-control" />
+                        <span class="required">*</span>
+                        <input asp-for="Email" class="form-control" v-validate="'required|email'" />
+                        <span class="field-validation-error" style="display: none;">@T("account.fields.lastname.required")</span>
                         <span asp-validation-for="Email"></span>
                     </div>
                 </fieldset>
@@ -134,9 +168,11 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <label asp-for="Username" class="col-form-label">@T("Account.Fields.Username"):</label>
+                            <span class="required">*</span>
                         </div>
                         <div class="col-12">
-                            <input asp-for="Username" class="form-control" />
+                            <input asp-for="Username" class="form-control" v-validate="'required'" />
+                            <span class="field-validation-error" style="display: none;">@T("account.fields.username.required")</span>
                             <span asp-validation-for="Username"></span>
                             @if (Model.CheckUsernameAvailabilityEnabled)
                             {
@@ -157,8 +193,18 @@
                 <b-card-text>
                     <div class="form-group">
                         <label asp-for="Company" class="col-form-label">@T("Account.Fields.Company"):</label>
-                        <input asp-for="Company" class="form-control" />
-                        <span asp-validation-for="Company"></span>
+                        @if (Model.CompanyRequired)
+                        {
+                            <span class="required">*</span>
+                            <input asp-for="Company" class="form-control" v-validate="'required'" />
+                            <span class="field-validation-error" style="display: none;">@T("account.fields.username.required")</span>
+                            <span asp-validation-for="Company"></span>
+                        }
+                        else
+                        {
+                            <input asp-for="Company" class="form-control" />
+                            <span asp-validation-for="Company"></span>
+                        }
                     </div>
                 </b-card-text>
             </b-card>
@@ -191,20 +237,39 @@
                     <b-row class="form-fields d-flex">
                         @if (Model.StreetAddressEnabled)
                         {
-                            <fieldset class="form-group col-12 col-sm-6">
-                                <legend class="sr-only">@T("account.fields.streetaddress")</legend>
-                                <label asp-for="StreetAddress" class="col-form-label">@T("Account.Fields.StreetAddress"):</label>
+                        <fieldset class="form-group col-12 col-sm-6">
+                            <legend class="sr-only">@T("account.fields.streetaddress")</legend>
+                            <label asp-for="StreetAddress" class="col-form-label">@T("Account.Fields.StreetAddress"):</label>
+                            @if (Model.StreetAddressRequired)
+                            {
+                                <span class="required">*</span>
+                                <input asp-for="StreetAddress" class="form-control" v-validate="'required'" />
+                                <span class="field-validation-error" style="display: none;">@T("account.fields.streetaddress.required")</span>
+                                <span asp-validation-for="StreetAddress"></span>
+                            }
+                            else
+                            {
                                 <input asp-for="StreetAddress" class="form-control" />
                                 <span asp-validation-for="StreetAddress"></span>
-                            </fieldset>
+                            }
+                        </fieldset>
                         }
                         @if (Model.StreetAddress2Enabled)
                         {
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.streetaddress2")</legend>
                                 <label asp-for="StreetAddress2" class="col-form-label">@T("Account.Fields.StreetAddress2"):</label>
-                                <input asp-for="StreetAddress2" class="form-control" />
-                                <span asp-validation-for="StreetAddress2"></span>
+                                @if (Model.StreetAddress2Required)
+                                {
+                                    <span class="required">*</span>
+                                    <input asp-for="StreetAddress2" class="form-control" v-validate="'required'"/>
+                                    <span class="field-validation-error" style="display: none;">@T("account.fields.streetaddress2.required")</span>
+                                    <span asp-validation-for="StreetAddress2"></span>
+                                } else
+                                {
+                                    <input asp-for="StreetAddress2" class="form-control" />
+                                    <span asp-validation-for="StreetAddress2"></span>
+                                }
                             </fieldset>
                         }
                         @if (Model.ZipPostalCodeEnabled)
@@ -212,8 +277,17 @@
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.zippostalcode")</legend>
                                 <label asp-for="ZipPostalCode" class="col-form-label">@T("Account.Fields.ZipPostalCode"):</label>
-                                <input asp-for="ZipPostalCode" class="form-control" />
-                                <span asp-validation-for="ZipPostalCode"></span>
+                                @if (Model.ZipPostalCodeRequired)
+                                {
+                                    <span class="required">*</span>
+                                    <input asp-for="ZipPostalCode" class="form-control" v-validate="'required'"/>
+                                    <span class="field-validation-error" style="display: none;">@T("account.fields.zippostalcode.required")</span>
+                                    <span asp-validation-for="ZipPostalCode"></span>
+                                } else
+                                {
+                                    <input asp-for="ZipPostalCode" class="form-control" />
+                                    <span asp-validation-for="ZipPostalCode"></span>
+                                }
                             </fieldset>
                         }
                         @if (Model.CityEnabled)
@@ -221,8 +295,17 @@
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.city")</legend>
                                 <label asp-for="City" class="col-form-label">@T("Account.Fields.City"):</label>
-                                <input asp-for="City" class="form-control" />
-                                <span asp-validation-for="City"></span>
+                                @if (Model.CityRequired)
+                                {
+                                    <span class="required">*</span>
+                                    <input asp-for="City" class="form-control" v-validate="'required'"/>
+                                    <span class="field-validation-error" style="display: none;">@T("account.fields.city.required")</span>
+                                    <span asp-validation-for="City"></span>
+                                } else
+                                {
+                                    <input asp-for="City" class="form-control" />
+                                    <span asp-validation-for="City"></span>
+                                }
                             </fieldset>
                         }
                         @if (Model.CountryEnabled)
@@ -230,8 +313,17 @@
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.country")</legend>
                                 <label asp-for="CountryId" class="col-form-label">@T("Account.Fields.Country"):</label>
-                                <select asp-for="CountryId" class="custom-select form-control" asp-items="Model.AvailableCountries"></select>
-                                <span asp-validation-for="CountryId"></span>
+                                @if (Model.CountryRequired)
+                                {
+                                    <span class="required">*</span>
+                                    <select asp-for="CountryId" class="custom-select form-control" asp-items="Model.AvailableCountries"  v-validate="'required'"></select>
+                                    <span class="field-validation-error" style="display: none;">@T("account.fields.country.required")</span>
+                                    <span asp-validation-for="CountryId"></span>
+                                } else
+                                {
+                                    <select asp-for="CountryId" class="custom-select form-control" asp-items="Model.AvailableCountries"></select>
+                                    <span asp-validation-for="CountryId"></span>
+                                }
                             </fieldset>
                         }
                         @if (Model.CountryEnabled && Model.StateProvinceEnabled)
@@ -240,7 +332,7 @@
                                 <legend class="sr-only">@T("account.fields.stateprovince")</legend>
                                 <label asp-for="StateProvinceId" class="col-form-label">@T("Account.Fields.StateProvince"):</label>
                                 <select asp-for="StateProvinceId" class="custom-select form-control" asp-items="Model.AvailableStates"></select>
-                                <span asp-validation-for="StateProvinceId"></span>
+                                <span class="field-validation-error" style="display: none;">@T("address.fields.stateprovince.required")</span>
                                 <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
                             </fieldset>
                         }
@@ -262,8 +354,16 @@
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.phone")</legend>
                                 <label asp-for="Phone" class="col-form-label">@T("Account.Fields.Phone"):</label>
-                                <input asp-for="Phone" class="form-control" />
-                                <span asp-validation-for="Phone"></span>
+                                @if (Model.PhoneRequired) { 
+                                    <span class="required">*</span>
+                                    <input asp-for="Phone" class="form-control" v-validate="'required'"/>
+                                    <span class="field-validation-error" style="display: none;">@T("address.fields.phone.required")</span>
+                                    <span asp-validation-for="Phone"></span>
+                                } else
+                                {
+                                    <input asp-for="Phone" class="form-control" />
+                                    <span asp-validation-for="Phone"></span>
+                                }
                             </fieldset>
                         }
                         @if (Model.FaxEnabled)
@@ -271,8 +371,17 @@
                             <fieldset class="form-group col-12 col-sm-6">
                                 <legend class="sr-only">@T("account.fields.fax")</legend>
                                 <label asp-for="Fax" class="col-form-label">@T("Account.Fields.Fax"):</label>
-                                <input asp-for="Fax" class="form-control" />
-                                <span asp-validation-for="Fax"></span>
+                                @if (Model.FaxRequired)
+                                {
+                                    <span class="required">*</span>
+                                    <input asp-for="Fax" class="form-control" v-validate="'required'"/>
+                                    <span class="field-validation-error" style="display: none;">@T("address.fields.fax.required")</span>
+                                    <span asp-validation-for="Fax"></span>
+                                } else
+                                {
+                                    <input asp-for="Fax" class="form-control" />
+                                    <span asp-validation-for="Fax"></span>
+                                }
                             </fieldset>
                         }
                     </b-row>
@@ -333,14 +442,18 @@
                 <div class="form-group col-12">
                     <div class="row">
                         <label asp-for="Password" class="col-form-label">@T("Account.Fields.Password"):</label>
-                        <input asp-for="Password" class="form-control" />
+                        <span class="required">*</span>
+                        <input asp-for="Password" class="form-control" v-validate="'required'"/>
+                        <span class="field-validation-error" style="display: none;">@T("address.fields.password.required")</span>
                         <span asp-validation-for="Password"></span>
                     </div>
                 </div>
                 <div class="form-group col-12">
                     <div class="row">
                         <label asp-for="ConfirmPassword" class="col-form-label">@T("Account.Fields.ConfirmPassword"):</label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span class="required">*</span>
+                        <input asp-for="ConfirmPassword" class="form-control" v-validate="'required'" />
+                        <span class="field-validation-error" style="display: none;">@T("account.fields.confirmpassword.required")</span>
                         <span asp-validation-for="ConfirmPassword"></span>
                     </div>
                 </div>
@@ -385,3 +498,13 @@
     </div>
     <input type="submit" id="register-button" class="btn btn-secondary register-next-step-button disabled my-3" value="@T("Account.Register.Button")" name="register-button" />
 </form>
+<script asp-location="Header">
+    Vue.use(VeeValidate, {
+        // This is the default
+        inject: true,
+        // Important to name this something other than 'fields'
+        fieldsBagName: 'veeFields',
+        // This is not required but avoids possible naming conflicts
+        errorBagName: 'veeErrors'
+    })
+</script>

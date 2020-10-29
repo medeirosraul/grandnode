@@ -487,10 +487,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (el.getAttribute(mutation.attributeName) == 'true') {
                         if (el.nextSibling.nextElementSibling) {
                             el.nextSibling.nextElementSibling.style.display = "block";
+                            if (el.nextSibling.nextSibling.nextElementSibling) {
+                                el.nextSibling.nextSibling.nextElementSibling.style.display = "block";
+                                el.nextSibling.nextElementSibling.style.display = "none";
+                            }
                         }
                     } else {
                         if (el.nextSibling.nextElementSibling) {
                             el.nextSibling.nextElementSibling.style.display = "none";
+                            if (el.nextSibling.nextSibling.nextElementSibling) {
+                                el.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                            }
                         }
                     }
                 }
