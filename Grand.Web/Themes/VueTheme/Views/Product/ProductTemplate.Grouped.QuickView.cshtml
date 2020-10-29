@@ -43,6 +43,12 @@
                             <partial name="_ProductDetailsPicturesQv" model="Model" />
                             <vc:widget widget-zone="productdetails_after_pictures" additional-data="@Model.Id"></vc:widget>
                             <b-col xl="5" lg="6" md="7" cols="12" class="overview px-md-3 px-0">
+                                @if (!string.IsNullOrEmpty(Model.Flag))
+                                {
+                                    <div class="product-label">
+                                        <b-badge variant="info">@Model.Flag</b-badge>
+                                    </div>
+                                }
                                 <partial name="_Discontinued" model="Model" />
                                 <div class="product-name">
                                     <h2 class="generalTitle mb-3" itemprop="name">
