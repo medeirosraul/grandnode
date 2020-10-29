@@ -16,7 +16,7 @@
     {
         if (Model.IsReservation)
         {
-            <div class="rental-price mb-3">
+            <div class="rental-price mb-2">
                 <label class="mb-0">@T("Products.Price.ReservationPrice"):</label>
                 <span>@Model.ReservationPrice</span>
             </div>
@@ -36,40 +36,40 @@
                 }
             </div>
         }
-        if (!String.IsNullOrWhiteSpace(Model.CatalogPrice))
+        if (!string.IsNullOrWhiteSpace(Model.CatalogPrice))
         {
             @*catalog price*@
-            <div class="catalog-product-price col-12 px-0 mb-3">
-                <label class="mb-0">@T("Products.Price.CatalogPrice"):</label>
-                <span>@Model.CatalogPrice</span>
+            <div class="catalog-product-price col-12 px-0 mb-2">
+                <label class="col-form-label mb-0">@T("Products.Price.CatalogPrice"):</label>
+                <span class="h6 mb-0">@Model.CatalogPrice</span>
             </div>
         }
         if (!(Model.IsAuction && Model.DisableBuyButton))
         {
-            <div class="@if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount))
+            <div class="@if (string.IsNullOrWhiteSpace(Model.PriceWithDiscount))
         {<text>product-price col-12 px-0 d-inline-flex align-items-center</text>}
         else
         {<text>non-discounted-price col-12 px-0 d-flex align-items-center</text>}">
                 @*render price*@
-                <span class="price-value-@(Model.ProductId) actual-price">
+                <span class="price-value-@(Model.ProductId) @if (string.IsNullOrEmpty(Model.PriceWithDiscount)) {<text>actual-price</text>}">
                     @if (Model.IsAuction)
                     {
                         <strong class="actual-price">@T("Products.BuyNowPrice"):</strong>
                     }
-                    @if (!String.IsNullOrWhiteSpace(Model.PriceWithDiscount))
-                    {
+
+                    @if (string.IsNullOrEmpty(Model.PriceWithDiscount)) {
                         <span class="actual-price">@Html.Raw(Model.Price)</span>
-                    }
-                    else
+                    } else
                     {
-                        <strong class="actual-price">@Html.Raw(Model.Price)</strong>
+                        <strong>@Html.Raw(Model.Price)</strong>
                     }
+
                 </span>
-                @if (!String.IsNullOrWhiteSpace(Model.OldPrice))
+                @if (!string.IsNullOrWhiteSpace(Model.OldPrice))
                 {
                     @*old price*@
                     <div class="old-product-price">
-                        <span class="old-price ml-2">@Model.OldPrice</span>
+                        <span class="old-price mx-2">@Model.OldPrice</span>
                     </div>
                 }
 
@@ -77,27 +77,27 @@
         }
         else
         {
-            @if (!String.IsNullOrWhiteSpace(Model.OldPrice))
+            @if (!string.IsNullOrWhiteSpace(Model.OldPrice))
             {
                 @*old price*@
                 <div class="old-product-price">
-                    <span class="old-price ml-2">@Model.OldPrice</span>
+                    <span class="old-price mx-2">@Model.OldPrice</span>
                 </div>
             }
         }
 
-        if (!String.IsNullOrWhiteSpace(Model.PriceWithDiscount))
+        if (!string.IsNullOrWhiteSpace(Model.PriceWithDiscount))
         {
             @*discounted price*@
             <div class="d-inline-flex align-items-center product-price discounted-price col-12 px-0">
-                <label class="mb-0 mr-2">@T("Products.Price.WithDiscount"):</label>
+                <label class="mb-0 mx-2">@T("Products.Price.WithDiscount"):</label>
                 <span class="your-price price-value-@(Model.ProductId)">
-                    <strong>@Html.Raw(Model.PriceWithDiscount)</strong>
+                    <strong class="actual-price">@Html.Raw(Model.PriceWithDiscount)</strong>
                 </span>
                  <meta itemprop="price" content="@Model.PriceValue.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" class="your-price price-value-@(Model.ProductId)" />
             </div>
         }
-        if (!String.IsNullOrEmpty(Model.BasePricePAngV))
+        if (!string.IsNullOrEmpty(Model.BasePricePAngV))
         {
             <div class="base-price-pangv ml-2">
                 @Model.BasePricePAngV
@@ -112,11 +112,11 @@
                 @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Shippinginfo }))
             </div>
         }
-        if (!String.IsNullOrEmpty(Model.CurrencyCode))
+        if (!string.IsNullOrEmpty(Model.CurrencyCode))
         {
             <meta itemprop="priceCurrency" content="@Model.CurrencyCode" />
         }
-        @if (String.IsNullOrWhiteSpace(Model.PriceWithDiscount)) {
+        @if (string.IsNullOrWhiteSpace(Model.PriceWithDiscount)) {
             <meta itemprop="price" content="@Model.PriceValue.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)"/> 
         }
     }
