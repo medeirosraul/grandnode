@@ -11,7 +11,7 @@
 {
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.ReturnRequests })
 }
-<div class="page account-page pl-lg-3">
+<div class="page account-page px-3">
     <h1 class="h2 generalTitle">@string.Format(T("Account.CustomerReturnRequests.Title").Text, Model.ReturnNumber, Model.ReturnRequestStatus)</h1>
     <b-row class="flex-column">
         <div class="return-product-container">
@@ -23,7 +23,7 @@
                 <h5 class="generalTitle">@T("Order.Product(s)")</h5>
                 <div class="mt-1">
                     <div class="return-request-table">
-                        <table class="table table-responsive">
+                        <table class="table">
                             <colgroup>
                                 <col width="1">
                                 <col width="1">
@@ -84,8 +84,8 @@
             @if (!String.IsNullOrEmpty(Model.Comments))
             {
                 <div class="comments">
-                    <label>@T("Account.CustomerReturnRequests.Comments"): </label>
-                    <div>@Html.Raw(Grand.Core.Html.HtmlHelper.FormatText(Model.Comments))</div>
+                    <label class="col-form-label">@T("Account.CustomerReturnRequests.Comments") </label>
+                    <b-card>@Html.Raw(Grand.Core.Html.HtmlHelper.FormatText(Model.Comments))</b-card>
                 </div>
             }
 
@@ -102,9 +102,9 @@
 
             @if (Model.ShowPickupAddress)
             {
-                <div class="card">
-                    <div class="card-body">
-                        <ul class="billing-info pl-0">
+                <b-card>
+                    <b-card-text>
+                        <ul class="billing-info px-0">
                             <li class="title">
                                 <h5 class="generalTitle">@T("Account.CustomerReturnRequests.PickupAddress")</h5>
                             </li>
@@ -185,8 +185,8 @@
                                 </li>
                             }
                         </ul>
-                    </div>
-                </div>
+                    </b-card-text>
+                </b-card>
             }
 
             @if (Model.ReturnRequestNotes.Any())

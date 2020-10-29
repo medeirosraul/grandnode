@@ -59,7 +59,7 @@
                         addAntiForgeryToken(postData);
 
                         var bodyFormData = new FormData();
-                        bodyFormData.append('Id', accountId;
+                        bodyFormData.append('Id', accountId)
                         bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
                         axios({
                             method: 'post',

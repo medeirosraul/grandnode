@@ -72,6 +72,9 @@
                                 <template v-slot:cell(remove)="data">
                                     <div v-html="data.value.href"></div>
                                 </template>
+                                <template v-slot:cell(addtocart)="data">
+                                    <div v-html="data.value.href"></div>
+                                </template>
                             </b-table>
                         </div>
                     </template>
@@ -152,10 +155,16 @@
                                     { key: 'unit', label: '@T("ShoppingCart.UnitPrice")', sortable: true, class: 'text-center' },
                                     { key: 'qty', label: '@T("ShoppingCart.Quantity")', sortable: true, class: 'text-center'  },
                                     { key: 'total', label: '@T("ShoppingCart.ItemTotal")', sortable: true, class: 'text-center'  },
-                                    @if (Model.IsEditable){
+                                    @if (Model.IsEditable || Model.DisplayAddToCart){
                                         <text>
                                             { key: 'remove', label: '@T("Remove")' },
                                         </text>
+                                        @if (Model.DisplayAddToCart)
+                                        {
+                                            <text>
+                                                { key: 'addtocart', label: '@T("addToCart")' },
+                                            </text>
+                                        }
                                     }
                                 ],
                                 items: [
@@ -217,13 +226,23 @@
                                                 </text>
                                             }
                                         },
-                                        @if (Model.IsEditable)
+                                        @if (Model.IsEditable || Model.DisplayAddToCart)
                                         {
-                                            <text>
-                                            remove: {
-                                                href: '<input type="checkbox" id="@T("Remove")-@(item.Id)" name="removefromcart" class="custom-control mx-auto custom-checkbox" value="@(item.Id)">'
+                                            @if (Model.IsEditable) {
+                                                <text>
+                                                remove: {
+                                                    href: '<label class="custom-control custom-switch mb-0 pl-0"><input type="checkbox" id="@T("Remove")-@(item.Id)" name="removefromcart" class="custom-control-input" value="@(item.Id)"><span class="custom-control-label ml-5"></span></label>'
+                                                },
+                                                </text>
                                             }
-                                            </text>
+                                            @if (Model.DisplayAddToCart)
+                                            {
+                                                <text>
+                                                addtocart: {
+                                                    href: '<label class="custom-control custom-switch mb-0 pl-0"><input type="checkbox" id="account.shoppingcart-@(item.Id)" name="addtocart" class="custom-control-input" value="@(item.Id)"><span class="custom-control-label ml-5"></span></label>'
+                                                },
+                                                </text>
+                                            }
                                         }
                                     },
                                         </text>

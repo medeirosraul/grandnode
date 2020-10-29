@@ -20,6 +20,10 @@ a:hover {
     color: #dc3545;
     font-weight: 500;
 }
+.message-error ul {
+    padding: 0;
+    margin-bottom: 0;
+}
 .custom-control {
     cursor: pointer;
 }
@@ -478,6 +482,7 @@ footer .list-group-item:not(.list-group-item-action) {
     background-color: #f8f9fa;
 }
 footer .list-group.social-icons .list-group-item {
+    width: auto;
     background-color: transparent;
 }
 footer .list-group-item span:first-child {

@@ -11,7 +11,7 @@
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.Courses })
 }
 
-<b-card-text class="page account-page auction-list-page pl-lg-3 pt-3 pt-lg-0">
+<div class="page account-page auction-list-page pl-lg-3 pt-3 pt-lg-0">
     <h1 class="h2 generalTitle">@T("Account.Courses")</h1>
     @if (Model.CourseList.Any())
     {
