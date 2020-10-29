@@ -25,7 +25,7 @@
             <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
         }
     }
-    <div class="page product-details-page product-standard">
+    <div class="page product-details-page">
         <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
         <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
             <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
@@ -201,7 +201,7 @@
                             @if (Model.AskQuestionOnProduct)
                             {
                                 <b-tab title="@T("Products.ContactUs")">
-                                    <partial name="_AskQuestionOnProduct" model="Model.ProductAskQuestion" />
+                                    <partial name="_AskQuestionOnProductQV" model="Model.ProductAskQuestion" />
                                 </b-tab>
                             }
                         </b-tabs>
