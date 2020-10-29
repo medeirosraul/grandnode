@@ -473,3 +473,33 @@ function displayPopupNotification(message, messagetype) {
 
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* validation */
+
+    var elements = document.querySelectorAll('.form-control');
+
+    [].forEach.call(elements, function (el) {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.type == "attributes") {
+                    if (el.getAttribute(mutation.attributeName) == 'true') {
+                        if (el.nextSibling.nextElementSibling) {
+                            el.nextSibling.nextElementSibling.style.display = "block";
+                        }
+                    } else {
+                        if (el.nextSibling.nextElementSibling) {
+                            el.nextSibling.nextElementSibling.style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+
+        observer.observe(el, {
+            attributes: true
+        });
+    });
+
+});
