@@ -474,9 +474,9 @@ function displayPopupNotification(message, messagetype) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+/* validation */
 
-    /* validation */
+function validation() {
 
     var elements = document.querySelectorAll('.form-control');
 
@@ -488,8 +488,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (el.nextSibling.nextElementSibling) {
                             el.nextSibling.nextElementSibling.style.display = "block";
                             if (el.nextSibling.nextSibling.nextElementSibling) {
-                                el.nextSibling.nextSibling.nextElementSibling.style.display = "block";
-                                el.nextSibling.nextElementSibling.style.display = "none";
+                                el.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                                el.nextSibling.nextElementSibling.style.display = "block";
                             }
                         }
                     } else {
@@ -508,5 +508,8 @@ document.addEventListener("DOMContentLoaded", function () {
             attributes: true
         });
     });
+}
 
+document.addEventListener("DOMContentLoaded", function () {
+    validation();
 });
