@@ -22,7 +22,7 @@
                 @if (Model.TotalReviews > 0)
                 {
                     <div class="product-review-links order-3">
-                        <b-button variant="outline-info" size="sm" class="review-scroll-button" href="#review-tab___BV_tab_button__">
+                        <b-button variant="outline-info" size="sm" class="review-scroll-button" @@click="active = true" href="#review-tab___BV_tab_button__">
                             @Model.TotalReviews
                             @T("Reviews.Overview.Reviews")
                         </b-button>

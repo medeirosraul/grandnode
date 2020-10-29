@@ -62,7 +62,6 @@
             this.$root.$on('bv::collapse::state', () => {
                 setTimeout(function () {
                     if (document.querySelector('#' + 'opc-shipping.show')) {
-                        console.log(this);
                         new Vue({
                             el: '#opc-shipping .edit-address',
                         });

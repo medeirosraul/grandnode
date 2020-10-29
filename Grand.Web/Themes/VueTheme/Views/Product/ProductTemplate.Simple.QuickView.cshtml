@@ -194,7 +194,7 @@
                             }
                             @if (Model.ProductReviewOverview.AllowCustomerReviews)
                             {
-                                <b-tab id="review-tab" title="@T("Products.Reviews")">
+                                <b-tab id="review-tab" title="@T("Products.Reviews")" :active="active ? true : false">
                                     @await Component.InvokeAsync("ProductReviews", new { productId = Model.Id })
                                 </b-tab>
                             }
