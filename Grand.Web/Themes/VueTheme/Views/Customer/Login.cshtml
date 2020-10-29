@@ -25,7 +25,7 @@
                             </h3>
                         </template>
                         <b-card-text>
-                            <div asp-validation-summary="ModelOnly" class="message-error w-100 text-center">@T("Account.Login.Unsuccessful")</div>
+                            <div asp-validation-summary="ModelOnly" class="message-error w-100 alert alert-danger pb-0 text-center">@T("Account.Login.Unsuccessful")</div>
                             <div class="col-12 form-group mb-0">
                                 @if (Model.UsernamesEnabled)
                                 {
@@ -34,8 +34,8 @@
                                             <label asp-for="Username" class="col-form-label">@T("Account.Login.Fields.UserName"):</label>
                                         </b-col>
                                         <b-col lg="9" cols="12">
-                                            <input asp-for="Username" class="form-control username" autofocus="autofocus" />
-                                            <span asp-validation-for="Username"></span>
+                                            <input asp-for="Username" class="form-control username" autofocus="autofocus" v-validate="'required'" />
+                                            <span class="field-validation-error" style="display: none;">@T("account.login.fields.username")</span>
                                         </b-col>
                                     </b-form-row>
                                 }
@@ -46,8 +46,8 @@
                                             <label asp-for="Email" class="col-form-label">@T("Account.Login.Fields.Email"):</label>
                                         </b-col>
                                         <b-col lg="9" cols="12">
-                                            <input asp-for="Email" class="form-control email" autofocus="autofocus" />
-                                            <span asp-validation-for="Email"></span>
+                                            <input asp-for="Email" class="form-control email" autofocus="autofocus" v-validate="'required|email'" />
+                                            <span class="field-validation-error" style="display: none;">@T("account.login.fields.email.required")</span>
                                         </b-col>
                                     </b-form-row>
                                 }
@@ -56,8 +56,8 @@
                                         <label asp-for="Password" class="col-form-label">@T("Account.Login.Fields.Password"):</label>
                                     </b-col>
                                     <b-col lg="9" cols="12">
-                                        <input asp-for="Password" class="form-control password" />
-                                        <span asp-validation-for="Password"></span>
+                                        <input asp-for="Password" class="form-control password" v-validate="'required'"/>
+                                        <span class="field-validation-error" style="display: none;">@T("account.login.fields.password")</span>
                                     </b-col>
                                 </b-form-row>
                                 <div class="inputs d-flex flex-sm-row flex-column justify-content-center">
@@ -138,3 +138,13 @@
         </b-col>
     </b-row>
 </div>
+<script asp-location="Header">
+    Vue.use(VeeValidate, {
+        // This is the default
+        inject: true,
+        // Important to name this something other than 'fields'
+        fieldsBagName: 'veeFields',
+        // This is not required but avoids possible naming conflicts
+        errorBagName: 'veeErrors'
+    })
+</script>
