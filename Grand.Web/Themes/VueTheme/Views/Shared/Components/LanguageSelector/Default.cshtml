@@ -7,10 +7,10 @@
     if (Model.UseImages)
     {
         <div class="btn-group language-selector btn-group-sm float-xs-right align-self-center d-block pr-1">
-            <ul class="list-inline language-list pl-0 mb-0 d-flex align-items-center">
+            <ul class="list-inline language-list px-0 mb-0 d-flex align-items-center">
                 @foreach (var lang in Model.AvailableLanguages)
                 {
-                    <li class="list-inline-item">
+                    <li class="list-inline-item mx-1">
                         <a href="@Url.RouteUrl("ChangeLanguage", new {langid = lang.Id, returnurl})" title="@lang.Name">
                             <img title='@lang.Name' alt='@lang.Name' @(lang.Id == Model.CurrentLanguageId ? " class=selected" : null)
                                  src="@Url.Content("~/content/images/flags/" + @lang.FlagImageFileName) " />

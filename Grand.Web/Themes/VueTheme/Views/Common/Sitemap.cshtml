@@ -26,7 +26,7 @@
         </b-col>
     }
     @await Component.InvokeAsync("Widget", new { widgetZone = "sitemap_before" })
-    <div lg="4" md="6">
+    <b-col lg="4" md="6">
         <h2 class="generalTitle">@T("Sitemap.General")</h2>
         <div class="list-group">
             <a class="list-group-item list-group-item-action" href="@Url.RouteUrl("HomePage")">@T("HomePage")</a>
@@ -57,10 +57,10 @@
                 }
             }
         </div>
-    </div>
+    </b-col>
     @if (Model.BlogPosts.Any())
     {
-        <div lg="4" md="6">
+        <b-col lg="4" md="6">
             <h2 class="generalTitle">@T("Sitemap.BlogPosts")</h2>
             <div class="list-group">
                 @foreach (var item in Model.BlogPosts)
@@ -68,11 +68,11 @@
                     <a class="list-group-item list-group-item-action" href="@Url.RouteUrl("BlogPost", new {SeName = item.SeName})">@item.Title</a>
                 }
             </div>
-        </div>
+        </b-col>
     }
     @if (Model.KnowledgebaseArticles.Any())
     {
-        <div lg="4" md="6">
+        <b-col lg="4" md="6">
             <h2 class="generalTitle">@T("Sitemap.KnowledgebaseArticles")</h2>
             <div class="list-group">
                 @foreach (var item in Model.KnowledgebaseArticles)
@@ -80,11 +80,11 @@
                     <a class="list-group-item list-group-item-action" href="@Url.RouteUrl("KnowledgebaseArticle", new {SeName = item.SeName})">@item.Name</a>
                 }
             </div>
-        </div>
+        </b-col>
     }
     @if (Model.Manufacturers.Any())
     {
-        <div lg="4" md="6">
+        <b-col lg="4" md="6">
             <h2 class="generalTitle">@T("Sitemap.Manufacturers")</h2>
             <div class="list-group">
                 @foreach (var manufacturer in Model.Manufacturers)
@@ -92,11 +92,11 @@
                     <a class="list-group-item list-group-item-action" href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a>
                 }
             </div>
-        </div>
+        </b-col>
     }
     @if (Model.Products.Any())
     {
-        <div cols="12">
+        <b-col cols="12">
             <h2 class="generalTitle">@T("Sitemap.Products")</h2>
             <div class="list-group sitemap-products-group">
                 @foreach (var product in Model.Products)
@@ -104,7 +104,7 @@
                     <a class="list-group-item list-group-item-action" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</a>
                 }
             </div>
-        </div>
+        </b-col>
     }
     @await Component.InvokeAsync("Widget", new { widgetZone = "sitemap_after" })
 </div>
