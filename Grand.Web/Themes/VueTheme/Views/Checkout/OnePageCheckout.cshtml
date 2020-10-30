@@ -61,7 +61,7 @@
                         </form>
                         <script asp-location="Footer">
                             Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
-                            if (document.querySelector("#billing-address-select").length > 0) {
+                            if (document.querySelector("#billing-address-select")) {
                                 Billing.newAddress(!document.querySelector('#billing-address-select').value);
                             }
                         </script>

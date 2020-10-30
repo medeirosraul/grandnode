@@ -238,7 +238,7 @@
             @if (Model.IsEditable)
             {
                 <div class="common-buttons btn-group btn-group-sm mb-3">
-                    <b-button onclick="location.href='@(Url.RouteUrl("ClearCart"))'" variant="danger" class="removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></b-button>
+                    <a onclick="location.href='@(Url.RouteUrl("ClearCart"))'" class="btn btn-danger removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></a>
                 </div>
             }
             <div class="cart-options">
