@@ -105,7 +105,7 @@
                                             attributeValue.Name :
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value list-inline-item\"") : @Html.Raw(" class=\"list-inline-item\""))>
-                                            <label>
+                                            <label class="text-center">
                                                 <span class="color-container" title="@attributeName">
                                                     <span class="color" style="background-color:@(attributeValue.ColorSquaresRgb);">&nbsp;</span>
                                                 </span>
@@ -137,7 +137,7 @@
                                             attributeValue.Name :
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li class="mr-2" @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value mr-2\"") : null)>
-                                            <label class="mb-0" data-toggle="tooltip" title="<img src='@(attributeValue.ImageSquaresPictureModel.FullSizeImageUrl)' alt='@attributeName' />">
+                                            <label class="mb-0 text-center" data-toggle="tooltip" title="<img src='@(attributeValue.ImageSquaresPictureModel.FullSizeImageUrl)' alt='@attributeName' />">
                                                 <span class="color-container">
                                                     <span class="color" style="background: url('@(attributeValue.ImageSquaresPictureModel.ImageUrl)') 50% 50% no-repeat;">&nbsp;</span>
                                                 </span>
