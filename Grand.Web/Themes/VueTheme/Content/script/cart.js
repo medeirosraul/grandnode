@@ -48,6 +48,7 @@ function ChangeShoppingCart(e) {
             el: '.checkout-buttons',
             mixins: [mix] 
         });
+        checkoutAttributeChange();
     }).catch(function (error) {
         alert('Failed to retrieve Shopping Cart Page.');
     })
