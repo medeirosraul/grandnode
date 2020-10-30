@@ -158,7 +158,7 @@
                         <label asp-for="Email" class="col-form-label">@T("Account.Fields.Email"):</label>
                         <span class="required">*</span>
                         <input asp-for="Email" class="form-control" v-validate="'required|email'" />
-                        <span class="field-validation-error" style="display: none;">@T("account.fields.lastname.required")</span>
+                        <span class="field-validation-error" style="display: none;">@T("account.fields.email.required")</span>
                         <span asp-validation-for="Email"></span>
                     </div>
                 </fieldset>
