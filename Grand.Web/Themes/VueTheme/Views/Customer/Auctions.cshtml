@@ -45,7 +45,7 @@
                                             { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")', sortable: true  },
                                         ],
                                         items:  [
-                                            @{                                              
+                                            @{
                                                 var ongoing = Model.ProductBidList.Where(x => !x.Ended);
                                             }
 
@@ -120,7 +120,7 @@
                                             { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")', sortable: true  },
                                         ],
                                         items:  [
-                                            @{ 
+                                            @{
                                                 var ended = Model.ProductBidList.Where(x => x.Ended);
                                             }
 
@@ -178,5 +178,8 @@
         <div class="no-data alert alert-info">
             @T("Account.Auctions.NoAuctions")
         </div>
+        <script>
+            var mix = {}
+        </script>
     }
 </div>
