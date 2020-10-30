@@ -64,12 +64,10 @@
                     if (document.querySelector('#' + 'opc-shipping.show')) {
                         new Vue({
                             el: '#opc-shipping .edit-address',
+                            mounted() {
+                                changeState()
+                            }
                         });
-                        Vue.use(VeeValidate, {
-                            inject: true,
-                            fieldsBagName: 'veeFields',
-                            errorBagName: 'veeErrors'
-                        })
                     } 
                 }, 300);            
             })
