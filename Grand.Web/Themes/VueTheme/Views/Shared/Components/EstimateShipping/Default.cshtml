@@ -39,6 +39,7 @@
                 }).then(function (response) {
                     var resp = response.data;
                     document.querySelector('.estimate-shipping-result').innerHTML = resp;
+                    checkoutAttributeChange();
                 }).catch(function (error) {
                     alert('Failed to retrieve estimate shipping.');
                 })
@@ -62,6 +63,7 @@
                         ddlStates.appendChild(elChild);
                         estimateProgress.style.display = "none";
                     })
+                    checkoutAttributeChange();
                 }).catch(function (error) {
                         alert(error);
                         estimateProgress.style.display = "none";

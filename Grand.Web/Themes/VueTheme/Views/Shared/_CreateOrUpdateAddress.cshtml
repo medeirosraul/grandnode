@@ -227,7 +227,7 @@
     {
         <div class="form-group col-sm-12 col-md-6">
             <label asp-for="Address2" class="col-form-label">@T("Address.Fields.Address2"):</label>
-            @if (Model.StreetAddressRequired)
+            @if (Model.StreetAddress2Required)
             {
                 <span class="required">*</span>
                 <input asp-for="Address2" class="form-control" v-validate="'required'" />
