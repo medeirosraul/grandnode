@@ -43,7 +43,8 @@
                 </div>
                 @if (!string.IsNullOrEmpty(review.ReplyText))
                 {
-                    <div class="reply-content">
+                    <hr/>
+                    <div class="reply-content mt-2">
                         <blockquote class="administration-response">
                             <h5 class="administration-response-header">@T("Reviews.AdministrationResponse")</h5>
                             @Html.Raw(Grand.Core.Html.HtmlHelper.FormatText(review.ReplyText))
