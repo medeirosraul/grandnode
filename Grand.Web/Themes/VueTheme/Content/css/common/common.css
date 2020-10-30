@@ -528,6 +528,21 @@ footer .list-group-item span:last-child {
         max-width: 33.333333%;
     }
 }
+@media (max-width: 1024px) {
+    .product-box::before {
+        border-bottom: 1px solid transparent;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
+    }
+    .product-box:hover .quick-view-button {
+        transform: translateY(100%);
+        -webkit-transform: translateY(100%);
+    }
+    .product-box:hover .card-footer {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
 @media (max-width: 991px) {
     footer .list-group-item:not(.list-group-item-action) {
         display: inline-flex;
