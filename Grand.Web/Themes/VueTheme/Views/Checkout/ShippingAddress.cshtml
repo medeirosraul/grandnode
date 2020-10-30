@@ -122,11 +122,13 @@
                                 @foreach (var item in Model.ExistingAddresses)
                                 {
                                     <div class="col-lg-4 col-md-6 col-12">
-                                        <div class="card address-item pb-3">
-                                            <h5 class="card-header">
-                                                @item.FirstName @item.LastName
-                                            </h5>
-                                            <div class="card-body mb-3">
+                                        <b-card class="address-item mb-3">
+                                            <template v-slot:header>
+                                                <h5 class="mb-0">
+                                                    @item.FirstName @item.LastName
+                                                </h5>
+                                            </template>
+                                            <div>
                                                 <ul class="address-box pl-0">
                                                     <li class="email">
                                                         <label>@T("Address.Fields.Email"):</label>
@@ -199,10 +201,10 @@
                                                     }
                                                 </ul>
                                             </div>
-                                            <div class="card-footer select-button">
+                                            <template v-slot:footer class="select-button">
                                                 <input type="button" value="@T("Checkout.ShipToThisAddress")" class="btn btn-secondary select-shipping-address-button" onclick="location = ('@Url.RouteUrl("CheckoutSelectShippingAddress", new { addressid = item.Id })') " />
-                                            </div>
-                                        </div>
+                                            </template>
+                                        </b-card>
                                     </div>
                                 }
                             </div>

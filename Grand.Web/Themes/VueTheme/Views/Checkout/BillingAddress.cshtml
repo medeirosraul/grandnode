@@ -32,8 +32,8 @@
                             @foreach (var item in Model.ExistingAddresses)
                             {
                                 <b-col lg="4" md="6" sm="6" cols="12">
-                                    <b-card header="@item.FirstName @item.LastName" header-tag="h5" class="address-item">
-                                        <ul class="address-box pl-0">
+                                    <b-card header="@item.FirstName @item.LastName" header-tag="h5" class="address-item mb-3">
+                                        <ul class="address-box px-0">
                                             <li class="email">
                                                 <label>@T("Address.Fields.Email"):</label>
                                                 <span>@item.Email</span>
