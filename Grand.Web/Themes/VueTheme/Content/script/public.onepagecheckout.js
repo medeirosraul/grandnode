@@ -68,7 +68,7 @@ var Checkout = {
         var m_linkname = document.getElementById('confirm-data-modal').getAttribute('data-linkname');
         var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
         new Vue({
-            el: '.order-summary-content',
+            el: '#opc-confirm-order .order-summary-content',
             methods: {
                     showMsgBoxOne() {
                         const h = this.$createElement
