@@ -110,3 +110,14 @@
     color: #fff;
     background-color: #17a2b8;
 }
+
+@media (max-width: 575px) {
+    .sort-container, .sort-container:not(:last-child) {
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+    .sort-container.change-view {
+        justify-content: flex-end;
+        margin: 10px 10px 0 0;
+    }
+}
