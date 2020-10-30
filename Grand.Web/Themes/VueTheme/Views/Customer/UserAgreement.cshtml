@@ -3,14 +3,13 @@
     Layout = "_ColumnsOne"; 
 }
 <script asp-location="Footer">
-    function toggleContinueButton() {
+    document.querySelector('#agreement-agree').addEventListener('change', function () {
         if (document.getElementById('agreement-agree').checked) {
-            document.getElementById('continue-downloading').classList.add('disabled');
-        } else {
             document.getElementById('continue-downloading').classList.remove('disabled');
+        } else {
+            document.getElementById('continue-downloading').classList.add('disabled');
         }
-    }
-    toggleContinueButton();
+    });
 </script>
 <div class="page user-agreement-page">
         <h1 class="generalTitle h2 text-xs-center">@T("DownloadableProducts.UserAgreement")</h1>
