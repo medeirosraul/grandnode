@@ -9,7 +9,7 @@
 
     @if (Model.MiniShoppingCartEnabled)
     {
-        @await Component.InvokeAsync("FlyoutShoppingCart")
+        <partial name="FlyoutShoppingCart" />
     }
     else
     {

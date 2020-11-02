@@ -39,6 +39,9 @@
                 value: 5,
                 scTimer: 0,
                 scY: 0,
+                flycart: null,
+                flycartitems: null,
+                flycartindicator: null
             }
         },
         mounted() {
@@ -59,6 +62,15 @@
                     bvEvent.preventDefault()
                 }
             })
+            axios({
+                url: 'vue/component',
+                method: 'get',
+                params: { component: 'FlyoutShoppingCart' },
+            }).then(response => (
+                this.flycart = response.data,
+                this.flycartitems = response.data.Items,
+                this.flycartindicator = response.data.TotalProducts
+            ))
         },
         watch: {
             fluid(newName) {

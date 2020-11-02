@@ -24,7 +24,7 @@
 </div>
 <!-- Start running your app -->
 <script>
-   new Vue({
+   var vm = new Vue({
         el: '#app',
         data: {
             name: 'Vue Theme',
@@ -39,6 +39,9 @@
                 scTimer: 0,
                 scY: 0,
                 NextDropdownVisible: false,
+                flycart: null,
+                flycartitems: null,
+                flycartindicator: null
             }
        },
         mounted() {
@@ -71,6 +74,15 @@
                     } 
                 }, 300);            
             })
+            axios({
+                url: 'vue/component',
+                method: 'get',
+                params: { component: 'FlyoutShoppingCart' },
+            }).then(response => (
+                this.flycart = response.data,
+                this.flycartitems = response.data.Items,
+                this.flycartindicator = response.data.TotalProducts
+            ))
         },
         watch: {
             fluid(newName) {

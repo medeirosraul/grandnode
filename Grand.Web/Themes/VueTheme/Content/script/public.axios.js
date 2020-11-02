@@ -131,27 +131,9 @@ var AxiosCart = {
         }
         if (response.data.updateflyoutcartsectionhtml) {
             var flyoutcart = response.data.updateflyoutcartsectionhtml;
-            new Vue({
-                el: '.flyout-cart',
-                data: {
-                    template: null,
-                },
-                render: function (createElement) {
-                    if (!this.template) {
-                        return createElement('b-icon', {
-                            attrs: { icon: 'cart-check', animation: 'cylon', variant: 'success' }
-                        });
-                    } else {
-                        return this.template();
-                    }
-                },
-                mounted() {
-                    var self = this;
-                    setTimeout(function () {
-                        self.template = Vue.compile(flyoutcart).render;
-                    }, 1000);
-                }
-            });
+            console.log(vm);
+            vm.flycartitems = flyoutcart;
+
         }
         if (response.data.comparemessage) {
             if (response.data.success == true) {
