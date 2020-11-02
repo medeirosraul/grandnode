@@ -61,16 +61,10 @@ var Checkout = {
     gotoSection: function (section) {
         section = document.querySelector('#button-' + section);
         section.classList.add("allow");
-        var m_title = document.getElementById('confirm-data-modal').getAttribute('data-title');
-        var m_body = document.getElementById('confirm-data-modal').getAttribute('data-body');
-        var m_terms = document.getElementById('confirm-data-modal').getAttribute('data-terms');
-        var m_link = document.getElementById('confirm-data-modal').getAttribute('data-link');
-        var m_linkname = document.getElementById('confirm-data-modal').getAttribute('data-linkname');
-        var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
         new Vue({
             el: '#opc-confirm-order .order-summary-content',
             methods: {
-                    showMsgBoxOne() {
+                showMsgBoxOne() {
                         const h = this.$createElement
 
                     const titleVNode = h('div', { domProps: { innerHTML: '<h5>' + m_title + '</h5>' } })
@@ -98,8 +92,16 @@ var Checkout = {
                             })
                     },
             }
-        });    
-        document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
+        });
+        if (document.querySelector('#checkout-confirm-order-load .checkout-data')) {
+                var m_title = document.getElementById('confirm-data-modal').getAttribute('data-title');
+                var m_body = document.getElementById('confirm-data-modal').getAttribute('data-body');
+                var m_terms = document.getElementById('confirm-data-modal').getAttribute('data-terms');
+                var m_link = document.getElementById('confirm-data-modal').getAttribute('data-link');
+                var m_linkname = document.getElementById('confirm-data-modal').getAttribute('data-linkname');
+                var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
+                document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
+        }
     },
 
     back: function () {
