@@ -44,6 +44,8 @@
     <None Remove="Themes\VueTheme\Content\css\common\common.rtl.css" />
     <None Remove="Themes\VueTheme\Content\css\header\header.rtl.css" />
     <None Remove="Themes\VueTheme\Content\css\product\product.rtl.css" />
+    <None Remove="Themes\VueTheme\Content\script\app.js" />
+    <None Remove="Themes\VueTheme\Content\script\app.mix.js" />
     <None Remove="Themes\VueTheme\Content\script\MyComponentName.js" />
     <None Remove="Themes\VueTheme\Content\script\vee-validate.js" />
     <Content Update="Plugins\**">

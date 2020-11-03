@@ -1,4 +1,4 @@
-﻿<template>
+﻿
     <div class="flyout-cart">
         <b-nav-item>
             <b-icon icon="handbag" variant="dark" v-b-toggle.sidebar-cart></b-icon>
@@ -18,7 +18,9 @@
                         <div class="quantity"><span>@T("ShoppingCart.Mini.Quantity"):</span> <strong>{{item.Quantity}}</strong></div>
                     </b-col>
                     <div>
-                        <b-icon icon="trash" class="deletecartitem" variant="danger" @@click="deletecartitem('/deletecartitem/{{item.Id}}')"></b-icon>
+                        <b-link class="deletecartitem" :data-href="item.Id" onclick="deletecartitem(this.getAttribute('data-href'))">
+                            <b-icon icon="trash" class="deletecartitem" variant="danger"></b-icon>
+                        </b-link>
                     </div>
                 </div>
                 <template v-slot:footer v-if="flycartindicator > 0">
@@ -48,4 +50,3 @@
                 </div>
         </b-sidebar>
     </div>
-</template>

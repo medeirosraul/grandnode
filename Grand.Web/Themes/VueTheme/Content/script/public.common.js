@@ -1,26 +1,17 @@
 ﻿function deletecartitem(href) {
     axios({
         method: "post",
-        url: href
+        url: 'deletecartitem/'+ href +''
     }).then(function (response) {
         var flyoutcart = response.data.flyoutshoppingcart;
-        new Vue({
-            el: '.flyout-cart',
-            data: {
-                template: null
-            },
-            render: function (createElement) {
-                if (!this.template) {
-                    
-                } else {
-                    return this.template();
-                }
-            },
-            mounted() {
-                var self = this;
-                self.template = Vue.compile(flyoutcart).render;
-            }
-        });
+        var newfly = JSON.parse(flyoutcart);
+        this.flycart = newfly;
+        this.flycartitems = newfly.Items;
+        this.flycartindicator = newfly.TotalProducts;
+        console.log(newfly.Items);
+        vm.flycart = newfly;
+        vm.flycartitems = newfly.Items;
+        vm.flycartindicator = newfly.TotalProducts;
     }).catch(function (error) {
         alert(error);
     });

@@ -1,8 +1,2 @@
 ﻿@model MiniShoppingCartModel
-@using Grand.Core;
-@inject IWorkContext workContext
-@{
-    var supportRtl = workContext.WorkingLanguage.Rtl;
-}
-@await Component.InvokeAsync("Widget", new { widgetZone = "flyout_shopping_cart_before_content", additionalData = Model })
 @Json.Serialize(Model)

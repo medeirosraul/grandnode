@@ -123,16 +123,18 @@ var AxiosCart = {
     },
 
     success_process: function (response) {
-        if (response.data.updatetopcartsectionhtml) {
-            document.querySelector(AxiosCart.topcartselector).innerHTML = response.data.updatetopcartsectionhtml;
-        }
         if (response.data.updatetopwishlistsectionhtml) {
             document.querySelector(AxiosCart.topwishlistselector).innerHTML = response.data.updatetopwishlistsectionhtml;
         }
         if (response.data.updateflyoutcartsectionhtml) {
             var flyoutcart = response.data.updateflyoutcartsectionhtml;
-            console.log(vm);
-            vm.flycartitems = flyoutcart;
+            var newfly = JSON.parse(flyoutcart);
+            this.flycart = newfly;
+            this.flycartitems = newfly.Items;
+            this.flycartindicator = newfly.TotalProducts;
+            vm.flycart = newfly;
+            vm.flycartitems = newfly.Items;
+            vm.flycartindicator = newfly.TotalProducts;
 
         }
         if (response.data.comparemessage) {
