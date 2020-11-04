@@ -3,110 +3,114 @@
 @if (Model.CountryEnabled && Model.StateProvinceEnabled)
 {
 <script asp-location="Footer">
-                var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
-                if (document.getElementById("@Html.IdFor(model => model.StateProvinceId)")) {
-                    var state_element = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    var ddlStates2 = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    state_element.onchange = function () {
-                        if (ddlStates2.options[0].selected) {
-                            ddlStates2.nextSibling.nextElementSibling.style.display = "block";
-                        } else {
-                            ddlStates2.nextSibling.nextElementSibling.style.display = "none";
+    document.addEventListener("DOMContentLoaded", function () {
+        var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
+        if (document.getElementById("@Html.IdFor(model => model.StateProvinceId)")) {
+            var state_element = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            var ddlStates2 = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            state_element.onchange = function () {
+                if (ddlStates2.options[0].selected) {
+                    ddlStates2.nextSibling.nextElementSibling.style.display = "block";
+                } else {
+                    ddlStates2.nextSibling.nextElementSibling.style.display = "none";
+                }
+            }
+        }
+
+        select_element.onchange = function () {
+            var selectedItem = this.value;
+            var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            var statesProgress = document.getElementById("states-loading-progress");
+            statesProgress.style.display = "block";
+            axios({
+                method: 'get',
+                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                params: { "countryId": selectedItem, "addSelectStateItem": "true" },
+            }).then(function (response) {
+                ddlStates.innerHTML = '';
+                response.data.forEach(function (id, option) {
+                    elChild = document.createElement('option');
+                    elChild.setAttribute('value', id.id);
+                    elChild.innerHTML = id.name;
+                    ddlStates.appendChild(elChild);
+                });
+                if (ddlStates.length > 1) {
+                    if (ddlStates.options[0].selected = true) {
+                        ddlStates.nextSibling.nextElementSibling.style.display = "block";
+                        if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                            ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                        }
+                    } else {
+                        ddlStates.nextSibling.nextElementSibling.style.display = "none";
+                        if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                            ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
                         }
                     }
+                } else {
+                    ddlStates.nextSibling.nextElementSibling.style.display = "none";
                 }
-
-                select_element.onchange = function () {
-                    var selectedItem = this.value;
-                    var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    var statesProgress = document.getElementById("states-loading-progress");
-                    statesProgress.style.display = "block";
-                    axios({
-                        method: 'get',
-                        url: "@(Url.RouteUrl("GetStatesByCountryId"))",
-                        params: { "countryId": selectedItem, "addSelectStateItem": "true" },
-                    }).then(function (response) {
-                        ddlStates.innerHTML = '';
-                        response.data.forEach(function (id, option) {
-                            elChild = document.createElement('option');
-                            elChild.setAttribute('value', id.id);
-                            elChild.innerHTML = id.name;
-                            ddlStates.appendChild(elChild);
-                        });
-                        if (ddlStates.length > 1) {
-                            if (ddlStates.options[0].selected = true) {
-                                ddlStates.nextSibling.nextElementSibling.style.display = "block";
-                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
-                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
-                                }
-                            } else {
-                                ddlStates.nextSibling.nextElementSibling.style.display = "none";
-                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
-                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
-                                }
-                            }
-                        } else {
-                            ddlStates.nextSibling.nextElementSibling.style.display = "none";
-                        }
-                        statesProgress.style.display = "none";
-                    }).catch(function (error) {
-                        alert(error);
-                        statesProgress.style.display = "none";
-                    });
-                }
+                statesProgress.style.display = "none";
+            }).catch(function (error) {
+                alert(error);
+                statesProgress.style.display = "none";
+            });
+        }
+    });
 </script>
 <script class="script-footer">
-                var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
-                if (document.getElementById("@Html.IdFor(model => model.StateProvinceId)")) {
-                    var state_element = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    var ddlStates2 = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    state_element.onchange = function () {
-                        if (ddlStates2.options[0].selected) {
-                            ddlStates2.nextSibling.nextElementSibling.style.display = "block";
-                        } else {
-                            ddlStates2.nextSibling.nextElementSibling.style.display = "none";
+    document.addEventListener("DOMContentLoaded", function () {
+        var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
+        if (document.getElementById("@Html.IdFor(model => model.StateProvinceId)")) {
+            var state_element = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            var ddlStates2 = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            state_element.onchange = function () {
+                if (ddlStates2.options[0].selected) {
+                    ddlStates2.nextSibling.nextElementSibling.style.display = "block";
+                } else {
+                    ddlStates2.nextSibling.nextElementSibling.style.display = "none";
+                }
+            }
+        }
+
+        select_element.onchange = function () {
+            var selectedItem = this.value;
+            var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+            var statesProgress = document.getElementById("states-loading-progress");
+            statesProgress.style.display = "block";
+            axios({
+                method: 'get',
+                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                params: { "countryId": selectedItem, "addSelectStateItem": "true" },
+            }).then(function (response) {
+                ddlStates.innerHTML = '';
+                response.data.forEach(function (id, option) {
+                    elChild = document.createElement('option');
+                    elChild.setAttribute('value', id.id);
+                    elChild.innerHTML = id.name;
+                    ddlStates.appendChild(elChild);
+                });
+                if (ddlStates.length > 1) {
+                    if (ddlStates.options[0].selected = true) {
+                        ddlStates.nextSibling.nextElementSibling.style.display = "block";
+                        if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                            ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
+                        }
+                    } else {
+                        ddlStates.nextSibling.nextElementSibling.style.display = "none";
+                        if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
+                            ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
                         }
                     }
+                } else {
+                    ddlStates.nextSibling.nextElementSibling.style.display = "none";
                 }
-
-                select_element.onchange = function () {
-                    var selectedItem = this.value;
-                    var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-                    var statesProgress = document.getElementById("states-loading-progress");
-                    statesProgress.style.display = "block";
-                    axios({
-                        method: 'get',
-                        url: "@(Url.RouteUrl("GetStatesByCountryId"))",
-                        params: { "countryId": selectedItem, "addSelectStateItem": "true" },
-                    }).then(function (response) {
-                        ddlStates.innerHTML = '';
-                        response.data.forEach(function (id, option) {
-                            elChild = document.createElement('option');
-                            elChild.setAttribute('value', id.id);
-                            elChild.innerHTML = id.name;
-                            ddlStates.appendChild(elChild);
-                        });
-                        if (ddlStates.length > 1) {
-                            if (ddlStates.options[0].selected = true) {
-                                ddlStates.nextSibling.nextElementSibling.style.display = "block";
-                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
-                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
-                                }
-                            } else {
-                                ddlStates.nextSibling.nextElementSibling.style.display = "none";
-                                if (ddlStates.nextSibling.nextSibling.nextElementSibling) {
-                                    ddlStates.nextSibling.nextSibling.nextElementSibling.style.display = "none";
-                                }
-                            }
-                        } else {
-                            ddlStates.nextSibling.nextElementSibling.style.display = "none";
-                        }
-                        statesProgress.style.display = "none";
-                    }).catch(function (error) {
-                        alert(error);
-                        statesProgress.style.display = "none";
-                    });
-    }
+                statesProgress.style.display = "none";
+            }).catch(function (error) {
+                alert(error);
+                statesProgress.style.display = "none";
+            });
+        }
+    });
 </script>
 }
 <input asp-for="Id" type="hidden" />
