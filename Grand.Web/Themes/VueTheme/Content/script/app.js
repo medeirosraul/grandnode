@@ -7,7 +7,7 @@
     methods: {
         updateFly() {
             axios({
-                url: 'vue/component',
+                url: '../vue/component',
                 method: 'get',
                 params: { component: 'FlyoutShoppingCart' },
             }).then(response => (
@@ -35,6 +35,10 @@ var vm = new Vue({
             scY: 0,
             NextDropdownVisible: false,
             searchitems: null,
+            searchcategories: null,
+            searchmanufacturers: null,
+            searchblog: null,
+            searchproducts: null
         }
     },
     mounted() {

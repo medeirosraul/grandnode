@@ -184,6 +184,12 @@ dl, ol, ul {
 
 /* search box */
 
+#small-searchterms + .invalid-feedback {
+    position: absolute;
+    top: 32px;
+    display: block;
+    z-index: 3;
+}
 #small-search-box-form {
     position: relative;
 }
@@ -211,10 +217,10 @@ dl, ol, ul {
 .advanced-search-results .list {
     margin: 0 0 10px 0;
 }
-.advanced-search-results .products .list:not(:nth-child(2)) {
-    margin: 10px 0 10px 0;
-    padding: 10px 0 0 0;
-    border-top: 1px solid #ddd;
+.advanced-search-results .products .list .media:not(:last-child) {
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 .advanced-search-results p {
     color: #666;

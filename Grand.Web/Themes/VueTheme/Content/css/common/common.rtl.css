@@ -236,7 +236,7 @@ dl, ol, ul {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: .25rem;
-    z-index: 3;
+    z-index: 2;
 }
 .advanced-search-results .title:first-child {
     margin: 0 0 10px 0;
@@ -251,10 +251,10 @@ dl, ol, ul {
 .advanced-search-results .list {
     margin: 0 0 10px 0;
 }
-.advanced-search-results .products .list:not(:nth-child(2)) {
-    margin: 10px 0 10px 0;
-    padding: 10px 0 0 0;
-    border-top: 1px solid #ddd;
+.advanced-search-results .products .list .media:not(:last-child) {
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 .advanced-search-results p {
     color: #666;
