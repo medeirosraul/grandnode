@@ -534,7 +534,7 @@ function displayPopupNotification(message, messagetype) {
 
 function validation() {
 
-    var elements = document.querySelectorAll('.form-control');
+    var elements = document.querySelectorAll('.form-control:not(.search-box-text)');
 
     [].forEach.call(elements, function (el) {
         var observer = new MutationObserver(function (mutations) {

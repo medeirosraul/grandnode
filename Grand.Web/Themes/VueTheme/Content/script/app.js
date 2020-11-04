@@ -34,6 +34,7 @@ var vm = new Vue({
             scTimer: 0,
             scY: 0,
             NextDropdownVisible: false,
+            searchitems: null,
         }
     },
     mounted() {

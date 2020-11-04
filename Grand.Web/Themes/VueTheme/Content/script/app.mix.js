@@ -33,9 +33,7 @@ var vm = new Vue({
             value: 5,
             scTimer: 0,
             scY: 0,
-            flycart: null,
-            flycartitems: null,
-            flycartindicator: null
+            searchitems: null,
         }
     },
     mounted() {
