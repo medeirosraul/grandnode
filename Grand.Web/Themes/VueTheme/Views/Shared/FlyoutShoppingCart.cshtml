@@ -5,6 +5,12 @@
             <div class="qty-indicator cart-qty">{{flycartindicator}}</div>
         </b-nav-item>
         <b-sidebar id="sidebar-cart" backdrop right>
+            <template v-slot:title v-if="flycartindicator > 0">
+                @T("Vue.ShoppingCart.Mini.ItemsText") <a :href="'/cart'">{{flycartindicator}} @T("Vue.ShoppingCart.Mini.Items")</a> @T("Vue.ShoppingCart.Mini.ItemsText2")
+            </template>
+                <template v-slot:title v-else>
+                        @T("ShoppingCart.Mini.NoItems")
+                </template>
                 <div v-for="item in flycartitems" class="item d-inline-flex no-wrap">
                     <b-link :href="item.ProductSeName" :title="item.Picture.Title" v-if="item.Picture.ImageUrl">
                         <b-img :alt="item.Picture.AlternateText" :src="item.Picture.ImageUrl" :title="item.Picture.Title" fluid></b-img>

@@ -227,11 +227,21 @@ dl, ol, ul {
 #small-search-box-form {
     position: relative;
 }
+#small-searchterms + .field-validation-error {
+    position: absolute;
+    top: 34px;
+    font-size: 14px;
+    display: block;
+    z-index: 3;
+}
 .advanced-search-results {
     position: absolute;
     top: 40px;
     left: 15px;
     right: 15px;
+    max-height: 80vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 15px;
     background: #fff;
     border: 1px solid #ddd;
