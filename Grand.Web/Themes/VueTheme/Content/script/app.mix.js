@@ -7,7 +7,7 @@
     methods: {
         updateFly() {
             axios({
-                url: '../vue/component',
+                baseURL: '/vue/component',
                 method: 'get',
                 params: { component: 'FlyoutShoppingCart' },
             }).then(response => (
