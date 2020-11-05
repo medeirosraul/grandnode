@@ -17,19 +17,21 @@
     }
     else
     {
-        <form asp-route="ContactVendor" method="post">
+        <form asp-route="ContactVendor" method="post" id="form" name="form" v-on:submit.prevent="validateBeforeSubmit">
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
             <div class="form-fields d-flex row">
                 <div class="form-group col-12 col-sm-6">
                     <label asp-for="FullName" class="col-form-label">@T("ContactVendor.FullName"):</label>
                     <span class="required">*</span>
-                    <input asp-for="FullName" placeholder="@T("ContactVendor.FullName.Hint")" class="form-control fullname" />
+                    <input asp-for="FullName" placeholder="@T("ContactVendor.FullName.Hint")" class="form-control fullname" v-validate="'required'" />
+                    <span v-if="veeErrors.first('FullName')" class="field-validation-error">@T("ContactVendor.fullname.required")</span>
                     <span asp-validation-for="FullName"></span>
                 </div>
                 <div class="form-group col-12 col-sm-6">
                     <label asp-for="Email" class="col-form-label">@T("ContactVendor.Email"):</label>
                     <span class="required">*</span>
-                    <input asp-for="Email" placeholder="@T("ContactVendor.Email.Hint")" class="form-control email" />
+                    <input asp-for="Email" placeholder="@T("ContactVendor.Email.Hint")" class="form-control email" v-validate="'required|email'" />
+                    <span v-if="veeErrors.first('Email')" class="field-validation-error">@T("ContactVendor.Email.required")</span>
                     <span asp-validation-for="Email"></span>
                 </div>
                 @if (Model.SubjectEnabled)
@@ -37,14 +39,16 @@
                     <div class="form-group col-12">
                         <label asp-for="Subject" class="col-form-label">@T("ContactVendor.Subject"):</label>
                         <span class="required">*</span>
-                        <input asp-for="Subject" placeholder="@T("ContactVendor.Subject.Hint")" class="form-control subject" />
+                        <input asp-for="Subject" placeholder="@T("ContactVendor.Subject.Hint")" class="form-control subject" v-validate="'required'" />
+                        <span v-if="veeErrors.first('Subject')" class="field-validation-error">@T("ContactVendor.Subject.required")</span>
                         <span asp-validation-for="Subject"></span>
                     </div>
                 }
                 <div class="form-group col-12">
                     <label asp-for="Enquiry" class="col-form-label">@T("ContactVendor.Enquiry"):</label>
                     <span class="required">*</span>
-                    <textarea asp-for="Enquiry" placeholder="@T("ContactVendor.Enquiry.Hint")" class="form-control enquiry"></textarea>
+                    <textarea asp-for="Enquiry" placeholder="@T("ContactVendor.Enquiry.Hint")" class="form-control enquiry" v-validate="'required'"></textarea>
+                     <span v-if="veeErrors.first('Enquiry')" class="field-validation-error">@T("ContactVendor.Enquiry.required")</span>
                     <span asp-validation-for="Enquiry"></span>
                 </div>
                 @if (Model.DisplayCaptcha)
@@ -61,3 +65,18 @@
     }
     @await Component.InvokeAsync("Widget", new { widgetZone = "contactvendor_bottom" })
 </div>
+<script asp-location="Header">
+    Vue.use(VeeValidate, {
+        // This is the default
+        inject: true,
+        // Important to name this something other than 'fields'
+        fieldsBagName: 'veeFields',
+        // This is not required but avoids possible naming conflicts
+        errorBagName: 'veeErrors',
+        classes: true,
+        classNames: {
+            valid: 'is-valid',
+            invalid: 'is-invalid'
+        }
+    })
+</script>

@@ -21,7 +21,6 @@
                     data: bodyFormData,
                     method: 'post',
                 }).then(function (response) {
-                    console.log(response);
                     document.getElementById('check-availability-button').removeAttribute('disabled');
                     document.getElementById('availability-check-progress').style.display = "none";
                     document.getElementById('username-availabilty').setAttribute('class', ((response.data.Available) ? 'username-available-status alert alert-success d-flex justify-content-center mt-3 mb-0' : 'username-not-available-status alert alert-danger d-flex justify-content-center mt-3 mb-0'));

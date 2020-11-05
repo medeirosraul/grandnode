@@ -141,3 +141,27 @@
         max-height: 45px;
     }
 }
+@media (max-width: 575px) {
+    .flyout-cart .item img {
+        max-width: 75px;
+    }
+    .flyout-cart .item .col a {
+        display: table;
+        max-width: calc(100% - 15px);
+        font-size: 14px;
+        line-height: 1;
+    }
+    .flyout-cart .item .price,
+    .flyout-cart .item .quantity {
+        font-size: 14px;
+    }
+    .flyout-cart .item .attributes {
+        font-size: 12px;
+    }
+    .flyout-cart .b-sidebar-footer .h4 {
+        font-size: 20px;
+    }
+    .flyout-cart .b-sidebar-footer .h5 {
+        font-size: 16px;
+    }
+}

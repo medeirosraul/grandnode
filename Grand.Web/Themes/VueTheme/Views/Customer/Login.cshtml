@@ -17,7 +17,7 @@
         <b-form-row class="my-3">
             @* login main block *@
             <b-col lg="7" md="10" sm="10" cols="12" class="mx-lg-0 mx-auto mt-3">
-                <form asp-route="Login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post">
+                <form asp-route="Login" name="form" id="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
                     <b-card>
                         <template v-slot:header>
                             <h3 class="h5 mb-0">
@@ -35,7 +35,8 @@
                                         </b-col>
                                         <b-col lg="9" cols="12">
                                             <input asp-for="Username" class="form-control username" autofocus="autofocus" v-validate="'required'" />
-                                            <span class="field-validation-error" style="display: none;">@T("account.login.fields.username")</span>
+                                            <span v-if="veeErrors.first('Username')" class="field-validation-error">@T("account.login.fields.username")</span>
+                                            <span asp-validation-for="Username"></span>
                                         </b-col>
                                     </b-form-row>
                                 }
@@ -47,7 +48,8 @@
                                         </b-col>
                                         <b-col lg="9" cols="12">
                                             <input asp-for="Email" class="form-control email" autofocus="autofocus" v-validate="'required|email'" />
-                                            <span class="field-validation-error" style="display: none;">@T("account.login.fields.email.required")</span>
+                                            <span v-if="veeErrors.first('Email')" class="field-validation-error">@T("account.login.fields.email.required")</span>
+                                            <span asp-validation-for="Email"></span>
                                         </b-col>
                                     </b-form-row>
                                 }
@@ -57,7 +59,8 @@
                                     </b-col>
                                     <b-col lg="9" cols="12">
                                         <input asp-for="Password" class="form-control password" v-validate="'required'"/>
-                                        <span class="field-validation-error" style="display: none;">@T("account.login.fields.password")</span>
+                                        <span v-if="veeErrors.first('Password')" class="field-validation-error">@T("account.login.fields.password")</span>
+                                        <span asp-validation-for="Password"></span>
                                     </b-col>
                                 </b-form-row>
                                 <div class="inputs d-flex flex-sm-row flex-column justify-content-center">
@@ -145,6 +148,11 @@
         // Important to name this something other than 'fields'
         fieldsBagName: 'veeFields',
         // This is not required but avoids possible naming conflicts
-        errorBagName: 'veeErrors'
+        errorBagName: 'veeErrors',
+        classes: true,
+        classNames: {
+            valid: 'is-valid',
+            invalid: 'is-invalid'
+        }
     })
 </script>

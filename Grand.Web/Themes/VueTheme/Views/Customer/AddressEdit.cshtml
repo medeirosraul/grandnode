@@ -11,20 +11,20 @@
 {
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.Addresses })
 }
-<vc:widget widget-zone="customer-address-add-before" additional-data="@Model"></vc:widget>
-<form asp-route="CustomerAddressAdd" method="post" id="form" name="form" v-on:submit.prevent="validateBeforeSubmit">
+<vc:widget widget-zone="customer-address-edit-before" additional-data="@Model"></vc:widget>
+<form asp-route="CustomerAddressEdit" method="post" id="form" name="form" v-on:submit.prevent="validateBeforeSubmit">
     <div class="page account-page address-edit-page pl-lg-3 mb-3 pt-lg-0 pt-3">
-        <h1 class="generalTitle h2">@T("Account.CustomerAddresses.AddNew")</h1>
+        <h1 class="h2 generalTitle">@T("Account.CustomerAddresses.Edit")</h1>
         <div asp-validation-summary="ModelOnly" class="message-error"></div>
         @{
             var dataDictAddress = new ViewDataDictionary(ViewData);
             dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
             <partial name="_CreateOrUpdateAddress" model="Model.Address" view-data="dataDictAddress" />
         }
-        <vc:widget widget-zone="customer-address-add-form" additional-data="@Model"></vc:widget>
-        <div class="buttons generalMarginSupporter mt-1 mb-1">
+        <vc:widget widget-zone="customer-address-edit-form" additional-data="@Model"></vc:widget>
+        <div class="buttons generalMarginSupporter">
             <input type="submit" class="btn btn-info save-address-button" value="@T("Common.Save")" />
         </div>
     </div>
 </form>
-<vc:widget widget-zone="customer-address-add-after" additional-data="@Model"></vc:widget>
+<vc:widget widget-zone="customer-address-edit-after" additional-data="@Model"></vc:widget>

@@ -14,7 +14,7 @@
 <vc:widget widget-zone="customer-subaccounts" additional-data="@Model"></vc:widget>
 <div class="page account-page subaccounts-list-page pl-lg-3 pt-lg-0 pt-3">
     @Html.AntiForgeryToken()
-    <b-button variant="info" class="add-address-button float-sm-right" onclick="location = '@Url.RouteUrl("CustomerSubAccountAdd")'">
+    <b-button variant="info" class="add-address-button float-sm-right mt-2" onclick="location = '@Url.RouteUrl("CustomerSubAccountAdd")'">
         <b-icon icon="clipboard-plus"></b-icon> @T("Common.AddNew")
     </b-button>
     <h1 class="h2 generalTitle">@T("Account.SubAccounts")</h1>
