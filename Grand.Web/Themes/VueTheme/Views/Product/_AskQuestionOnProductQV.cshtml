@@ -3,12 +3,16 @@
 <div id="contact-us-product">
     <fieldset class="form-group">
         <label asp-for="AskQuestionEmail" class="col-form-label">@T("Products.AskQuestion.Email"):</label>
-        <input asp-for="AskQuestionEmail" placeholder="@T("Products.AskQuestion.Email.Hint")" class="form-control ask-question-email" />
+        <span class="required">*</span>
+        <input asp-for="AskQuestionEmail" placeholder="@T("Products.AskQuestion.Email.Hint")" v-validate="'required|email'" class="form-control ask-question-email" />
+        <span v-if="veeErrors.first('AskQuestionEmail')" class="field-validation-error">@T("products.askquestion.Email.required")</span>
         <span asp-validation-for="AskQuestionEmail"></span>
     </fieldset>
     <fieldset class="form-group">
         <label asp-for="AskQuestionFullName" class="col-form-label">@T("Products.AskQuestion.FullName"):</label>
-        <input asp-for="AskQuestionFullName" placeholder="@T("Products.AskQuestion.FullName.Hint")" class="form-control ask-question-fullname" />
+        <span class="required">*</span>
+        <input asp-for="AskQuestionFullName" placeholder="@T("Products.AskQuestion.FullName.Hint")" v-validate="'required'" class="form-control ask-question-fullname" />
+        <span v-if="veeErrors.first('AskQuestionFullName')" class="field-validation-error">@T("products.askquestion.fullname.required")</span>
         <span asp-validation-for="AskQuestionFullName"></span>
     </fieldset>
     <fieldset class="form-group">
@@ -18,7 +22,9 @@
     </fieldset>
     <fieldset class="form-group">
         <label asp-for="AskQuestionMessage" class="col-form-label">@T("Products.AskQuestion.Message"):</label>
-        <textarea asp-for="AskQuestionMessage" placeholder="@T("Products.AskQuestion.Message.Hint")" class="form-control ask-question-message"></textarea>
+        <span class="required">*</span>
+        <textarea asp-for="AskQuestionMessage" placeholder="@T("Products.AskQuestion.Message.Hint")" v-validate="'required'" class="form-control ask-question-message"></textarea>
+        <span v-if="veeErrors.first('AskQuestionMessage')" class="field-validation-error">@T("products.askquestion.Message.required")</span>
         <span asp-validation-for="AskQuestionMessage"></span>
     </fieldset>
     @if (Model.DisplayCaptcha)
@@ -27,7 +33,7 @@
             <captcha />
         </div>
     }
-    
+
     <div class="buttons generalMarginSupporter pt-1 pb-1">
         <input type="button" name="send-email" class="btn btn-info send-ask-question-button" value="@T("Products.AskQuestion.Button")"
                onclick="sendcontactusformQuickview('@Url.RouteUrl("AskQuestionOnProduct")')" />
@@ -41,3 +47,19 @@
 
 <div class="alert alert-success product-contact-send" style="display: none;">
 </div>
+
+<script asp-location="Header">
+    Vue.use(VeeValidate, {
+        // This is the default
+        inject: true,
+        // Important to name this something other than 'fields'
+        fieldsBagName: 'veeFields',
+        // This is not required but avoids possible naming conflicts
+        errorBagName: 'veeErrors',
+        classes: true,
+        classNames: {
+            valid: 'is-valid',
+            invalid: 'is-invalid'
+        }
+    })
+</script>

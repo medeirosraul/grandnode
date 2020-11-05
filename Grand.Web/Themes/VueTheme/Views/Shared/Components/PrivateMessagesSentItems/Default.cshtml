@@ -2,27 +2,30 @@
 @inject Grand.Services.Localization.ILocalizationService localizationService
 <div class="private-messages-box">
     <script asp-location="Footer">
-        document.getElementById('selectall-sent').addEventListener('click', function () {
-            if (document.querySelector('#pm-sent-table .rowcheckbox').checked) {
-                var items = document.getElementsByClassName('rowcheckbox');
-                for (var i = 0, len = items.length; i < len; i++) {
-                    var item = items[i];
-                    item.checked = false;
+        if (document.getElementById('selectall-sent')) {
+            document.getElementById('selectall-sent').addEventListener('click', function () {
+                if (document.querySelector('#pm-sent-table .rowcheckbox').checked) {
+                    var items = document.getElementsByClassName('rowcheckbox');
+                    for (var i = 0, len = items.length; i < len; i++) {
+                        var item = items[i];
+                        item.checked = false;
+                    }
+                } else {
+                    var items = document.getElementsByClassName('rowcheckbox');
+                    for (var i = 0, len = items.length; i < len; i++) {
+                        var item = items[i];
+                        item.checked = true;
+                    }
                 }
-            } else {
-                var items = document.getElementsByClassName('rowcheckbox');
-                for (var i = 0, len = items.length; i < len; i++) {
-                    var item = items[i];
-                    item.checked = true;
-                }
-            }
-        });
-
-        document.querySelector('#pm-sent-table .rowcheckbox').addEventListener('change', function (e) {
-            var numChkBoxes = document.querySelector('#pm-sent-table .rowcheckbox').length;
-            var numChkBoxesChecked = document.querySelector('#pm-sent-table .rowcheckbox:checked').length;
-            document.querySelector('#pm-sent-table .rowcheckbox').setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0)
-        });
+            });
+        }
+        if (document.querySelector('#pm-sent-table .rowcheckbox')) {
+            document.querySelector('#pm-sent-table .rowcheckbox').addEventListener('change', function (e) {
+                var numChkBoxes = document.querySelector('#pm-sent-table .rowcheckbox').length;
+                var numChkBoxesChecked = document.querySelector('#pm-sent-table .rowcheckbox:checked').length;
+                document.querySelector('#pm-sent-table .rowcheckbox').setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0)
+            });
+        }
     </script>
     @if (Model.Messages.Any())
     {

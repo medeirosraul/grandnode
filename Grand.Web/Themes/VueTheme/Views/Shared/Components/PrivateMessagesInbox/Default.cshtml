@@ -2,28 +2,30 @@
 @inject Grand.Services.Localization.ILocalizationService localizationService
 <div class="private-messages-box">
     <script asp-location="Footer">
-
-        document.getElementById('select-all-inbox').addEventListener('click', function () {
-            if (document.querySelector('#pm-inbox-table .rowcheckbox').checked) {
-                var items = document.getElementsByClassName('rowcheckbox');
-                for (var i = 0, len = items.length; i < len; i++) {
-                    var item = items[i];
-                    item.checked = false;
+        if (document.getElementById('select-all-inbox')) {
+            document.getElementById('select-all-inbox').addEventListener('click', function () {
+                if (document.querySelector('#pm-inbox-table .rowcheckbox').checked) {
+                    var items = document.getElementsByClassName('rowcheckbox');
+                    for (var i = 0, len = items.length; i < len; i++) {
+                        var item = items[i];
+                        item.checked = false;
+                    }
+                } else {
+                    var items = document.getElementsByClassName('rowcheckbox');
+                    for (var i = 0, len = items.length; i < len; i++) {
+                        var item = items[i];
+                        item.checked = true;
+                    }
                 }
-            } else {
-                var items = document.getElementsByClassName('rowcheckbox');
-                for (var i = 0, len = items.length; i < len; i++) {
-                    var item = items[i];
-                    item.checked = true;
-                }
-            }
-        });
-
+            });
+        }
+        if (document.querySelector('#pm-inbox-table .rowcheckbox')) {
             document.querySelector('#pm-inbox-table .rowcheckbox').addEventListener('change', function (e) {
                 var numChkBoxes = document.querySelector('#pm-inbox-table .rowcheckbox').length;
                 var numChkBoxesChecked = document.querySelector('#pm-inbox-table .rowcheckbox:checked').length;
-                document.querySelector('#pm-inbox-table .rowcheckbox').setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0 )
+                document.querySelector('#pm-inbox-table .rowcheckbox').setAttribute('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0)
             });
+        }
     </script>
     @if (Model.Messages.Any())
     {
