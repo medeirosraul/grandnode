@@ -158,7 +158,9 @@
         }
 
         var post = '#post-vote-' + '@Model.Id';
-        document.querySelector('#post-vote-@Model.Id span.vote').addEventListener('click', function () {
+        var votebutton = document.querySelector('#post-vote-@Model.Id').querySelectorAll('span.vote');
+        for (var i = 0; i < votebutton.length; i++) {
+                    votebutton[i].addEventListener('click', function () {
                     var postData = {
                         postId: '@Model.Id',
                         IsUp: this.classList.contains('up')
@@ -191,5 +193,6 @@
                         alert(error);
                     })
                 });
+        }
 </script>
 }
