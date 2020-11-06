@@ -93,16 +93,19 @@
             {
                 @if (Model.PickupDate != default(DateTime))
                 {
-                    <div class="date">
-                        <label>@T("Account.CustomerReturnRequests.PickupDate"): </label>
-                        <span>@Model.PickupDate.ToShortDateString()</span>
+                    <div class="d-inline-flex align-items-center w-100 my-3">
+                        <b-icon class="mx-2" icon="calendar2-check" variant="info"></b-icon>
+                        <small class="text-muted">
+                            <label class="mb-0">@T("Account.CustomerReturnRequests.PickupDate"): </label>
+                            <span>@Model.PickupDate.ToShortDateString()</span>
+                        </small>
                     </div>
                 }
             }
 
             @if (Model.ShowPickupAddress)
             {
-                <b-card>
+                <b-card class="mt-3">
                     <b-card-text>
                         <ul class="billing-info px-0">
                             <li class="title">

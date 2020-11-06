@@ -25,7 +25,7 @@
             </div>
         }
 
-        <form asp-route="ReturnRequest" method="post">
+        <form asp-route="ReturnRequest" name="form" method="post" v-on:submit.prevent="validateBeforeSubmit">
             <div class="mt-2">
                 <h2 class="h5 mt-3"><strong>@T("ReturnRequests.SelectProduct(s)")</strong></h2>
                 <div class="table-responsive">
@@ -176,7 +176,8 @@
                 {
                     <div class="form-group">
                         @T("ReturnRequests.PickupDate"):
-                        <input asp-for="PickupDate" type="date" class="form-control datepicker" required="@Model.PickupDateRequired" />
+                        <input asp-for="PickupDate" type="date" class="form-control datepicker" v-validate="'required'" required="@Model.PickupDateRequired" />
+                         <span class="field-validation-error"></span>
                     </div>
                 }
             </div>
@@ -189,7 +190,9 @@
     }
 </div>
 <script asp-location="Footer">
-    if (document.getElementById("pickup-address-select option:selected").value != "") {
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.querySelector("#pickup-address-select").value != "") {
             newAddress(false);
-    }
+        }
+    });
 </script>
