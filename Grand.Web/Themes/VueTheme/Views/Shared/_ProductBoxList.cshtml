@@ -36,7 +36,7 @@
 
 @await Component.InvokeAsync("Widget", new { widgetZone = "productbox_before_content", additionalData = Model })
 <template>
-    <div class="w-100">
+    <div class="w-100 mb-3 border-bottom">
         <b-card no-body tag="article" class="product-box list mb-3" @@mouseover="hover = true" @@mouseleave="hover = false">
             <div class="picture-container">
                 <b-link href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
@@ -180,13 +180,13 @@
                                                             if ((spec.PictureModel.FullSizeImageUrl).Length > 0)
                                                             {
                                                                 <b-button variant="light" size="sm" class="p-1 name image-container" v-on:click='productImage' data-href="@spec.PictureModel.FullSizeImageUrl">
-                                                                    <img src="@spec.ImageSquaresPictureModel?.ImageUrl" />
+                                                                    <img src="@spec.ImageSquaresPictureModel?.ImageUrl" alt="@spec.Name" />
                                                                 </b-button>
                                                             }
                                                             else
                                                             {
                                                                 <b-button variant="light" size="sm" class="p-1 name image-container" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })?@item.Name=@Html.Raw(spec.Name)">
-                                                                    <img src="@spec.ImageSquaresPictureModel?.ImageUrl" />
+                                                                    <img src="@spec.ImageSquaresPictureModel?.ImageUrl" alt="@spec.Name" />
                                                                 </b-button>
                                                             }
                                                             break;

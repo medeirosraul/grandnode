@@ -11,7 +11,7 @@
 {
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.DeleteAccount })
 }
-<form asp-route="CustomerDeleteAccount" method="post" autocomplete="off">
+<form asp-route="CustomerDeleteAccount" name="form" method="post" autocomplete="off" v-on:submit.prevent="validateBeforeSubmit">
     <section class="page account-page change-password-page pl-lg-3 pt-3 pt-lg-0">
         <h1 class="h2 generalTitle">@T("Account.DeleteAccount")</h1>
         <div asp-validation-summary="ModelOnly" class="message-error"></div>
@@ -22,8 +22,8 @@
             <div class="form-fields">
                 <fieldset class="form-group">
                     <label asp-for="Password" class="col-form-label">@T("Account.DeleteAccount.Fields.Password"):</label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password"></span>
+                    <input asp-for="Password" class="form-control" v-validate="'required'"/>
+                    <span class="field-validation-error"></span>
                 </fieldset>
             </div>
         </fieldset>

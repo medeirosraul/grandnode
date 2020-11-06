@@ -22,7 +22,9 @@ a:hover {
 }
 .message-error ul {
     padding: 0;
-    margin-bottom: 0;
+    margin-bottom: 5px;
+    color: #dc3545;
+    font-weight: 500;
 }
 .custom-control {
     cursor: pointer;
