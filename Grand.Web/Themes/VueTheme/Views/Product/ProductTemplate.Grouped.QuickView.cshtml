@@ -25,6 +25,7 @@
             <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
         }
     }
+    <b-button class="modal-close" block @@click="$bvModal.hide('ModalQuickView')"><b-icon icon="x"></b-icon></b-button>
     <div class="page product-details-page product-grouped">
         @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_top", additionalData = Model.Id })
         <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
@@ -147,7 +148,7 @@
                                             <partial name="_SKU_Man_GTIN_Ven" model="variant" />
                                             <!--delivery-->
                                             @if ((variant.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(variant.DeliveryDate)
-                                      || variant.NotReturnable || variant.AdditionalShippingCharge > 0)
+                                     || variant.NotReturnable || variant.AdditionalShippingCharge > 0)
                                             {
                                                 <partial name="_DeliveryInfo" model="variant" />
                                             }

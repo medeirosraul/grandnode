@@ -25,6 +25,7 @@
             <link href="~/Themes/VueTheme/Content/css/product/product.css" rel="stylesheet" type="text/css" />
         }
     }
+    <b-button class="modal-close" block @@click="$bvModal.hide('ModalQuickView')"><b-icon icon="x"></b-icon></b-button>
     <div class="page product-details-page">
         <vc:widget widget-zone="productdetails_top" additional-data="@Model.Id"></vc:widget>
         <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">

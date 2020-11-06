@@ -175,6 +175,24 @@ dl, ol, ul {
 
 /* modals */
 
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    background-color: transparent;
+    border-color: transparent;
+    color: #212529;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 3;
+}
+.modal-close:hover, .modal-close:focus, .modal-close:not(:disabled):not(.disabled):active {
+    color: #17a2b8;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none !important;
+}
 .modal-place .b-overlay-wrap {
     position: fixed !important;
     width: 100%;
