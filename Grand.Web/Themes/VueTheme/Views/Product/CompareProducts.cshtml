@@ -31,7 +31,7 @@
     <h2 class="text-center generalTitle">@T("Products.Compare.Title")</h2>
     @if (Model.Products.Any())
     {
-        <b-button variant="outline-secondary mb-3" size="sm" onclick="location = ('@Url.RouteUrl("ClearCompareList")')" class="clear-list">@T("Products.Compare.Clear")</b-button>
+        <b-button variant="outline-secondary mb-3" onclick="location = ('@Url.RouteUrl("ClearCompareList")')" class="clear-list">@T("Products.Compare.Clear")</b-button>
         <div class="table-responsive">
             <table class="table table-hover">
                 <tbody>

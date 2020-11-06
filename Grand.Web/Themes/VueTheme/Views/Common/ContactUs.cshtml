@@ -19,20 +19,21 @@
         }
         else
         {
-            <form asp-route="ContactUs" method="post" id="form" name="form" v-on:submit.prevent="validateBeforeSubmit">
+            <form asp-route="ContactUs" method="post" name="form" v-on:submit.prevent="validateBeforeSubmit">
                 <div asp-validation-summary="ModelOnly" class="message-error"></div>
                 <div class="form-fields">
                     <div class="form-group">
                         <label asp-for="FullName" class="col-form-label">@T("ContactUs.FullName"):</label>
                         <span class="required">*</span>
                         <input asp-for="FullName" placeholder="@T("ContactUs.FullName.Hint")" class="fullname form-control" v-validate="'required'" />
-                        <span v-if="veeErrors.first('FullName')" class="field-validation-error">@T("contactus.fullname.required")</span>
+                        <span class="field-validation-error"></span>
                         <span asp-validation-for="FullName"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email" class="col-form-label">@T("ContactUs.Email"):</label>
                         <span class="required">*</span>
                         <input asp-for="Email" placeholder="@T("ContactUs.Email.Hint")" class="form-control email" v-validate="'required|email'" />
+                        <span class="field-validation-error"></span>
                         <span asp-validation-for="Email"></span>
                     </div>
                     @if (Model.SubjectEnabled)
@@ -41,7 +42,7 @@
                             <label asp-for="Subject" class="col-form-label">@T("ContactUs.Subject"):</label>
                             <span class="required">*</span>
                             <input asp-for="Subject" placeholder="@T("ContactUs.Subject.Hint")" class="form-control subject" v-validate="'required'" />
-                            <span v-if="veeErrors.first('Subject')" class="field-validation-error">@T("contactus.Subject.required")</span>
+                            <span class="field-validation-error"></span>
                             <span asp-validation-for="Subject"></span>
                         </div>
                     }
@@ -49,7 +50,7 @@
                     <label asp-for="Enquiry" class="col-form-label">@T("ContactUs.Enquiry"):</label>
                     <span class="required">*</span>
                     <textarea asp-for="Enquiry" placeholder="@T("ContactUs.Enquiry.Hint")" class="form-control enquiry" v-validate="'required'"></textarea>
-                    <span v-if="veeErrors.first('Enquiry')" class="field-validation-error">@T("contactus.Enquiry.required")</span>
+                    <span class="field-validation-error"></span>
                     <span asp-validation-for="Enquiry"></span>
                 </div>
                     @if (Model.DisplayCaptcha)

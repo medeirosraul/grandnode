@@ -529,3 +529,39 @@ function displayPopupNotification(message, messagetype) {
 
     }
 }
+
+function validation() {
+
+    var elements = document.querySelectorAll('.form-control[aria-invalid]');
+
+    [].forEach.call(elements, function (el) {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.type == "attributes") {
+                    if (el.getAttribute(mutation.attributeName) == 'true') {
+                        if (el.classList.contains('is-invalid')) {
+                            var message = el.getAttribute('data-val-required');
+                            el.nextElementSibling.innerText = message;
+                        } else {
+                            el.nextElementSibling.innerText = '';
+                            if (el.getAttribute('data-val-length')) {
+                                var message2 = el.getAttribute('data-val-length');
+                                el.nextElementSibling.innerText = message2;
+                            } else {
+                                el.nextElementSibling.innerText = '';
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        observer.observe(el, {
+            attributes: true
+        });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    validation();
+}); 

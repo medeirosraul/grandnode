@@ -113,8 +113,8 @@ var vm = new Vue({
         validateBeforeSubmit() {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    if (document.getElementById('form')) {
-                        document.getElementById('form').submit();
+                    if (document.querySelector('[name="form"]')) {
+                        document.querySelector('[name="form"]').submit();
                     }
                    return
                 }

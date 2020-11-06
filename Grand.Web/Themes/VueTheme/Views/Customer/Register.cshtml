@@ -79,7 +79,7 @@
         }
 </script>
 <template>
-        <form asp-route="Register" name="form" id="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
+        <form asp-route="Register" name="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
             <div class="page registration-page">
                 <div asp-validation-summary="ModelOnly" class="message-error alert alert-danger"></div>
                 <b-card class="my-3" no-footer>
@@ -115,16 +115,16 @@
                                 <legend class="sr-only">@T("account.fields.firstname")</legend>
                                 <label asp-for="FirstName" class="col-form-label">@T("Account.Fields.FirstName"):</label>
                                 <span class="required">*</span>
-                                <input asp-for="FirstName" class="form-control" name="Address.FirstName" v-validate="'required'" />
-                                <span v-if="veeErrors.first('Address.FirstName')" class="field-validation-error">@T("account.fields.firstname.required")</span>
+                                <input asp-for="FirstName" class="form-control" v-validate="'required'" />
+                                <span class="field-validation-error"></span>
                                 <span asp-validation-for="FirstName"></span>
                             </fieldset>
                             <fieldset class="col-sm-6 col-12 form-group">
                                 <legend class="sr-only">@T("account.fields.lastname")</legend>
                                 <label asp-for="LastName" class="col-form-label">@T("Account.Fields.LastName"):</label>
                                 <span class="required">*</span>
-                                <input asp-for="LastName" class="form-control" name="Address.LastName" v-validate="'required'" />
-                                <span v-if="veeErrors.first('Address.LastName')" class="field-validation-error">@T("account.fields.lastname.required")</span>
+                                <input asp-for="LastName" class="form-control" v-validate="'required'" />
+                                <span class="field-validation-error"></span>
                                 <span asp-validation-for="LastName"></span>
                             </fieldset>
                         </div>
@@ -183,8 +183,8 @@
                             <div class="row">
                                 <label asp-for="Email" class="col-form-label">@T("Account.Fields.Email"):</label>
                                 <span class="required">*</span>
-                                <input asp-for="Email" class="form-control" name="Address.Email" v-validate="'required|email'" />
-                                <span v-if="veeErrors.first('Address.Email')" class="field-validation-error">@T("account.fields.email.required")</span>
+                                <input asp-for="Email" class="form-control" v-validate="'required|email'" />
+                                <span class="field-validation-error"></span>
                                 <span asp-validation-for="Email"></span>
                             </div>
                         </fieldset>
@@ -197,8 +197,8 @@
                                     <span class="required">*</span>
                                 </div>
                                 <div class="col-12">
-                                    <input asp-for="Username" class="form-control" name="Address.Username" v-validate="'required'" />
-                                    <span v-if="veeErrors.first('Address.Username')" class="field-validation-error">@T("account.fields.username.required")</span>
+                                    <input asp-for="Username" class="form-control" v-validate="'required'" />
+                                    <span class="field-validation-error"></span>
                                     <span asp-validation-for="Username"></span>
                                     @if (Model.CheckUsernameAvailabilityEnabled)
                                     {
@@ -222,8 +222,8 @@
                                 @if (Model.CompanyRequired)
                                 {
                                     <span class="required">*</span>
-                                    <input asp-for="Company" class="form-control" name="Address.Company" v-validate="'required'" />
-                                    <span v-if="veeErrors.first('Address.Company')" class="field-validation-error">@T("account.fields.username.required")</span>
+                                    <input asp-for="Company" class="form-control" v-validate="'required'" />
+                                    <span class="field-validation-error"></span>
                                     <span asp-validation-for="Company"></span>
                                 }
                                 else
@@ -269,8 +269,8 @@
                                         @if (Model.StreetAddressRequired)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="StreetAddress" name="Address.StreetAddress" class="form-control" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.StreetAddress')" class="field-validation-error">@T("account.fields.streetaddress.required")</span>
+                                            <input asp-for="StreetAddress" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="StreetAddress"></span>
                                         }
                                         else
@@ -288,8 +288,8 @@
                                         @if (Model.StreetAddress2Required)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="StreetAddress2" class="form-control" name="Address.StreetAddress2" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.StreetAddress2')" class="field-validation-error">@T("account.fields.streetaddress2.required")</span>
+                                            <input asp-for="StreetAddress2" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="StreetAddress2"></span>
                                         }
                                         else
@@ -307,8 +307,8 @@
                                         @if (Model.ZipPostalCodeRequired)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="ZipPostalCode" class="form-control" name="Address.ZipPostalCode" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.ZipPostalCode')" class="field-validation-error">@T("account.fields.zippostalcode.required")</span>
+                                            <input asp-for="ZipPostalCode" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="ZipPostalCode"></span>
                                         }
                                         else
@@ -326,8 +326,8 @@
                                         @if (Model.CityRequired)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="City" class="form-control" name="Address.City" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.City')" class="field-validation-error">@T("account.fields.city.required")</span>
+                                            <input asp-for="City" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="City"></span>
                                         }
                                         else
@@ -345,8 +345,8 @@
                                         @if (Model.CountryRequired)
                                         {
                                             <span class="required">*</span>
-                                            <select asp-for="CountryId" class="custom-select form-control" name="Address.CountryId" asp-items="Model.AvailableCountries" v-validate="'required'"></select>
-                                            <span v-if="veeErrors.first('Address.CountryId')" class="field-validation-error">@T("account.fields.country.required")</span>
+                                            <select asp-for="CountryId" class="custom-select form-control" asp-items="Model.AvailableCountries" v-validate="'required'"></select>
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="CountryId"></span>
                                         }
                                         else
@@ -362,7 +362,7 @@
                                         <legend class="sr-only">@T("account.fields.stateprovince")</legend>
                                         <label asp-for="StateProvinceId" class="col-form-label">@T("Account.Fields.StateProvince"):</label>
                                         <select asp-for="StateProvinceId" class="custom-select form-control" asp-items="Model.AvailableStates"></select>
-                                        <span class="field-validation-error" style="display: none;">@T("Account.fields.stateprovince.required")</span>
+                                        <span class="field-validation-error"></span>
                                         <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
                                     </fieldset>
                                 }
@@ -387,8 +387,8 @@
                                         @if (Model.PhoneRequired)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="Phone" class="form-control" name="Address.Phone" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.Phone')" class="field-validation-error">@T("Account.fields.phone.required")</span>
+                                            <input asp-for="Phone" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="Phone"></span>
                                         }
                                         else
@@ -406,8 +406,8 @@
                                         @if (Model.FaxRequired)
                                         {
                                             <span class="required">*</span>
-                                            <input asp-for="Fax" class="form-control" name="Address.Fax" v-validate="'required'" />
-                                            <span v-if="veeErrors.first('Address.Fax')" class="field-validation-error">@T("Account.fields.fax.required")</span>
+                                            <input asp-for="Fax" class="form-control" v-validate="'required'" />
+                                            <span class="field-validation-error"></span>
                                             <span asp-validation-for="Fax"></span>
                                         }
                                         else
@@ -476,18 +476,16 @@
                             <div class="row">
                                 <label asp-for="Password" class="col-form-label">@T("Account.Fields.Password"):</label>
                                 <span class="required">*</span>
-                                <input asp-for="Password" class="form-control" name="Address.Password" v-validate="'required'" />
-                                <span v-if="veeErrors.first('Address.Password')" class="field-validation-error">@T("account.fields.password.required")</span>
-                                <span asp-validation-for="Password"></span>
+                                <input asp-for="Password" class="form-control" v-validate="'required'" />
+                                <span class="field-validation-error"></span>
                             </div>
                         </div>
                         <div class="form-group col-12">
                             <div class="row">
                                 <label asp-for="ConfirmPassword" class="col-form-label">@T("Account.Fields.ConfirmPassword"):</label>
                                 <span class="required">*</span>
-                                <input asp-for="ConfirmPassword" class="form-control" name="Address.ConfirmPassword" v-validate="'required'" />
-                                <span v-if="veeErrors.first('Address.ConfirmPassword')" class="field-validation-error">@T("account.passwordrecovery.confirmnewpassword.required")</span>
-                                <span asp-validation-for="ConfirmPassword"></span>
+                                <input asp-for="ConfirmPassword" class="form-control" v-validate="'required'" />
+                                <span class="field-validation-error"></span>
                             </div>
                         </div>
                         @if (Model.DisplayCaptcha)
@@ -519,7 +517,7 @@
                     <span v-if="veeErrors.first('acceptprivacypolicy')" class="field-validation-error d-flex w-100">@T("account.fields.acceptprivacypolicy.required")</span>
                 }
             </div>
-            <input type="submit" id="register-button" class="btn btn-secondary register-next-step-button my-3" value="@T("Account.Register.Button")" name="register-button" />
+            <input type="submit" id="register-button" class="btn btn-secondary register-next-step-button my-3" value="@T("Account.Register.Button")" />
         </form>
 </template>
 <script asp-location="Header">

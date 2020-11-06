@@ -12,7 +12,7 @@
     @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.Addresses })
 }
 <vc:widget widget-zone="customer-address-add-before" additional-data="@Model"></vc:widget>
-<form asp-route="CustomerAddressAdd" method="post" id="form" name="form" v-on:submit.prevent="validateBeforeSubmit">
+<form asp-route="CustomerAddressAdd" method="post" name="form" v-on:submit.prevent="validateBeforeSubmit">
     <div class="page account-page address-edit-page pl-lg-3 mb-3 pt-lg-0 pt-3">
         <h1 class="generalTitle h2">@T("Account.CustomerAddresses.AddNew")</h1>
         <div asp-validation-summary="ModelOnly" class="message-error"></div>
