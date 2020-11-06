@@ -199,14 +199,16 @@ var Billing = {
         //ensure that response.wrong_billing_address is set
         //if not set, "true" is the default value
         if (typeof response.data.wrong_billing_address == 'undefined') {
-            response.wrong_billing_address = false;
+            response.data.wrong_billing_address = false;
         }
         if (Billing.disableBillingAddressCheckoutStep) {
-            console.log(response.data)
             if (response.data.wrong_billing_address) {
-                Accordion.showSection('#opc-billing');
+                document.getElementById('button-billing').classList.add('allow');
             } else {
-                Accordion.hideSection('#opc-billing');
+                document.getElementById('button-billing').classList.remove('allow');
+                if (document.getElementById('back-shipping_method')) {
+                    document.getElementById('back-shipping_method').classList.add('disabled');
+                }
             }
         }
 
