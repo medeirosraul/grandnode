@@ -48,6 +48,7 @@
     <None Remove="Themes\VueTheme\Content\script\app.js" />
     <None Remove="Themes\VueTheme\Content\script\app.mix.js" />
     <None Remove="Themes\VueTheme\Content\script\MyComponentName.js" />
+    <None Remove="Themes\VueTheme\Content\script\validation-config.js" />
     <None Remove="Themes\VueTheme\Content\script\vee-validate.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
