@@ -530,6 +530,27 @@ function displayPopupNotification(message, messagetype) {
     }
 }
 
+function Mobile() {
+
+    // mobile main menu
+
+    var mainmenu = document.querySelector('.main-nav');
+    if (document.getElementById('sidebar-menu')) {
+        document.querySelector("#sidebar-menu .b-sidebar-body").appendChild(mainmenu);
+    } else {
+        document.querySelector(".header-nav").appendChild(mainmenu);
+    }
+
+    // mobile search box
+
+    var searchBox = document.querySelector('.searchBox');
+    if (document.getElementById('MobileSearchBox')) {
+        document.querySelector("#MobileSearchBox").appendChild(searchBox);
+    } else {
+        document.querySelector("#header-container").appendChild(searchBox);
+    }
+}
+
 function validation() {
 
     var elements = document.querySelectorAll('.form-control[aria-invalid]');
@@ -563,5 +584,6 @@ function validation() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    Mobile();
     validation();
 }); 

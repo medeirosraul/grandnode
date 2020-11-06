@@ -24,14 +24,6 @@
                                backdrop
                                left
                                shadow>
-                        <script asp-location="Footer">
-                            var mainmenu = document.querySelector('.main-nav');
-                            if (document.getElementById('sidebar-menu')) {
-                                document.querySelector("#sidebar-menu .b-sidebar-body").appendChild(mainmenu);
-                            } else {
-                                document.querySelector(".header-nav").appendChild(mainmenu);
-                            }
-                        </script>
                     </b-sidebar>
                 </div>
             </template>
@@ -64,14 +56,6 @@
     </b-navbar>
     <template v-if="isMobile()">
         <div id="MobileSearchBox" class="w-100 pb-2"></div>
-        <script asp-location="Footer">
-            var searchBox = document.querySelector('.searchBox');
-            if (document.getElementById('MobileSearchBox')) {
-                document.querySelector("#MobileSearchBox").appendChild(searchBox);
-            } else {
-                document.querySelector("#header-container").appendChild(searchBox);
-            }
-        </script>
     </template>
     <b-navbar toggleable="lg" type="light" variant="light" class="main-nav">
         <b-container :fluid="fluid">

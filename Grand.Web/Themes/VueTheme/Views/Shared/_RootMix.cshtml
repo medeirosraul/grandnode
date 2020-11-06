@@ -27,8 +27,4 @@
     @await Component.InvokeAsync("Footer")
     @await Component.InvokeAsync("EuCookieLaw")
 </div>
-<script asp-location="Footer">
-    AxiosCart.init('.cart-qty', '.wishlist-qty', '.flyout-cart');
-</script>
-
 @await Component.InvokeAsync("Widget", new { widgetZone = "body_end_html_tag_before" })
