@@ -182,18 +182,23 @@ function newsletter_subscribe(subscribe) {
         method: 'post',
     }).then(function (response) {
         subscribeProgress.style.display = "none";
-        document.getElementById("newsletter-result-block").innerHTML = response.data.Result;
+        document.querySelector("#newsletter-result-block .alert").innerHTML = response.data.Result;
         console.log(response);
         if (response.data.Success) {
             document.querySelector('.newsletter-inputs .input-group').style.display = "none";
-            document.getElementById('newsletter-result-block').classList.add("d-block").style.bottom = "unset";
+            if (document.querySelector('.newsletter-inputs .newsletter-subscribe-unsubscribe')) {
+                document.querySelector('.newsletter-inputs .newsletter-subscribe-unsubscribe').style.display = "none";
+            }
+            document.querySelector("#newsletter-result-block").style.display = "block";
+            document.getElementById('newsletter-result-block').classList.add("success").style.bottom = "unset";
             if (data.response.Showcategories) {
-                document.getElementById('#nc_modal_form').innerHTML = response.data.ResultCategory;
+                document.getElementById('nc_modal_form').innerHTML = response.data.ResultCategory;
                 window.setTimeout(function () {
                     //document.querySelector('.nc-action-form').magnificPopup('open');
                 }, 100);
             }
         } else {
+            document.querySelector("#newsletter-result-block").style.display = "block";
             window.setTimeout(function () {
                 document.getElementById('newsletter-result-block').style.display = "none"
             }, 2000);

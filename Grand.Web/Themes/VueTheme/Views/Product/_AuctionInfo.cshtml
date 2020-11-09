@@ -9,10 +9,10 @@
                 <countdown :end-time="@Model.EndTime.Value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds">
                     <template v-slot:process="{ timeObj }">
                         <span class="col-form-label">@T("AddToCart.Timeleft"):</span>
-                        <span>{{ `${timeObj.d}` }} </span>
-                        <span>: {{ `${timeObj.h}` }} </span>
-                        <span>: {{ `${timeObj.m}` }} </span>
-                        <span>: {{ `${timeObj.s}` }}</span>
+                        <span>@T("vue.auction.days"): {{ `${timeObj.d}` }} </span>
+                        <span>@T("vue.auction.hours"): {{ `${timeObj.h}` }} </span>
+                        <span>@T("vue.auction.minutes"): {{ `${timeObj.m}` }} </span>
+                        <span>@T("vue.auction.seconds"): {{ `${timeObj.s}` }}</span>
                     </template>
                     <template v-slot:finish>
                         <span>@T("ShoppingCart.Auctionends")</span>

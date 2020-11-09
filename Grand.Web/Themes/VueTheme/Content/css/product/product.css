@@ -131,3 +131,12 @@
     left: 0;
     right: 0;
 }
+
+/* product collateral */
+
+.product-collateral .add-to-cart-button {
+    max-width: 160px;
+}
+.product-collateral .add-to-wishlist-button {
+    width: 235px;
+} 

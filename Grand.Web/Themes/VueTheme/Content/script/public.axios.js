@@ -139,10 +139,10 @@ var AxiosCart = {
         }
         if (response.data.comparemessage) {
             if (response.data.success == true) {
-                displayBarNotification(response.data.comparemessage, 'success', 3500);
+                displayBarNotification(response.data.comparemessage, 'success', 9000000);
             }
             else {
-                displayBarNotification(response.data.comparemessage, 'error', 3500);
+                displayBarNotification(response.data.comparemessage, 'error', 9000000);
             }
             return false;
         }

@@ -133,33 +133,8 @@
                         {
                             <fieldset class="form-group date-of-birth col-sm-12">
                                 <legend class="sr-only">@T("Account.Fields.DateOfBirth")</legend>
-                                @if (Model.DateOfBirthRequired)
-                                {
                                     <div class="row">
                                         <span class="col-form-label col-12 py-0 px-0">@T("Account.Fields.DateOfBirth"):<span class="required">*</span></span>
-                                        <date-picker-dropdown v-validate="'required'" control-day="@Html.IdFor(x => x.DateOfBirthDay)"
-                                                              control-month="@Html.IdFor(x => x.DateOfBirthMonth)"
-                                                              control-year="@Html.IdFor(x => x.DateOfBirthYear)"
-                                                              begin-year="@(DateTime.Now.Year - 100)"
-                                                              end-year="DateTime.Now.Year"
-                                                              selected-day="Model.DateOfBirthDay.HasValue ? Model.DateOfBirthDay.Value : 0"
-                                                              selected-month="Model.DateOfBirthMonth.HasValue ? Model.DateOfBirthMonth.Value : 0"
-                                                              selected-year="Model.DateOfBirthYear.HasValue ? Model.DateOfBirthYear.Value : 0"
-                                                              class="col-12 input-group px-0" />
-                                    </div>
-                                    <div class="row">
-                                        <span v-if="veeErrors.first('DateOfBirthDay')" class="field-validation-error">@T("account.fields.dateofbirth.required")</span>
-                                        <span v-if="veeErrors.first('DateOfBirthMonth')" class="field-validation-error">@T("account.fields.dateofbirth.required")</span>
-                                        <span v-if="veeErrors.first('DateOfBirthYear')" class="field-validation-error">@T("account.fields.dateofbirth.required")</span>
-                                        <span asp-validation-for="DateOfBirthDay"></span>
-                                        <span asp-validation-for="DateOfBirthMonth"></span>
-                                        <span asp-validation-for="DateOfBirthYear"></span>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="row">
-                                        <span class="col-form-label col-12 py-0 px-0">@T("Account.Fields.DateOfBirth"):</span>
                                         <date-picker-dropdown control-day="@Html.IdFor(x => x.DateOfBirthDay)"
                                                               control-month="@Html.IdFor(x => x.DateOfBirthMonth)"
                                                               control-year="@Html.IdFor(x => x.DateOfBirthYear)"
@@ -175,7 +150,6 @@
                                         <span asp-validation-for="DateOfBirthMonth"></span>
                                         <span asp-validation-for="DateOfBirthYear"></span>
                                     </div>
-                                }
                             </fieldset>
                         }
                         <fieldset class="form-group col-md-12 mail">

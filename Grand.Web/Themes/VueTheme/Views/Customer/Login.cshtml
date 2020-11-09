@@ -16,7 +16,7 @@
     <b-col cols="12">
         <b-form-row class="my-3">
             @* login main block *@
-            <b-col lg="7" md="10" sm="10" cols="12" class="mx-lg-0 mx-auto mt-3">
+            <b-col cols="12" class="mx-lg-0 mx-auto mt-3">
                 <form asp-route="Login" name="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
                     <b-card>
                         <template v-slot:header>
@@ -94,7 +94,7 @@
             @* want some register? *@
             @if (Model.CheckoutAsGuest)
             {
-                <b-col lg="5" md="10" sm="10" cols="12" class="new-wrapper checkout-as-guest-or-register-block mt-3 mx-lg-0 mx-auto">
+                <b-col cols="12" class="new-wrapper checkout-as-guest-or-register-block mt-3 mx-lg-0 mx-auto">
                     <h5>
                         <strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
                     </h5>
@@ -115,7 +115,7 @@
             }
             else
             {
-                <b-col lg="5" md="10" sm="10" cols="12" class="mx-lg-0 mx-auto mt-3">
+                <b-col cols="12" class="mx-lg-0 mx-auto mt-3">
                     <b-card no-header no-footer>
                         <b-card-text>
                             <div class="text generalMarginSupporter">

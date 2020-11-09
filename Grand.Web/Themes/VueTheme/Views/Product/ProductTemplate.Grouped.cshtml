@@ -110,13 +110,13 @@
                                 <partial name="_ProductWarehouses" model="Model" />
                             }
                             <!--compare, email a friend-->
-                            <div class="overview-buttons mt-3 mb-3">
+                            <b-btn-group class="mt-2 mb-3 w-100">
                                 @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_inside_overview_buttons_before", additionalData = Model.Id })
                                 <partial name="_CompareProductsButton" model="Model" />
                                 <partial name="_ProductEmailAFriendButton" model="Model" />
                                 <partial name="_ProductAskQuestionButton" model="Model" />
                                 @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_inside_overview_buttons_after", additionalData = Model.Id })
-                            </div>
+                            </b-btn-group>
                             <partial name="_ShareButton" model="Model" />
                             @await Component.InvokeAsync("Widget", new { widgetZone = "productdetails_overview_bottom", additionalData = Model.Id })
                         </b-col>

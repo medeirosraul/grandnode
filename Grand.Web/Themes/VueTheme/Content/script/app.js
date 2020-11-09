@@ -2,7 +2,7 @@
     props: {
         flycart: null,
         flycartitems: null,
-        flycartindicator: null
+        flycartindicator: null,
     },
     methods: {
         updateFly() {
