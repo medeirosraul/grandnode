@@ -277,6 +277,23 @@
                 data: data,
                 url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
             }).then(function (response) {
+                    var newResponse= JSON.parse(response.data.htmlordertotal)
+                    vm.DisplayTax = newResponse.DisplayTax,
+                    vm.DisplayTaxRates = newResponse.DisplayTaxRates,
+                    vm.GiftCards = newResponse.GiftCards,
+                    vm.OrderTotal = newResponse.OrderTotal,
+                    vm.OrderTotalDiscount = newResponse.OrderTotalDiscount,
+                    vm.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
+                    vm.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
+                    vm.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
+                    vm.RequiresShipping = newResponse.RequiresShipping,
+                    vm.SelectedShippingMethod = newResponse.SelectedShippingMethod,
+                    vm.Shipping = newResponse.Shipping,
+                    vm.SubTotal = newResponse.SubTotal,
+                    vm.SubTotalDiscount = newResponse.SubTotalDiscount,
+                    vm.Tax = newResponse.Tax,
+                    vm.TaxRates = newResponse.TaxRates,
+                    vm.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
                 if (response.data.enabledattributeids) {
                     for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                         if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
@@ -296,12 +313,6 @@
                             document.querySelector('#checkout_attribute_input_' + response.data.disabledattributeids[i]).style.display = 'none';
                         }
                     }
-                }
-                if (response.data.htmlordertotal) {
-                    document.querySelector('.total-info').innerHTML = response.data.htmlordertotal
-                }
-                if (response.data.checkoutattributeinfo) {
-                    document.querySelector('.selected-checkout-attributes').innerHTML = response.data.checkoutattributeinfo
                 }
             })
         }

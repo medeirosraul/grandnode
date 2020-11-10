@@ -3,34 +3,59 @@
         method: 'post',
         url: href,
     }).then(function (response) {
+        var cartall = response.data.cart;
+        var newcart = JSON.parse(cartall);
         var flyoutcart = response.data.flyoutshoppingcart;
-        var cartChange = response.data.cart;
-        var delButtons = document.querySelector('.remove-from-cart');
-        document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
-        new Vue({
-            el: '.flyout-cart',
-            data: {
-                template: null
-            },
-            render: function (createElement) {
-                if (!this.template) {
-
-                } else {
-                    return this.template();
-                }
-            },
-            mounted() {
-                var self = this;
-                self.template = Vue.compile(flyoutcart).render;
-            }
-        });
-        new Vue({
-            el: '.checkout-buttons',
-            mixins: [mix]
-        });
+        var newfly = JSON.parse(flyoutcart);
+        vm.flycart = newfly;
+        vm.flycartitems = newfly.Items;
+        vm.flycartindicator = newfly.TotalProducts;
+            vm.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
+            vm.CheckoutAttributeInfo = newcart.CheckoutAttributeInfo,
+            vm.CheckoutAttributes = newcart.CheckoutAttributes,
+            vm.DiscountBox = newcart.DiscountBox,
+            vm.DisplayTaxShippingInfo = newcart.DisplayTaxShippingInfo,
+            vm.GiftCardBox = newcart.GiftCardBox,
+            vm.IsAllowOnHold = newcart.IsAllowOnHold,
+            vm.IsGuest = newcart.IsGuest,
+            vm.Items = newcart.Items,
+            vm.MinOrderSubtotalWarning = newcart.MinOrderSubtotalWarning,
+            vm.OnePageCheckoutEnabled = newcart.OnePageCheckoutEnabled,
+            vm.OrderReviewData = newcart.OrderReviewData,
+            vm.ShowCheckoutAsGuestButton = newcart.ShowCheckoutAsGuestButton,
+            vm.ShowProductImages = newcart.ShowProductImages,
+            vm.ShowSku = newcart.ShowSku,
+            vm.TermsOfServiceOnOrderConfirmPage = newcart.TermsOfServiceOnOrderConfirmPage,
+            vm.TermsOfServiceOnShoppingCartPage = newcart.TermsOfServiceOnShoppingCartPage,
+            vm.TermsOfServicePopup = newcart.TermsOfServicePopup,
+            vm.Warnings = newcart.Warnings,
+            vm.DiscountBox = newcart.DiscountBox
     }).catch(function (error) {
         alert('Failed to retrieve Shopping Cart Page.');
-    })
+    }).then(function () {
+        axios({
+            baseURL: '/vue/component',
+            method: 'get',
+            params: { component: 'OrderTotals' },
+        }).then(response => (
+            vm.DisplayTax = response.data.DisplayTax,
+            vm.DisplayTaxRates = response.data.DisplayTaxRates,
+            vm.GiftCards = response.data.GiftCards,
+            vm.OrderTotal = response.data.OrderTotal,
+            vm.OrderTotalDiscount = response.data.OrderTotalDiscount,
+            vm.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
+            vm.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
+            vm.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
+            vm.RequiresShipping = response.data.RequiresShipping,
+            vm.SelectedShippingMethod = response.data.SelectedShippingMethod,
+            vm.Shipping = response.data.Shipping,
+            vm.SubTotal = response.data.SubTotal,
+            vm.SubTotalDiscount = response.data.SubTotalDiscount,
+            vm.Tax = response.data.Tax,
+            vm.TaxRates = response.data.TaxRates,
+            vm.WillEarnRewardPoints = response.data.WillEarnRewardPoints
+        ))
+    });
 }
 
 function ChangeShoppingCart(e) {
@@ -42,16 +67,55 @@ function ChangeShoppingCart(e) {
         data: data,
         url: href,
     }).then(function (response) {
-        var cartChange = response.data.cart;
-        document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
-        new Vue({
-            el: '.checkout-buttons',
-            mixins: [mix] 
-        });
+        var cartall = response.data.cart;
+        var newcart = JSON.parse(cartall);
+        vm.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
+            vm.CheckoutAttributeInfo = newcart.CheckoutAttributeInfo,
+            vm.CheckoutAttributes = newcart.CheckoutAttributes,
+            vm.DiscountBox = newcart.DiscountBox,
+            vm.DisplayTaxShippingInfo = newcart.DisplayTaxShippingInfo,
+            vm.GiftCardBox = newcart.GiftCardBox,
+            vm.IsAllowOnHold = newcart.IsAllowOnHold,
+            vm.IsGuest = newcart.IsGuest,
+            vm.Items = newcart.Items,
+            vm.MinOrderSubtotalWarning = newcart.MinOrderSubtotalWarning,
+            vm.OnePageCheckoutEnabled = newcart.OnePageCheckoutEnabled,
+            vm.OrderReviewData = newcart.OrderReviewData,
+            vm.ShowCheckoutAsGuestButton = newcart.ShowCheckoutAsGuestButton,
+            vm.ShowProductImages = newcart.ShowProductImages,
+            vm.ShowSku = newcart.ShowSku,
+            vm.TermsOfServiceOnOrderConfirmPage = newcart.TermsOfServiceOnOrderConfirmPage,
+            vm.TermsOfServiceOnShoppingCartPage = newcart.TermsOfServiceOnShoppingCartPage,
+            vm.TermsOfServicePopup = newcart.TermsOfServicePopup,
+            vm.Warnings = newcart.Warnings,
+            vm.DiscountBox = newcart.DiscountBox
         checkoutAttributeChange();
     }).catch(function (error) {
         alert('Failed to retrieve Shopping Cart Page.');
-    })
+    }).then(function () {
+        axios({
+            baseURL: '/vue/component',
+            method: 'get',
+            params: { component: 'OrderTotals' },
+        }).then(response => (
+            vm.DisplayTax = response.data.DisplayTax,
+            vm.DisplayTaxRates = response.data.DisplayTaxRates,
+            vm.GiftCards = response.data.GiftCards,
+            vm.OrderTotal = response.data.OrderTotal,
+            vm.OrderTotalDiscount = response.data.OrderTotalDiscount,
+            vm.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
+            vm.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
+            vm.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
+            vm.RequiresShipping = response.data.RequiresShipping,
+            vm.SelectedShippingMethod = response.data.SelectedShippingMethod,
+            vm.Shipping = response.data.Shipping,
+            vm.SubTotal = response.data.SubTotal,
+            vm.SubTotalDiscount = response.data.SubTotalDiscount,
+            vm.Tax = response.data.Tax,
+            vm.TaxRates = response.data.TaxRates,
+            vm.WillEarnRewardPoints = response.data.WillEarnRewardPoints
+        ))
+    });
 }
 
 function removeGiftCard(e) {
@@ -65,13 +129,52 @@ function removeGiftCard(e) {
         data: bodyFormData,
         headers: { 'Content-Type': 'multipart/form-data' },
     }).then(function (response) {
-        var cartChange = response.data.cart;
-        document.querySelector('#ordersummarypagecart').innerHTML = cartChange;
-        new Vue({
-            el: '.checkout-buttons',
-            mixins: [mix]
-        });
+        var cartall = response.data.cart;
+        var newcart = JSON.parse(cartall);
+        vm.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
+            vm.CheckoutAttributeInfo = newcart.CheckoutAttributeInfo,
+            vm.CheckoutAttributes = newcart.CheckoutAttributes,
+            vm.DiscountBox = newcart.DiscountBox,
+            vm.DisplayTaxShippingInfo = newcart.DisplayTaxShippingInfo,
+            vm.GiftCardBox = newcart.GiftCardBox,
+            vm.IsAllowOnHold = newcart.IsAllowOnHold,
+            vm.IsGuest = newcart.IsGuest,
+            vm.Items = newcart.Items,
+            vm.MinOrderSubtotalWarning = newcart.MinOrderSubtotalWarning,
+            vm.OnePageCheckoutEnabled = newcart.OnePageCheckoutEnabled,
+            vm.OrderReviewData = newcart.OrderReviewData,
+            vm.ShowCheckoutAsGuestButton = newcart.ShowCheckoutAsGuestButton,
+            vm.ShowProductImages = newcart.ShowProductImages,
+            vm.ShowSku = newcart.ShowSku,
+            vm.TermsOfServiceOnOrderConfirmPage = newcart.TermsOfServiceOnOrderConfirmPage,
+            vm.TermsOfServiceOnShoppingCartPage = newcart.TermsOfServiceOnShoppingCartPage,
+            vm.TermsOfServicePopup = newcart.TermsOfServicePopup,
+            vm.Warnings = newcart.Warnings,
+            vm.DiscountBox = newcart.DiscountBox
     }).catch(function (error) {
         console.log(error);
-    })
+    }).then(function () {
+        axios({
+            baseURL: '/vue/component',
+            method: 'get',
+            params: { component: 'OrderTotals' },
+        }).then(response => (
+            vm.DisplayTax = response.data.DisplayTax,
+            vm.DisplayTaxRates = response.data.DisplayTaxRates,
+            vm.GiftCards = response.data.GiftCards,
+            vm.OrderTotal = response.data.OrderTotal,
+            vm.OrderTotalDiscount = response.data.OrderTotalDiscount,
+            vm.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
+            vm.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
+            vm.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
+            vm.RequiresShipping = response.data.RequiresShipping,
+            vm.SelectedShippingMethod = response.data.SelectedShippingMethod,
+            vm.Shipping = response.data.Shipping,
+            vm.SubTotal = response.data.SubTotal,
+            vm.SubTotalDiscount = response.data.SubTotalDiscount,
+            vm.Tax = response.data.Tax,
+            vm.TaxRates = response.data.TaxRates,
+            vm.WillEarnRewardPoints = response.data.WillEarnRewardPoints
+        ))
+    });
 }
