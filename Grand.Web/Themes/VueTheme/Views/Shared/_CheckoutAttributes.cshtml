@@ -1,11 +1,8 @@
-﻿@model IList<ShoppingCartModel.CheckoutAttributeModel>
+﻿@*@model IList<ShoppingCartModel.CheckoutAttributeModel>
 @using Grand.Domain.Catalog;
 @using Grand.Domain.Media
 @using System.Text;
-@inject Grand.Services.Media.IDownloadService downloadService
-@if (Model.Any())
-{
-    var attributeChangeScriptsBuilder = new StringBuilder();
+@inject Grand.Services.Media.IDownloadService downloadService*@
     <div v-if="CheckoutAttributes[0]" class="checkout-attributes p-0">
         <div v-for="attribute in CheckoutAttributes" :id="'checkout_attribute_' + attribute.Id" class="col-12 px-0 mb-2">
             <span class="col-form-label text-prompt">
@@ -115,7 +112,7 @@
     <script asp-location="Footer">
 
         checkoutAttributeChange();
-        @Html.Raw(attributeChangeScriptsBuilder.ToString())
+        @*@Html.Raw(attributeChangeScriptsBuilder.ToString())*@
 
 
         function checkoutAttributeChange() {
@@ -169,4 +166,3 @@
             })
         }
     </script>
-}
