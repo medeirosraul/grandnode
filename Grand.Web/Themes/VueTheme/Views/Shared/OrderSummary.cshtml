@@ -16,11 +16,11 @@
         <div v-if="OrderReviewData.Display"></div>
     </div>
     <div v-if="Items[0]">
-        <div v-if="Warnings">
-            <div v-for="item in Warnings">
-
-            </div>
-        </div>
+        <ul v-if="Warnings[0]" class="px-0 mb-3">
+            <li v-for="item in Warnings">
+                <span class="text-danger"></span>
+            </li>
+        </ul>
         <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
             <div class="shopping-cart-container">
                 <div class="shopping-cart-container">
@@ -336,9 +336,17 @@
                 })
                     .then(value => {
                         this.boxOne = value
-                        if (value == true) {
-                            document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
-                            document.querySelector('#shopping-cart-form').submit();
+                        if (vm.MinOrderSubtotalWarning == null && vm.Warnings.length == 0) {
+                            if (value == true) {
+                                document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
+                                document.querySelector('#shopping-cart-form').submit();
+                            }
+                        } else {
+                            this.$bvToast.toast(vm.MinOrderSubtotalWarning, {
+                                title: '@T("vue.shoppingcart.warning")',
+                                variant: 'danger',
+                                solid: true
+                            })
                         }
                     })
                     .catch(err => {
