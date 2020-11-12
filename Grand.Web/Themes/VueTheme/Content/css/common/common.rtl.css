@@ -252,6 +252,9 @@ dl, ol, ul {
     display: block;
     z-index: 3;
 }
+.search-box-select {
+    max-width: 100px;
+}
 .advanced-search-results {
     position: absolute;
     top: 40px;

@@ -214,6 +214,9 @@ dl, ol, ul {
 #small-search-box-form {
     position: relative;
 }
+.search-box-select {
+    max-width: 100px;
+}
 .advanced-search-results {
     position: absolute;
     top: 40px;

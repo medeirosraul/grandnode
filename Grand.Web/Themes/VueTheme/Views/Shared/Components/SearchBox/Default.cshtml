@@ -1,4 +1,5 @@
 ﻿@model SearchBoxModel
+@inject Grand.Domain.Blogs.BlogSettings BlogSettings 
 @using System.Text.Encodings.Web
 <form asp-route="ProductSearch" method="get" id="small-search-box-form" class="searchBox w-100 px-3 order-2">
     <input type="hidden" asp-for="Box" value="true" />
@@ -46,18 +47,21 @@
                     <ul v-else class="px-0 mb-1">
                         <li class="alert alert-info">@T("search.noresultstextmanufacturer")</li>
                     </ul>
-                    <h5 class="title">@T("search.blog")</h5>
-                    <div v-if="searchblog.length">
-                        <ul class="list px-0">
-                            <li v-for="item in searchblog">
-                                <h6 class="mb-0"><a :href="item.Url">{{item.Label}}</a></h6>
-                                <p v-if="item.Desc">{{item.Desc}}</p>
-                            </li>
+                    @if (BlogSettings.ShowBlogPostsInSearchAutoComplete)
+                    {
+                        <h5 class="title">@T("search.blog")</h5>
+                        <div v-if="searchblog.length">
+                            <ul class="list px-0">
+                                <li v-for="item in searchblog">
+                                    <h6 class="mb-0"><a :href="item.Url">{{item.Label}}</a></h6>
+                                    <p v-if="item.Desc">{{item.Desc}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul v-else class="px-0 mb-1">
+                            <li class="alert alert-info">@T("search.noresultstextblog")</li>
                         </ul>
-                    </div>
-                    <ul v-else class="px-0 mb-1">
-                        <li class="alert alert-info">@T("search.noresultstextblog")</li>
-                    </ul>
+                    }
                 </b-col>
                 <b-col md="6" cols="12" class="products">
                     <h5 class="title">@T("search.products")</h5>
