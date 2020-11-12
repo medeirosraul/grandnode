@@ -36,7 +36,7 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th v-if="IsAllowOnHold || IsEditable" class="cart text-center"></th>
+                                <th v-if="IsAllowOnHold && IsEditable" class="cart text-center"></th>
                                 <th v-if="ShowProductImages" class="product-picture text-center">
                                     @T("ShoppingCart.Image")
                                 </th>
@@ -59,7 +59,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in Items">
-                                <td v-if="IsAllowOnHold || IsEditable" class="onhold-cart">
+                                <td v-if="IsAllowOnHold && IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
                                         <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + item.IsCart" onchange="ChangeShoppingCart(this)" />
                                         <span class="custom-control-label ml-5"></span>
@@ -218,7 +218,13 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
 <script>
-    var mix = {
+    var path = window.location.pathname;
+    if (path == "cart") {
+        IsEditable = true
+    } else {
+        IsEditable = false
+    }
+    Vue.mixin({
         props: {
             ButtonPaymentMethodViewComponentNames: null,
             CheckoutAttributeInfo: null,
@@ -268,29 +274,33 @@
                     baseURL: '/vue/component',
                     method: 'get',
                     params: { component: 'OrderSummary' },
-                }).then(response => (
-                    this.ButtonPaymentMethodViewComponentNames = response.data.ButtonPaymentMethodViewComponentNames,
-                    this.CheckoutAttributeInfo = response.data.CheckoutAttributeInfo,
-                    this.CheckoutAttributes = response.data.CheckoutAttributes,
-                    this.DiscountBox = response.data.DiscountBox,
-                    this.DisplayTaxShippingInfo = response.data.DisplayTaxShippingInfo,
-                    this.GiftCardBox = response.data.GiftCardBox,
-                    this.IsAllowOnHold = response.data.IsAllowOnHold,
-                    this.IsEditable = '@Model.IsEditable'.toLowerCase(),
-                    this.IsGuest = response.data.IsGuest,
-                    this.Items = response.data.Items,
-                    this.MinOrderSubtotalWarning = response.data.MinOrderSubtotalWarning,
-                    this.OnePageCheckoutEnabled = response.data.OnePageCheckoutEnabled,
-                    this.OrderReviewData = response.data.OrderReviewData,
-                    this.ShowCheckoutAsGuestButton = response.data.ShowCheckoutAsGuestButton,
-                    this.ShowProductImages = response.data.ShowProductImages,
-                    this.ShowSku = response.data.ShowSku,
-                    this.TermsOfServiceOnOrderConfirmPage = response.data.TermsOfServiceOnOrderConfirmPage,
-                    this.TermsOfServiceOnShoppingCartPage = response.data.TermsOfServiceOnShoppingCartPage,
-                    this.TermsOfServicePopup = response.data.TermsOfServicePopup,
-                    this.Warnings = response.data.Warnings,
-                    this.DiscountBox = response.data.DiscountBox
-                ))
+                }).then(response => {
+                    this.ButtonPaymentMethodViewComponentNames = response.data.ButtonPaymentMethodViewComponentNames;
+                    this.CheckoutAttributeInfo = response.data.CheckoutAttributeInfo;
+                    this.CheckoutAttributes = response.data.CheckoutAttributes;
+                    this.DiscountBox = response.data.DiscountBox;
+                    this.DisplayTaxShippingInfo = response.data.DisplayTaxShippingInfo;
+                    this.GiftCardBox = response.data.GiftCardBox;
+                    this.IsAllowOnHold = response.data.IsAllowOnHold;
+                    if (window.location.pathname == '/cart') {
+                        this.IsEditable = true;
+                    } else {
+                        this.IsEditable = false;
+                    }
+                    this.IsGuest = response.data.IsGuest;
+                    this.Items = response.data.Items;
+                    this.MinOrderSubtotalWarning = response.data.MinOrderSubtotalWarning;
+                    this.OnePageCheckoutEnabled = response.data.OnePageCheckoutEnabled;
+                    this.OrderReviewData = response.data.OrderReviewData;
+                    this.ShowCheckoutAsGuestButton = response.data.ShowCheckoutAsGuestButton;
+                    this.ShowProductImages = response.data.ShowProductImages;
+                    this.ShowSku = response.data.ShowSku;
+                    this.TermsOfServiceOnOrderConfirmPage = response.data.TermsOfServiceOnOrderConfirmPage;
+                    this.TermsOfServiceOnShoppingCartPage = response.data.TermsOfServiceOnShoppingCartPage;
+                    this.TermsOfServicePopup = response.data.TermsOfServicePopup;
+                    this.Warnings = response.data.Warnings;
+                    this.DiscountBox = response.data.DiscountBox;
+                });
             },
             updateTotals() {
                 axios({
@@ -353,7 +363,7 @@
                     })
             },
         }
-    }
+    });
     function removefromcart(el) {
         var href = el.getAttribute('data-href');
         deleteitem(href);
