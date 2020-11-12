@@ -8,7 +8,6 @@
         this.flycart = newfly;
         this.flycartitems = newfly.Items;
         this.flycartindicator = newfly.TotalProducts;
-        console.log(newfly.Items);
         vm.flycart = newfly;
         vm.flycartitems = newfly.Items;
         vm.flycartindicator = newfly.TotalProducts;
@@ -183,7 +182,6 @@ function newsletter_subscribe(subscribe) {
     }).then(function (response) {
         subscribeProgress.style.display = "none";
         document.querySelector("#newsletter-result-block .alert").innerHTML = response.data.Result;
-        console.log(response);
         if (response.data.Success) {
             document.querySelector('.newsletter-inputs .input-group').style.display = "none";
             if (document.querySelector('.newsletter-inputs .newsletter-subscribe-unsubscribe')) {

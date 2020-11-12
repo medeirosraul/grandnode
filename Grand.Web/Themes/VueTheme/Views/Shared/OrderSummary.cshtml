@@ -18,7 +18,7 @@
     <div v-if="Items[0]">
         <ul v-if="Warnings[0]" class="px-0 mb-3">
             <li v-for="item in Warnings">
-                <span class="text-danger"></span>
+                <span class="text-danger">{{item}}</span>
             </li>
         </ul>
         <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
@@ -289,8 +289,7 @@
                     this.TermsOfServiceOnShoppingCartPage = response.data.TermsOfServiceOnShoppingCartPage,
                     this.TermsOfServicePopup = response.data.TermsOfServicePopup,
                     this.Warnings = response.data.Warnings,
-                    this.DiscountBox = response.data.DiscountBox,
-                    console.log(response.data)
+                    this.DiscountBox = response.data.DiscountBox
                 ))
             },
             updateTotals() {

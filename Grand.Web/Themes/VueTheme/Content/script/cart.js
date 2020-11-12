@@ -152,7 +152,7 @@ function removeGiftCard(e) {
             vm.Warnings = newcart.Warnings,
             vm.DiscountBox = newcart.DiscountBox
     }).catch(function (error) {
-        console.log(error);
+        alert(error);
     }).then(function () {
         axios({
             baseURL: '/vue/component',
