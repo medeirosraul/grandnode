@@ -100,7 +100,7 @@
                                     <span class="color" :style="'background-color:' + attributeValue.ColorSquaresRgb"></span>
                                 </span>
                             </template>
-                            <input :id="'checkout_attribute_' + attribute.Id + '_' + attributeValue.Id" type="radio" :name="'checkout_attribute_' + attribute.Id" :value="attributeValue.Id" :checked="attributeValue.IsPreSelected" />
+                            <input :id="'checkout_attribute_' + attribute.Id + '_' + attributeValue.Id" type="radio" :name="'checkout_attribute_' + attribute.Id" :value="attributeValue.Id" onchange="checkoutAttributeChange()" :checked="attributeValue.IsPreSelected" />
                         </label>
                     </li>
                 </ul>
