@@ -61,7 +61,7 @@
                             <tr v-for="item in Items">
                                 <td v-if="IsAllowOnHold && IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
-                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + item.IsCart" onchange="ChangeShoppingCart(this)" />
+                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" onchange="ChangeShoppingCart(this)" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
