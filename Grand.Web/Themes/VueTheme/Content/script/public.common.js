@@ -17,17 +17,6 @@
     return false;
 }
 
-function changeState() {
-    function load_js_footer() {
-        var boody = document.getElementsByTagName('body')[0];
-        var oldscript = document.querySelector('#opc-shipping .script-footer').innerHTML;
-        var newscript = document.createElement('script');
-        newscript.innerHTML = oldscript;
-        boody.appendChild(newscript);
-    }
-    load_js_footer();
-}
-
 function displayPopupPrivacyPreference(html) {
     new Vue({
         el: '#ModalPrivacyPreference',

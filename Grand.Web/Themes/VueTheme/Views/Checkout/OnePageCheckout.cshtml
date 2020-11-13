@@ -57,8 +57,29 @@
                             <div id="checkout-billing-load">
                                 <partial name="OpcBillingAddress" model="Model.BillingAddress" />
                                 @*billing address content will be loaded here*@
+                                @*<div class="checkout-data">
+                                    @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_billing_address_top" })
+                                    <div v-if="" class="ship-to-same-address">
+                                        <p class="selector">
+                                            <label class="custom-control custom-checkbox">
+                                                <input asp-for="ShipToSameAddress" class="custom-control-input" />
+                                                <span class="custom-control-label"></span>
+                                                <span class="custom-control-description">@T("Checkout.ShipToSameAddress")</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </div>*@
                             </div>
                         </form>
+                        @*<script asp-location="Header">
+                            axios({
+                                baseURL: '/vue/component',
+                                method: 'get',
+                                params: { component: 'OpcBillingAddress' },
+                            }).then(response => {
+                                console.log(response);
+                            })
+                        </script>*@
                         <script asp-location="Footer">
                             Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
                             if (document.querySelector("#billing-address-select")) {
@@ -83,6 +104,7 @@
                             <form action="" id="co-shipping-form">
                                 <div id="checkout-shipping-load">
                                     @*shipping address content will be loaded here*@
+                                    <partial name="VueOpcShippingAddress" model="Model" />
                                 </div>
                             </form>
                             <script asp-location="Footer">
@@ -113,6 +135,7 @@
                         <form id="co-shipping-method-form" action="">
                             <div id="checkout-shipping-method-load">
                                 @*shipping methods content will be loaded here*@
+                                <partial name="VueOpcShippingMethods" model="Model" />
                             </div>
                             <script asp-location="Footer">
                                 ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
@@ -134,11 +157,12 @@
                     <b-card-body>
                         <form action="" id="co-payment-method-form">
                             <div id="checkout-payment-method-load">
-                                @*payment methods content will be loaded here*@ Payment is not required
+                                @*payment methods content will be loaded here*@
+                                <partial name="VueOpcPaymentMethods" model="Model" />
                             </div>
                         </form>
                         <script asp-location="Footer">
-                        PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/');
+                            PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/');
                         </script>
                         <div class="col-12 buttons pt-1 pb-1 my-3 px-0" id="payment-method-buttons-container">
                             @if (paymentMethodStepNumber > 1)
@@ -159,11 +183,12 @@
                     <b-card-body>
                         <form action="" id="co-payment-info-form">
                             <div id="checkout-payment-info-load">
-                                @*payment info content will be loaded here*@ Payment is not required
+                                @*payment info content will be loaded here*@
+                                <partial name="VueOpcPaymentInfo" model="Model" />
                             </div>
                         </form>
                         <script asp-location="Footer">
-                        PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
+                            PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
                         </script>
                         <div class="col-12 buttons pt-1 pb-1 my-3 px-0" id="payment-info-buttons-container">
                             @if (!Model.HasSinglePaymentMethod || paymentMethodStepNumber > 1)
@@ -184,6 +209,7 @@
                     <b-card-body>
                         <div id="checkout-confirm-order-load">
                             @*confirm order content will be loaded here*@
+                            <partial name="VueOpcConfirmOrder" model="Model" />
                         </div>
                         <script asp-location="Footer">
                             ConfirmOrder.init('@(storeLocation)checkout/OpcConfirmOrder/', '@(storeLocation)checkout/completed/');
@@ -206,4 +232,42 @@
         {
             Billing.save();
         }
+</script>
+<script>
+    Vue.mixin({
+        props: {
+            ShippingAddress: false,
+            ShippingMethod: false,
+            PaymentMethod: false,
+            PaymentInfo: false,
+            Confirm: false,
+            // shipping address
+            ShippingAllowPickUpInStore: null,
+            ShippingExistingAddresses: null,
+            ShippingNewAddress: null,
+            ShippingNewAddressPreselected: null,
+            ShippingPickUpInStore: null,
+            ShippingPickUpInStoreOnly: null,
+            ShippingPickupPoints: null,
+            ShippingWarnings: null,
+            // shipping method
+            NotifyCustomerAboutShippingFromMultipleLocations: null,
+            ShippingMethods: null,
+            ShippingMethodWarnings: null,
+            // payment methods
+            DisplayRewardPoints: null,
+            PaymentMethods: null,
+            RewardPointsAmount: null,
+            RewardPointsBalance: null,
+            RewardPointsEnoughToPayForOrder: null,
+            UseRewardPoints: null,
+            // payment info
+            DisplayOrderTotals: null,
+            PaymentViewComponentName: null,
+            // confirm order
+            MinOrderTotalWarning: null,
+            TermsOfServiceOnOrderConfirmPage: null,
+            ConfirmWarnings: null,
+        }
+    })
 </script>

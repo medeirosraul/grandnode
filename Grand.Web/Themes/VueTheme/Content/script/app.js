@@ -62,18 +62,6 @@ var vm = new Vue({
                 bvEvent.preventDefault()
             }
         });
-        this.$root.$on('bv::collapse::state', () => {
-            setTimeout(function () {
-                if (document.querySelector('#' + 'opc-shipping.show')) {
-                    new Vue({
-                        el: '#opc-shipping .edit-address',
-                        mounted() {
-                            changeState()
-                        }
-                    });
-                }
-            }, 300);
-        });
         this.updateFly();
     },
     watch: {
@@ -119,6 +107,6 @@ var vm = new Vue({
                    return
                 }
             });
-        },
-    },
+        }
+    }
 });

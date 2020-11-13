@@ -217,7 +217,7 @@
     </div>
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
-<script>
+<script asp-location="Header">
     var path = window.location.pathname;
     if (path == "cart") {
         IsEditable = true

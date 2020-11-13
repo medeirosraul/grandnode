@@ -110,7 +110,103 @@ var Checkout = {
 
     setStepResponse: function (response) {
         if (response.data.update_section.name) {
-            document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
+            if (response.data.goto_section == "shipping") {
+                var Model = JSON.parse(response.data.update_section.html);
+                Vue.mixin({
+                    created() {
+                        this.updateShipping()
+                    },
+                    methods: {
+                        updateShipping() {
+                            vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
+                            vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore,
+                            vm.ShippingExistingAddresses = Model.ExistingAddresses,
+                            vm.ShippingNewAddress = Model.NewAddress,
+                            vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
+                            vm.ShippingPickUpInStore = Model.PickUpInStore,
+                            vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
+                            vm.ShippingPickupPoints = Model.PickupPoints,
+                            vm.ShippingWarnings = Model.Warnings,
+                            vm.ShippingAddress = true;
+                        }
+                    }
+                })
+            }
+            if (response.data.goto_section == "shipping_method") {
+                var Model = JSON.parse(response.data.update_section.html);
+                Vue.mixin({
+                    created() {
+                        this.updateShippingMethod()
+                    },
+                    methods: {
+                        updateShippingMethod() {
+                            vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
+                            vm.ShippingMethods = Model.ShippingMethods,
+                            vm.ShippingMethodWarnings = Model.Warnings,
+                            vm.ShippingMethod = true;
+                        }
+                    }
+                })
+            }
+            if (response.data.goto_section == "payment_method") {
+                var Model = JSON.parse(response.data.update_section.html);
+                Vue.mixin({
+                    created() {
+                        this.updateShippingMethod()
+                    },
+                    methods: {
+                        updateShippingMethod() {
+                            vm.DisplayRewardPoints = Model.DisplayRewardPoints;
+                            vm.PaymentMethods = Model.PaymentMethods,
+                            vm.RewardPointsAmount = Model.RewardPointsAmount,
+                            vm.RewardPointsBalance = Model.RewardPointsBalance;
+                            vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
+                            vm.UseRewardPoints = Model.UseRewardPoints;
+                            vm.PaymentMethod = true;
+                        }
+                    }
+                })
+            }
+            if (response.data.goto_section == "payment_info") {
+                var Model = JSON.parse(response.data.update_section.html);
+                Vue.mixin({
+                    created() {
+                        this.updatePaymentInfo()
+                    },
+                    methods: {
+                        updatePaymentInfo() {
+                            vm.DisplayOrderTotals = Model.DisplayOrderTotals;
+                            vm.PaymentViewComponentName = Model.PaymentViewComponentName,
+                            vm.PaymentInfo = true;
+                                axios({
+                                    baseURL: '/vue/component',
+                                    method: 'get',
+                                    params: { component: Model.PaymentViewComponentName },
+                                }).then(response => {
+                                    var html = response.data;
+                                    document.querySelector('.payment-info .info').innerHTML = html;
+                                })
+                        }
+                    }
+                })
+            }
+            if (response.data.goto_section == "confirm_order") {
+                var Model = JSON.parse(response.data.update_section.html);
+                Vue.mixin({
+                    created() {
+                        this.updateConfirmMethod()
+                    },
+                    methods: {
+                        updateConfirmMethod() {
+                            vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
+                            vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
+                            vm.ConfirmWarnings = Model.ConfirmWarnings
+                            vm.Confirm = true;
+                        }
+                    }
+                })
+            }
+            //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
             document.querySelector('#button-' + response.data.update_section.name).click();
         }
         if (response.data.allow_sections) {

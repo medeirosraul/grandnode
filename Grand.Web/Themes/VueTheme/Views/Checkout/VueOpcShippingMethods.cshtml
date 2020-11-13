@@ -1,0 +1,38 @@
+﻿<div v-if="ShippingMethod" class="checkout-data">
+    <div class="shipping-method">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_top" })
+        <template v-if="ShippingMethodWarnings">
+            <ul class="method-list px-0">
+                    <li v-for="(shippingMethod, index) in ShippingMethods">
+                        <label class="custom-control custom-checkbox">
+                            <input :id="'shippingoption_' + index" type="radio"
+                                   onclick="loadPartialView(value)"
+                                   name="shippingoption"
+                                   :value="shippingMethod.Name + '___' + shippingMethod.ShippingRateComputationMethodSystemName"
+                                   :checked="shippingMethod.Selected"
+                                   class="custom-control-input">
+                            <span class="custom-control-label"></span>
+                            <span :for="'shippingoption_' + index" class="custom-control-description">
+                                {{shippingMethod.Name}} ({{shippingMethod.Fee}})
+                                <template v-if="shippingMethod.Description !== null">
+                                    <span v-html="shippingMethod.Description"></span>
+                                </template>
+                            </span>
+                        </label>
+                    </li>
+            </ul>
+            <div v-if="NotifyCustomerAboutShippingFromMultipleLocations" class="multiple-locations">
+                @T("Checkout.ShippingMethod.ShippingFromMultipleLocations")
+            </div>
+            <div id="shipping_form"></div>
+        </template>
+        <template v-else>
+            <div class="message-error">
+                <ul class="px-0 my-3">
+                    <li class="text-danger" v-for="warning in ShippingMethodWarnings">{{warning}}</li>
+                </ul>
+            </div>
+        </template>
+        @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_bottom" })
+    </div>
+</div>
