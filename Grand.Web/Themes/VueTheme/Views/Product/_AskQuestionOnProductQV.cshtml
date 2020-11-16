@@ -35,8 +35,8 @@
     }
 
     <div class="buttons generalMarginSupporter pt-1 pb-1">
-        <input type="button" name="send-email" class="btn btn-info send-ask-question-button" value="@T("Products.AskQuestion.Button")"
-               onclick="sendcontactusformQuickview('@Url.RouteUrl("AskQuestionOnProduct")')" />
+        <input type="button" name="send-email" class="btn btn-info send-ask-question-button" @@click="validateBeforeClick($event)" value="@T("Products.AskQuestion.Button")"
+               data-click="sendcontactusformQuickview('@Url.RouteUrl("AskQuestionOnProduct")')" />
         <span class="sr-only">@T("Products.AskQuestion.Button")</span>
     </div>
 

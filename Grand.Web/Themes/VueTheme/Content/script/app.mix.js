@@ -110,15 +110,22 @@ var vm = new Vue({
         showModalBackInStock() {
             this.$refs['back-in-stock'].show()
         },
-        validateBeforeSubmit() {
+        validateBeforeSubmit(event) {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    if (document.querySelector('[name="form"]')) {
-                        document.querySelector('[name="form"]').submit();
-                    }
+                    event.srcElement.submit();
                     return
                 }
             });
         },
+        validateBeforeClick(event) {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    var callFunction = event.srcElement.getAttribute('data-click');
+                    eval(callFunction)
+                    return
+                }
+            });
+        }
     },
 });

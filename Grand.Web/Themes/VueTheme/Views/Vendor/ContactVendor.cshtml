@@ -17,7 +17,7 @@
     }
     else
     {
-        <form asp-route="ContactVendor" method="post" name="form" v-on:submit.prevent="validateBeforeSubmit">
+        <form asp-route="ContactVendor" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
             <div class="form-fields d-flex row">
                 <div class="form-group col-12 col-sm-6">

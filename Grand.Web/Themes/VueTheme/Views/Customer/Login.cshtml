@@ -17,7 +17,7 @@
         <b-form-row class="my-3">
             @* login main block *@
             <b-col cols="12" class="mx-lg-0 mx-auto mt-3">
-                <form asp-route="Login" name="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
+                <form asp-route="Login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
                     <b-card>
                         <template v-slot:header>
                             <h3 class="h5 mb-0">

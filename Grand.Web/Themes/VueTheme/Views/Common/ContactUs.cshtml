@@ -19,7 +19,7 @@
         }
         else
         {
-            <form asp-route="ContactUs" method="post" name="form" v-on:submit.prevent="validateBeforeSubmit">
+            <form asp-route="ContactUs" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
                 <div asp-validation-summary="ModelOnly" class="message-error"></div>
                 <div class="form-fields">
                     <div class="form-group">

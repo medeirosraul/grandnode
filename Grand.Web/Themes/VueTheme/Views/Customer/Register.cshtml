@@ -79,7 +79,7 @@
         }
 </script>
 <template>
-        <form asp-route="Register" name="form" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit">
+        <form asp-route="Register" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
             <div class="page registration-page">
                 <div asp-validation-summary="ModelOnly" class="message-error alert alert-danger"></div>
                 <b-card class="my-3" no-footer>
