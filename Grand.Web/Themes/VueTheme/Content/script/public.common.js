@@ -110,6 +110,15 @@ function displayPopupQuickView(html) {
             showModalBackInStock() {
                 this.$refs['back-in-stock'].show()
             },
+            validateBeforeClick(event) {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        var callFunction = event.srcElement.getAttribute('data-click');
+                        eval(callFunction)
+                        return
+                    }
+                });
+            }
         },
         mounted() {
             var self = this;

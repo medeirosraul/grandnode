@@ -6,26 +6,22 @@
         <span class="required">*</span>
         <input asp-for="AskQuestionEmail" placeholder="@T("Products.AskQuestion.Email.Hint")" v-validate="'required|email'" class="form-control ask-question-email" />
         <span class="field-validation-error"></span>
-        <span asp-validation-for="AskQuestionEmail"></span>
     </fieldset>
     <fieldset class="form-group">
         <label asp-for="AskQuestionFullName" class="col-form-label">@T("Products.AskQuestion.FullName"):</label>
         <span class="required">*</span>
         <input asp-for="AskQuestionFullName" placeholder="@T("Products.AskQuestion.FullName.Hint")" v-validate="'required'" class="form-control ask-question-fullname" />
         <span class="field-validation-error"></span>
-        <span asp-validation-for="AskQuestionFullName"></span>
     </fieldset>
     <fieldset class="form-group">
         <label asp-for="AskQuestionPhone" class="col-form-label">@T("Products.AskQuestion.Phone"):</label>
         <input asp-for="AskQuestionPhone" placeholder="@T("Products.AskQuestion.Phone.Hint")" class="form-control ask-question-phone" />
-        <span asp-validation-for="AskQuestionPhone"></span>
     </fieldset>
     <fieldset class="form-group">
         <label asp-for="AskQuestionMessage" class="col-form-label">@T("Products.AskQuestion.Message"):</label>
         <span class="required">*</span>
         <textarea asp-for="AskQuestionMessage" placeholder="@T("Products.AskQuestion.Message.Hint")" v-validate="'required'" class="form-control ask-question-message"></textarea>
         <span class="field-validation-error"></span>
-        <span asp-validation-for="AskQuestionMessage"></span>
     </fieldset>
     @if (Model.DisplayCaptcha)
     {
