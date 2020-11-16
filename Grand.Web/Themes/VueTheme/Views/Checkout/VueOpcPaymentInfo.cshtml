@@ -8,7 +8,7 @@
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_payment_info_bottom" })
             <div v-if="DisplayOrderTotals" class="order-summary">
-                <partial name="OrderSummary" model="Model" />
+                <partial name="OrderSummary" model="null" />
             </div>
     </div>
 </div>

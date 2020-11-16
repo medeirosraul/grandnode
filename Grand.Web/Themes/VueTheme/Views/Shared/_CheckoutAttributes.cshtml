@@ -1,5 +1,5 @@
-﻿   <div v-if="CheckoutAttributes[0]" class="checkout-attributes p-0">
-        <div v-for="attribute in CheckoutAttributes" :id="'checkout_attribute_' + attribute.Id" class="col-12 px-0 mb-2">
+﻿   <div v-if="cart.CheckoutAttributes[0]" class="checkout-attributes p-0">
+        <div v-for="attribute in cart.CheckoutAttributes" :id="'checkout_attribute_' + attribute.Id" class="col-12 px-0 mb-2">
             <span class="col-form-label text-prompt">
                 <template v-if="attribute.TextPrompt !== null">
                     {{attribute.TextPrompt}}
@@ -105,9 +105,7 @@
     </div>
 
     <script asp-location="Footer">
-        document.addEventListener("DOMContentLoaded", function () {
-            checkoutAttributeChange();
-        }); 
+        checkoutAttributeChange();
         function checkoutAttributeChange() {
             var form = document.querySelector('#shopping-cart-form');
             var data = new FormData(form);
@@ -117,22 +115,22 @@
                 url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
             }).then(function (response) {
                     var newResponse= JSON.parse(response.data.htmlordertotal)
-                    vm.DisplayTax = newResponse.DisplayTax,
-                    vm.DisplayTaxRates = newResponse.DisplayTaxRates,
-                    vm.GiftCards = newResponse.GiftCards,
-                    vm.OrderTotal = newResponse.OrderTotal,
-                    vm.OrderTotalDiscount = newResponse.OrderTotalDiscount,
-                    vm.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
-                    vm.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
-                    vm.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
-                    vm.RequiresShipping = newResponse.RequiresShipping,
-                    vm.SelectedShippingMethod = newResponse.SelectedShippingMethod,
-                    vm.Shipping = newResponse.Shipping,
-                    vm.SubTotal = newResponse.SubTotal,
-                    vm.SubTotalDiscount = newResponse.SubTotalDiscount,
-                    vm.Tax = newResponse.Tax,
-                    vm.TaxRates = newResponse.TaxRates,
-                    vm.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
+                    vm.cart.DisplayTax = newResponse.DisplayTax,
+                    vm.cart.DisplayTaxRates = newResponse.DisplayTaxRates,
+                    vm.cart.GiftCards = newResponse.GiftCards,
+                    vm.cart.OrderTotal = newResponse.OrderTotal,
+                    vm.cart.OrderTotalDiscount = newResponse.OrderTotalDiscount,
+                    vm.cart.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
+                    vm.cart.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
+                    vm.cart.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
+                    vm.cart.RequiresShipping = newResponse.RequiresShipping,
+                    vm.cart.SelectedShippingMethod = newResponse.SelectedShippingMethod,
+                    vm.cart.Shipping = newResponse.Shipping,
+                    vm.cart.SubTotal = newResponse.SubTotal,
+                    vm.cart.SubTotalDiscount = newResponse.SubTotalDiscount,
+                    vm.cart.Tax = newResponse.Tax,
+                    vm.cart.TaxRates = newResponse.TaxRates,
+                    vm.cart.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
                 if (response.data.enabledattributeids) {
                     for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                         if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
@@ -154,7 +152,7 @@
                     }
                 }
                 if (response.data.checkoutattributeinfo) {
-                    vm.CheckoutAttributeInfo = response.data.checkoutattributeinfo
+                    vm.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
                 }
             })
         }

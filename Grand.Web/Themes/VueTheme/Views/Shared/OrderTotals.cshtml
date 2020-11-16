@@ -6,26 +6,26 @@
                     <span>@T("ShoppingCart.Totals.SubTotal"):</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span class="value-summary">{{SubTotal}}</span>
+                    <span class="value-summary">{{cart.SubTotal}}</span>
                 </td>
             </tr>
-            <tr v-if="SubTotalDiscount !== null" class="col-12 px-0 order-subtotal-discount d-flex justify-content-start">
+            <tr v-if="cart.SubTotalDiscount !== null" class="col-12 px-0 order-subtotal-discount d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.SubTotalDiscount"):</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span class="value-summary">{{SubTotalDiscount}}</span>
+                    <span class="value-summary">{{cart.SubTotalDiscount}}</span>
                 </td>
             </tr>
             <tr class="col-12 px-0 shipping-cost d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.Shipping"):</span>
-                    <span v-if="RequiresShipping && SelectedShippingMethod !== null" class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method") {{SelectedShippingMethod}}</span>
+                    <span v-if="cart.RequiresShipping && cart.SelectedShippingMethod !== null" class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method") {{cart.SelectedShippingMethod}}</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <div v-if="RequiresShipping">
-                        <span v-if="Shipping !== null">
-                            {{Shipping}}
+                    <div v-if="cart.RequiresShipping">
+                        <span v-if="cart.Shipping !== null">
+                            {{cart.Shipping}}
                         </span>
                         <span v-else>
                             @T("ShoppingCart.Totals.CalculatedDuringCheckout")
@@ -36,16 +36,16 @@
                     </div>
                 </td>
             </tr>
-            <tr v-if="PaymentMethodAdditionalFee !== null" class="col-12 px-0 additional-fees d-flex justify-content-start">
+            <tr v-if="cart.PaymentMethodAdditionalFee !== null" class="col-12 px-0 additional-fees d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.PaymentMethodAdditionalFee"):</span>
                 </td>
                 <td class="col-6 cart-total-right text-right">
-                    <span class="value-summary">{{PaymentMethodAdditionalFee}}</span>
+                    <span class="value-summary">{{cart.PaymentMethodAdditionalFee}}</span>
                 </td>
             </tr>
 
-            <tr v-if="DisplayTaxRates && TaxRates[0]" v-for="taxRate in TaxRates" class="col-12 px-0 tax-rate d-flex justify-content-start">
+            <tr v-if="cart.DisplayTaxRates && cart.TaxRates[0]" v-for="taxRate in cart.TaxRates" class="col-12 px-0 tax-rate d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>
                         @T("ShoppingCart.Totals.TaxRateLine")
@@ -56,23 +56,23 @@
                     <span>{{taxRate.Value}}</span>
                 </td>
             </tr>
-            <tr v-if="DisplayTax" class="col-12 px-0 tax-value d-flex justify-content-start">
+            <tr v-if="cart.DisplayTax" class="col-12 px-0 tax-value d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.Tax"):</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span class="value-summary">{{Tax}}</span>
+                    <span class="value-summary">{{cart.Tax}}</span>
                 </td>
             </tr>
-            <tr v-if="OrderTotalDiscount !== null" class="col-12 px-0 discount-total d-flex justify-content-start">
+            <tr v-if="cart.OrderTotalDiscount !== null" class="col-12 px-0 discount-total d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.OrderTotalDiscount"):</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span class="value-summary">{{OrderTotalDiscount}}</span>
+                    <span class="value-summary">{{cart.OrderTotalDiscount}}</span>
                 </td>
             </tr>
-            <tr v-if="GiftCards[0]" v-for="gc in GiftCards" class="col-12 px-0 giftcard-summary d-flex justify-content-start">
+            <tr v-if="cart.GiftCards[0]" v-for="gc in cart.GiftCards" class="col-12 px-0 giftcard-summary d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.GiftCardInfo"):</span>
                     <span>@T("ShoppingCart.Totals.GiftCardInfo.Code") {{gc.CouponCode}}</span>
@@ -81,19 +81,19 @@
                 <td class="col-6 cart-total-right  text-right">
                     <span class="value-summary">{{gc.Amount}}</span>
 
-                    <button v-if="IsEditable" type="button" name="removegiftcard" id="remove-gift-card-button" onclick="removeGiftCard(this)"
+                    <button v-if="cart.IsEditable" type="button" name="removegiftcard" id="remove-gift-card-button" onclick="removeGiftCard(this)"
                             @*data-href="@Url.RouteUrl("RemoveGiftCardCode", new { giftCardId = gc.Id})"
                                         title="@T("Common.Remove")" class="btn btn-sm btn-secondary remove-gift-card-button"*@>
                         @T("Common.Remove")
                     </button>
                 </td>
             </tr>
-            <tr v-if="RedeemedRewardPoints > 0" class="col-12 px-0 reward-points d-flex justify-content-start">
+            <tr v-if="cart.RedeemedRewardPoints > 0" class="col-12 px-0 reward-points d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
-                    <span>@T("ShoppingCart.Totals.RewardPoints") {{RedeemedRewardPoints}}</span>
+                    <span>@T("ShoppingCart.Totals.RewardPoints") {{cart.RedeemedRewardPoints}}</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span class="value-summary">{{RedeemedRewardPointsAmount}}</span>
+                    <span class="value-summary">{{cart.RedeemedRewardPointsAmount}}</span>
                 </td>
             </tr>
             <tr class="col-12 px-0 order-total d-flex justify-content-start">
@@ -101,16 +101,16 @@
                     <span>@T("ShoppingCart.Totals.OrderTotal"):</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
-                    <span v-if="OrderTotal !== null" class="value-summary"><strong>{{OrderTotal}}</strong></span>
+                    <span v-if="cart.OrderTotal !== null" class="value-summary"><strong>{{cart.OrderTotal}}</strong></span>
                     <span v-else>@T("ShoppingCart.Totals.CalculatedDuringCheckout")</span>
                 </td>
             </tr>
-            <tr v-if="WillEarnRewardPoints > 0" class="col-12 px-0 earn-reward-points d-flex justify-content-start">
+            <tr v-if="cart.WillEarnRewardPoints > 0" class="col-12 px-0 earn-reward-points d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.RewardPoints.WillEarn"):</span>
                 </td>
                 <td class="col-6 cart-total-right text-right">
-                    <span class="value-summary">{{WillEarnRewardPoints}} @T("ShoppingCart.Totals.RewardPoints.WillEarn.Point")</span>
+                    <span class="value-summary">{{cart.WillEarnRewardPoints}} @T("ShoppingCart.Totals.RewardPoints.WillEarn.Point")</span>
                 </td>
             </tr>
         </tbody>

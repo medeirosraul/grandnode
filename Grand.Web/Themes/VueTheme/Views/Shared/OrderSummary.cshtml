@@ -9,15 +9,13 @@
     var themeName = themeContext.WorkingThemeName;
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/cart.js", themeName));
+    var firstLoad = Model != null;
 }
 <div class="order-summary-content mt-3" id="ordersummarypagecart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
-    <div v-if="OrderReviewData">
-        <div v-if="OrderReviewData.Display"></div>
-    </div>
-    <div v-if="typeof Items !== 'undefined' && Items.length > 0">
-        <ul v-if="typeof Warnings !== 'undefined' && Warnings.length > 0" class="px-0 mb-3">
-            <li v-for="item in Warnings">
+    <div v-if="typeof cart.Items !== 'undefined' && cart.Items.length > 0">
+        <ul v-if="typeof cart.Warnings !== 'undefined' && cart.Warnings.length > 0" class="px-0 mb-3">
+            <li v-for="item in cart.Warnings">
                 <span class="text-danger">{{item}}</span>
             </li>
         </ul>
@@ -36,8 +34,8 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th v-if="IsAllowOnHold && IsEditable" class="cart text-center"></th>
-                                <th v-if="ShowProductImages" class="product-picture text-center">
+                                <th v-if="cart.IsAllowOnHold && cart.IsEditable" class="cart text-center"></th>
+                                <th v-if="cart.ShowProductImages" class="product-picture text-center">
                                     @T("ShoppingCart.Image")
                                 </th>
                                 <th class="product text-center">
@@ -52,20 +50,20 @@
                                 <th class="subtotal text-center">
                                     @T("ShoppingCart.ItemTotal")
                                 </th>
-                                <th v-if="IsEditable" class="remove-from-cart text-center">
+                                <th v-if="cart.IsEditable" class="remove-from-cart text-center">
                                     @T("Remove")
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in Items">
-                                <td v-if="IsAllowOnHold && IsEditable" class="onhold-cart">
+                            <tr v-for="item in cart.Items">
+                                <td v-if="cart.IsAllowOnHold && cart.IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
                                         <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" onchange="ChangeShoppingCart(this)" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
-                                <td v-if="ShowProductImages" class="product-picture text-center">
+                                <td v-if="cart.ShowProductImages" class="product-picture text-center">
                                     <a :href="'/' + item.ProductSeName">
                                         <img alt="item.Picture.AlternateText" :src="item.Picture.ImageUrl" title="item.Picture.Title" />
                                     </a>
@@ -74,7 +72,7 @@
                                     <a :href="'/' + item.ProductSeName" class="product-name">
                                         {{item.ProductName}}
                                     </a>
-                                    <span v-if="ShowSku" class="sku-number">
+                                    <span v-if="cart.ShowSku" class="sku-number">
                                         {{item.Sku}}
                                     </span>
                                     <div v-if="item.AttributeInfo != ''" v-html="item.AttributeInfo" class="attributes small"></div>
@@ -83,7 +81,7 @@
                                     <div v-if="item.AuctionInfo != ''" v-html="item.AuctionInfo" class="attributes small"></div>
                                     <div v-if="item.RecurringInfo != null" v-html="item.RecurringInfo" class="recurring-info"></div>
                                     <div v-if="item.ReservationInfo != null" v-html="item.ReservationInfo" class="rental-info attributes small"></div>
-                                    <div v-if="IsEditable || item.AllowItemEditing" class="edit-item mb-1 mt-1">
+                                    <div v-if="cart.IsEditable || item.AllowItemEditing" class="edit-item mb-1 mt-1">
                                         <a class="btn btn-sm btn-secondary" :href="'/' + item.ProductSeName + '?updatecartitemid=' + item.Id">@T("Common.Edit")</a>
                                     </div>
                                     <div v-if="item.Warnings > 0" class="message-error alert alert-danger">
@@ -99,7 +97,7 @@
                                     </div>
                                 </td>
                                 <td class="quantity">
-                                    <div v-if="IsEditable">
+                                    <div v-if="cart.IsEditable">
                                         <div v-if="item.AllowedQuantities[0]">
                                             <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" data-href="@Url.RouteUrl("UpdateCart")" onchange="ChangeShoppingCart(this)">
                                                 <option v-for="qty in item.AllowedQuantities" :selected="qty.Selected" :value="qty.Value">{{qty.Value}}</option>
@@ -127,7 +125,7 @@
                                         <p class="mb-0 prod-total">{{item.SubTotal}}</p>
                                     </div>
                                 </td>
-                                <td v-if="IsEditable" class="remove-from-cart text-center">
+                                <td v-if="cart.IsEditable" class="remove-from-cart text-center">
                                     <b-button variant="link" class="deleteshoppingcartitem" onclick="removefromcart(this)" :data-href="('/deletecartitem/'+ item.Id +'?shoppingcartpage=True')">
                                         <b-icon icon="trash" variant="danger"></b-icon>
                                     </b-button>
@@ -137,21 +135,21 @@
                     </table>
                 </div>
             </div>
-            <div v-if="IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
+            <div v-if="cart.IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
                 <a onclick="location.href='@(Url.RouteUrl("ClearCart"))'" class="btn btn-danger removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></a>
                 <a onclick="location.href=('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary continue-shopping-button">@T("shoppingcart.continueshopping")</a>
             </div>
             <div class="cart-options">
                 <div class="row">
-                    <div v-if="IsEditable" class="col-12 col-md-6 checkoutAttributes">
+                    <div v-if="cart.IsEditable" class="col-12 col-md-6 checkoutAttributes">
                         <partial name="_CheckoutAttributes" />
                     </div>
-                    <div v-if="CheckoutAttributeInfo" class="selected-checkout-attributes col-sm-3 col-md-6 col-12 ml-auto justify-content-end text-right mt-3">
-                        <div v-html="CheckoutAttributeInfo"></div>
+                    <div v-if="cart.CheckoutAttributeInfo" class="selected-checkout-attributes col-sm-3 col-md-6 col-12 ml-auto justify-content-end text-right mt-3">
+                        <div v-html="cart.CheckoutAttributeInfo"></div>
                     </div>
                 </div>
             </div>
-            <div v-if="IsEditable && Items != null && DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
+            <div v-if="cart.IsEditable && cart.Items != null && cart.DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
                 <div class="taxHelper">
                     @{
                         var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
@@ -166,23 +164,23 @@
             <div class="cart-footer mt-3 mb-3">
                 <div class="row">
                     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_cart_footer" })
-                    <div v-if="IsEditable" class="col-sm-6 col-12 cart-collaterals">
-                        <div v-if="GiftCardBox || DiscountBox" class="deals">
-                            <partial name="_GiftCardBox"/>
-                            <partial name="_DiscountBox"/>
+                    <div v-if="cart.IsEditable" class="col-sm-6 col-12 cart-collaterals">
+                        <div v-if="cart.GiftCardBox || cart.DiscountBox" class="deals">
+                            <partial name="_GiftCardBox" />
+                            <partial name="_DiscountBox" />
                             @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_deals" })
                         </div>
                         @await Component.InvokeAsync("EstimateShipping")
                     </div>
                     <div class="col-sm-6 col-12 totals float-sm-right ml-auto pt-0">
                         <partial name="OrderTotals" />
-                        <div v-if="IsEditable && MinOrderSubtotalWarning != null" class="alert alert-danger">
-                            {{MinOrderSubtotalWarning}}
+                        <div v-if="cart.IsEditable && cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
+                            {{cart.MinOrderSubtotalWarning}}
                         </div>
-                        <div v-if="IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
-                            <div v-if-else="MinOrderSubtotalWarning !== null">
-                                <b-button v-if="TermsOfServiceOnShoppingCartPage" id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button">
-                                    <span v-if="IsGuest">
+                        <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
+                            <div v-if-else="cart.MinOrderSubtotalWarning !== null">
+                                <b-button v-if="cart.TermsOfServiceOnShoppingCartPage" id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button">
+                                    <span v-if="cart.IsGuest">
                                         @T("Checkout.Button.Login")
                                     </span>
                                     <span v-else>
@@ -190,7 +188,7 @@
                                     </span>
                                 </b-button>
                                 <b-button v-else id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button">
-                                    <span v-if="IsGuest">
+                                    <span v-if="cart.IsGuest">
                                         @T("Checkout.Button.Login")
                                     </span>
                                     <span v-else>
@@ -200,7 +198,7 @@
                             </div>
                         </div>
                         <div class="addon-buttons">
-                            <div v-for="pm in ButtonPaymentMethodViewComponentNames">
+                            <div v-for="pm in cart.ButtonPaymentMethodViewComponentNames">
                                 <div v-html="pm"></div>
                             </div>
                         </div>
@@ -218,113 +216,31 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
 <script asp-location="Header">
-    var path = window.location.pathname;
-    if (path == "/cart") {
-        IsEditable = true;
-    } else {
-        IsEditable = false
-    }
-    Vue.mixin({
+    var mix = {
         props: {
-            ButtonPaymentMethodViewComponentNames: null,
-            CheckoutAttributeInfo: null,
-            CheckoutAttributes: null,
-            DiscountBox: null,
-            DisplayTaxShippingInfo: null,
-            GiftCardBox: null,
-            IsAllowOnHold: null,
-            IsEditable: null,
-            IsGuest: null,
-            Items: null,
-            Fields: null,
-            MinOrderSubtotalWarning: null,
-            OnePageCheckoutEnabled: null,
-            OrderReviewData: null,
-            ShowCheckoutAsGuestButton: null,
-            ShowProductImages: null,
-            ShowSku: null,
-            TermsOfServiceOnOrderConfirmPage: null,
-            TermsOfServiceOnShoppingCartPage: null,
-            TermsOfServicePopup: null,
-            Warnings: null,
-            DisplayTax: null,
-            DisplayTaxRates: null,
-            GiftCards: null,
-            OrderTotal: null,
-            OrderTotalDiscount: null,
-            PaymentMethodAdditionalFee: null,
-            RedeemedRewardPoints: null,
-            RedeemedRewardPointsAmount: null,
-            RequiresShipping: null,
-            SelectedShippingMethod: null,
-            Shipping: null,
-            SubTotal: null,
-            SubTotalDiscount: null,
-            Tax: null,
-            TaxRates: null,
-            WillEarnRewardPoints: null
+            cart: null
         },
         created() {
-            this.updateCart(),
-            this.updateTotals()
+            if (@firstLoad.ToString().ToLower()==false) {
+                this.updateCart()
+            }
+            else {
+                this.firstLoad()
+            }
         },
         methods: {
+            firstLoad() {
+                this.cart = @Json.Serialize(Model);
+            },
             updateCart() {
                 axios({
                     baseURL: '/vue/component',
                     method: 'get',
-                    params: { component: 'OrderSummary' },
+                    params: { component: 'OrderSummary'},
                 }).then(response => {
-                    this.ButtonPaymentMethodViewComponentNames = response.data.ButtonPaymentMethodViewComponentNames;
-                    this.CheckoutAttributeInfo = response.data.CheckoutAttributeInfo;
-                    this.CheckoutAttributes = response.data.CheckoutAttributes;
-                    this.DiscountBox = response.data.DiscountBox;
-                    this.DisplayTaxShippingInfo = response.data.DisplayTaxShippingInfo;
-                    this.GiftCardBox = response.data.GiftCardBox;
-                    this.IsAllowOnHold = response.data.IsAllowOnHold;
-                    if (window.location.pathname == '/cart') {
-                        this.IsEditable = true;
-                    } else {
-                        this.IsEditable = false;
-                    }
-                    this.IsGuest = response.data.IsGuest;
-                    this.Items = response.data.Items;
-                    this.MinOrderSubtotalWarning = response.data.MinOrderSubtotalWarning;
-                    this.OnePageCheckoutEnabled = response.data.OnePageCheckoutEnabled;
-                    this.OrderReviewData = response.data.OrderReviewData;
-                    this.ShowCheckoutAsGuestButton = response.data.ShowCheckoutAsGuestButton;
-                    this.ShowProductImages = response.data.ShowProductImages;
-                    this.ShowSku = response.data.ShowSku;
-                    this.TermsOfServiceOnOrderConfirmPage = response.data.TermsOfServiceOnOrderConfirmPage;
-                    this.TermsOfServiceOnShoppingCartPage = response.data.TermsOfServiceOnShoppingCartPage;
-                    this.TermsOfServicePopup = response.data.TermsOfServicePopup;
-                    this.Warnings = response.data.Warnings;
-                    this.DiscountBox = response.data.DiscountBox;
+                    this.cart = response.data
+                    document.querySelector('.flyout-cart').style.pointerEvents = "none";
                 });
-            },
-            updateTotals() {
-                axios({
-                    baseURL: '/vue/component',
-                    method: 'get',
-                    params: { component: 'OrderTotals' },
-                }).then(response => (
-                    this.DisplayTax = response.data.DisplayTax,
-                    this.DisplayTaxRates = response.data.DisplayTaxRates,
-                    this.GiftCards = response.data.GiftCards,
-                    this.OrderTotal = response.data.OrderTotal,
-                    this.OrderTotalDiscount = response.data.OrderTotalDiscount,
-                    this.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
-                    this.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
-                    this.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
-                    this.RequiresShipping = response.data.RequiresShipping,
-                    this.SelectedShippingMethod = response.data.SelectedShippingMethod,
-                    this.Shipping = response.data.Shipping,
-                    this.SubTotal = response.data.SubTotal,
-                    this.SubTotalDiscount = response.data.SubTotalDiscount,
-                    this.Tax = response.data.Tax,
-                    this.TaxRates = response.data.TaxRates,
-                    this.WillEarnRewardPoints = response.data.WillEarnRewardPoints
-                ))
             },
             showMsgBoxOne() {
                 const h = this.$createElement
@@ -345,7 +261,7 @@
                 })
                     .then(value => {
                         this.boxOne = value
-                        if (vm.MinOrderSubtotalWarning == null && vm.Warnings.length == 0) {
+                        if (vm.cart.MinOrderSubtotalWarning == null && vm.cart.Warnings.length == 0) {
                             if (value == true) {
                                 document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
                                 if (vm.Confirm == true) {
@@ -355,7 +271,7 @@
                                 }
                             }
                         } else {
-                            this.$bvToast.toast(vm.MinOrderSubtotalWarning, {
+                            this.$bvToast.toast(vm.cart.MinOrderSubtotalWarning, {
                                 title: '@T("vue.shoppingcart.warning")',
                                 variant: 'danger',
                                 solid: true
@@ -367,7 +283,7 @@
                     })
             },
         }
-    });
+    };
     function removefromcart(el) {
         var href = el.getAttribute('data-href');
         deleteitem(href);

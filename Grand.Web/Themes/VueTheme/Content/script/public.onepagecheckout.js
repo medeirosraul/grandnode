@@ -61,10 +61,6 @@ var Checkout = {
     gotoSection: function (section) {
         section = document.querySelector('#button-' + section);
         section.classList.add("allow");
-        if (document.querySelector('#checkout-confirm-order-load .checkout-data')) {
-                var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
-                document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
-        }
     },
 
     back: function () {
@@ -165,6 +161,10 @@ var Checkout = {
                             vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
                             vm.ConfirmWarnings = Model.ConfirmWarnings
                             vm.Confirm = true;
+                            setTimeout(function () {
+                                var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
+                                document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
+                            }, 300);
                         }
                     }
                 })

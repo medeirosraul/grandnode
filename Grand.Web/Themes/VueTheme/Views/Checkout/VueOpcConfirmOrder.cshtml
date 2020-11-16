@@ -1,7 +1,7 @@
 ﻿<div v-if="Confirm" class="checkout-data order-summary-content col-12 px-0">
     @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_confirm_top" })
     <div class="order-summary">
-        <partial name="OrderSummary" model="Model" />
+        <partial name="OrderSummary" model="null" />
         @*@await Component.InvokeAsync("OrderSummary", new { prepareAndDisplayOrderReviewData = true })*@
     </div>
     <div class="confirm-order">
