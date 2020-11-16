@@ -17,7 +17,7 @@ p, .form-group, dl, ol, ul, .page {
     padding-right: 1.5rem;
     padding-left: unset;
 }
-.custom-control-label::after, .custom-checkbox .custom-control-label::before {
+.custom-control-label::after, .custom-control-label::before {
     left: unset;
     right: -1.5rem;
 }
@@ -504,6 +504,54 @@ dl, ol, ul {
 }
 .product-box .catalog-quantity {
     max-width: 60px;
+}
+.product-box .spec-container {
+	margin: 10px 0 0 0;
+}
+.product-box.grid-box .spec-container table,
+.product-box.list-box .spec-container table {
+	border-bottom: 0;
+}
+.product-box .spec-container table,
+.product-box.grid-box .spec-container table td {
+	width: 100%;
+}
+.product-box .spec-container table td {
+	padding: 0 0 5px 0;
+}
+.product-box.grid-box .spec-container table td:nth-child(2) {
+	display: inline-flex;
+	justify-content: flex-end;
+}
+.product-box .spec {
+	display: inline-flex;
+	width: 100%;
+	line-height: 1;
+}
+.product-box .spec:not(:last-child) {
+	border-bottom: 1px dashed #dfdfdf;
+}
+.product-box .spec-name {
+	color: #292929;
+	font-size: 14px;
+	font-weight: 500;
+	border: 0;
+}
+.product-box .spec-value {
+	position: relative;
+    margin: 0 5px 0 0;
+	color: #777;
+	font-size: 14px;
+	font-weight: 400;
+	border: 0;
+}
+.product-box .spec-value span:not(:first-child):not(:last-child)::after,
+.product-box .spec-value span:not(:last-child)::after {
+	content: ",";
+	position: relative;
+	bottom: 0;
+	right: 0;
+	margin: 0 2px 0 0;
 }
 
 /* product box list */
