@@ -61,44 +61,7 @@ var Checkout = {
     gotoSection: function (section) {
         section = document.querySelector('#button-' + section);
         section.classList.add("allow");
-        new Vue({
-            el: '#opc-confirm-order .order-summary-content',
-            methods: {
-                showMsgBoxOne() {
-                        const h = this.$createElement
-
-                    const titleVNode = h('div', { domProps: { innerHTML: '<h5>' + m_title + '</h5>' } })
-                    const messageVNode = h('div', { domProps: { innerHTML: '' + m_terms + ' <a href="' + m_link + '" target="popup" onclick="window.open(' + m_link + ')">' + m_linkname + '</a>' } })
-
-                        this.$bvModal.msgBoxConfirm([messageVNode], {
-                            title: [titleVNode],
-                            centered: true,
-                            size: 'md',
-                            okVariant: 'info',
-                            okTitle: 'Ok',
-                            cancelTitle: 'Cancel',
-                            cancelVariant: 'danger',
-                            footerClass: 'p-2',
-                            hideHeaderClose: false,
-                        })
-                            .then(value => {
-                                this.boxOne = value
-                                if (value == true) {
-                                    ConfirmOrder.save()
-                                }
-                            })
-                            .catch(err => {
-
-                            })
-                    },
-            }
-        });
         if (document.querySelector('#checkout-confirm-order-load .checkout-data')) {
-                var m_title = document.getElementById('confirm-data-modal').getAttribute('data-title');
-                var m_body = document.getElementById('confirm-data-modal').getAttribute('data-body');
-                var m_terms = document.getElementById('confirm-data-modal').getAttribute('data-terms');
-                var m_link = document.getElementById('confirm-data-modal').getAttribute('data-link');
-                var m_linkname = document.getElementById('confirm-data-modal').getAttribute('data-linkname');
                 var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
                 document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
         }
@@ -112,7 +75,7 @@ var Checkout = {
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
                 var Model = JSON.parse(response.data.update_section.html);
-                Vue.mixin({
+                new Vue({
                     created() {
                         this.updateShipping()
                     },
@@ -134,7 +97,7 @@ var Checkout = {
             }
             if (response.data.goto_section == "shipping_method") {
                 var Model = JSON.parse(response.data.update_section.html);
-                Vue.mixin({
+                new Vue({
                     created() {
                         this.updateShippingMethod()
                     },
@@ -150,7 +113,7 @@ var Checkout = {
             }
             if (response.data.goto_section == "payment_method") {
                 var Model = JSON.parse(response.data.update_section.html);
-                Vue.mixin({
+                new Vue({
                     created() {
                         this.updateShippingMethod()
                     },
@@ -169,7 +132,7 @@ var Checkout = {
             }
             if (response.data.goto_section == "payment_info") {
                 var Model = JSON.parse(response.data.update_section.html);
-                Vue.mixin({
+                new Vue({
                     created() {
                         this.updatePaymentInfo()
                     },
@@ -192,7 +155,7 @@ var Checkout = {
             }
             if (response.data.goto_section == "confirm_order") {
                 var Model = JSON.parse(response.data.update_section.html);
-                Vue.mixin({
+                new Vue({
                     created() {
                         this.updateConfirmMethod()
                     },

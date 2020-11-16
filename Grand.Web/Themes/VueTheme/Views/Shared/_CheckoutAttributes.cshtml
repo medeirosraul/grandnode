@@ -105,6 +105,9 @@
     </div>
 
     <script asp-location="Footer">
+        document.addEventListener("DOMContentLoaded", function () {
+            checkoutAttributeChange();
+        }); 
         function checkoutAttributeChange() {
             var form = document.querySelector('#shopping-cart-form');
             var data = new FormData(form);

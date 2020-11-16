@@ -219,9 +219,8 @@
 </div>
 <script asp-location="Header">
     var path = window.location.pathname;
-    if (path == "cart") {
+    if (path == "/cart") {
         IsEditable = true;
-        checkoutAttributeChange();
     } else {
         IsEditable = false
     }
@@ -349,7 +348,11 @@
                         if (vm.MinOrderSubtotalWarning == null && vm.Warnings.length == 0) {
                             if (value == true) {
                                 document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
-                                document.querySelector('#shopping-cart-form').submit();
+                                if (vm.Confirm == true) {
+                                    ConfirmOrder.save();
+                                } else {
+                                    document.querySelector('#shopping-cart-form').submit();
+                                }
                             }
                         } else {
                             this.$bvToast.toast(vm.MinOrderSubtotalWarning, {
