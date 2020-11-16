@@ -15,8 +15,8 @@
     <div v-if="OrderReviewData">
         <div v-if="OrderReviewData.Display"></div>
     </div>
-    <div v-if="Items[0]">
-        <ul v-if="Warnings[0]" class="px-0 mb-3">
+    <div v-if="typeof Items !== 'undefined' && Items.length > 0">
+        <ul v-if="typeof Warnings !== 'undefined' && Warnings.length > 0" class="px-0 mb-3">
             <li v-for="item in Warnings">
                 <span class="text-danger">{{item}}</span>
             </li>
@@ -220,7 +220,8 @@
 <script asp-location="Header">
     var path = window.location.pathname;
     if (path == "cart") {
-        IsEditable = true
+        IsEditable = true;
+        checkoutAttributeChange();
     } else {
         IsEditable = false
     }
