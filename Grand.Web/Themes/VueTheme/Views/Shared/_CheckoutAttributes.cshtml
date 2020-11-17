@@ -104,10 +104,11 @@
         </div>
     </div>
 
-    <script asp-location="Footer">
+   <script asp-location="Footer">
         checkoutAttributeChange();
         function checkoutAttributeChange() {
-            var form = document.querySelector('#shopping-cart-form');
+            if (document.querySelector('#shopping-cart-form')) {
+                var form = document.querySelector('#shopping-cart-form');
             var data = new FormData(form);
             axios({
                 method: 'post',
@@ -155,5 +156,6 @@
                     vm.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
                 }
             })
+            }
         }
-    </script>
+   </script>
