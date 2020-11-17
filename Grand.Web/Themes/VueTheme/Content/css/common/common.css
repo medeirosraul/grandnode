@@ -545,6 +545,9 @@ dl, ol, ul {
 .main-container.container-fluid .product-box.list .card-body {
     flex: 4;
 }
+.main-container {
+    min-height: 350px;
+}
 
 /* color container */
 

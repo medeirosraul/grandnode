@@ -1,5 +1,5 @@
 ﻿   <div v-if="cart.CheckoutAttributes[0]" class="checkout-attributes p-0">
-        <div v-for="attribute in cart.CheckoutAttributes" :id="'checkout_attribute_' + attribute.Id" class="col-12 px-0 mb-2">
+        <div v-for="attribute in cart.CheckoutAttributes" :id="'checkout_attribute_label_' + attribute.Id" class="col-12 px-0 mb-2">
             <span class="col-form-label text-prompt">
                 <template v-if="attribute.TextPrompt !== null">
                     {{attribute.TextPrompt}}

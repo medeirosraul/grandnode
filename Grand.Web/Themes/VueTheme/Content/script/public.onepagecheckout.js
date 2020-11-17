@@ -8,7 +8,6 @@ var Checkout = {
     init: function (failureUrl) {
         this.loadWaiting = false;
         this.failureUrl = failureUrl;
-
         //Accordion.disallowAccessToNextSections = true;
     },
 

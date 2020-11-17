@@ -79,7 +79,7 @@
     @*description*@
     @if (!String.IsNullOrWhiteSpace(Model.Description))
     {
-        <b-card no-body>
+        <b-card>
             @Html.Raw(Model.Description)
         </b-card>
     }
@@ -171,7 +171,7 @@
     @*bottom description*@
     @if (!String.IsNullOrWhiteSpace(Model.BottomDescription))
     {
-        <b-card no-body>
+        <b-card>
             @Html.Raw(Model.BottomDescription)
         </b-card>
     }

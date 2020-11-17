@@ -52,6 +52,7 @@
     <None Remove="Themes\VueTheme\Content\script\MyComponentName.js" />
     <None Remove="Themes\VueTheme\Content\script\validation-config.js" />
     <None Remove="Themes\VueTheme\Content\script\vee-validate.js" />
+    <None Remove="Themes\VueTheme\Content\script\VueAutocomplete.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

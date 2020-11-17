@@ -232,6 +232,7 @@
         methods: {
             firstLoad() {
                 this.cart = @Json.Serialize(Model);
+                document.querySelector('.flyout-cart').style.pointerEvents = "none";
             },
             updateCart() {
                 axios({

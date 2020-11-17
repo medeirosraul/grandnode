@@ -1,6 +1,13 @@
 ﻿@model SearchBoxModel
-@inject Grand.Domain.Blogs.BlogSettings BlogSettings 
+@inject Grand.Domain.Blogs.BlogSettings BlogSettings
 @using System.Text.Encodings.Web
+@inject IThemeContext themeContext
+@inject IPageHeadBuilder pagebuilder
+@if (Model.AutoCompleteEnabled)
+{
+    var themeName = themeContext.WorkingThemeName;
+    pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/VueAutocomplete.js", themeName));
+}
 <form asp-route="ProductSearch" method="get" id="small-search-box-form" class="searchBox w-100 px-3 order-2">
     <input type="hidden" asp-for="Box" value="true" />
     <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
@@ -87,80 +94,3 @@
     </div>
     @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox" })
 </form>
-<script asp-location="Header">
-    @if (Model.AutoCompleteEnabled)
-    {
-        <text>
-            function autocompleteVue(e) {
-                function getCategories(item) {
-                    if (item.SearchType == 'Category') {
-                        return item
-                    }
-                }
-                function getManufacturers(item) {
-                    if (item.SearchType == 'Manufacturer') {
-                        return item
-                    }
-                }
-                function getBlog(item) {
-                    if (item.SearchType == 'Blog') {
-                        return item
-                    }
-                }
-                function getProducts(item) {
-                    if (item.SearchType == 'Product') {
-                        return item
-                    }
-                }
-                setTimeout(function () {
-                    if (e.checkValidity()) {
-                        var searchResult = document.getElementById('adv_search');
-                        if (searchResult) {
-                            if (e.value != '') {
-                                searchResult.style.display = 'block';
-                            }
-                        }
-                        var value = e.value;
-                        var category = '';
-                        if (document.getElementById("SearchCategoryId")) {
-                            category = document.getElementById("SearchCategoryId").value;
-                        }
-                        axios({
-                            url: '@(Url.RouteUrl("ProductSearchAutoComplete"))',
-                            method: 'get',
-                            params: {
-                                term: value,
-                                categoryId: category
-                            }
-                        }).then(function (response) {
-                            if (response.data) {
-                                vm.searchitems = response.data;
-                                var categories = response.data.map(getCategories).filter(function (element) {
-                                    return element !== undefined;
-                                });
-                                var manufacturers = response.data.map(getManufacturers).filter(function (element) {
-                                    return element !== undefined;
-                                });
-                                var blog = response.data.map(getBlog).filter(function (element) {
-                                    return element !== undefined;
-                                });
-                                var products = response.data.map(getProducts).filter(function (element) {
-                                    return element !== undefined;
-                                });
-                                vm.searchcategories = categories;
-                                vm.searchmanufacturers = manufacturers;
-                                vm.searchblog = blog;
-                                vm.searchproducts = products;
-                            }
-                        })
-                    } else {
-                        var searchResult = document.getElementById('adv_search');
-                        if (searchResult) {
-                            searchResult.style.display = 'none';
-                        }
-                    }
-                }, 300);
-            }
-        </text>
-    }
-</script>

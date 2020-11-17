@@ -16,23 +16,22 @@
     }
     else
     {
-        <form asp-route="EmailWishlist" method="post">
+        <form asp-route="EmailWishlist" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
             <div class="form-fields">
                 <div class="inputs pb-1">
                     <label class="col-form-label" asp-for="FriendEmail">@T("Wishlist.EmailAFriend.FriendEmail"):</label>
-                    <input asp-for="FriendEmail" class="form-control friend-email" placeholder="@T("Wishlist.EmailAFriend.FriendEmail.Hint")" />
-                    <span asp-validation-for="FriendEmail"></span>
+                    <input asp-for="FriendEmail" class="form-control friend-email" placeholder="@T("Wishlist.EmailAFriend.FriendEmail.Hint")" v-validate="'required|email'" />
+                    <span class="field-validation-error"></span>
                 </div>
                 <div class="inputs pb-1">
                     <label class="col-form-label" asp-for="YourEmailAddress">@T("Wishlist.EmailAFriend.YourEmailAddress"):</label>
-                    <input asp-for="YourEmailAddress" class="form-control your-email" placeholder="@T("Wishlist.EmailAFriend.YourEmailAddress.Hint")" />
-                    <span asp-validation-for="YourEmailAddress"></span>
+                    <input asp-for="YourEmailAddress" class="form-control your-email" placeholder="@T("Wishlist.EmailAFriend.YourEmailAddress.Hint")" v-validate="'required'" />
+                    <span class="field-validation-error"></span>
                 </div>
                 <div class="inputs pb-1">
                     <label class="col-form-label" asp-for="PersonalMessage">@T("Wishlist.EmailAFriend.PersonalMessage"):</label>
                     <textarea asp-for="PersonalMessage" class="form-control personal-message" placeholder="@T("Wishlist.EmailAFriend.PersonalMessage.Hint")"></textarea>
-                    <span asp-validation-for="PersonalMessage"></span>
                 </div>
                 @if (Model.DisplayCaptcha)
                 {
@@ -42,7 +41,8 @@
                 }
             </div>
             <div class="btn-group mt-3">
-                <input type="submit" name="send-email" class="btn btn-info send-email-a-friend-button" value="@T("Wishlist.EmailAFriend.Button")">
+                <input type="hidden" name="send-email"/>
+                <input type="submit" class="btn btn-info send-email-a-friend-button" value="@T("Wishlist.EmailAFriend.Button")">
             </div>
         </form>
     }
