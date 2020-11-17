@@ -130,7 +130,8 @@ var Checkout = {
                 var Model = JSON.parse(response.data.update_section.html);
                 new Vue({
                     created() {
-                        this.updatePaymentInfo()
+                        this.updatePaymentInfo();
+                        this.updateTotals();
                     },
                     methods: {
                         updatePaymentInfo() {
@@ -145,7 +146,33 @@ var Checkout = {
                                     var html = response.data;
                                     document.querySelector('.payment-info .info').innerHTML = html;
                                 })
-                        }
+                        },
+                        updateTotals() {
+                            axios({
+                                baseURL: '/vue/component',
+                                method: 'get',
+                                params: { component: 'OrderTotals' },
+                            }).then(response => {
+                                vm.cart.DisplayTax = response.data.DisplayTax;
+                                vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+                                vm.cart.GenericAttributes = response.data.GenericAttributes;
+                                vm.cart.GiftCards = response.data.GiftCards;
+                                vm.cart.IsEditable = response.data.IsEditable;
+                                vm.cart.OrderTotal = response.data.OrderTotal;
+                                vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+                                vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+                                vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+                                vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+                                vm.cart.RequiresShipping = response.data.RequiresShipping;
+                                vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+                                vm.cart.Shipping = response.data.Shipping;
+                                vm.cart.SubTotal = response.data.SubTotal;
+                                vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+                                vm.cart.Tax = response.data.Tax;
+                                vm.cart.TaxRates = response.data.TaxRates;
+                                vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+                            });
+                        },
                     }
                 })
             }
@@ -153,7 +180,8 @@ var Checkout = {
                 var Model = JSON.parse(response.data.update_section.html);
                 new Vue({
                     created() {
-                        this.updateConfirmMethod()
+                        this.updateConfirmMethod();
+                        this.updateTotals();
                     },
                     methods: {
                         updateConfirmMethod() {
@@ -165,7 +193,33 @@ var Checkout = {
                                 var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
                                 document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
                             }, 300);
-                        }
+                        },
+                        updateTotals() {
+                            axios({
+                                baseURL: '/vue/component',
+                                method: 'get',
+                                params: { component: 'OrderTotals' },
+                            }).then(response => {
+                                vm.cart.DisplayTax = response.data.DisplayTax;
+                                vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+                                vm.cart.GenericAttributes = response.data.GenericAttributes;
+                                vm.cart.GiftCards = response.data.GiftCards;
+                                vm.cart.IsEditable = response.data.IsEditable;
+                                vm.cart.OrderTotal = response.data.OrderTotal;
+                                vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+                                vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+                                vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+                                vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+                                vm.cart.RequiresShipping = response.data.RequiresShipping;
+                                vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+                                vm.cart.Shipping = response.data.Shipping;
+                                vm.cart.SubTotal = response.data.SubTotal;
+                                vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+                                vm.cart.Tax = response.data.Tax;
+                                vm.cart.TaxRates = response.data.TaxRates;
+                                vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+                            });
+                        },
                     }
                 })
             }
