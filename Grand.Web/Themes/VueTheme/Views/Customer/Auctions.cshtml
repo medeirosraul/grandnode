@@ -87,7 +87,7 @@
                     }
                     else
                     {
-                        <div class="no-data">
+                        <div class="no-data alert alert-info">
                             @T("Account.Auctions.NoOngoingAuctions")
                         </div>
                     }
@@ -159,15 +159,11 @@
                                     }
                                 }
                         </script>
-                    }
-                    else
+                    } else 
                     {
                         <div class="no-data alert alert-info">
-                            @T("Account.Auctions.NoEndedAuctions")
-                        </div>
-                        <script>
-                            var mix = {}
-                        </script>
+                            @T("Account.Auctions.NoOngoingAuctions")
+                        </div>                     
                     }
                 </b-tab>
             </b-tabs>
