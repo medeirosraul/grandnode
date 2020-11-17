@@ -94,7 +94,7 @@
                 <div asp-validation-summary="ModelOnly" class="message-error"></div>
                 @{
                     var dataDictAddress = new ViewDataDictionary(ViewData);
-                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "BillingNewAddress";
+                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "ShippingNewAddress";
                     <partial name="_CreateOrUpdateAddress" model="Model.BillingAddress.NewAddress" view-data="dataDictAddress" />
                 }
             </div>

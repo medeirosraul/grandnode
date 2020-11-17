@@ -81,9 +81,7 @@
                 <td class="col-6 cart-total-right  text-right">
                     <span class="value-summary">{{gc.Amount}}</span>
 
-                    <button v-if="cart.IsEditable" type="button" name="removegiftcard" id="remove-gift-card-button" onclick="removeGiftCard(this)"
-                            @*data-href="@Url.RouteUrl("RemoveGiftCardCode", new { giftCardId = gc.Id})"
-                                        title="@T("Common.Remove")" class="btn btn-sm btn-secondary remove-gift-card-button"*@>
+                    <button v-if="cart.IsEditable" type="button" name="removegiftcard" id="remove-gift-card-button" onclick="removeGiftCard(this)">
                         @T("Common.Remove")
                     </button>
                 </td>

@@ -3,11 +3,8 @@
 @if (Model.CountryEnabled && Model.StateProvinceEnabled)
 {
 <script asp-location="Footer">
-    document.addEventListener("DOMContentLoaded", function () {
-        var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
-
-        select_element.onchange = function () {
-            var selectedItem = this.value;
+        function @Html.IdFor(model => model.CountryId)_select_element(e) {
+            var selectedItem = e.value;
             var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
             axios({
                 method: 'get',
@@ -21,36 +18,28 @@
                     elChild.innerHTML = id.name;
                     ddlStates.appendChild(elChild);
                 });
+            }).then(function () {
+                if (ddlStates.length > 1) {
+                    ddlStates.classList.remove('is-valid');
+                    ddlStates.classList.add('is-invalid');
+                } else {
+                    ddlStates.classList.remove('is-invalid');
+                    ddlStates.classList.add('is-valid');
+                }
             }).catch(function (error) {
                 alert(error);
             });
         }
-    });
-</script>
-<script class="script-footer">
-    document.addEventListener("DOMContentLoaded", function () {
-        var select_element = document.getElementById('@Html.IdFor(model => model.CountryId)');
-
-        select_element.onchange = function () {
-            var selectedItem = this.value;
-            var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
-            axios({
-                method: 'get',
-                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
-                params: { "countryId": selectedItem, "addSelectStateItem": "true" },
-            }).then(function (response) {
-                ddlStates.innerHTML = '';
-                response.data.forEach(function (id, option) {
-                    elChild = document.createElement('option');
-                    elChild.setAttribute('value', id.id);
-                    elChild.innerHTML = id.name;
-                    ddlStates.appendChild(elChild);
-                });
-            }).catch(function (error) {
-                alert(error);
-            });
+    function @Html.IdFor(model => model.StateProvinceId)_select_element(e) {
+        var ddlStates = document.getElementById("@Html.IdFor(model => model.StateProvinceId)");
+        if (e.selectedIndex > 0) {
+            ddlStates.classList.remove('is-invalid');
+            ddlStates.classList.add('is-valid');
+        } else {
+            ddlStates.classList.remove('is-valid');
+            ddlStates.classList.add('is-invalid');
         }
-    });
+    }
 </script>
 }
 <input asp-for="Id" type="hidden" />
@@ -110,7 +99,7 @@
         <div class="form-group col-sm-12 col-md-6">
             <label asp-for="CountryId" class="col-form-label">@T("Address.Fields.Country"):</label>
             <span class="required">*</span>
-            <select asp-for="CountryId" asp-items="Model.AvailableCountries" class="custom-select form-control" v-validate="'required'"></select>
+            <select asp-for="CountryId" asp-items="Model.AvailableCountries" onchange="@Html.IdFor(model => model.CountryId)_select_element(this)" class="custom-select form-control" v-validate="'required'"></select>
             <span class="field-validation-error"></span>
         </div>
     }
@@ -119,7 +108,7 @@
     {
         <div class="form-group col-sm-12 col-md-6">
             <label asp-for="StateProvinceId" class="col-form-label">@T("Address.Fields.StateProvince"):</label>
-            <select asp-for="StateProvinceId" class="custom-select form-control" asp-items="Model.AvailableStates" ></select>
+            <select asp-for="StateProvinceId" class="custom-select form-control" onchange="@Html.IdFor(model => model.StateProvinceId)_select_element(this)" asp-items="Model.AvailableStates"></select>
             <span asp-validation-for="StateProvinceId"></span>
         </div>
     }

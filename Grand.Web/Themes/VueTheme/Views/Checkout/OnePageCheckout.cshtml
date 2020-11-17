@@ -56,30 +56,8 @@
                         <form id="co-billing-form" action="">
                             <div id="checkout-billing-load">
                                 <partial name="OpcBillingAddress" model="Model.BillingAddress" />
-                                @*billing address content will be loaded here*@
-                                @*<div class="checkout-data">
-                                    @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_billing_address_top" })
-                                    <div v-if="" class="ship-to-same-address">
-                                        <p class="selector">
-                                            <label class="custom-control custom-checkbox">
-                                                <input asp-for="ShipToSameAddress" class="custom-control-input" />
-                                                <span class="custom-control-label"></span>
-                                                <span class="custom-control-description">@T("Checkout.ShipToSameAddress")</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                </div>*@
                             </div>
                         </form>
-                        @*<script asp-location="Header">
-                            axios({
-                                baseURL: '/vue/component',
-                                method: 'get',
-                                params: { component: 'OpcBillingAddress' },
-                            }).then(response => {
-                                console.log(response);
-                            })
-                        </script>*@
                         <script asp-location="Footer">
                             Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
                             if (document.querySelector("#billing-address-select")) {
@@ -87,7 +65,7 @@
                             }
                         </script>
                         <div class="col-12 buttons pb-2 pt-2 px-0 my-0" id="billing-buttons-container">
-                            <input type="button" title="@T("Common.Continue")" @@click="validateBeforeSubmit()" class="btn btn-info new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
+                            <input type="button" title="@T("Common.Continue")" @@click="validateBeforeClick($event)" class="btn btn-info new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
                             <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
                         </div>
                     </b-card-body>
@@ -119,7 +97,7 @@
                                     <a class="btn btn-secondary" id="back-shipping" href="#" onclick="Checkout.back(); return false; ">@T("Common.Back")</a>
 
                                 }
-                                <input type="button" class="btn btn-info new-address-next-step-button" @@click="validateBeforeSubmit()" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
+                                <input type="button" class="btn btn-info new-address-next-step-button" @@click="validateBeforeClick($event)" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
                                 <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
                             </div>
                         </b-card-body>

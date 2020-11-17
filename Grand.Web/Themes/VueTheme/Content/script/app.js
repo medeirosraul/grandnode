@@ -38,10 +38,7 @@ var vm = new Vue({
             searchcategories: null,
             searchmanufacturers: null,
             searchblog: null,
-            searchproducts: null,
-            email: '',
-            firstName: '',
-            lastName: ''
+            searchproducts: null
         }
     },
     mounted() {
