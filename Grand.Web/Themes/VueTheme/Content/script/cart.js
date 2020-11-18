@@ -34,9 +34,14 @@
         alert('Failed to retrieve Shopping Cart Page.');
     }).then(function () {
         axios({
-            baseURL: '/vue/component',
+            baseURL: '/Common/Component',
             method: 'get',
-            params: { component: 'OrderTotals' },
+            params: { Name: 'OrderTotals' },
+            data: null,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         }).then(response => (
             vm.cart.DisplayTax = response.data.DisplayTax,
             vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,
@@ -94,9 +99,14 @@ function ChangeShoppingCart(e) {
         alert('Failed to retrieve Shopping Cart Page.');
     }).then(function () {
         axios({
-            baseURL: '/vue/component',
+            baseURL: '/Common/Component',
             method: 'get',
-            params: { component: 'OrderTotals' },
+            params: { Name: 'OrderTotals' },
+            data: null,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         }).then(response => (
             vm.cart.DisplayTax = response.data.DisplayTax,
             vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,
@@ -155,9 +165,14 @@ function removeGiftCard(e) {
         alert(error);
     }).then(function () {
         axios({
-            baseURL: '/vue/component',
+            baseURL: '/Common/Component',
             method: 'get',
-            params: { component: 'OrderTotals' },
+            params: { Name: 'OrderTotals' },
+            data: null,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         }).then(response => (
             vm.cart.DisplayTax = response.data.DisplayTax,
             vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,

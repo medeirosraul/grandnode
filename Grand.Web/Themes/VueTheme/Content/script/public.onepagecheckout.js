@@ -138,9 +138,14 @@ var Checkout = {
                             vm.PaymentViewComponentName = Model.PaymentViewComponentName,
                             vm.PaymentInfo = true;
                                 axios({
-                                    baseURL: '/vue/component',
+                                    baseURL: '/Common/Component',
                                     method: 'get',
-                                    params: { component: Model.PaymentViewComponentName },
+                                    params: { Name: Model.PaymentViewComponentName },
+                                    data: null,
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    }
                                 }).then(response => {
                                     var html = response.data;
                                     document.querySelector('.payment-info .info').innerHTML = html;
@@ -148,9 +153,14 @@ var Checkout = {
                         },
                         updateTotals() {
                             axios({
-                                baseURL: '/vue/component',
+                                baseURL: '/Common/Component',
                                 method: 'get',
-                                params: { component: 'OrderTotals' },
+                                params: { Name: 'OrderTotals' },
+                                data: null,
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }
                             }).then(response => {
                                 vm.cart.DisplayTax = response.data.DisplayTax;
                                 vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
@@ -195,9 +205,14 @@ var Checkout = {
                         },
                         updateTotals() {
                             axios({
-                                baseURL: '/vue/component',
+                                baseURL: '/Common/Component',
                                 method: 'get',
-                                params: { component: 'OrderTotals' },
+                                params: { Name: 'OrderTotals' },
+                                data: null,
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }
                             }).then(response => {
                                 vm.cart.DisplayTax = response.data.DisplayTax;
                                 vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;

@@ -236,9 +236,14 @@
             },
             updateCart() {
                 axios({
-                    baseURL: '/vue/component',
+                    baseURL: '/Common/Component',
                     method: 'get',
-                    params: { component: 'OrderSummary'},
+                    params: { Name: 'OrderSummary' },
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }).then(response => {
                     this.cart = response.data
                     document.querySelector('.flyout-cart').style.pointerEvents = "none";
@@ -246,9 +251,14 @@
             },
             updateTotals() {
                 axios({
-                    baseURL: '/vue/component',
+                    baseURL: '/Common/Component',
                     method: 'get',
-                    params: { component: 'OrderTotals' },
+                    params: { Name: 'OrderTotals' },
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }).then(response => {
                     this.cart.DisplayTax = response.data.DisplayTax;
                     this.cart.DisplayTaxRates = response.data.DisplayTaxRates;

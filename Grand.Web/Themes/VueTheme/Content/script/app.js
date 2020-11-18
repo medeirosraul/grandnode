@@ -7,9 +7,14 @@
     methods: {
         updateFly() {
             axios({
-                baseURL: '/vue/component',
+                baseURL: '/Common/Component',
                 method: 'get',
-                params: { component: 'FlyoutShoppingCart' },
+                params: { Name: 'FlyoutShoppingCart' },
+                data: null,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             }).then(response => (
                 this.flycart = response.data,
                 this.flycartitems = response.data.Items,
