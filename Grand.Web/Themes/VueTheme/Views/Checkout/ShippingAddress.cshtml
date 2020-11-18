@@ -1,7 +1,7 @@
 ﻿@model CheckoutShippingAddressModel
 @inject IPageHeadBuilder pagebuilder
 @{
-    Layout = "_ColumnsOne";
+    Layout = "_ColumnsMix";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Checkout").Text);
@@ -238,7 +238,8 @@
             </div>
         }
         <div class="buttons col-12 mb-2 mt-2">
-            <input type="submit" name="nextstep" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
+            <input type="hidden" name="nextstep" />
+            <input type="submit" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
         </div>
     </form>
 
@@ -246,6 +247,6 @@
         <h5 class="generalTitle">
             <strong>@T("Checkout.OrderSummary")</strong>
         </h5>
-        <partial name="OrderSummary" />
+        <partial name="OrderSummary" model="null" />
     </div>
 </div>
