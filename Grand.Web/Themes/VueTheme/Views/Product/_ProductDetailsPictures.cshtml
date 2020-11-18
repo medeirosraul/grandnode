@@ -17,7 +17,7 @@
             @if (Model.DefaultPictureZoomEnabled)
             {
                 <template>
-                    <img class="image main-image zoom" id="main-product-img-@Model.Id" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+                    <img class="image main-image zoom" id="main-product-img-@Model.Id" v-for="(image, i) in images" :src="image.url" :alt="image.alt" :title="image.title" :key="i" @@click="index = i">
                     <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
                 </template>
                 <script>
@@ -28,7 +28,7 @@
                             @foreach (var picture in Model.PictureModels)
                             {
                                     <text>
-                                        '@picture.ImageUrl',
+                                        { url: '@picture.ImageUrl', alt:'@picture.AlternateText', title: '@picture.Title' },
                                     </text>
                             }
                         ],
@@ -76,11 +76,11 @@
                      title="@Model.DefaultPictureModel.Title"
                      onclick="document.querySelector('.thumb-image').click()" />
                 <template>
-                    <img class="image thumb-image zoom" v-for="(image, i) in images" :src="image" :key="i" @@click="index = i">
+                    <img class="image thumb-image zoom" v-for="(image, i) in images" :src="image.url" :datasrc="image.fullimg" :alt="image.alt" :title="image.title" :key="i" @@click="index = i">
                     <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
                 </template>
                 <!-- Start running your app -->
-                <script>
+    <script>
                 var mix = {
                     data: function () {
                         return {
@@ -90,13 +90,13 @@
                                 if (Model.PictureModels.First() == picture)
                                 {
                                     <text>
-                                        '@picture.FullSizeImageUrl',
+                                        { url: '@picture.FullSizeImageUrl', fullimg: '@picture.FullSizeImageUrl', alt:'@picture.AlternateText', title: '@picture.Title' },
                                     </text>
                                 }
                                 else
                                 {
                                     <text>
-                                        '@picture.ImageUrl',
+                                { url: '@picture.ImageUrl', fullimg: '@picture.FullSizeImageUrl', alt:'@picture.AlternateText', title: '@picture.Title' },
                                     </text>
                                 }
 
@@ -109,7 +109,7 @@
                         VueGallerySlideshow
                     },
                 }
-                </script>
+    </script>
             }
         }
         else
@@ -125,11 +125,21 @@
                     <img class="image thumb-image"
                          src="@picture.ThumbImageUrl"
                          alt="@picture.AlternateText"
-                         title="@picture.Title" />
+                         title="@picture.Title"
+                         data-src="@picture.ImageUrl"
+                         @@click="changeImg($event)"/>
                 }
                 <script>
                     var mix = {
-                        data: function () { }
+                        data: function () {
+                        },
+                        methods: {
+                            changeImg(event) {
+                                var img = event.srcElement.getAttribute('data-src');
+                                var mainImg = document.getElementById('main-product-img-@Model.Id');
+                                mainImg.setAttribute('src', img);
+                            }
+                        }
                     }
                 </script>
             }
