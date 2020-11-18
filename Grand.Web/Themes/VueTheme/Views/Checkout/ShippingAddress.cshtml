@@ -1,7 +1,7 @@
 ﻿@model CheckoutShippingAddressModel
 @inject IPageHeadBuilder pagebuilder
 @{
-    Layout = "_ColumnsMix";
+    Layout = "_ColumnsOne";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Checkout").Text);
@@ -9,7 +9,7 @@
 <div class="page checkout-page shipping-address-page">
     @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Address })
     <h2 class="generalTitle text-sm-center ">@T("Checkout.ShippingAddress")</h2>
-    <form asp-route="CheckoutShippingAddress" method="post">
+    <form asp-route="CheckoutShippingAddress" method="post" v-on:submit.prevent="validateBeforeSubmit($event)">
         @if (Model.AllowPickUpInStore && !Model.PickUpInStoreOnly && Model.PickupPoints.Any())
         {
             <div class="pickup-in-store genera">
@@ -71,7 +71,7 @@
                             <div class="title">
                                 <strong>@T("Checkout.PickupPoints.SelectPickupPoint")</strong>
                             </div>
-                            <select name="pickup-point-id" id="pickup-points-select" class="address-select" title="">
+                            <select name="pickup-point-id" id="pickup-points-select" class="address-select form-control" title="">
                                 @foreach (var point in Model.PickupPoints)
                                 {
                                     var addressLine = new System.Text.StringBuilder();
@@ -246,6 +246,6 @@
         <h5 class="generalTitle">
             <strong>@T("Checkout.OrderSummary")</strong>
         </h5>
-        @await Component.InvokeAsync("OrderSummary")
+        <partial name="OrderSummary" />
     </div>
 </div>

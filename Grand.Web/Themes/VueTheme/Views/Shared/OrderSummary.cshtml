@@ -11,7 +11,7 @@
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/cart.js", themeName));
     var firstLoad = Model != null;
 }
-<div class="order-summary-content mt-3" id="ordersummarypagecart">
+<div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="cart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
     <div v-if="typeof cart.Items !== 'undefined' && cart.Items.length > 0">
         <ul v-if="typeof cart.Warnings !== 'undefined' && cart.Warnings.length > 0" class="px-0 mb-3">
@@ -250,24 +250,24 @@
                     method: 'get',
                     params: { component: 'OrderTotals' },
                 }).then(response => {
-                    vm.cart.DisplayTax = response.data.DisplayTax;
-                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                    vm.cart.GenericAttributes = response.data.GenericAttributes;
-                    vm.cart.GiftCards = response.data.GiftCards;
-                    vm.cart.IsEditable = response.data.IsEditable;
-                    vm.cart.OrderTotal = response.data.OrderTotal;
-                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                    vm.cart.RequiresShipping = response.data.RequiresShipping;
-                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                    vm.cart.Shipping = response.data.Shipping;
-                    vm.cart.SubTotal = response.data.SubTotal;
-                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                    vm.cart.Tax = response.data.Tax;
-                    vm.cart.TaxRates = response.data.TaxRates;
-                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+                    this.cart.DisplayTax = response.data.DisplayTax;
+                    this.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+                    this.cart.GenericAttributes = response.data.GenericAttributes;
+                    this.cart.GiftCards = response.data.GiftCards;
+                    this.cart.IsEditable = response.data.IsEditable;
+                    this.cart.OrderTotal = response.data.OrderTotal;
+                    this.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+                    this.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+                    this.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+                    this.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+                    this.cart.RequiresShipping = response.data.RequiresShipping;
+                    this.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+                    this.cart.Shipping = response.data.Shipping;
+                    this.cart.SubTotal = response.data.SubTotal;
+                    this.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+                    this.cart.Tax = response.data.Tax;
+                    this.cart.TaxRates = response.data.TaxRates;
+                    this.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
                 });
             },
             showMsgBoxOne() {
@@ -291,11 +291,15 @@
                         this.boxOne = value
                         if (vm.cart.MinOrderSubtotalWarning == null && vm.cart.Warnings.length == 0) {
                             if (value == true) {
-                                document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
                                 if (vm.Confirm == true) {
                                     ConfirmOrder.save();
                                 } else {
-                                    document.querySelector('#shopping-cart-form').submit();
+                                    if (document.querySelector('#confirm-order-form') !== null) {
+                                        document.getElementById('confirm-order-form').submit();
+                                    } else {
+                                        document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
+                                        document.querySelector('#shopping-cart-form').submit();
+                                    }
                                 }
                             }
                         } else {

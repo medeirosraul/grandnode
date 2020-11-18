@@ -17,13 +17,14 @@
                 @await Component.InvokeAsync(Model.PaymentViewComponentName)
             </div>
             <div class="buttons pt-2 pb-2">
-                <input type="submit" name="nextstep" value="@T("Checkout.NextButton")" class="btn btn-info payment-info-next-step-button" />
+                <input type="hidden" name="nextstep" />
+                <input type="submit" value="@T("Checkout.NextButton")" class="btn btn-info payment-info-next-step-button" />
             </div>
         </form>
     </div>
     @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_payment_info_bottom" })
     <div class="order-summary">
         <h5 class="generalTitle"><strong>@T("Checkout.OrderSummary")</strong></h5>
-        @await Component.InvokeAsync("OrderSummary")
+         <partial name="OrderSummary" model="null" />
     </div>
 </div>

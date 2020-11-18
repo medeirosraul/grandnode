@@ -39,7 +39,7 @@
             }
             @if (Model.PaymentMethods.Any())
             {
-                <ul id="payment-method-block">
+                <ul id="payment-method-block" class="px-0">
                     @for (int i = 0; i < Model.PaymentMethods.Count; i++)
                     {
                         var paymentMethod = Model.PaymentMethods[i];
@@ -75,12 +75,13 @@
                 </ul>
 
                 <div class="col-12 buttons mt-1 mb-1">
-                    <input type="submit" name="nextstep" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
+                    <input type="hidden" name="nextstep" />
+                    <input type="submit" value="@T("Checkout.NextButton")" class="btn btn-info new-address-next-step-button" />
                 </div>
             }
             else
             {
-                <div class="message-error">
+                <div class="message-error alert alert-danger my-3">
                     @T("Checkout.NoPaymentMethods")
                 </div>
             }
@@ -91,6 +92,6 @@
         <h5>
             <strong>@T("Checkout.OrderSummary")</strong>
         </h5>
-        @await Component.InvokeAsync("OrderSummary")
+        <partial name="OrderSummary" model="null" />
     </div>
 </div>
