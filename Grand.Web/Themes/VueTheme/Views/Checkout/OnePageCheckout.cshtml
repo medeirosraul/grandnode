@@ -47,7 +47,7 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "opc_content_before" })
     <template>
         <div class="accordion opc" id="checkout-steps" role="tablist">
-            <b-card no-body class="mb-1">
+            <b-card no-body class="mb-1" @if (Model.DisableBillingAddressCheckoutStep) {<text>style="display:none;"</text> }>
                 <b-card-header header-tag="header" class="p-1" role="tab">
                     <b-button block v-b-toggle.opc-billing id="button-billing" class="allow" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@billingAddressStepNumber. @T("Checkout.BillingAddress")</b-button>
                 </b-card-header>
