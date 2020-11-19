@@ -388,6 +388,9 @@ dl, ol, ul {
     transform: translateY(0);
     -webkit-transform: translateY(0);
 }
+.product-box .card-title {
+    line-height: 1;
+}
 .product-box .card-title a {
     color: #212529;
     margin: 0;
@@ -765,5 +768,8 @@ footer .list-group-item span:last-child {
     }
     .b-sidebar > .b-sidebar-header {
         font-size: 16px;
+    }
+    .product-box .rating .b-rating + a {
+        display: none;
     }
 }

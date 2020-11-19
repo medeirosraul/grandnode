@@ -132,6 +132,7 @@
         position: -webkit-sticky;
         position: sticky;
         top: 0;
+        margin: 0 0 15px 0;
         background: #fff;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         z-index: 1034;
@@ -165,5 +166,10 @@
     }
     .flyout-cart .b-sidebar-footer .h5 {
         font-size: 16px;
+    }
+}
+@media (max-width: 380px) {
+    .header-nav .navbar-brand img {
+        max-width: 120px;
     }
 }
