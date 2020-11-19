@@ -7,7 +7,7 @@
 @if (Model.Any())
 {
     var attributeChangeScriptsBuilder = new StringBuilder();
-    <div class="contact-attributes">
+    <div class="contact-attributes mb-3">
         @foreach (var attribute in Model)
         {
             string controlId = string.Format("contact_attribute_{0}", attribute.Id);
@@ -217,16 +217,16 @@
                         break;
                     case AttributeControlType.ColorSquares:
                         {
-                            <ul class="option-list color-squares pl-0" id="color-squares-@(attribute.Id)">
+                            <ul class="option-list color-squares w-100 d-inline-flex flex-wrap px-0 mb-0" id="color-squares-@(attribute.Id)">
                                 @foreach (var attributeValue in attribute.Values)
                                 {
                                     var attributeName = attributeValue.Name;
                                     <li class="mr-1 p-0" @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value border border-primary\"") : null)>
                                         <label for="@(controlId)_@(attributeValue.Id)" class="mb-0">
+                                            <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                             <span class="color-container" title="@attributeName">
                                                 <span class="color" style="background-color:@(attributeValue.ColorSquaresRgb);">&nbsp;</span>
                                             </span>
-                                            <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                         </label>
                                     </li>
                                     attributeChangeScriptsBuilder.AppendFormat("document.querySelector('#{0}_{1}').addEventListener('click',function(){{contactAttributeChange();}});\n", controlId, attributeValue.Id);

@@ -202,6 +202,24 @@ dl, ol, ul {
     z-index: 1050;
 }
 
+/* color squares */
+
+.color-squares input {
+    position: absolute;
+    visibility: hidden;
+}
+input ~ .color-container .color {
+    position: relative;
+    cursor: pointer;
+}
+input:checked ~ .color-container .color::before {
+    content: '\2713';
+    position: absolute;
+    top: 0;
+    left: 5px;
+    color: #efefef;
+}
+
 /* search box */
 
 #small-searchterms + .field-validation-error {

@@ -217,10 +217,10 @@
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value list-inline-item\"") : @Html.Raw(" class=\"list-inline-item\""))>
                                             <label class="text-center">
+                                                <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                                 <span class="color-container" title="@attributeName">
                                                     <span class="color" style="background-color:@(attributeValue.ColorSquaresRgb);">&nbsp;</span>
                                                 </span>
-                                                <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                             </label>
                                         </li>
                                     }
@@ -249,10 +249,10 @@
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li class="mr-2" @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value mr-2\"") : null)>
                                             <label class="mb-0 text-center" data-toggle="tooltip" title="<img src='@(attributeValue.ImageSquaresPictureModel.FullSizeImageUrl)' alt='@attributeName' />">
+                                                <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                                 <span id="imgSqr_@(attributeValue.Id)" class="color-container">
                                                     <span class="color" style="background: url('@(attributeValue.ImageSquaresPictureModel.ImageUrl)') 50% 50% no-repeat;">&nbsp;</span>
                                                 </span>
-                                                <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                             </label>
                                             <b-tooltip target="imgSqr_@(attributeValue.Id)" placement="bottom">
                                                 <div class="image-square-tooltip">

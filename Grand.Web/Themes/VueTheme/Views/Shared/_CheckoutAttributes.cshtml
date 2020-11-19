@@ -85,6 +85,7 @@
                 <ul class="option-list color-squares w-100 d-inline-flex flex-wrap px-0 mb-0" :id="'color-squares-' + attribute.Id">
                     <li v-for="attributeValue in attribute.Values" class="mr-1 p-0">
                         <label :for="'checkout_attribute_' + attribute.Id + '_' + attributeValue.Id" class="mb-0">
+                            <input :id="'checkout_attribute_' + attribute.Id + '_' + attributeValue.Id" type="radio" :name="'checkout_attribute_' + attribute.Id" :value="attributeValue.Id" onchange="checkoutAttributeChange()" :checked="attributeValue.IsPreSelected" />
                             <template v-if="attributeValue.PriceAdjustment == null">
                                 <span class="color-container" :title="attributeValue.Name">
                                     <span class="color" :style="'background-color:' + attributeValue.ColorSquaresRgb"></span>
@@ -95,7 +96,6 @@
                                     <span class="color" :style="'background-color:' + attributeValue.ColorSquaresRgb"></span>
                                 </span>
                             </template>
-                            <input :id="'checkout_attribute_' + attribute.Id + '_' + attributeValue.Id" type="radio" :name="'checkout_attribute_' + attribute.Id" :value="attributeValue.Id" onchange="checkoutAttributeChange()" :checked="attributeValue.IsPreSelected" />
                         </label>
                     </li>
                 </ul>
