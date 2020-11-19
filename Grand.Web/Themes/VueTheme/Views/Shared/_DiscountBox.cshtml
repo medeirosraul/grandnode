@@ -80,7 +80,7 @@
                     checkoutAttributeChange();
                 }).then(function () {
                     axios({
-                        baseURL: 'Common/Component?Name=OrderTotals',
+                        baseURL: '/Common/Component?Name=OrderTotals',
                         method: 'get',
                         params: { Name: 'OrderTotals' },
                         data: null,

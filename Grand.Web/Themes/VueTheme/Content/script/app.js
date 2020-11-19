@@ -7,7 +7,7 @@
     methods: {
         updateFly() {
             axios({
-                baseURL: 'Common/Component?Name=FlyoutShoppingCart',
+                baseURL: '/Common/Component?Name=FlyoutShoppingCart',
                 method: 'get',
                 data: null,
                 headers: {

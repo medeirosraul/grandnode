@@ -138,7 +138,7 @@ var Checkout = {
                             vm.PaymentViewComponentName = Model.PaymentViewComponentName,
                             vm.PaymentInfo = true;
                                 axios({
-                                    baseURL: 'Common/Component?Name=' + Model.PaymentViewComponentName,
+                                    baseURL: '/Common/Component?Name=' + Model.PaymentViewComponentName,
                                     method: 'get',
                                     data: null,
                                     headers: {
@@ -152,7 +152,7 @@ var Checkout = {
                         },
                         updateTotals() {
                             axios({
-                                baseURL: 'Common/Component?Name=OrderTotals',
+                                baseURL: '/Common/Component?Name=OrderTotals',
                                 method: 'get',
                                 data: null,
                                 headers: {
@@ -203,7 +203,7 @@ var Checkout = {
                         },
                         updateTotals() {
                             axios({
-                                baseURL: 'Common/Component?Name=OrderTotals',
+                                baseURL: '/Common/Component?Name=OrderTotals',
                                 method: 'get',
                                 data: null,
                                 headers: {

@@ -1,7 +1,7 @@
 ﻿function deletecartitem(href) {
     axios({
         method: "post",
-        url: 'deletecartitem/'+ href +''
+        baseURL: '/deletecartitem/'+ href +''
     }).then(function (response) {
         var flyoutcart = response.data.flyoutshoppingcart;
         var newfly = JSON.parse(flyoutcart);
