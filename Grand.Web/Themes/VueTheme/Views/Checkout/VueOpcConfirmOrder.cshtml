@@ -24,5 +24,8 @@
                 @T("Common.Confirm")
             </b-button>
         </template>
-        <input v-else type="button" class="btn btn-info confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
+        <template v-else>
+            <b-button id="new-back-confirm_order">@T("Common.Back")</b-button>
+            <input type="button" class="btn btn-info confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
+        </template>
 </div>

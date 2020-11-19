@@ -70,169 +70,118 @@ var Checkout = {
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
                 var Model = JSON.parse(response.data.update_section.html);
-                new Vue({
-                    created() {
-                        this.updateShipping()
-                    },
-                    methods: {
-                        updateShipping() {
-                            vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
-                            vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore,
-                            vm.ShippingExistingAddresses = Model.ExistingAddresses,
-                            vm.ShippingNewAddress = Model.NewAddress,
-                            vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
-                            vm.ShippingPickUpInStore = Model.PickUpInStore,
-                            vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
-                            vm.ShippingPickupPoints = Model.PickupPoints,
-                            vm.ShippingWarnings = Model.Warnings,
-                            vm.ShippingAddress = true;
-                        }
-                    }
-                })
+                vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
+                vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore,
+                    vm.ShippingExistingAddresses = Model.ExistingAddresses,
+                    vm.ShippingNewAddress = Model.NewAddress,
+                    vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
+                    vm.ShippingPickUpInStore = Model.PickUpInStore,
+                    vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
+                    vm.ShippingPickupPoints = Model.PickupPoints,
+                    vm.ShippingWarnings = Model.Warnings,
+                    vm.ShippingAddress = true;
             }
             if (response.data.goto_section == "shipping_method") {
                 var Model = JSON.parse(response.data.update_section.html);
-                new Vue({
-                    created() {
-                        this.updateShippingMethod()
-                    },
-                    methods: {
-                        updateShippingMethod() {
-                            vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
-                            vm.ShippingMethods = Model.ShippingMethods,
-                            vm.ShippingMethodWarnings = Model.Warnings,
-                            vm.ShippingMethod = true;
-                        }
-                    }
-                })
+                vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
+                vm.ShippingMethods = Model.ShippingMethods,
+                vm.ShippingMethodWarnings = Model.Warnings,
+                vm.ShippingMethod = true;
             }
             if (response.data.goto_section == "payment_method") {
                 var Model = JSON.parse(response.data.update_section.html);
-                new Vue({
-                    created() {
-                        this.updateShippingMethod()
-                    },
-                    methods: {
-                        updateShippingMethod() {
-                            vm.DisplayRewardPoints = Model.DisplayRewardPoints;
-                            vm.PaymentMethods = Model.PaymentMethods,
-                            vm.RewardPointsAmount = Model.RewardPointsAmount,
-                            vm.RewardPointsBalance = Model.RewardPointsBalance;
-                            vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
-                            vm.UseRewardPoints = Model.UseRewardPoints;
-                            vm.PaymentMethod = true;
-                        }
-                    }
-                })
+                vm.DisplayRewardPoints = Model.DisplayRewardPoints;
+                vm.PaymentMethods = Model.PaymentMethods,
+                    vm.RewardPointsAmount = Model.RewardPointsAmount,
+                    vm.RewardPointsBalance = Model.RewardPointsBalance;
+                vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
+                vm.UseRewardPoints = Model.UseRewardPoints;
+                vm.PaymentMethod = true;
             }
             if (response.data.goto_section == "payment_info") {
                 var Model = JSON.parse(response.data.update_section.html);
-                new Vue({
-                    created() {
-                        this.updatePaymentInfo();
-                        this.updateTotals();
-                    },
-                    methods: {
-                        updatePaymentInfo() {
-                            vm.DisplayOrderTotals = Model.DisplayOrderTotals;
-                            vm.PaymentViewComponentName = Model.PaymentViewComponentName,
-                            vm.PaymentInfo = true;
-                                axios({
-                                    baseURL: '/Common/Component?Name=' + Model.PaymentViewComponentName,
-                                    method: 'get',
-                                    data: null,
-                                    headers: {
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json'
-                                    }
-                                }).then(response => {
-                                    var html = response.data;
-                                    document.querySelector('.payment-info .info').innerHTML = html;
-                                })
-                        },
-                        updateTotals() {
-                            axios({
-                                baseURL: '/Common/Component?Name=OrderTotals',
-                                method: 'get',
-                                data: null,
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                }
-                            }).then(response => {
-                                vm.cart.DisplayTax = response.data.DisplayTax;
-                                vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                                vm.cart.GenericAttributes = response.data.GenericAttributes;
-                                vm.cart.GiftCards = response.data.GiftCards;
-                                vm.cart.IsEditable = response.data.IsEditable;
-                                vm.cart.OrderTotal = response.data.OrderTotal;
-                                vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                                vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                                vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                                vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                                vm.cart.RequiresShipping = response.data.RequiresShipping;
-                                vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                                vm.cart.Shipping = response.data.Shipping;
-                                vm.cart.SubTotal = response.data.SubTotal;
-                                vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                                vm.cart.Tax = response.data.Tax;
-                                vm.cart.TaxRates = response.data.TaxRates;
-                                vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
-                            });
-                        },
+                vm.DisplayOrderTotals = Model.DisplayOrderTotals;
+                vm.PaymentViewComponentName = Model.PaymentViewComponentName,
+                    vm.PaymentInfo = true;
+                axios({
+                    baseURL: '/Common/Component?Name=' + Model.PaymentViewComponentName,
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
+                }).then(response => {
+                    var html = response.data;
+                    document.querySelector('.payment-info .info').innerHTML = html;
                 })
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.cart.DisplayTax = response.data.DisplayTax;
+                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+                    vm.cart.GenericAttributes = response.data.GenericAttributes;
+                    vm.cart.GiftCards = response.data.GiftCards;
+                    vm.cart.IsEditable = response.data.IsEditable;
+                    vm.cart.OrderTotal = response.data.OrderTotal;
+                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+                    vm.cart.RequiresShipping = response.data.RequiresShipping;
+                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+                    vm.cart.Shipping = response.data.Shipping;
+                    vm.cart.SubTotal = response.data.SubTotal;
+                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+                    vm.cart.Tax = response.data.Tax;
+                    vm.cart.TaxRates = response.data.TaxRates;
+                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+                });
             }
             if (response.data.goto_section == "confirm_order") {
                 var Model = JSON.parse(response.data.update_section.html);
-                new Vue({
-                    created() {
-                        this.updateConfirmMethod();
-                        this.updateTotals();
-                    },
-                    methods: {
-                        updateConfirmMethod() {
-                            vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
-                            vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
-                            vm.ConfirmWarnings = Model.ConfirmWarnings
-                            vm.Confirm = true;
-                            setTimeout(function () {
-                                var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
-                                document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
-                            }, 300);
-                        },
-                        updateTotals() {
-                            axios({
-                                baseURL: '/Common/Component?Name=OrderTotals',
-                                method: 'get',
-                                data: null,
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                }
-                            }).then(response => {
-                                vm.cart.DisplayTax = response.data.DisplayTax;
-                                vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                                vm.cart.GenericAttributes = response.data.GenericAttributes;
-                                vm.cart.GiftCards = response.data.GiftCards;
-                                vm.cart.IsEditable = response.data.IsEditable;
-                                vm.cart.OrderTotal = response.data.OrderTotal;
-                                vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                                vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                                vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                                vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                                vm.cart.RequiresShipping = response.data.RequiresShipping;
-                                vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                                vm.cart.Shipping = response.data.Shipping;
-                                vm.cart.SubTotal = response.data.SubTotal;
-                                vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                                vm.cart.Tax = response.data.Tax;
-                                vm.cart.TaxRates = response.data.TaxRates;
-                                vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
-                            });
-                        },
+                vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
+                vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
+                    vm.ConfirmWarnings = Model.ConfirmWarnings
+                vm.Confirm = true;
+                setTimeout(function () {
+                    var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
+                    document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
+                }, 300);
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                     }
-                })
+                }).then(response => {
+                    vm.cart.DisplayTax = response.data.DisplayTax;
+                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+                    vm.cart.GenericAttributes = response.data.GenericAttributes;
+                    vm.cart.GiftCards = response.data.GiftCards;
+                    vm.cart.IsEditable = response.data.IsEditable;
+                    vm.cart.OrderTotal = response.data.OrderTotal;
+                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+                    vm.cart.RequiresShipping = response.data.RequiresShipping;
+                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+                    vm.cart.Shipping = response.data.Shipping;
+                    vm.cart.SubTotal = response.data.SubTotal;
+                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+                    vm.cart.Tax = response.data.Tax;
+                    vm.cart.TaxRates = response.data.TaxRates;
+                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+                });
             }
             //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
             document.querySelector('#button-' + response.data.update_section.name).click();
