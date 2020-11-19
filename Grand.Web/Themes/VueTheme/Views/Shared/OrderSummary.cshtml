@@ -236,9 +236,8 @@
             },
             updateCart() {
                 axios({
-                    baseURL: '/Common/Component',
+                    baseURL: 'Common/Component?Name=OrderSummary',
                     method: 'get',
-                    params: { Name: 'OrderSummary' },
                     data: null,
                     headers: {
                         'Accept': 'application/json',
@@ -251,9 +250,8 @@
             },
             updateTotals() {
                 axios({
-                    baseURL: '/Common/Component',
+                    baseURL: 'Common/Component?Name=OrderTotals',
                     method: 'get',
-                    params: { Name: 'OrderTotals' },
                     data: null,
                     headers: {
                         'Accept': 'application/json',

@@ -73,7 +73,7 @@
                             <partial name="_SKU_Man_GTIN_Ven" model="Model" />
                             <!--delivery-->
                             @if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(Model.DeliveryDate)
-|| Model.NotReturnable || Model.AdditionalShippingCharge > 0)
+                            || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
                             {
                                 <partial name="_DeliveryInfo" model="Model" />
                             }

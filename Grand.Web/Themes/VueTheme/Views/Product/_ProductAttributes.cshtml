@@ -11,7 +11,7 @@
             string controlId = string.Format("product_attribute_{0}", attribute.Id);
             string textPrompt = !string.IsNullOrEmpty(attribute.TextPrompt) ? attribute.TextPrompt : attribute.Name;
             <tr>
-                <td class="d-inline-flex w-100" id="@string.Format("product_attribute_label_{0}", attribute.Id)">
+                <td id="@string.Format("product_attribute_label_{0}", attribute.Id)">
                     <span class="text-prompt">
                         @textPrompt
                     </span>
@@ -249,11 +249,17 @@
                                             T("Products.ProductAttributes.PriceAdjustment", attributeValue.Name, attributeValue.PriceAdjustment).Text;
                                         <li class="mr-2" @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value mr-2\"") : null)>
                                             <label class="mb-0 text-center" data-toggle="tooltip" title="<img src='@(attributeValue.ImageSquaresPictureModel.FullSizeImageUrl)' alt='@attributeName' />">
-                                                <span class="color-container">
+                                                <span id="imgSqr_@(attributeValue.Id)" class="color-container">
                                                     <span class="color" style="background: url('@(attributeValue.ImageSquaresPictureModel.ImageUrl)') 50% 50% no-repeat;">&nbsp;</span>
                                                 </span>
                                                 <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
                                             </label>
+                                            <b-tooltip target="imgSqr_@(attributeValue.Id)" placement="bottom">
+                                                <div class="image-square-tooltip">
+                                                    <img src="@(attributeValue.ImageSquaresPictureModel.FullSizeImageUrl)" alt="@attributeName" />
+                                                    <span>@attributeName</span>
+                                                </div>
+                                            </b-tooltip>
                                         </li>
                                     }
                                 </ul>

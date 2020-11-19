@@ -110,7 +110,7 @@
                         <partial name="_SKU_Man_GTIN_Ven" model="Model" />
                         <!--delivery-->
                         @if ((Model.FreeShippingNotificationEnabled && Model.IsFreeShipping) || !string.IsNullOrWhiteSpace(Model.DeliveryDate)
-                       || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
+                      || Model.NotReturnable || Model.AdditionalShippingCharge > 0)
                         {
                             <partial name="_DeliveryInfo" model="Model" />
                         }
@@ -130,7 +130,7 @@
                             {
                                 var dataDictAttributes = new ViewDataDictionary(ViewData);
                                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                                <partial name="_ProductAttributes" model="Model.ProductAttributes" view-data="dataDictAttributes" />
+                                <partial name="VueProductAttributes"  model="Model.ProductAttributes" view-data="dataDictAttributes" />
                             }
                         }
                         <!--warehouses-->

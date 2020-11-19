@@ -34,9 +34,8 @@
         alert('Failed to retrieve Shopping Cart Page.');
     }).then(function () {
         axios({
-            baseURL: '/Common/Component',
+            baseURL: 'Common/Component?Name=OrderTotals',
             method: 'get',
-            params: { Name: 'OrderTotals' },
             data: null,
             headers: {
                 'Accept': 'application/json',
@@ -99,9 +98,8 @@ function ChangeShoppingCart(e) {
         alert('Failed to retrieve Shopping Cart Page.');
     }).then(function () {
         axios({
-            baseURL: '/Common/Component',
+            baseURL: 'Common/Component?Name=OrderTotals',
             method: 'get',
-            params: { Name: 'OrderTotals' },
             data: null,
             headers: {
                 'Accept': 'application/json',
@@ -165,9 +163,8 @@ function removeGiftCard(e) {
         alert(error);
     }).then(function () {
         axios({
-            baseURL: '/Common/Component',
+            baseURL: 'Common/Component?Name=OrderTotals',
             method: 'get',
-            params: { Name: 'OrderTotals' },
             data: null,
             headers: {
                 'Accept': 'application/json',
