@@ -6,10 +6,10 @@
         </b-nav-item>
         <b-sidebar id="sidebar-cart" backdrop right>
             <template v-slot:title v-if="flycartindicator > 0">
-                @T("Vue.ShoppingCart.Mini.ItemsText") <a :href="'/cart'">{{flycartindicator}} @T("Vue.ShoppingCart.Mini.Items")</a> @T("Vue.ShoppingCart.Mini.ItemsText2")
+                @Html.Raw(string.Format(T("ShoppingCart.Mini.ItemsText").Text, string.Format("<a href=\"{0}\">{1}</a>", "/cart", string.Format(T("ShoppingCart.Mini.Items").Text, "{{flycartindicator}}"))))
             </template>
                 <template v-slot:title v-else>
-                        @T("ShoppingCart.Mini.NoItems")
+                    @T("ShoppingCart.Mini.NoItems")
                 </template>
                 <div v-for="item in flycartitems" class="item d-inline-flex no-wrap">
                     <b-link :href="item.ProductSeName" :title="item.Picture.Title" v-if="item.Picture.ImageUrl">

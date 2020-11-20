@@ -20,7 +20,7 @@
             <tr class="col-12 px-0 shipping-cost d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.Shipping"):</span>
-                    <span v-if="cart.RequiresShipping && cart.SelectedShippingMethod !== null" class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method") {{cart.SelectedShippingMethod}}</span>
+                    <span v-if="cart.RequiresShipping && cart.SelectedShippingMethod !== null" class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method").Text.Replace("{0}", "{{cart.SelectedShippingMethod}}")</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
                     <div v-if="cart.RequiresShipping">
@@ -48,8 +48,7 @@
             <tr v-if="cart.DisplayTaxRates && cart.TaxRates[0]" v-for="taxRate in cart.TaxRates" class="col-12 px-0 tax-rate d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>
-                        @T("ShoppingCart.Totals.TaxRateLine")
-                        {{taxRate.Rate}}
+                        @T("ShoppingCart.Totals.TaxRateLine").Text.Replace("{0}", "{{taxRate.Rate}}")
                     </span>
                 </td>
                 <td class="col-6 cart-total-right text-right">
@@ -75,8 +74,8 @@
             <tr v-if="cart.GiftCards[0]" v-for="gc in cart.GiftCards" class="col-12 px-0 giftcard-summary d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.GiftCardInfo"):</span>
-                    <span>@T("ShoppingCart.Totals.GiftCardInfo.Code") {{gc.CouponCode}}</span>
-                    <span class="giftcard-remaining">@T("ShoppingCart.Totals.GiftCardInfo.Remaining") {{gc.Remaining}}</span>
+                    <span>@T("ShoppingCart.Totals.GiftCardInfo.Code").Text.Replace("{0}", "{{gc.CouponCode}}")</span>
+                    <span class="giftcard-remaining">@T("ShoppingCart.Totals.GiftCardInfo.Remaining").Text.Replace("{0}", "{{gc.Remaining}}")</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
                     <span class="value-summary">{{gc.Amount}}</span>
@@ -88,7 +87,7 @@
             </tr>
             <tr v-if="cart.RedeemedRewardPoints > 0" class="col-12 px-0 reward-points d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
-                    <span>@T("ShoppingCart.Totals.RewardPoints") {{cart.RedeemedRewardPoints}}</span>
+                    <span>@T("ShoppingCart.Totals.RewardPoints").Text.Replace("{0}", "{{cart.RedeemedRewardPoints}}")</span>
                 </td>
                 <td class="col-6 cart-total-right  text-right">
                     <span class="value-summary">{{cart.RedeemedRewardPointsAmount}}</span>
@@ -108,7 +107,7 @@
                     <span>@T("ShoppingCart.Totals.RewardPoints.WillEarn"):</span>
                 </td>
                 <td class="col-6 cart-total-right text-right">
-                    <span class="value-summary">{{cart.WillEarnRewardPoints}} @T("ShoppingCart.Totals.RewardPoints.WillEarn.Point")</span>
+                    <span class="value-summary">@T("ShoppingCart.Totals.RewardPoints.WillEarn.Point").Text.Replace("{0}", "{{cart.WillEarnRewardPoints}}")</span>
                 </td>
             </tr>
         </tbody>

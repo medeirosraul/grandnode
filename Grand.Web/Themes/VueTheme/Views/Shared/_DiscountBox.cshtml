@@ -1,6 +1,4 @@
-﻿
-
-<div v-if="cart.DiscountBox.Display" class="coupon-box">
+﻿<div v-if="cart.DiscountBox.Display" class="coupon-box">
     <h2 class="h5">
         <strong>
             @T("ShoppingCart.DiscountCouponCode.Tooltip")
@@ -29,7 +27,7 @@
         {{cart.DiscountBox.Message}}
     </div>
         <div v-if="cart.DiscountBox.AppliedDiscountsWithCodes[0]" v-for="discount in cart.DiscountBox.AppliedDiscountsWithCodes" class="alert alert-success text-center">
-            <span>@T("ShoppingCart.DiscountCouponCode.CurrentCode") {{discount.CouponCode}}</span>
+            <span>@T("ShoppingCart.DiscountCouponCode.CurrentCode").Text.Replace("{0}", "{{discount.CouponCode}}")</span>
             <b-link name="removediscount"
                     :data-href="'/removediscountcoupon?discountId=' + discount.Id"
                     title="@T("Common.Remove")"
