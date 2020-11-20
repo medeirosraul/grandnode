@@ -12,7 +12,7 @@
     <input type="hidden" asp-for="Box" value="true" />
     <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
     <div class="input-group flex-row">
-        <input minlength="@(Model.SearchTermMinimumLength)" oninput="autocompleteVue(this)" type="search" name="smallsearchterms" class="form-control search-box-text" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
+        <input minlength="@(Model.SearchTermMinimumLength)" oninput="autocompleteVue(this)" type="search" name="q" class="form-control search-box-text" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
         @if (Model.AvailableCategories.Any())
         {
             <select asp-for="SearchCategoryId" asp-items="Model.AvailableCategories" class="search-box-select custom-select input-group-addon"></select>
