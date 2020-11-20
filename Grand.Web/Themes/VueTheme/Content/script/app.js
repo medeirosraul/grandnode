@@ -115,6 +115,10 @@ var vm = new Vue({
                     return
                 }
             });
+        },
+        MenuBack(event) {
+            var dropdown = 'dropdown_' + event.srcElement.getAttribute('data-id');
+            this.$refs[dropdown].hide(true);
         }
     }
 });

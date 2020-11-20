@@ -17,53 +17,52 @@
 <div class="header-nav">
     <b-navbar type="light">
         <b-container :fluid="fluid" id="header-container">
-            <template v-if="isMobile()">
-                <div>
-                    <b-button class="menu-toggler" v-b-toggle.sidebar-menu><span></span><span></span><span></span></b-button>
-                    <b-sidebar id="sidebar-menu"
-                               backdrop
-                               left
-                               shadow>
-                    </b-sidebar>
-                </div>
+            <b-button class="menu-toggler" v-b-toggle.sidebar-menu><span></span><span></span><span></span></b-button>
+            <template>
+                <b-sidebar id="sidebar-menu"
+                           backdrop
+                           left
+                           shadow>
+                    <b-navbar toggleable type="light" variant="light" class="main-nav">
+                        <b-collapse id="main_nav" is-nav>
+                            <b-navbar-nav>
+                                @await Component.InvokeAsync("TopMenu")
+                            </b-navbar-nav>
+                        </b-collapse>
+                    </b-navbar>
+                </b-sidebar>
             </template>
             @await Component.InvokeAsync("Logo")
-            @await Component.InvokeAsync("SearchBox")
-            <b-navbar-nav class="order-3">
+            <b-navbar-nav class="top-header-items order-3">
                 <b-nav-item class="d-lg-block d-none">
                     <b-icon :variant="[fluid ? 'info' : 'dark']" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
                 </b-nav-item>
                 <b-nav-item>
+                    <b-icon icon="search" variant="dark" v-b-toggle.search-box></b-icon>
+                </b-nav-item>
+                <b-sidebar id="search-box"
+                       backdrop
+                       right
+                       shadow>
+                    @await Component.InvokeAsync("SearchBox")
+                </b-sidebar>
+                <b-nav-item>
                     <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
                 </b-nav-item>
                 <template>
-                    <div>
-                        <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" @if (supportRtl) { <text>left</text> } else { <text>right</text> } backdrop>
-                            <div class="d-inline-flex flex-wrap mb-2">
-                                @await Component.InvokeAsync("TaxTypeSelector")
-                                @await Component.InvokeAsync("CurrencySelector")
-                                @await Component.InvokeAsync("LanguageSelector")
-                                @await Component.InvokeAsync("StoreSelector")
-                                @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
-                            </div>
-                            @await Component.InvokeAsync("HeaderLinks")
-                        </b-sidebar>
-                    </div>
+                    <b-sidebar id="sidebar-right" body-class="user-panel" title="@T("Account.MyAccount")" @if (supportRtl) { <text> left</text> } else { <text>right</text> } backdrop>
+                        <div class="d-inline-flex flex-wrap mb-2">
+                            @await Component.InvokeAsync("TaxTypeSelector")
+                            @await Component.InvokeAsync("CurrencySelector")
+                            @await Component.InvokeAsync("LanguageSelector")
+                            @await Component.InvokeAsync("StoreSelector")
+                            @await Component.InvokeAsync("Widget", new { widgetZone = "header_selectors" })
+                        </div>
+                        @await Component.InvokeAsync("HeaderLinks")
+                    </b-sidebar>
                 </template>
                 @await Component.InvokeAsync("ShoppingCartLinks")
             </b-navbar-nav>
-        </b-container>
-    </b-navbar>
-    <template v-if="isMobile()">
-        <div id="MobileSearchBox" class="w-100 pb-2"></div>
-    </template>
-    <b-navbar toggleable="lg" type="light" variant="light" class="main-nav">
-        <b-container :fluid="fluid">
-            <b-collapse id="main_nav" is-nav>
-                <b-navbar-nav>
-                    @await Component.InvokeAsync("TopMenu")
-                </b-navbar-nav>
-            </b-collapse>
         </b-container>
     </b-navbar>
 </div>
