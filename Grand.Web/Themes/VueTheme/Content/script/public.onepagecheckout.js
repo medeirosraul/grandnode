@@ -182,6 +182,19 @@ var Checkout = {
                     vm.cart.TaxRates = response.data.TaxRates;
                     vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
                 });
+                axios({
+                    baseURL: '/Common/Component?Name=OrderSummary',
+                    method: 'post',
+                    data: {
+                        prepareAndDisplayOrderReviewData: true,
+                    },
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.cart.OrderReviewData = response.data.OrderReviewData
+                })
             }
             //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
             document.querySelector('#button-' + response.data.update_section.name).click();
@@ -254,9 +267,9 @@ var Billing = {
             method: 'post',
             data: data,
         }).then(function (response) {
+            this.Billing.nextStep(response);
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
-            this.Billing.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
@@ -349,9 +362,9 @@ var Shipping = {
             method: 'post',
             data: data,
         }).then(function (response) {
+            this.Shipping.nextStep(response);
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
-            this.Shipping.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
@@ -418,9 +431,9 @@ var ShippingMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
+                this.ShippingMethod.nextStep(response);
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
                 document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
-                this.ShippingMethod.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
@@ -496,9 +509,9 @@ var PaymentMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
+                this.PaymentMethod.nextStep(response);
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-method").click()');
                 document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
-                this.PaymentMethod.nextStep(response);
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
@@ -548,9 +561,9 @@ var PaymentInfo = {
             method: 'post',
             data: data,
         }).then(function (response) {
+            this.PaymentInfo.nextStep(response);
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
-            this.PaymentInfo.nextStep(response);
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {

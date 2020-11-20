@@ -107,6 +107,11 @@ var vm = new Vue({
                 if (result) {
                     event.srcElement.submit();
                     return
+                } else {
+                    if (document.querySelector('#PickUpInStore:checked')) {
+                        event.srcElement.submit();
+                        return
+                    }
                 }
             });
         },

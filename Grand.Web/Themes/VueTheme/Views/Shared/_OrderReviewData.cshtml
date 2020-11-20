@@ -1,5 +1,4 @@
-﻿@model ShoppingCartModel.OrderReviewDataModel
-@using Grand.Core.Http;
+﻿@using Grand.Core.Http;
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor httpContextAccessor
 @{
@@ -11,84 +10,52 @@
             <b-card-text>
                 <ul class="billing-info pl-0">
                     <li class="name">
-                        @Model.BillingAddress.FirstName @Model.BillingAddress.LastName
+                        {{cart.OrderReviewData.BillingAddress.FirstName}} {{cart.OrderReviewData.BillingAddress.LastName}}
                     </li>
                     <li class="email">
-                        <span>@T("Order.Email"):</span> @Model.BillingAddress.Email
+                        <span>@T("Order.Email"):</span> {{cart.OrderReviewData.BillingAddress.Email}}
                     </li>
-                    @if (Model.BillingAddress.PhoneEnabled)
-                    {
-                        <li class="phone">
-                            <span>@T("Order.Phone"):</span> @Model.BillingAddress.PhoneNumber
-                        </li>
-                    }
-                    @if (Model.BillingAddress.FaxEnabled)
-                    {
-                        <li class="fax">
-                            <span>@T("Order.Fax"):</span> @Model.BillingAddress.FaxNumber
-                        </li>
-                    }
-                    @if (Model.BillingAddress.CompanyEnabled && !String.IsNullOrEmpty(Model.BillingAddress.Company))
-                    {
-                        <li class="company">
-                            @Model.BillingAddress.Company
-                        </li>
-                    }
-                    @if (Model.BillingAddress.VatNumberEnabled && !String.IsNullOrEmpty(Model.BillingAddress.VatNumber))
-                    {
-                        <li class="vatnumber">
-                            @Model.BillingAddress.VatNumber
-                        </li>
-                    }
-                    @if (Model.BillingAddress.StreetAddressEnabled)
-                    {
-                        <li class="address1">
-                            @Model.BillingAddress.Address1
-                        </li>
-                    }
-                    @if (Model.BillingAddress.StreetAddress2Enabled && !String.IsNullOrEmpty(Model.BillingAddress.Address2))
-                    {
-                        <li class="address2">
-                            @Model.BillingAddress.Address2
-                        </li>
-                    }
-                    @if (Model.BillingAddress.CityEnabled ||
-                  Model.BillingAddress.StateProvinceEnabled ||
-                  Model.BillingAddress.ZipPostalCodeEnabled)
-                    {
+                    <li class="phone" v-if="cart.OrderReviewData.BillingAddress.PhoneEnabled">
+                        <span>@T("Order.Phone"):</span> {{cart.OrderReviewData.BillingAddress.PhoneNumber}}
+                    </li>
+                    <li class="fax" v-if="cart.OrderReviewData.BillingAddress.FaxEnabled">
+                        <span>@T("Order.Fax"):</span> {{cart.OrderReviewData.BillingAddress.FaxNumber}}
+                    </li>
+                    <li class="company" v-if="cart.OrderReviewData.BillingAddress.CompanyEnabled && cart.OrderReviewData.BillingAddress.Company !== null">
+                        {{cart.OrderReviewData.BillingAddress.Company}}
+                    </li>
+                    <li class="vatnumber" v-if="cart.OrderReviewData.BillingAddress.VatNumberEnabled && cart.OrderReviewData.BillingAddress.VatNumber !== null">
+                        {{cart.OrderReviewData.BillingAddress.VatNumber}}
+                    </li>
+                    <li class="address1" v-if="cart.OrderReviewData.BillingAddress.StreetAddressEnabled">
+                        {{cart.OrderReviewData.BillingAddress.Address1}}
+                    </li>
+                    <li class="address2" v-if="cart.OrderReviewData.BillingAddress.StreetAddress2Enabled && cart.OrderReviewData.BillingAddress.Address2 !== null">
+                        {{cart.OrderReviewData.BillingAddress.Address2}}
+                    </li>
+                    <template v-if="cart.OrderReviewData.BillingAddress.CityEnabled && cart.OrderReviewData.BillingAddress.StateProvinceEnabled && cart.OrderReviewData.BillingAddress.ZipPostalCodeEnabled">
                         <li class="city-state-zip">
-                            @if (Model.BillingAddress.CityEnabled)
-                            {
-                                @Model.BillingAddress.City
-                            }
-                            @if (Model.BillingAddress.CityEnabled && (Model.BillingAddress.StateProvinceEnabled || Model.BillingAddress.ZipPostalCodeEnabled))
-                            {
-                                <text>,</text>
-                            }
-                            @if (Model.BillingAddress.StateProvinceEnabled)
-                            {
-                                @Model.BillingAddress.StateProvinceName
-                            }
-                            @if (Model.BillingAddress.ZipPostalCodeEnabled)
-                            {
-                                @Model.BillingAddress.ZipPostalCode
-                            }
+                            <template v-if="cart.OrderReviewData.BillingAddress.CityEnabled">
+                                {{cart.OrderReviewData.BillingAddress.City}}
+                            </template>
+                            <template v-if="cart.OrderReviewData.BillingAddress.CityEnabled && (cart.OrderReviewData.BillingAddress.StateProvinceEnabled || cart.OrderReviewData.BillingAddress.ZipPostalCodeEnabled)">
+                                ,
+                            </template>
+                            <template v-if="cart.OrderReviewData.BillingAddress.StateProvinceEnabled">
+                                {{cart.OrderReviewData.BillingAddress.StateProvinceName}}
+                            </template>
+                            <template v-if="cart.OrderReviewData.BillingAddress.ZipPostalCodeEnabled">
+                                {{cart.OrderReviewData.BillingAddress.ZipPostalCode}}
+                            </template>
                         </li>
-                    }
-                    @if (Model.BillingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.BillingAddress.CountryName))
-                    {
-                        <li class="country">
-                            @Model.BillingAddress.CountryName
-                        </li>
-                    }
-                    @if (!String.IsNullOrEmpty(Model.BillingAddress.FormattedCustomAddressAttributes))
-                    {
-                        <li class="custom-attributes-view">
-                            @Html.Raw(Model.BillingAddress.FormattedCustomAddressAttributes)
-                        </li>
-                    }
-                    @if (!String.IsNullOrEmpty(Model.PaymentMethod))
-                    {
+                    </template>
+                    <li class="country" v-if="cart.OrderReviewData.BillingAddress.CountryEnabled && cart.OrderReviewData.BillingAddress.CountryName !== null">
+                        {{cart.OrderReviewData.BillingAddress.CountryName}}
+                    </li>
+                    <li class="custom-attributes-view" v-if="cart.OrderReviewData.BillingAddress.FormattedCustomAddressAttributes">
+                        <div v-html="cart.OrderReviewData.BillingAddress.FormattedCustomAddressAttributes"></div>
+                    </li>
+                    <template v-if="cart.OrderReviewData.PaymentMethod !== null">
                         <li class="title">
                             <h5>@T("Order.Payment")</h5>
                         </li>
@@ -97,155 +64,112 @@
                                 @T("Order.Payment.Method"):
                             </span>
                             <span class="value">
-                                @Model.PaymentMethod
+                                {{cart.OrderReviewData.PaymentMethod}}
                             </span>
                         </li>
-                    }
+                    </template>
                     @if (processPaymentRequest != null)
-                    {
-                        foreach (var item in processPaymentRequest.CustomValues)
                         {
-                            <li class="custom-value">
-                                <span class="label">
-                                    @item.Key:
-                                </span>
-                                <span class="value">
-                                    @(item.Value != null ? item.Value.ToString() : "")
-                                </span>
-                            </li>
+                            foreach (var item in processPaymentRequest.CustomValues)
+                            {
+                                <li class="custom-value">
+                                    <span class="label">
+                                        @item.Key:
+                                    </span>
+                                    <span class="value">
+                                        @(item.Value != null ? item.Value.ToString() : "")
+                                    </span>
+                                </li>
+                            }
                         }
-                    }
                 </ul>
             </b-card-text>
         </b-card>
-        <b-card title="@T("Order.ShippingAddress")">
+        <b-card v-if="cart.OrderReviewData.IsShippable" title="@T("Order.ShippingAddress")">
             <b-card-text>
-                @if (Model.IsShippable)
-                {
-                        <ul class="shipping-info pl-0">
-                            @if (!Model.SelectedPickUpInStore)
-                            {
-                                <li class="name">
-                                    @Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName
-                                </li>
-                                <li class="email">
-                                    <span>@T("Order.Email"):</span> @Model.ShippingAddress.Email
-                                </li>
-                                if (Model.ShippingAddress.PhoneEnabled)
-                                {
-                                    <li class="phone">
-                                        <span>@T("Order.Phone"):</span> @Model.ShippingAddress.PhoneNumber
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.FaxEnabled)
-                                {
-                                    <li class="fax">
-                                        <span>@T("Order.Fax"):</span> @Model.ShippingAddress.FaxNumber
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.CompanyEnabled && !String.IsNullOrEmpty(Model.ShippingAddress.Company))
-                                {
-                                    <li class="company">
-                                        @Model.ShippingAddress.Company
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.StreetAddressEnabled)
-                                {
-                                    <li class="address1">
-                                        @Model.ShippingAddress.Address1
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.StreetAddress2Enabled && !String.IsNullOrEmpty(Model.ShippingAddress.Address2))
-                                {
-                                    <li class="address2">
-                                        @Model.ShippingAddress.Address2
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.CityEnabled ||
-                                    Model.ShippingAddress.StateProvinceEnabled ||
-                                    Model.ShippingAddress.ZipPostalCodeEnabled)
-                                {
-                                    <li class="city-state-zip">
-                                        @if (Model.ShippingAddress.CityEnabled)
-                                        {
-                                            @Model.ShippingAddress.City
-                                        }
-                                        @if (Model.ShippingAddress.CityEnabled && (Model.ShippingAddress.StateProvinceEnabled || Model.ShippingAddress.ZipPostalCodeEnabled))
-                                        {
-                                            <text>,</text>
-                                        }
-                                        @if (Model.ShippingAddress.StateProvinceEnabled)
-                                        {
-                                            @Model.ShippingAddress.StateProvinceName
-                                        }
-                                        @if (Model.ShippingAddress.ZipPostalCodeEnabled)
-                                        {
-                                            @Model.ShippingAddress.ZipPostalCode
-                                        }
-                                    </li>
-                                }
-                                if (Model.ShippingAddress.CountryEnabled && !String.IsNullOrEmpty(Model.ShippingAddress.CountryName))
-                                {
-                                    <li class="country">
-                                        @Model.ShippingAddress.CountryName
-                                    </li>
-                                }
-                                if (!String.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
-                                {
-                                    <li class="custom-attributes-view">
-                                        @Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)
-                                    </li>
-                                }
-                            }
-                            else
-                            {
-                                <li class="title">
-                                    <h5>@T("Order.PickupAddress")</h5>
-                                </li>
-                                if (!string.IsNullOrEmpty(Model.PickupAddress.Address1))
-                                {
-                                    <li class="address1">
-                                        @Model.PickupAddress.Address1
-                                    </li>
-                                }
-                                if (!string.IsNullOrEmpty(Model.PickupAddress.City) || !string.IsNullOrEmpty(Model.PickupAddress.ZipPostalCode))
-                                {
-                                    <li class="city-state-zip">
-                                        @if (!string.IsNullOrEmpty(Model.PickupAddress.City))
-                                        {
-                                            @Model.PickupAddress.City
-                                        }
-                                        @if (!string.IsNullOrEmpty(Model.PickupAddress.ZipPostalCode))
-                                        {
-                                            <text>,</text>
-                                            @Model.PickupAddress.ZipPostalCode
-                                        }
-                                    </li>
-                                }
-                                if (!string.IsNullOrEmpty(Model.PickupAddress.CountryName))
-                                {
-                                    <li class="country">
-                                        @Model.PickupAddress.CountryName
-                                    </li>
-                                }
-                            }
-                            <li class="title">
-                                <h5>@T("Order.Shipping")</h5>
+                <ul class="shipping-info pl-0">
+                    <template v-if="!cart.OrderReviewData.SelectedPickUpInStore">
+                        <li class="name">
+                            {{cart.OrderReviewData.ShippingAddress.FirstName}} {{cart.OrderReviewData.ShippingAddress.LastName}}
+                        </li>
+                        <li class="email">
+                            <span>@T("Order.Email"):</span> {{cart.OrderReviewData.ShippingAddress.Email}}
+                        </li>
+                        <li class="phone" v-if="cart.OrderReviewData.ShippingAddress.PhoneEnabled">
+                            <span>@T("Order.Phone"):</span> {{cart.OrderReviewData.ShippingAddress.PhoneNumber}}
+                        </li>
+                        <li class="fax" v-if="cart.OrderReviewData.ShippingAddress.FaxEnabled">
+                            <span>@T("Order.Fax"):</span> {{cart.OrderReviewData.ShippingAddress.FaxNumber}}
+                        </li>
+                        <li class="company" v-if="cart.OrderReviewData.ShippingAddress.CompanyEnabled && cart.OrderReviewData.ShippingAddress.Company !== null">
+                            {{cart.OrderReviewData.ShippingAddress.Company}}
+                        </li>
+                        <li class="address1" v-if="cart.OrderReviewData.ShippingAddress.StreetAddressEnabled">
+                            {{cart.OrderReviewData.ShippingAddress.Address1}}
+                        </li>
+                        <li class="address2" v-if="cart.OrderReviewData.ShippingAddress.StreetAddress2Enabled && cart.OrderReviewData.ShippingAddress.Address2 !== null">
+                            {{cart.OrderReviewData.ShippingAddress.Address2}}
+                        </li>
+                        <template v-if="cart.OrderReviewData.CiytEnabled && cart.OrderReviewData.StateProvinceEnabled && cart.OrderReviewData.ZipPostalCodeEnabled">
+                            <li class="city-state-zip">
+                                <template v-if="cart.OrderReviewData.ShippingAddress.CityEnabled">
+                                    {{cart.OrderReviewData.ShippingAddress.City}}
+                                </template>
+                                <template v-if="cart.OrderReviewData.ShippingAddress.CityEnabled && (cart.OrderReviewData.ShippingAddress.StateProvinceEnabled || cart.OrderReviewData.ShippingAddress.ZipPostalCodeEnabled)">
+                                    ,
+                                </template>
+                                <template v-if="cart.OrderReviewData.ShippingAddress.StateProvinceEnabled">
+                                    {{cart.OrderReviewData.ShippingAddress.StateProvinceName}}
+                                </template>
+                                <template v-if="cart.OrderReviewData.ShippingAddress.ZipPostalCodeEnabled">
+                                    {{cart.OrderReviewData.ShippingAddress.ZipPostalCode}}
+                                </template>
                             </li>
-                            <li class="shipping-method">
-                                <span class="label">
-                                    @T("Order.Shipping.Name"):
-                                </span>
-                                <span class="value">
-                                    @Model.ShippingMethod
-                                </span>
-                                @if (!string.IsNullOrEmpty(Model.ShippingAdditionDescription))
-                                {
-                                    <div> @Html.Raw(Model.ShippingAdditionDescription)</div>
-                                }
-                            </li>
-                        </ul>
-                }
+                        </template>
+                        <li class="country" v-if="cart.OrderReviewData.ShippingAddress.CountryName && cart.OrderReviewData.ShippingAddress.CountryName !== null">
+                            {{cart.OrderReviewData.ShippingAddress.CountryName}}
+                        </li>
+                        <li class="custom-attributes-view" v-if="!cart.OrderReviewData.ShippingAddress.FormattedCustomAddressAttributes !== null">
+                            <div v-html="cart.OrderReviewData.ShippingAddress.FormattedCustomAddressAttributes"></div>
+                        </li>
+                    </template>
+                    <template v-else>
+                        <li class="title">
+                            <h5>@T("Order.PickupAddress")</h5>
+                        </li>
+                        <li class="address1" v-if="cart.OrderReviewData.PickupAddress.Address1 !== null">
+                            {{cart.OrderReviewData.PickupAddress.Address1}}
+                        </li>
+                        <li class="city-state-zip" v-if="cart.OrderReviewData.ShippingAddress.City || !cart.OrderReviewData.ShippingAddress.ZipPostalCode !== null">
+                            <template v-if="!cart.OrderReviewData.PickupAddress.City !== null">
+                                {{cart.OrderReviewData.PickupAddress.City}}
+                            </template>
+                            <template v-if="!cart.OrderReviewData.PickupAddress.City !== null">
+                                {{cart.OrderReviewData.PickupAddress.City}}
+                            </template>
+                            <template v-if="!cart.OrderReviewData.PickupAddress.ZipPostalCode !== null">
+                                , {{cart.OrderReviewData.PickupAddress.ZipPostalCode}}
+                            </template>
+                        </li>
+                        <li class="country" v-if="!cart.OrderReviewData.PickupAddress.CountryName !== null">
+                            {{cart.OrderReviewData.PickupAddress.CountryName}}
+                        </li>
+                    </template>
+                    <li class="title">
+                        <h5>@T("Order.Shipping")</h5>
+                    </li>
+                    <li class="shipping-method">
+                        <span class="label">
+                            @T("Order.Shipping.Name"):
+                        </span>
+                        <span class="value">
+                            {{cart.OrderReviewData.ShippingMethod}}
+                        </span>
+                        <template v-if="!cart.OrderReviewData.ShippingAdditionDescription !== null">
+                            <div v-html="cart.OrderReviewData.ShippingAdditionDescription"></div>
+                        </template>
+                    </li>
+                </ul>
             </b-card-text>
         </b-card>
     </b-card-group>

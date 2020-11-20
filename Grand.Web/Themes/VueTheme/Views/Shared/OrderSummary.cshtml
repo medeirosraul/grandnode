@@ -14,6 +14,9 @@
 <div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="cart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
     <div v-if="typeof cart.Items !== 'undefined' && cart.Items.length > 0">
+        <template v-if="cart.OrderReviewData.Display">
+            <partial name="_OrderReviewData" />
+        </template>
         <ul v-if="typeof cart.Warnings !== 'undefined' && cart.Warnings.length > 0" class="px-0 mb-3">
             <li v-for="item in cart.Warnings">
                 <span class="text-danger">{{item}}</span>
