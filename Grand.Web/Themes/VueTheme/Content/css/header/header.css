@@ -190,6 +190,9 @@
     }
 }
 @media (max-width: 991px) {
+    .b-sidebar#sidebar-cart, .b-sidebar#search-box {
+        width: 100vw;
+    }
     .header-nav {
         position: -webkit-sticky;
         position: sticky;
@@ -215,9 +218,6 @@
         display: inline-flex;
         justify-content: space-around;
         box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 -3px 6px rgba(0,0,0,0.23);
-    }
-    .header-nav .top-header-items.navbar-nav > * {
-        width: 100%;
     }
 }
 @media (max-width: 575px) {
