@@ -57,7 +57,7 @@ var vm = new Vue({
         })
         this.$root.$on('bv::dropdown::hide', bvEvent => {
             if (bvEvent.vueTarget.$el.getAttribute('data-level') === 'next') {
-                this.isDropdown2Visible = true;
+                this.isDropdown2Visible = false;
             }
             if (this.isDropdown2Visible) {
                 bvEvent.preventDefault()
