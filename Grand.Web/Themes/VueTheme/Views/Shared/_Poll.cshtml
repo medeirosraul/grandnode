@@ -48,8 +48,9 @@
         
         <script asp-location="Footer">
             document.getElementById('vote-poll-@(Model.Id)').addEventListener('click', function () {
-                console.log(this);
-                var pollAnswerId = document.querySelector("input[name=pollanswers-@(Model.Id)]:checked").value;
+                if (document.querySelector("input[name=pollanswers-@(Model.Id)]:checked") !== null) {
+                    var pollAnswerId = document.querySelector("input[name=pollanswers-@(Model.Id)]:checked").value;
+                }
                 if (typeof (pollAnswerId) == 'undefined') {
                     alert('@Html.Raw(JavaScriptEncoder.Default.Encode(T("Polls.SelectAnswer").Text))');
                 }
@@ -61,6 +62,7 @@
                         url: "@(Url.RouteUrl("PollVote"))",
                         params: { "pollAnswerId": pollAnswerId, "pollId": '@(Model.Id)' },
                     }).then(function (response) {
+
                             voteProgress.style.display = "none";
                             if (response.data.error) {
                                 document.getElementById("block-poll-vote-error-@(Model.Id)").innerHTML = response.data.error;
