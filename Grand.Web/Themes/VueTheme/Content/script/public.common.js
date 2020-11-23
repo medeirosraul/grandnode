@@ -471,7 +471,7 @@ function displayPopupNotification(message, messagetype) {
     //we do not encode displayed message
     var htmlcode = '';
     if ((typeof message) == 'string') {
-        htmlcode = '<b-modal ref="grandModal" id="grandModal" centered hide-footer hide-header><b-button class="modal-close h-100" block @@click="$bvModal.hide(grandModal)"><b-icon icon="x" variant="info"></b-icon></b-button><b-alert class="mb-0" show>' + message + '</b-alert></b-modal>';
+        htmlcode = '<b-modal ref="grandModal" id="grandModal" centered hide-footer hide-header><b-alert class="mb-0" show>' + message + '</b-alert></b-modal>';
         document.querySelector('.modal-place').innerHTML = htmlcode;
         new Vue({
             el: '#grandModal',
