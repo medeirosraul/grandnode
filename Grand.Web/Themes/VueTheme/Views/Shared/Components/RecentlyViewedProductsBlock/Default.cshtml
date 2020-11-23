@@ -11,11 +11,13 @@
                 <b-media @(i == Model.Count - 1 ? @Html.Raw(" class=\"last\"") : @Html.Raw(" class=\"mb-1\"")) tag="li">
                     @if (!String.IsNullOrEmpty(product.DefaultPictureModel.ImageUrl))
                     {
-                    <template v-slot:aside>
-                        <b-img-lazy alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title"></b-img-lazy>
-                    </template>
+                        <template v-slot:aside>
+                            <b-link href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
+                                <b-img-lazy alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title"></b-img-lazy>
+                            </b-link>
+                        </template>
                     }
-                    <b-link class="product-name" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</b-link>
+                    <b-link href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</b-link>
                 </b-media>   
             }
         </ul>

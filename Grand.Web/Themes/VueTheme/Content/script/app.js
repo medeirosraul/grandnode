@@ -122,6 +122,17 @@ var vm = new Vue({
                 if (result) {
                     event.srcElement.submit();
                     return
+                } else {
+                    if (document.querySelector('#PickUpInStore:checked')) {
+                        event.srcElement.submit();
+                        return
+                    }
+                    if (event.target.querySelectorAll('#pickup-new-address-form').length > 0) {
+                        if (event.target.querySelector('#pickup-new-address-form').style['display'] === 'none') {
+                            event.srcElement.submit();
+                            return
+                        }
+                    }
                 }
             });
         },
