@@ -67,6 +67,7 @@ var Checkout = {
     },
 
     setStepResponse: function (response) {
+        console.log(response);
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
                 var Model = JSON.parse(response.data.update_section.html);
@@ -197,7 +198,9 @@ var Checkout = {
                 })
             }
             //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
-            document.querySelector('#button-' + response.data.update_section.name).click();
+            if (!response.data.wrong_billing_address) {
+                document.querySelector('#button-' + response.data.update_section.name).click();
+            }
         }
         if (response.data.allow_sections) {
             response.data.allow_sections.forEach(function (e) {
@@ -267,9 +270,11 @@ var Billing = {
             method: 'post',
             data: data,
         }).then(function (response) {
-            if (document.querySelector("#billing_card").style['display'] != 'none') {
-                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
-                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
+            if (!response.data.wrong_billing_address) {
+                if (document.querySelector("#billing_card").style['display'] != 'none') {
+                    document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
+                    document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
+                }
             }
             this.Billing.nextStep(response);
         }).catch(function (error) {
@@ -291,7 +296,9 @@ var Billing = {
         }
         if (Billing.disableBillingAddressCheckoutStep) {
             if (response.data.wrong_billing_address) {
+                document.querySelector("#billing_card").style.display = "flex";
                 document.getElementById('button-billing').classList.add('allow');
+                //setTimeout(function () { document.querySelector("#opc-billing").style.display = "flex"; }, 300);
             } else {
                 document.getElementById('button-billing').classList.remove('allow');
             }
