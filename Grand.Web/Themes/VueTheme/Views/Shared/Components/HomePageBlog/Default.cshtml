@@ -19,9 +19,9 @@
                                     </b-link>
                                 </h3>
                             </template> 
-                            <b-card-text>
+                            <div>
                                 @Html.Raw(item.Short)
-                            </b-card-text>
+                            </div>
                             <template v-slot:footer>
                                 <small class="text-muted">@item.CreatedOn.ToString("D")</small>
                             </template>
