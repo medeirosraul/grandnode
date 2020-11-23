@@ -2,21 +2,6 @@
 @inject Grand.Services.Media.IPictureService pictureService
 @inject SeoSettings seoSettings
 @inject IPageHeadBuilder pagebuilder
-@using Grand.Framework.Themes
-@inject IWorkContext workContext
-@inject IThemeContext themeContext
-@{
-    var supportRtl = workContext.WorkingLanguage.Rtl;
-    var themeName = themeContext.WorkingThemeName;
-    if (supportRtl)
-    {
-        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/category/category.rtl.css", themeName));
-    }
-    else
-    {
-        pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/category/category.css", themeName));
-    }
-}
 @{
     Layout = "_ColumnsOne";
 

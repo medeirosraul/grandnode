@@ -1,7 +1,7 @@
 ﻿@inject IPageHeadBuilder pagebuilder
 @model CustomerRewardPointsModel
 @{
-    Layout = "_ColumnsTwoMix";
+    Layout = "_ColumnsTwo";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Account").Text);
@@ -38,7 +38,7 @@
                 </template>
             </b-table>
             <script>
-                var mix = {
+                Vue.mixin({
                                 data() {
                                     return {
                                         fields: [
@@ -72,14 +72,11 @@
                                                 ]
                                         }
                                     }
-                                }
+                                });
             </script>
         }
         else
         {
-            <script>
-                var mix = {}
-            </script>
             <section class="no-data alert alert-info my-3">
                 @T("RewardPoints.NoHistory")
             </section>

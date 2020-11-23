@@ -8,7 +8,7 @@
     var themeName = themeContext.WorkingThemeName;
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/VueAutocomplete.js", themeName));
 }
-<form asp-route="ProductSearch" method="get" id="small-search-box-form" class="searchBox w-100 px-3 order-2">
+<form asp-route="ProductSearch" method="get" id="small-search-box-form" class="searchBox w-100">
     <input type="hidden" asp-for="Box" value="true" />
     <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
     <div class="input-group flex-row">
@@ -20,7 +20,7 @@
         @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox_before_search_button" })
 
         <div class="input-group-append">
-            <button type="submit" class="btn btn-info search-box-button float-sm-right d-inline-flex">
+            <button type="submit" class="btn btn-info search-box-button float-sm-right d-inline-flex align-items-center">
                 <span class="sr-only">@T("Search.SearchBox.Tooltip")</span>
                 <b-icon icon="search"></b-icon>
             </button>

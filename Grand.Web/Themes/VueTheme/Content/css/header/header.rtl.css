@@ -131,6 +131,7 @@
     display: inline-flex;
     align-items: center;
     width: 100%;
+    padding: 15px;
 }
 .main-nav.navbar-light .navbar-nav .nav-link .title {
     color: #333;
@@ -174,12 +175,6 @@
 @media (min-width: 576px) {
     .b-sidebar {
         width: 530px;
-    }
-}
-@media (min-width: 992px) {
-    .b-sidebar:not(#sidebar-menu, #sidebar-right),
-    .b-sidebar:not(#sidebar-right) {
-        width: 50vw;
     }
 }
 @media (max-width: 991px) {

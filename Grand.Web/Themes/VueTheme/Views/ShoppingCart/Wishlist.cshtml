@@ -11,7 +11,7 @@
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
 }
 @{
-    Layout = "_ColumnsMix";
+    Layout = "_ColumnsOne";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Wishlist").Text);
@@ -132,7 +132,7 @@
     }
 </div>
 <script>
-                    var mix = {
+                    Vue.mixin({
                         data() {
                             return {
                                 show: false,
@@ -246,5 +246,5 @@
                                 ]
                             }
                         },
-                    }
+                    });
 </script>

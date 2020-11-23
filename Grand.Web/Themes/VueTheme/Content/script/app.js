@@ -73,10 +73,28 @@ var vm = new Vue({
     methods: {
         productImage: function (event) {
             var Imagesrc = event.target.parentElement.getAttribute('data-href');
-            if (event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".hover-img")) {
-                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".hover-img")[0];
+            function collectionHas(a, b) { //helper function (see below)
+                for (var i = 0, len = a.length; i < len; i++) {
+                    if (a[i] == b) return true;
+                }
+                return false;
+            }
+            function findParentBySelector(elm, selector) {
+                var all = document.querySelectorAll(selector);
+                var cur = elm.parentNode;
+                while (cur && !collectionHas(all, cur)) { //keep going up until you find a match
+                    cur = cur.parentNode; //go up
+                }
+                return cur; //will return null if not found
+            }
+
+            var yourElm = event.target //div in your original code
+            var selector = ".product-box";
+            var parent = findParentBySelector(yourElm, selector);
+            if (parent.querySelectorAll(".hover-img")) {
+                var Image = parent.querySelectorAll(".hover-img")[0];
             } else {
-                var Image = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelectorAll(".main-product-img")[0];
+                var Image = parent.querySelectorAll(".main-product-img")[0];
             }
             Image.setAttribute('src', Imagesrc);
         },

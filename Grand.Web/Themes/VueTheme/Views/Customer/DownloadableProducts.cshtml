@@ -2,7 +2,7 @@
 @using Grand.Web.Models.Customer;
 @inject IPageHeadBuilder pagebuilder
 @{
-    Layout = "_ColumnsTwoMix";
+    Layout = "_ColumnsTwo";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Account").Text);
@@ -30,41 +30,41 @@
                 </template>
             </b-table>
             <script>
-                var mix = {
+                Vue.mixin({
                     data() {
                         return {
                             fields: [
                                 { key: 'order', label: '@T("DownloadableProducts.Fields.Order")', sortable: true },
                                 { key: 'date', label: '@T("DownloadableProducts.Fields.Date")', sortable: true },
-                                { key: 'product', label: '@T("DownloadableProducts.Fields.Product")', sortable: true  },
-                                { key: 'download', label: '@T("DownloadableProducts.Fields.Download")', sortable: true  },
+                                { key: 'product', label: '@T("DownloadableProducts.Fields.Product")', sortable: true },
+                                { key: 'download', label: '@T("DownloadableProducts.Fields.Download")', sortable: true },
                             ],
                             items: [
                                 @for (int i = 0; i < Model.Items.Count; i++)
                                 {
                                     var item = Model.Items[i];
                                     <text>
-                                    {
-                                        order: {
-                                            order: '<a href="@Url.RouteUrl("OrderDetails", new { orderId = item.OrderId })">@item.OrderNumber</a>'
-                                        },
-                                        date: {
-                                            date: '@item.CreatedOn.ToString("d")'
-                                        },
-                                        product: {
-                                            product: '<a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>@if (!String.IsNullOrEmpty(item.ProductAttributes)) {<div class="attributes">@Html.Raw(item.ProductAttributes)</div>}'
-                                        },
-                                        download: {
-                                            download: '@if (!String.IsNullOrEmpty(item.DownloadId)) { <a href="@Url.RouteUrl("GetDownload", new { orderItemId = item.OrderItemGuid })">@T("DownloadableProducts.Fields.Download")</a>}else {@T("DownloadableProducts.Fields.Download.NA")}@if (!String.IsNullOrEmpty(item.LicenseId))@if (!String.IsNullOrEmpty(item.LicenseId)) {<a href="@Url.RouteUrl("GetLicense", new { orderItemId = item.OrderItemGuid })">@T("DownloadableProducts.Fields.DownloadLicense")</a> }'
-                                        },
-
+                                {
+                                    order: {
+                                        order: '<a href="@Url.RouteUrl("OrderDetails", new { orderId = item.OrderId })">@item.OrderNumber</a>'
                                     },
+                                    date: {
+                                        date: '@item.CreatedOn.ToString("d")'
+                                    },
+                                    product: {
+                                        product: '<a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>@if (!String.IsNullOrEmpty(item.ProductAttributes)) {<div class="attributes">@Html.Raw(item.ProductAttributes)</div>}'
+                                    },
+                                    download: {
+                                        download: '@if (!String.IsNullOrEmpty(item.DownloadId)) { <a href="@Url.RouteUrl("GetDownload", new { orderItemId = item.OrderItemGuid })">@T("DownloadableProducts.Fields.Download")</a>}else {@T("DownloadableProducts.Fields.Download.NA")}@if (!String.IsNullOrEmpty(item.LicenseId))@if (!String.IsNullOrEmpty(item.LicenseId)) {<a href="@Url.RouteUrl("GetLicense", new { orderItemId = item.OrderItemGuid })">@T("DownloadableProducts.Fields.DownloadLicense")</a> }'
+                                    },
+
+                                },
                                     </text>
                                 }
                             ]
                         }
                     }
-                }
+                });
             </script>
     }
     else
@@ -72,9 +72,5 @@
         <div class="no-data alert alert-info">
             @T("DownloadableProducts.NoItems")
         </div>
-        <script>
-            var mix = {
-            }
-        </script>
     }
 </section>

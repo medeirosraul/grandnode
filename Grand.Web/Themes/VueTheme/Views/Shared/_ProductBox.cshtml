@@ -206,7 +206,7 @@
                                                         case AttributeControlType.ColorSquares:
                                                             if ((spec.PictureModel.FullSizeImageUrl).Length > 0)
                                                             {
-                                                                <b-button variant="light" size="sm" class="name color-container" title="@spec.Name" v-on:click='productImage' data-href="@spec.PictureModel.FullSizeImageUrl">
+                                                                <b-button variant="light" size="sm" class="name color-container" title="@spec.Name" @@click="productImage($event)" data-href="@spec.PictureModel.FullSizeImageUrl">
                                                                     <span class="color" style="background-color:@spec.ColorSquaresRgb;">&nbsp;</span>
                                                                 </b-button>
                                                             }

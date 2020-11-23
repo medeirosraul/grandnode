@@ -1,7 +1,7 @@
 ﻿@model CustomerOrderListModel
 @inject IPageHeadBuilder pagebuilder
 @{
-    Layout = "_ColumnsTwoMix";
+    Layout = "_ColumnsTwo";
 
     //title
     pagebuilder.AddTitleParts(T("PageTitle.Account").Text);
@@ -46,51 +46,51 @@
                         </template>
                     </b-table>
                     <script>
-                            var mix = {
-                                data() {
-                                    return {
-                                        fields: [
-                                            { key: 'start', label: '@T("Account.CustomerOrders.RecurringOrders.StartDate")', sortable: true },
-                                            { key: 'cycle', label: '@T("Account.CustomerOrders.RecurringOrders.CycleInfo")', sortable: true },
-                                            { key: 'payment', label: '@T("Account.CustomerOrders.RecurringOrders.NextPayment")', sortable: true  },
-                                            { key: 'cycletot', label: '@T("Account.CustomerOrders.RecurringOrders.TotalCycles")', sortable: true },
-                                            { key: 'cyclerem', label: '@T("Account.CustomerOrders.RecurringOrders.CyclesRemaining")', sortable: true },
-                                            { key: 'initial', label: '@T("Account.CustomerOrders.RecurringOrders.InitialOrder")', sortable: true },
-                                            { key: 'cancel', label: '@T("Account.CustomerOrders.RecurringOrders.Cancel")', sortable: true  },
-                                        ],
-                                        items: [
+                        Vue.mixin({
+                            data() {
+                                return {
+                                    fields: [
+                                        { key: 'start', label: '@T("Account.CustomerOrders.RecurringOrders.StartDate")', sortable: true },
+                                        { key: 'cycle', label: '@T("Account.CustomerOrders.RecurringOrders.CycleInfo")', sortable: true },
+                                        { key: 'payment', label: '@T("Account.CustomerOrders.RecurringOrders.NextPayment")', sortable: true },
+                                        { key: 'cycletot', label: '@T("Account.CustomerOrders.RecurringOrders.TotalCycles")', sortable: true },
+                                        { key: 'cyclerem', label: '@T("Account.CustomerOrders.RecurringOrders.CyclesRemaining")', sortable: true },
+                                        { key: 'initial', label: '@T("Account.CustomerOrders.RecurringOrders.InitialOrder")', sortable: true },
+                                        { key: 'cancel', label: '@T("Account.CustomerOrders.RecurringOrders.Cancel")', sortable: true },
+                                    ],
+                                    items: [
                                              @foreach (var item in Model.RecurringOrders) {
                                              <text>
-                                            {
-                                                start: {
-                                                    start: '@item.StartDate'
-                                                },
-                                                cycle: {
-                                                    cycle: '@item.CycleInfo'
-                                                },
-                                                payment: {
-                                                    payment: '@item.NextPayment'
-                                                },
-                                                cycletot: {
-                                                    cycletot: '@item.TotalCycles',
-                                                },
-                                                cyclerem: {
-                                                    cyclerem: '@item.CyclesRemaining'
-                                                },
-                                                initial: {
-                                                    initial: '<a href="@Url.RouteUrl("OrderDetails", new { orderId = item.InitialOrderId })">@string.Format(T("Account.CustomerOrders.RecurringOrders.ViewInitialOrder").Text, item.InitialOrderId)</a>'
-                                                },
-                                                cancel: {
-                                                    cancel: '@if (item.CanCancel) {<input type="submit" name="cancelRecurringPayment@(item.Id)" value="@T("Account.CustomerOrders.RecurringOrders.Cancel")" class="btn btn-outline-success cancel-recurring-order-button" />}'
-                                                }
-
+                                        {
+                                            start: {
+                                                start: '@item.StartDate'
+                                            },
+                                            cycle: {
+                                                cycle: '@item.CycleInfo'
+                                            },
+                                            payment: {
+                                                payment: '@item.NextPayment'
+                                            },
+                                            cycletot: {
+                                                cycletot: '@item.TotalCycles',
+                                            },
+                                            cyclerem: {
+                                                cyclerem: '@item.CyclesRemaining'
+                                            },
+                                            initial: {
+                                                initial: '<a href="@Url.RouteUrl("OrderDetails", new { orderId = item.InitialOrderId })">@string.Format(T("Account.CustomerOrders.RecurringOrders.ViewInitialOrder").Text, item.InitialOrderId)</a>'
+                                            },
+                                            cancel: {
+                                                cancel: '@if (item.CanCancel) {<input type="submit" name="cancelRecurringPayment@(item.Id)" value="@T("Account.CustomerOrders.RecurringOrders.Cancel")" class="btn btn-outline-success cancel-recurring-order-button" />}'
                                             }
+
+                                        }
                                             </text>
                                             }
-                                                ]
-                                        }
-                                    }
+                                    ]
                                 }
+                            }
+                        });
                     </script>
 
                 </div>
@@ -107,11 +107,6 @@
                 </ul>
             </div>
         }
-    } else
-    {
-        <script>
-            var mix = {}
-        </script>
     }
 
     @if (Model.Orders.Any())

@@ -136,6 +136,7 @@
     display: inline-flex;
     align-items: center;
     width: 100%;
+    padding: 15px;
 }
 .main-nav.navbar-light .navbar-nav .nav-link .title {
     color: #333;
@@ -184,15 +185,7 @@
         width: 530px;
     }
 }
-@media (min-width: 992px) {
-    .b-sidebar#sidebar-cart, .b-sidebar#search-box {
-        width: 50vw;
-    }
-}
 @media (max-width: 991px) {
-    .b-sidebar#sidebar-cart, .b-sidebar#search-box {
-        width: 100vw;
-    }
     .header-nav {
         position: -webkit-sticky;
         position: sticky;

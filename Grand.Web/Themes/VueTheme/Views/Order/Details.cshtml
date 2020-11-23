@@ -9,7 +9,7 @@
 @{
     if (!Model.PrintMode)
     {
-        Layout = "_ColumnsMix";
+        Layout = "_ColumnsOne";
         var themeName = themeContext.WorkingThemeName;
         pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
     }
@@ -125,8 +125,8 @@
                             </li>
                         }
                         @if (Model.BillingAddress.CityEnabled ||
-Model.BillingAddress.StateProvinceEnabled ||
-Model.BillingAddress.ZipPostalCodeEnabled)
+                            Model.BillingAddress.StateProvinceEnabled ||
+                            Model.BillingAddress.ZipPostalCodeEnabled)
                         {
                             <li class="city-state-zip">
                                 @if (Model.BillingAddress.CityEnabled)
@@ -392,7 +392,7 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                         </template>
                     </b-table>
                     <script>
-                        var mix = {
+                        Vue.mixin({
                                 data() {
                                     return {
                                         fields: [
@@ -428,7 +428,7 @@ Model.BillingAddress.ZipPostalCodeEnabled)
                                                 ]
                                         }
                                     }
-                                }
+                                });
                     </script>
                 </div>
             </div>

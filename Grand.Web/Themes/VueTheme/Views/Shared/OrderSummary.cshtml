@@ -219,7 +219,7 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
 <script asp-location="Header">
-    var mix = {
+    Vue.mixin({
         props: {
             cart: null
         },
@@ -324,7 +324,7 @@
                     })
             },
         }
-    };
+    });
     function removefromcart(el) {
         var href = el.getAttribute('data-href');
         deleteitem(href);

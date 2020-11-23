@@ -267,9 +267,11 @@ var Billing = {
             method: 'post',
             data: data,
         }).then(function (response) {
+            if (document.querySelector("#billing_card").style['display'] != 'none') {
+                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
+                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
+            }
             this.Billing.nextStep(response);
-            document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
-            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
@@ -292,9 +294,6 @@ var Billing = {
                 document.getElementById('button-billing').classList.add('allow');
             } else {
                 document.getElementById('button-billing').classList.remove('allow');
-                if (document.getElementById('back-shipping_method')) {
-                    document.getElementById('back-shipping_method').classList.add('disabled');
-                }
             }
         }
 

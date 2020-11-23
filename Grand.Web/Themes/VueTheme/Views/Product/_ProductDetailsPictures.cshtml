@@ -9,7 +9,6 @@
     var themeName = themeContext.WorkingThemeName;
     pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/vue-gallery-slideshow.min.js", themeName));
 }
-
 <b-col xl="6" lg="6" md="5" cols="12" class="mt-md-0 mt-3 px-0">
     <div class="gallery">
         @if (Model.PictureModels.Count == 1)
@@ -21,7 +20,7 @@
                     <vue-gallery-slideshow :images="images" :index="index" @@close="index = null"></vue-gallery-slideshow>
                 </template>
                 <script>
-                var mix = {
+                    Vue.mixin({
                     data: function () {
                         return {
                             images: [
@@ -38,7 +37,7 @@
                     components: {
                         VueGallerySlideshow
                     },
-                }
+                })
                 </script>
             }
             else
@@ -47,11 +46,6 @@
                      src="@Model.DefaultPictureModel.ImageUrl"
                      alt="@Model.DefaultPictureModel.AlternateText"
                      title="@Model.DefaultPictureModel.Title" />
-                <script>
-                    var mix = {
-                        data: function () { }
-                    }
-                </script>
             }
         }
         @if (Model.PictureModels.Count == 0)
@@ -60,11 +54,6 @@
                  src="@Model.DefaultPictureModel.ImageUrl"
                  alt="@Model.DefaultPictureModel.AlternateText"
                  title="@Model.DefaultPictureModel.Title" />
-            <script>
-                var mix = {
-                    data: function () { }
-                }
-            </script>
         }
         @if (Model.DefaultPictureZoomEnabled)
         {
@@ -81,7 +70,7 @@
                 </template>
                 <!-- Start running your app -->
     <script>
-                var mix = {
+                Vue.mixin({
                     data: function () {
                         return {
                             images: [
@@ -108,7 +97,7 @@
                     components: {
                         VueGallerySlideshow
                     },
-                }
+                })
     </script>
             }
         }
@@ -130,7 +119,7 @@
                          @@click="changeImg($event)"/>
                 }
                 <script>
-                    var mix = {
+                    Vue.mixin({
                         data: function () {
                         },
                         methods: {
@@ -140,7 +129,7 @@
                                 mainImg.setAttribute('src', img);
                             }
                         }
-                    }
+                    })
                 </script>
             }
         }
