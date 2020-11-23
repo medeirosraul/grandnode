@@ -260,6 +260,20 @@ input:checked ~ .color-container .color::before {
 
 /* search box */
 
+#search-box .modal-close {
+    height: 55px;
+    padding: 0;
+    left: -50px;
+    color: #fff;
+}
+#search-box .modal-body {
+    padding: 0;
+}
+#search-box .input-group,
+#search-box .input-group > .form-control,
+#search-box .search-box-select {
+    height: 55px;
+}
 #small-search-box-form {
     position: relative;
 }
@@ -275,9 +289,9 @@ input:checked ~ .color-container .color::before {
 }
 .advanced-search-results {
     position: absolute;
-    top: 40px;
-    left: 15px;
-    right: 15px;
+    top: 54px;
+    left: 0;
+    right: 0;
     max-height: 80vh;
     overflow-x: hidden;
     overflow-y: auto;
@@ -285,6 +299,8 @@ input:checked ~ .color-container .color::before {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: .25rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     z-index: 3;
 }
 .advanced-search-results .title:first-child {
@@ -600,6 +616,18 @@ input:checked ~ .color-container .color::before {
     width: auto;
 }
 
+/* category grid */
+
+.categoryGrid a {
+    color: #333;
+    text-align: right;
+    text-decoration: none;
+}
+.categoryGrid .card-img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 /* container wide */
 
 .main-container.container-fluid .product-box.list .card-body {
@@ -763,6 +791,13 @@ footer .list-group-item span:last-child {
         max-width: 33.333333%;
     }
 }
+@media (min-width: 1400px) {
+    .main-container.container-fluid .categoryGrid .col-xl-4 {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
 @media (max-width: 991px) {
     footer .list-group-item:not(.list-group-item-action) {
         display: inline-flex;
@@ -777,6 +812,13 @@ footer .list-group-item span:last-child {
 @media (max-width: 768px) {
     .product-box.list .picture-container {
         flex: 2;
+    }
+    .categoryGrid .card .card-body {
+        padding: 6px;
+    }
+    .categoryGrid .card .card-body h5 {
+        font-size: 18px;
+        margin: 0;
     }
 }
 @media (max-width: 575px) {

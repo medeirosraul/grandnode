@@ -38,14 +38,13 @@
                     <b-icon :variant="[fluid ? 'info' : 'dark']" icon="aspect-ratio" @@click="fluid = !fluid"></b-icon>
                 </b-nav-item>
                 <b-nav-item>
-                    <b-icon icon="search" variant="dark" v-b-toggle.search-box></b-icon>
+                    <b-icon icon="search" variant="dark" v-b-modal.search-box></b-icon>
                 </b-nav-item>
-                <b-sidebar id="search-box"
-                       backdrop
-                       right
-                       shadow>
+                <b-modal id="search-box"
+                     hide-footer hide-header size="xl">
+                    <b-button class="modal-close" block @@click="$bvModal.hide('search-box')"><b-icon icon="x"></b-icon></b-button>
                     @await Component.InvokeAsync("SearchBox")
-                </b-sidebar>
+                </b-modal>
                 <b-nav-item>
                     <b-icon icon="gear" variant="dark" v-b-toggle.sidebar-right></b-icon>
                 </b-nav-item>
