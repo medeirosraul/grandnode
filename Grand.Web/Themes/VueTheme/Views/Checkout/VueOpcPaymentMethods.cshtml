@@ -6,7 +6,9 @@
             <input v-else id="UseRewardPoints" name="UseRewardPoints" type="checkbox" class="custom-control-input" value="true" />
             <input name="UseRewardPoints" type="hidden" value="false">
             <span class="custom-control-label"></span>
-            <span class="custom-control-description">@T("Checkout.UseRewardPoints") {{RewardPointsBalance}} {{RewardPointsAmount}}</span>
+            <span class="custom-control-description">        
+                @T("Checkout.UseRewardPoints").Text.Replace("{0}", "{{RewardPointsBalance}}").Replace("{1}", "{{RewardPointsAmount}}")
+            </span>
         </label>
     </div>
         <div v-if="PaymentMethods !== []" class="list-inline col-12 mt-2 mb-2 px-0" id="payment-method-block">

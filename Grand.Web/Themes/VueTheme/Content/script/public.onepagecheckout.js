@@ -67,7 +67,6 @@ var Checkout = {
     },
 
     setStepResponse: function (response) {
-        console.log(response);
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
                 var Model = JSON.parse(response.data.update_section.html);
