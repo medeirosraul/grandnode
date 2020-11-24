@@ -139,6 +139,12 @@ body:not(.modal-open) {
     cursor: pointer;
 }
 
+/* bootstrap slider */
+
+#GrandCarousel .link {
+    cursor: pointer;
+}
+
 /* buttons */
 
 .btn {
