@@ -1,20 +1,8 @@
 ﻿@using Grand.Core;
 @model PublicInfoModel
-@inject IWorkContext workContext
 @inject IPageHeadBuilder pagebuilder
 @{
-    var supportRtl = workContext.WorkingLanguage.Rtl;
-
     pagebuilder.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.Slider/Content/slider.js");
-
-    if (supportRtl)
-    {
-        pagebuilder.AddCssFileParts(ResourceLocation.Head, "~/Plugins/Widgets.Slider/Content/style.rtl.css");
-    }
-    else
-    {
-        pagebuilder.AddCssFileParts(ResourceLocation.Head, "~/Plugins/Widgets.Slider/Content/style.css");
-    }
 }
 <b-carousel id="GrandCarousel"
             fade
