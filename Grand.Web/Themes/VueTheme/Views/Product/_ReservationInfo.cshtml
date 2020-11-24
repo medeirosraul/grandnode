@@ -6,13 +6,15 @@
 @inject IThemeContext themeContext
 @inject IPageHeadBuilder pagebuilder
 @using System.Globalization
-<script asp-location="Footer" src="/scripts/jquery-3.3.1.min.js"></script>
+<script asp-location="Footer" src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<link asp-location="Header" rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+@*<script asp-location="Footer" src="/scripts/jquery-3.3.1.min.js"></script>
 <script asp-location="Footer" src="/scripts/jquery.validate.min.js"></script>
 <script asp-location="Footer" src="/scripts/jquery.validate.unobtrusive.min.js"></script>
 <script asp-location="Footer" src="/scripts/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<script asp-location="Footer" src="/scripts/jquery-migrate-3.0.1.min.js"></script>
+<script asp-location="Footer" src="/scripts/jquery-migrate-3.0.1.min.js"></script>*@
 <script asp-location="Footer" src="/Themes/VueTheme/Content/script/public.reservation.js"></script>
-<link href="~/content/jquery-ui-themes/smoothness/jquery-ui.calendar.min.css" rel="stylesheet" type="text/css"/>
+@*<link href="~/content/jquery-ui-themes/smoothness/jquery-ui.calendar.min.css" rel="stylesheet" type="text/css"/>*@
 <div>
     @if (Model.Parameters.Any())
     {
@@ -42,7 +44,7 @@
     {
         <div>
             <h5>@T("Products.Reservation.Date"):</h5>
-            <div id="reservationDatepicker"></div>
+            <input id="reservationDatepicker" class="form-control datepicker"/>
         </div>
         <div>
             <h5 style="margin-top:10px">@T("Products.Reservation.Hour"):</h5>
@@ -52,9 +54,7 @@
 </div>
 
 <script asp-location="Footer">
-    $(document).ready(function () {
         Reservation.init("@Model.StartDate.ToString("d", CultureInfo.CreateSpecificCulture("en-US"))", "@Model.StartDate.Year", "@Model.StartDate.Month", "@T("Products.Noavailablereservations")",
             "@(Url.Action("GetDatesForMonth", "Product"))", "@Model.Id",
             "@Html.Raw(Url.Action("productdetails_attributechange", "product", new { productId = Model.Id, validateAttributeConditions = false }))");
-    });
 </script>
