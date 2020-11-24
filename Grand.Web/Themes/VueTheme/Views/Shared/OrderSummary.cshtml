@@ -182,22 +182,32 @@
                         </div>
                         <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
                             <div v-if-else="cart.MinOrderSubtotalWarning !== null">
-                                <b-button v-if="cart.TermsOfServiceOnShoppingCartPage" id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button">
-                                    <span v-if="cart.IsGuest">
-                                        @T("Checkout.Button.Login")
-                                    </span>
-                                    <span v-else>
-                                        @T("Checkout.Button")
-                                    </span>
-                                </b-button>
-                                <b-button v-else id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button">
-                                    <span v-if="cart.IsGuest">
-                                        @T("Checkout.Button.Login")
-                                    </span>
-                                    <span v-else>
-                                        @T("Checkout.Button")
-                                    </span>
-                                </b-button>
+                                <template v-if="cart.TermsOfServiceOnShoppingCartPage">
+                                    <b-button type="button" id="checkoutasguest"  v-if="cart.IsGuest" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
+                                        @T("Account.Login.CheckoutAsGuest")
+                                    </b-button>
+                                    <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button">
+                                        <span v-if="cart.IsGuest">
+                                            @T("Checkout.Button.Login")
+                                        </span>
+                                        <span v-else>
+                                            @T("Checkout.Button")
+                                        </span>
+                                    </b-button>
+                                </template>
+                                <template v-else>
+                                    <b-button type="button" id="checkoutasguest" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
+                                        @T("Account.Login.CheckoutAsGuest")
+                                    </b-button>
+                                    <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button">
+                                        <span v-if="cart.IsGuest">
+                                            @T("Checkout.Button.Login")
+                                        </span>
+                                        <span v-else>
+                                            @T("Checkout.Button")
+                                        </span>
+                                    </b-button>
+                                </template>
                             </div>
                         </div>
                         <div class="addon-buttons">
@@ -221,7 +231,8 @@
 <script asp-location="Header">
     Vue.mixin({
         props: {
-            cart: null
+            cart: null,
+            checkoutAsGuest: false
         },
         created() {
             if (@firstLoad.ToString().ToLower()== false) {
@@ -279,11 +290,12 @@
                     });
                 })
             },
-            showMsgBoxOne() {
+            showMsgBoxOne(event) {
                 const h = this.$createElement
 
                 const titleVNode = h('div', { domProps: { innerHTML: '<h5>@T("Checkout.TermsOfService.IAccept")</h5>' } })
                 const messageVNode = h('div', { domProps: { innerHTML: '@T("Checkout.TermsOfService.PleaseAccept") <a href="@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse })" target="popup" onclick="window.open(@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse }))">@T("Checkout.TermsOfService.Read")</a>' } })
+                const checkoutAsQuest = event.srcElement.classList.contains('checkout-as-guest-button');
 
                 this.$bvModal.msgBoxConfirm([messageVNode], {
                     title: [titleVNode],
@@ -306,8 +318,12 @@
                                     if (document.querySelector('#confirm-order-form') !== null) {
                                         document.getElementById('confirm-order-form').submit();
                                     } else {
-                                        document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
-                                        document.querySelector('#shopping-cart-form').submit();
+                                        if (checkoutAsQuest) {
+                                            window.location = '@Url.RouteUrl("Checkout")';
+                                        } else {
+                                            document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');
+                                            document.querySelector('#shopping-cart-form').submit();
+                                        }
                                     }
                                 }
                             }

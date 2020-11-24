@@ -98,6 +98,9 @@ var vm = new Vue({
             }
             Image.setAttribute('src', Imagesrc);
         },
+        showModalBackInStock() {
+            this.$refs['back-in-stock'].show()
+        },
         handleScroll: function () {
             if (this.scTimer) return;
             this.scTimer = setTimeout(() => {
