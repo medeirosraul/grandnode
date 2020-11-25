@@ -120,7 +120,7 @@
                     </li>
                 </ul>
                 <file-upload class="btn btn-outline-info"
-                             :post-action="/uploadfilecheckoutattribute/' + attribute.Id"
+                             :post-action="'/uploadfilecheckoutattribute/' + attribute.Id"
                              :extensions="attribute.AllowedFileExtensions"
                              v-model="files"
                              @@input-file="inputFile"
