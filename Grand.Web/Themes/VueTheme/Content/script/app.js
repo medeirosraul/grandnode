@@ -25,9 +25,6 @@
 var vm = new Vue({
     el: '#app',
     mixins: [flycartMix],
-    data: {
-        name: 'Vue Theme',
-    },
     data() {
         return {
             show: false,
@@ -42,8 +39,7 @@ var vm = new Vue({
             searchcategories: null,
             searchmanufacturers: null,
             searchblog: null,
-            searchproducts: null,
-            files: []
+            searchproducts: null
         }
     },
     mounted() {
@@ -64,6 +60,7 @@ var vm = new Vue({
                 bvEvent.preventDefault()
             }
         });
+        this.isMobile();
         this.updateFly();
     },
     watch: {
@@ -144,22 +141,12 @@ var vm = new Vue({
                 }
             });
         },
+        isMobile() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        },
         MenuBack(event) {
             var dropdown = 'dropdown_' + event.srcElement.getAttribute('data-id');
             this.$refs[dropdown].hide(true);
-        },
-        inputFile: function (newFile, oldFile) {
-            if (newFile && oldFile && !newFile.active && oldFile.active) {
-                // Get response data
-                console.log('response', newFile.response)
-                if (newFile.xhr) {
-                    //  Get the response status code
-                    console.log('status', newFile.xhr.status)
-                }
-            }
         }
-    },
-    components: {
-        FileUpload: VueUploadComponent
     }
 });

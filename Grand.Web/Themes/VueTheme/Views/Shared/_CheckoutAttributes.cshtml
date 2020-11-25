@@ -80,18 +80,59 @@
             </template>
             <template v-if="attribute.AttributeControlType == 30">
                 <script asp-location="Header" src="https://cdn.jsdelivr.net/npm/vue-upload-component"></script>
-                <ul>
-                    <li v-for="file in files">{{file.name}} - Error: {{file.error}}, Success: {{file.success}}</li>
+                <script asp-location="Header">
+                    Vue.mixin({
+                        data() {
+                            return {
+                                files: []
+                            }
+                        },
+                        methods: {
+                            inputFile(newFile, oldFile) {
+                                if (newFile && !oldFile) {
+                                    // add
+                                    console.log('add', newFile)
+                                }
+                                if (newFile && oldFile) {
+                                    // update
+                                    console.log('update', newFile)
+                                }
+                                if (!newFile && oldFile) {
+                                    // remove
+                                    console.log('remove', oldFile)
+                                }
+                            }
+                        },
+                        components: {
+                            FileUpload: VueUploadComponent
+                        }
+                    })
+                </script>
+                <ul class="px-0 mb-0">
+                    <li class="alert alert-info mb-1" v-for="(file, index) in files" :key="file.id">
+                        <span>{{file.name}}</span> -
+                        <span>{{file.size | formatSize}}</span> -
+                        <span v-if="file.error">{{file.error}}</span>
+                        <span v-else-if="file.success">success</span>
+                        <span v-else-if="file.active">active</span>
+                        <span v-else-if="file.active">active</span>
+                        <span v-else></span>
+                    </li>
                 </ul>
-                <file-upload ref="upload"
-                             class="btn btn-outline-info"
-                             v-model="files"
-                             name="qqfilename"
+                <file-upload class="btn btn-outline-info"
+                             :post-action="/uploadfilecheckoutattribute/' + attribute.Id"
                              :extensions="attribute.AllowedFileExtensions"
-                             :post-action="'/uploadfilecheckoutattribute/' + attribute.Id"
-                             @@input-file="inputFile">
-                    Upload file
+                             v-model="files"
+                             @@input-file="inputFile"
+                             ref="upload">
+                    Select files
                 </file-upload>
+                <button type="button" class="btn btn-success" v-if="!$refs.upload || !$refs.upload.active" @@click.prevent="$refs.upload.active = true">
+                    Start Upload
+                </button>
+                <button type="button" class="btn btn-danger" v-else @@click.prevent="$refs.upload.active = false">
+                    Stop Upload
+                </button>
             </template>
             <template v-if="attribute.AttributeControlType == 40">
                 <ul class="option-list color-squares w-100 d-inline-flex flex-wrap px-0 mb-0" :id="'color-squares-' + attribute.Id">
