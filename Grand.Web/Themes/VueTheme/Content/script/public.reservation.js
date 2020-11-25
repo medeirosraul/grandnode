@@ -54,26 +54,26 @@
             field: document.getElementById('reservationDatepicker'),
             onSelect: this.onDatePickerDateChange,
             disableDayFn: this.daysToMark,
-            format: 'D/M/YYYY',
+            format: 'MM/DD/YYYY',
             toString(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate();
-                const month = date.getMonth() + 1;
+                const day = ("0" + date.getDate()).slice(-2);
+                const month = ("0" + (date.getMonth() + 1)).slice(-2);
                 const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
+                return `${month}/${day}/${year}`;
             },
             parse(dateString, format) {
                 // dateString is the result of `toString` method
                 const parts = dateString.split('/');
-                const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10) - 1;
+                const day = parts[0];
+                const month = parseInt(parts[1], 10);
                 const year = parseInt(parts[2], 10);
                 return new Date(year, month, day);
             },
             onDraw: function (date) {
                 var year = date.calendars[0].year.toString();
-                var month = date.calendars[0].month.toString();
+                var month = (date.calendars[0].month + 1).toString();
                 if (document.getElementById("hoursDiv") != null) {
                     document.getElementById("hoursDiv").innerHTML = '';
                 }
@@ -98,12 +98,12 @@
             field: document.getElementById('reservationDatepickerFrom'),
             onSelect: this.onDatePickerSelect,
             disableDayFn: this.daysToMarkFrom,
-            format: 'M/D/YYYY',
+            format: 'MM/DD/YYYY',
             toString(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate();
-                const month = date.getMonth() + 1;
+                const day = ("0" + date.getDate()).slice(-2);
+                const month = ("0" + (date.getMonth() + 1)).slice(-2);
                 const year = date.getFullYear();
                 return `${month}/${day}/${year}`;
             },
@@ -111,13 +111,13 @@
                 // dateString is the result of `toString` method
                 const parts = dateString.split('/');
                 const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10) - 1;
+                const month = parseInt(parts[1], 10);
                 const year = parseInt(parts[2], 10);
                 return new Date(year, month, day);
             },
             onDraw: function (date) {
                 var year = date.calendars[0].year.toString();
-                var month = date.calendars[0].month.toString();
+                var month = (date.calendars[0].month + 1).toString();
                 Reservation.fillAvailableDatesFrom(year, month);
             },
             firstDay: 1,
@@ -137,12 +137,12 @@
             field: document.getElementById('reservationDatepickerTo'),
             onSelect: this.onDatePickerSelect,
             disableDayFn: this.daysToMarkTo,
-            format: 'M/D/YYYY',
+            format: 'MM/DD/YYYY',
             toString(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate();
-                const month = date.getMonth() + 1;
+                const day = ("0" + date.getDate()).slice(-2);
+                const month = ("0" + (date.getMonth() + 1)).slice(-2);
                 const year = date.getFullYear();
                 return `${month}/${day}/${year}`;
             },
@@ -150,14 +150,14 @@
                 // dateString is the result of `toString` method
                 const parts = dateString.split('/');
                 const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10) - 1;
+                const month = parseInt(parts[1], 10);
                 const year = parseInt(parts[2], 10);
                 return new Date(year, month, day);
             },
             onDraw: function (date) {
                 var year = date.calendars[0].year.toString();
-                var month = date.calendars[0].month.toString();
-                Reservation.fillAvailableDatesFrom(year, month);
+                var month = (date.calendars[0].month + 1).toString();
+                Reservation.fillAvailableDatesTo(year, month);
             },
             firstDay: 1,
             defaultDate: defdate
@@ -196,11 +196,11 @@
             field: document.getElementById('reservationDatepicker'),
             onSelect: this.onDatePickerDateChange,
             disableDayFn: this.daysToMark,
-            format: 'M/D/YYYY',
+            format: 'MM/DD/YYYY',
             toString(date, format) {
                 // you should do formatting based on the passed format,
                 // but we will just return 'D/M/YYYY' for simplicity
-                const day = date.getDate();
+                const day = ("0" + date.getDate()).slice(-2);
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
                 return `${month}/${day}/${year}`;
@@ -213,7 +213,9 @@
                 const year = parseInt(parts[2], 10);
                 return new Date(year, month, day);
             },
-            onDraw: function (year, month, inst) {
+            onDraw: function (date) {
+                var year = date.calendars[0].year.toString();
+                var month = (date.calendars[0].month + 1).toString();
                 if (document.getElementById("hoursDiv") != null) {
                     document.getElementById("hoursDiv").innerHTML = '';
                 }
@@ -276,12 +278,12 @@
             var selected = null;
         }
         if (selected != null) {
+            document.querySelector("#hoursDiv").innerHTML = '';
             var selectedSplitResults = selected.split("/");
             var selectedDay = selectedSplitResults[1];
             var selectedMonth = selectedSplitResults[0];
             var selectedYear = selectedSplitResults[2];
 
-            document.querySelector("#hoursDiv").innerHTML = '';
             for (i = 0; i < Reservation.availableDates.length; i++) {
                 var splitResults = Reservation.availableDates[i].Date.split("-");
                 var year = splitResults[0];
@@ -289,7 +291,14 @@
                 var day = splitResults[2].substring(0, 2);
 
                 if (selectedYear == year && selectedMonth == month && selectedDay == day) {
-                    document.querySelector("#hoursDiv").appendChild("<div class='custom-control custom-radio mx-1'><input class='custom-control-input' type='radio' id='Reservation_" + Reservation.availableDates[i].Id + "' name='Reservation' value='" + Reservation.availableDates[i].Id + "' /><label class='custom-control-label' for='Reservation_" + Reservation.availableDates[i].Id + "'>" + Reservation.availableDates[i].Date.substring(11, 16) + "</label></div>");
+                    var div = document.createElement('div');
+                    div.classList.add('custom-control');
+                    div.classList.add('custom-radio');
+                    div.classList.add('mx-1');
+
+                    document.querySelector("#hoursDiv").appendChild(div);
+                    div.innerHTML = "<input class='custom-control-input' type='radio' id='Reservation_" + Reservation.availableDates[i].Id + "' name='Reservation' value='" + Reservation.availableDates[i].Id + "' /><label class='custom-control-label' for='Reservation_" + Reservation.availableDates[i].Id + "'>" + Reservation.availableDates[i].Date.substring(11, 16) + "</label>";
+
                 }
             }
 
@@ -309,12 +318,13 @@
             parameter: parameter
         };
 
+
         addAntiForgeryToken(postData);
 
         axios({
             url: Reservation.ajaxUrl,
             method: 'post',
-            data: postData,
+            params: postData,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -329,6 +339,7 @@
                 Reservation.reload(new Date(year, month - 1, 1), Reservation.currentYear, Reservation.currentMonth);
                 //$("#reservationDatepicker").datepicker("refresh");
             }
+            return true;
         }).catch(function (error) {
             alert(error)
         })
@@ -418,7 +429,6 @@
             method: 'post',
             data: data,
         }).then(response => {
-            console.log(response);
             if (response.data.sku) {
                 document.querySelector("#sku-" + Reservation.productId).innerText = response.data.sku;
             }
