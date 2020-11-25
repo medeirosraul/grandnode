@@ -15,8 +15,6 @@
         pagebuilder.AddCanonicalUrlParts(productsByTagUrl);
     }
 }
-@using Grand.Domain.Seo
-@using Grand.Web.Models.Catalog;
 <div class="page product-tag-page">
     <h1 class="generalTitle h2">@String.Format(T("Products.Tags.ProductsTaggedWith").Text, Model.TagName)</h1>
     @await Component.InvokeAsync("Widget", new { widgetZone = "productsbytag_top", additionalData = Model.Id })
