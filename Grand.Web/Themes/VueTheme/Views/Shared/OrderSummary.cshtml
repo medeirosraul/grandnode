@@ -62,7 +62,7 @@
                             <tr v-for="item in cart.Items">
                                 <td v-if="cart.IsAllowOnHold && cart.IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
-                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" onchange="ChangeShoppingCart(this)" />
+                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" onchange="ChangeShoppingCart()" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
@@ -102,12 +102,12 @@
                                 <td class="quantity">
                                     <div v-if="cart.IsEditable">
                                         <div v-if="item.AllowedQuantities[0]">
-                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" data-href="@Url.RouteUrl("UpdateCart")" onchange="ChangeShoppingCart(this)">
+                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" onchange="ChangeShoppingCart()">
                                                 <option v-for="qty in item.AllowedQuantities" :selected="qty.Selected" :value="qty.Value">{{qty.Value}}</option>
                                             </select>
                                         </div>
                                         <div v-else>
-                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" data-href="@Url.RouteUrl("UpdateCart")" onchange="ChangeShoppingCart(this)" class="qty-input form-control text-center" />
+                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" onchange="ChangeShoppingCart()" class="qty-input form-control text-center" />
                                         </div>
                                     </div>
                                     <div v-else>
@@ -229,18 +229,21 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
 <script asp-location="Header">
-    Vue.mixin({
+    var OrderSummary = {
         props: {
             cart: null,
             checkoutAsGuest: false
         },
-        created() {
-            if (@firstLoad.ToString().ToLower()== false) {
+        mounted() {
+            if (@firstLoad.ToString().ToLower() == false) {
                 this.updateCart();
             }
             else {
                 this.firstLoad();
             }
+        },
+        created() {
+            setTimeout(function () { ChangeShoppingCart() }, 300)
         },
         methods: {
             firstLoad() {
@@ -340,7 +343,7 @@
                     })
             },
         }
-    });
+    }
     function removefromcart(el) {
         var href = el.getAttribute('data-href');
         deleteitem(href);

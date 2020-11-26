@@ -24,7 +24,7 @@
 }
 var vm = new Vue({
     el: '#app',
-    mixins: [flycartMix],
+    mixins: [flycartMix, OrderSummary],
     data() {
         return {
             show: false,
@@ -46,7 +46,6 @@ var vm = new Vue({
         if (localStorage.fluid == "true") this.fluid = "fluid";
         if (localStorage.fluid == "fluid") this.fluid = "fluid";
         if (localStorage.fluid == "") this.fluid = "false";
-        window.addEventListener('scroll', this.handleScroll);
         this.$root.$on('bv::dropdown::show', bvEvent => {
             if (bvEvent.vueTarget.$el.getAttribute('data-level') === 'next') {
                 this.isDropdown2Visible = true;

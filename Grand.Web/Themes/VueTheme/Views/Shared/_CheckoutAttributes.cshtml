@@ -80,9 +80,11 @@
             </template>
             <template v-if="attribute.AttributeControlType == 30">
                 <template>
-                    <b-form-file :accept="attribute.AllowedFileExtensions" type="file" id="qqfile" name="qqfile" :data-url="'/uploadfilecheckoutattribute/' + attribute.Id" onchange="uploadFile(this)" />
+                    <div :id="'checkout_attribute_' + attribute.Id + 'uploader'">
+                        <b-form-file :accept="attribute.AllowedFileExtensions" type="file" id="qqfile" name="qqfile" :data-url="'/uploadfilecheckoutattribute/' + attribute.Id" onchange="uploadFile(this)" />
+                    </div>
                 </template>
-                <input class="hidden-upload-input" type="hidden" onchange="checkoutAttributeChange()" :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" />
+                <input class="hidden-upload-input" type="hidden" onchange="checkoutAttributeChange()" :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" value="" :data-value="attribute.DefaultValue" />
                 <div id="download-message" class="alert my-2" style="display:none;"></div>
                 <div id="'checkout_attribute_' + attribute.Id + 'downloadurl'" class="download-file" style="display:none;">
                     <a class="btn btn-outline-info">
@@ -90,6 +92,10 @@
                     </a>
                 </div>
                 <script asp-location="Footer">
+
+                    var defVal = document.querySelector('.hidden-upload-input').getAttribute('data-value');
+                    document.querySelector('.hidden-upload-input').value = defVal;
+
                     function uploadFile(e) {
                         var formData = new FormData();
                         var imagefile = e;
@@ -108,8 +114,7 @@
                                 var messageContainer = document.getElementById('download-message');
 
                                 e.setAttribute('qq-button-id', downloadGuid);
-                                document.querySelector('.hidden-upload-input').setAttribute('value', downloadGuid);
-                                checkoutAttributeChange()
+                                document.querySelector('.hidden-upload-input').value = downloadGuid;
 
                                 messageContainer.style.display = "block";
                                 messageContainer.classList.remove('alert-danger');
@@ -127,7 +132,9 @@
                                 messageContainer.classList.add('alert-danger');
                                 messageContainer.innerText = message;
                             }
-                        })
+                        }).then(function () {
+                            checkoutAttributeChange()
+                        });
                     }
                 </script>
             </template>

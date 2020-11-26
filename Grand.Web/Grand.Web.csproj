@@ -38,6 +38,7 @@
     <Compile Remove="Plugins\**" />
     <EmbeddedResource Remove="Plugins\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Themes\VueTheme\Content\script\app.cart.js" />
     <None Remove="Themes\VueTheme\Content\script\vue.push.notifications.js" />
     <Content Update="Plugins\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

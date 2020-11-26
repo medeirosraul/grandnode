@@ -62,8 +62,8 @@
     });
 }
 
-function ChangeShoppingCart(e) {
-    var href = e.getAttribute('data-href');
+function ChangeShoppingCart() {
+    var href = '/updatecart';
     var form = document.getElementById('shopping-cart-form');
     var data = new FormData(form);
     axios({
@@ -71,6 +71,9 @@ function ChangeShoppingCart(e) {
         data: data,
         url: href,
     }).then(function (response) {
+        if (localStorage.checkoutattributeinfo) {
+
+        }
         var cartall = response.data.cart;
         var newcart = JSON.parse(cartall);
         vm.cart.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
@@ -105,24 +108,24 @@ function ChangeShoppingCart(e) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(response => (
-            vm.cart.DisplayTax = response.data.DisplayTax,
-            vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,
-            vm.cart.GiftCards = response.data.GiftCards,
-            vm.cart.OrderTotal = response.data.OrderTotal,
-            vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount,
-            vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
-            vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
-            vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
-            vm.cart.RequiresShipping = response.data.RequiresShipping,
-            vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod,
-            vm.cart.Shipping = response.data.Shipping,
-            vm.cart.SubTotal = response.data.SubTotal,
-            vm.cart.SubTotalDiscount = response.data.SubTotalDiscount,
-            vm.cart.Tax = response.data.Tax,
-            vm.cart.TaxRates = response.data.TaxRates,
-            vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints
-        ))
+        }).then(function (response) {
+            vm.cart.DisplayTax = response.data.DisplayTax;
+            vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
+            vm.cart.GiftCards = response.data.GiftCards;
+            vm.cart.OrderTotal = response.data.OrderTotal;
+            vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
+            vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
+            vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
+            vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
+            vm.cart.RequiresShipping = response.data.RequiresShipping;
+            vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
+            vm.cart.Shipping = response.data.Shipping;
+            vm.cart.SubTotal = response.data.SubTotal;
+            vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
+            vm.cart.Tax = response.data.Tax;
+            vm.cart.TaxRates = response.data.TaxRates;
+            vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
+        })
     });
 }
 

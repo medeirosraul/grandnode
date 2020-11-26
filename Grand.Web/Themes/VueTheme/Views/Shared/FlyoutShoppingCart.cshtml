@@ -17,7 +17,7 @@
                     </b-link>
                     <b-col>
                         <b-link :href="item.ProductSeName">{{item.ProductName}}</b-link>
-                        <div class="attributes" v-if="item.AttributeInfo">
+                        <div class="attributes p-2" v-if="item.AttributeInfo">
                             <div v-html="item.AttributeInfo"></div>
                         </div>
                         <div class="price"><span>@T("ShoppingCart.Mini.UnitPrice"):</span> <strong>{{item.UnitPrice}}</strong></div>

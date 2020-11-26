@@ -197,7 +197,8 @@
                                             }
                                         });
 
-                                        $("#@(controlId + "remove")").click(function(e) {
+                                        $("#@(controlId + "remove")").click(function (e) {
+                                            console.log(this);
                                             $("#@(controlId + "downloadurl")").html("");
                                             $("#@(controlId)").val('');
                                             $(this).hide();
