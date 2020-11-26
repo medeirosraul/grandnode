@@ -112,6 +112,7 @@
                                 checkoutAttributeChange()
 
                                 messageContainer.style.display = "block";
+                                messageContainer.classList.remove('alert-danger');
                                 messageContainer.classList.add('alert-info');
                                 messageContainer.innerText = message;
 
@@ -122,6 +123,7 @@
                                 var message = response.data.message;
                                 var messageContainer = document.getElementById('download-message');
                                 messageContainer.style.display = "block";
+                                messageContainer.classList.remove('alert-info');
                                 messageContainer.classList.add('alert-danger');
                                 messageContainer.innerText = message;
                             }
