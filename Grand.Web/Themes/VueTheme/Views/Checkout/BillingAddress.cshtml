@@ -117,7 +117,7 @@
                                             <script asp-location="Footer">
                                                 function selectBillingAddress@(item.Id)() {
                                                     var checkbox = document.querySelector('#@Html.IdFor(model => model.ShipToSameAddress)');
-                                                    if (checkbox.checked) {
+                                                    if (checkbox != null && checkbox.checked) {
                                                         location=('@Html.Raw(Url.RouteUrl("CheckoutSelectBillingAddress", new {addressId = item.Id, shipToSameAddress = "true"}))');
                                                     } else {
                                                         location=('@Url.RouteUrl("CheckoutSelectBillingAddress", new {addressId = item.Id })');
