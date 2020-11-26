@@ -1,4 +1,5 @@
-﻿function autocompleteVue(e) {
+﻿var delayTimer;
+function autocompleteVue(e) {
     function getCategories(item) {
         if (item.SearchType == 'Category') {
             return item
@@ -19,7 +20,8 @@
             return item
         }
     }
-    setTimeout(function () {
+    clearTimeout(delayTimer);
+    delayTimer = setTimeout(function () {
         if (e.checkValidity()) {
             var searchResult = document.getElementById('adv_search');
             if (searchResult) {
@@ -66,5 +68,5 @@
                 searchResult.style.display = 'none';
             }
         }
-    }, 300);
+    }, 600);
 }
