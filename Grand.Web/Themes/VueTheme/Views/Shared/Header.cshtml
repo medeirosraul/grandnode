@@ -42,7 +42,6 @@
                 </b-nav-item>
                 <b-modal id="search-box"
                      hide-footer hide-header size="xl">
-                    <b-button class="modal-close" block @@click="$bvModal.hide('search-box')"><b-icon icon="x"></b-icon></b-button>
                     @await Component.InvokeAsync("SearchBox")
                 </b-modal>
                 <b-nav-item>

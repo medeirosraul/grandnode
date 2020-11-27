@@ -232,11 +232,17 @@ input:checked ~ .color-container .color::before {
 
 /* search box */
 
-#search-box .modal-close {
-    height: 55px;
-    padding: 0;
-    right: -50px;
-    color: #fff;
+#search-box .modal-dialog.modal-xl {
+    max-width: 100%;
+    margin: 0;
+}
+#search-box .modal-content,
+#search-box .input-group #small-searchterms,
+#search-box .input-group .search-box-select,
+#search-box .input-group .search-box-button,
+#search-box .input-group .modal-close {
+    border: 0;
+    border-radius: 0;
 }
 #search-box .modal-body {
     padding: 0;
@@ -264,7 +270,7 @@ input:checked ~ .color-container .color::before {
     top: 54px;
     left: 0;
     right: 0;
-    max-height: 80vh;
+    max-height: calc(100vh - 55px);
     overflow-x: hidden;
     overflow-y: auto;
     padding: 15px;

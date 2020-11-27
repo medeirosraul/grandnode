@@ -563,6 +563,18 @@ function validation() {
     });
 }
 
+function CloseSearchBox() {
+    window.addEventListener('click', function () {
+        if (document.getElementById('adv_search')) {
+            document.getElementById('adv_search').style.display = "none";
+        }
+    });
+}
+function StopPropagation(event) {
+    event.stopPropagation();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     validation();
+    CloseSearchBox();
 }); 

@@ -12,21 +12,22 @@
     <input type="hidden" asp-for="Box" value="true" />
     <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
     <div class="input-group flex-row">
-        <input minlength="@(Model.SearchTermMinimumLength)" oninput="autocompleteVue(this)" type="search" name="q" class="form-control search-box-text" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
+        <input minlength="@(Model.SearchTermMinimumLength)" @if (Model.AutoCompleteEnabled) { <text>oninput="autocompleteVue(this)"</text> } type="search" name="q" class="form-control search-box-text" id="small-searchterms" placeholder="@T("Search.SearchBox.Tooltip")">
         @if (Model.AvailableCategories.Any())
         {
             <select asp-for="SearchCategoryId" asp-items="Model.AvailableCategories" class="search-box-select custom-select input-group-addon"></select>
         }
         @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox_before_search_button" })
 
-        <div class="input-group-append">
+        <div class="input-group-append"> 
             <button type="submit" class="btn btn-info search-box-button float-sm-right d-inline-flex align-items-center">
                 <span class="sr-only">@T("Search.SearchBox.Tooltip")</span>
                 <b-icon icon="search"></b-icon>
             </button>
+            <b-button class="modal-close" block @@click="$bvModal.hide('search-box')"><b-icon icon="x"></b-icon></b-button>
         </div>
     </div>
-    <div id="adv_search" class="advanced-search-results" v-if="searchitems">
+    <div id="adv_search" class="advanced-search-results" v-if="searchitems" onclick="StopPropagation(event)">
         <b-col cols="12">
             <b-form-row>
                 <b-col md="6" cols="12">
