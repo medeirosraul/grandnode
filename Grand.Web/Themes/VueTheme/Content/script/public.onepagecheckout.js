@@ -72,14 +72,14 @@ var Checkout = {
                 var Model = JSON.parse(response.data.update_section.html);
                 vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
                 vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore,
-                    vm.ShippingExistingAddresses = Model.ExistingAddresses,
-                    vm.ShippingNewAddress = Model.NewAddress,
-                    vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
-                    vm.ShippingPickUpInStore = Model.PickUpInStore,
-                    vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
-                    vm.ShippingPickupPoints = Model.PickupPoints,
-                    vm.ShippingWarnings = Model.Warnings,
-                    vm.ShippingAddress = true;
+                vm.ShippingExistingAddresses = Model.ExistingAddresses,
+                vm.ShippingNewAddress = Model.NewAddress,
+                vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
+                vm.ShippingPickUpInStore = Model.PickUpInStore,
+                vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
+                vm.ShippingPickupPoints = Model.PickupPoints,
+                vm.ShippingWarnings = Model.Warnings,
+                vm.ShippingAddress = true;
             }
             if (response.data.goto_section == "shipping_method") {
                 var Model = JSON.parse(response.data.update_section.html);
@@ -92,8 +92,8 @@ var Checkout = {
                 var Model = JSON.parse(response.data.update_section.html);
                 vm.DisplayRewardPoints = Model.DisplayRewardPoints;
                 vm.PaymentMethods = Model.PaymentMethods,
-                    vm.RewardPointsAmount = Model.RewardPointsAmount,
-                    vm.RewardPointsBalance = Model.RewardPointsBalance;
+                vm.RewardPointsAmount = Model.RewardPointsAmount,
+                vm.RewardPointsBalance = Model.RewardPointsBalance;
                 vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
                 vm.UseRewardPoints = Model.UseRewardPoints;
                 vm.PaymentMethod = true;
@@ -115,34 +115,7 @@ var Checkout = {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
                 })
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.cart.DisplayTax = response.data.DisplayTax;
-                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                    vm.cart.GenericAttributes = response.data.GenericAttributes;
-                    vm.cart.GiftCards = response.data.GiftCards;
-                    vm.cart.IsEditable = response.data.IsEditable;
-                    vm.cart.OrderTotal = response.data.OrderTotal;
-                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                    vm.cart.RequiresShipping = response.data.RequiresShipping;
-                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                    vm.cart.Shipping = response.data.Shipping;
-                    vm.cart.SubTotal = response.data.SubTotal;
-                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                    vm.cart.Tax = response.data.Tax;
-                    vm.cart.TaxRates = response.data.TaxRates;
-                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
-                });
+                
             }
             if (response.data.goto_section == "confirm_order") {
                 var Model = JSON.parse(response.data.update_section.html);
@@ -154,34 +127,6 @@ var Checkout = {
                     var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
                     document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
                 }, 300);
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.cart.DisplayTax = response.data.DisplayTax;
-                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                    vm.cart.GenericAttributes = response.data.GenericAttributes;
-                    vm.cart.GiftCards = response.data.GiftCards;
-                    vm.cart.IsEditable = response.data.IsEditable;
-                    vm.cart.OrderTotal = response.data.OrderTotal;
-                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                    vm.cart.RequiresShipping = response.data.RequiresShipping;
-                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                    vm.cart.Shipping = response.data.Shipping;
-                    vm.cart.SubTotal = response.data.SubTotal;
-                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                    vm.cart.Tax = response.data.Tax;
-                    vm.cart.TaxRates = response.data.TaxRates;
-                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
-                });
                 axios({
                     baseURL: '/Common/Component?Name=OrderSummary',
                     method: 'post',
