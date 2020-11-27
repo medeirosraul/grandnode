@@ -11,8 +11,7 @@
                 <input type="text" id="discountcouponcode" name="discountcouponcode" class="form-control discount-coupon-code">
                 <label for="discountcouponcode" class="sr-only">@T("ShoppingCart.GiftCardCouponCode.Button")</label>
                 <span class="input-group-append">
-                    <button type="button" name="applydiscountcouponcode" id="applydiscountcouponcode" onclick="ApplyDiscountCode(this)" class="btn btn-outline-secondary apply-discount-coupon-code-button"
-                            data-href="@Url.RouteUrl("ApplyDiscountCoupon")">
+                    <button type="button" name="applydiscountcouponcode" id="applydiscountcouponcode" @@click="ApplyDiscountCode('@Url.RouteUrl("ApplyDiscountCoupon")')" class="btn btn-outline-secondary apply-discount-coupon-code-button">
                         @T("ShoppingCart.DiscountCouponCode.Button")
                     </button>
                 </span>
@@ -29,81 +28,10 @@
         <div v-if="cart.DiscountBox.AppliedDiscountsWithCodes[0]" v-for="discount in cart.DiscountBox.AppliedDiscountsWithCodes" class="alert alert-success text-center">
             <span>@T("ShoppingCart.DiscountCouponCode.CurrentCode").Text.Replace("{0}", "{{discount.CouponCode}}")</span>
             <b-link name="removediscount"
-                    :data-href="'/removediscountcoupon?discountId=' + discount.Id"
                     title="@T("Common.Remove")"
                     class="mx-1"
-                    onclick="ApplyDiscountCode(this)">
+                    @@click="ApplyDiscountCode('/removediscountcoupon?discountId=' + discount.Id)">
                 <b-icon icon="trash" variant="danger"></b-icon>
             </b-link>
         </div>
 </div>
-    <script asp-location="Footer">
-            function ApplyDiscountCode(e) {
-                var href = e.getAttribute('data-href');
-                var DiscountCodeData = {
-                    giftcardcouponcode: document.getElementById('discountcouponcode').value,
-                };
-                addAntiForgeryToken(DiscountCodeData);
-                var bodyFormData = new FormData();
-                bodyFormData.append('discountcouponcode', document.getElementById('discountcouponcode').value);
-                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
-                axios({
-                    method: 'post',
-                    url: href,
-                    data: bodyFormData,
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vm.cart.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
-                        vm.cart.CheckoutAttributeInfo = newcart.CheckoutAttributeInfo,
-                        vm.cart.CheckoutAttributes = newcart.CheckoutAttributes,
-                        vm.cart.DiscountBox = newcart.DiscountBox,
-                        vm.cart.DisplayTaxShippingInfo = newcart.DisplayTaxShippingInfo,
-                        vm.cart.GiftCardBox = newcart.GiftCardBox,
-                        vm.cart.IsAllowOnHold = newcart.IsAllowOnHold,
-                        vm.cart.IsGuest = newcart.IsGuest,
-                        vm.cart.Items = newcart.Items,
-                        vm.cart.MinOrderSubtotalWarning = newcart.MinOrderSubtotalWarning,
-                        vm.cart.OnePageCheckoutEnabled = newcart.OnePageCheckoutEnabled,
-                        vm.cart.OrderReviewData = newcart.OrderReviewData,
-                        vm.cart.ShowCheckoutAsGuestButton = newcart.ShowCheckoutAsGuestButton,
-                        vm.cart.ShowProductImages = newcart.ShowProductImages,
-                        vm.cart.ShowSku = newcart.ShowSku,
-                        vm.cart.TermsOfServiceOnOrderConfirmPage = newcart.TermsOfServiceOnOrderConfirmPage,
-                        vm.cart.TermsOfServiceOnShoppingCartPage = newcart.TermsOfServiceOnShoppingCartPage,
-                        vm.cart.TermsOfServicePopup = newcart.TermsOfServicePopup,
-                        vm.cart.Warnings = newcart.Warnings,
-                        vm.cart.DiscountBox = newcart.DiscountBox
-                    checkoutAttributeChange();
-                }).then(function () {
-                    axios({
-                        baseURL: '/Common/Component?Name=OrderTotals',
-                        method: 'get',
-                        params: { Name: 'OrderTotals' },
-                        data: null,
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => (
-                        vm.cart.DisplayTax = response.data.DisplayTax,
-                        vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,
-                        vm.cart.GiftCards = response.data.GiftCards,
-                        vm.cart.OrderTotal = response.data.OrderTotal,
-                        vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount,
-                        vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
-                        vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
-                        vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
-                        vm.cart.RequiresShipping = response.data.RequiresShipping,
-                        vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod,
-                        vm.cart.Shipping = response.data.Shipping,
-                        vm.cart.SubTotal = response.data.SubTotal,
-                        vm.cart.SubTotalDiscount = response.data.SubTotalDiscount,
-                        vm.cart.Tax = response.data.Tax,
-                        vm.cart.TaxRates = response.data.TaxRates,
-                        vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints
-                    ))
-                });
-            }
-    </script>

@@ -92,9 +92,10 @@
                     </a>
                 </div>
                 <script asp-location="Footer">
-
-                    var defVal = document.querySelector('.hidden-upload-input').getAttribute('data-value');
-                    document.querySelector('.hidden-upload-input').value = defVal;
+                    if (document.querySelector('.hidden-upload-input') != null) {
+                        var defVal = document.querySelector('.hidden-upload-input').getAttribute('data-value');
+                        document.querySelector('.hidden-upload-input').value = defVal;
+                    }
 
                     function uploadFile(e) {
                         var formData = new FormData();
@@ -162,57 +163,56 @@
     </div>
 
    <script asp-location="Footer">
-        checkoutAttributeChange();
         function checkoutAttributeChange() {
             if (document.querySelector('#shopping-cart-form')) {
                 var form = document.querySelector('#shopping-cart-form');
-            var data = new FormData(form);
-            axios({
-                method: 'post',
-                data: data,
-                url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
-            }).then(function (response) {
-                var newResponse = JSON.parse(response.data.htmlordertotal)
-                    vm.cart.DisplayTax = newResponse.DisplayTax,
-                    vm.cart.DisplayTaxRates = newResponse.DisplayTaxRates,
-                    vm.cart.GiftCards = newResponse.GiftCards,
-                    vm.cart.OrderTotal = newResponse.OrderTotal,
-                    vm.cart.OrderTotalDiscount = newResponse.OrderTotalDiscount,
-                    vm.cart.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
-                    vm.cart.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
-                    vm.cart.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
-                    vm.cart.RequiresShipping = newResponse.RequiresShipping,
-                    vm.cart.SelectedShippingMethod = newResponse.SelectedShippingMethod,
-                    vm.cart.Shipping = newResponse.Shipping,
-                    vm.cart.SubTotal = newResponse.SubTotal,
-                    vm.cart.SubTotalDiscount = newResponse.SubTotalDiscount,
-                    vm.cart.Tax = newResponse.Tax,
-                    vm.cart.TaxRates = newResponse.TaxRates,
-                    vm.cart.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
-                if (response.data.enabledattributeids) {
-                    for (var i = 0; i < response.data.enabledattributeids.length; i++) {
-                        if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
-                            document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i]).style.display = 'block';
-                        }
-                        if (document.querySelector('#checkout_attribute_input_' + response.data.enabledattributeids[i])) {
-                            document.querySelector('#checkout_attribute_input_' + response.data.enabledattributeids[i]).style.display = 'block';
-                        }
-                    }
-                }
-                if (response.data.disabledattributeids) {
-                    for (var i = 0; i < response.data.disabledattributeids.length; i++) {
-                        if (document.querySelector('#checkout_attribute_label_' + response.data.disabledattributeids[i])) {
-                            document.querySelector('#checkout_attribute_label_' + response.data.disabledattributeids[i]).style.display = 'none';
-                        }
-                        if (document.querySelector('#checkout_attribute_input_' + response.data.disabledattributeids[i])) {
-                            document.querySelector('#checkout_attribute_input_' + response.data.disabledattributeids[i]).style.display = 'none';
+                var data = new FormData(form);
+                axios({
+                    method: 'post',
+                    data: data,
+                    url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
+                }).then(function (response) {
+                    var newResponse = JSON.parse(response.data.htmlordertotal)
+                        vm.totals.DisplayTax = newResponse.DisplayTax,
+                        vm.totals.DisplayTaxRates = newResponse.DisplayTaxRates,
+                        vm.totals.GiftCards = newResponse.GiftCards,
+                        vm.totals.OrderTotal = newResponse.OrderTotal,
+                        vm.totals.OrderTotalDiscount = newResponse.OrderTotalDiscount,
+                        vm.totals.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
+                        vm.totals.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
+                        vm.totals.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
+                        vm.totals.RequiresShipping = newResponse.RequiresShipping,
+                        vm.totals.SelectedShippingMethod = newResponse.SelectedShippingMethod,
+                        vm.totals.Shipping = newResponse.Shipping,
+                        vm.totals.SubTotal = newResponse.SubTotal,
+                        vm.totals.SubTotalDiscount = newResponse.SubTotalDiscount,
+                        vm.totals.Tax = newResponse.Tax,
+                        vm.totals.TaxRates = newResponse.TaxRates,
+                        vm.totals.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
+                    if (response.data.enabledattributeids) {
+                        for (var i = 0; i < response.data.enabledattributeids.length; i++) {
+                            if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
+                                document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i]).style.display = 'block';
+                            }
+                            if (document.querySelector('#checkout_attribute_input_' + response.data.enabledattributeids[i])) {
+                                document.querySelector('#checkout_attribute_input_' + response.data.enabledattributeids[i]).style.display = 'block';
+                            }
                         }
                     }
-                }
-                if (response.data.checkoutattributeinfo) {
-                    vm.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
-                }
-            })
+                    if (response.data.disabledattributeids) {
+                        for (var i = 0; i < response.data.disabledattributeids.length; i++) {
+                            if (document.querySelector('#checkout_attribute_label_' + response.data.disabledattributeids[i])) {
+                                document.querySelector('#checkout_attribute_label_' + response.data.disabledattributeids[i]).style.display = 'none';
+                            }
+                            if (document.querySelector('#checkout_attribute_input_' + response.data.disabledattributeids[i])) {
+                                document.querySelector('#checkout_attribute_input_' + response.data.disabledattributeids[i]).style.display = 'none';
+                            }
+                        }
+                    }
+                    if (response.data.checkoutattributeinfo) {
+                        vm.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
+                    }
+                })
             }
         }
    </script>

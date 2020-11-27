@@ -9,8 +9,7 @@
                     <input id="giftcardcouponcode" name="giftcardcouponcode" type="text" class="form-control gift-card-coupon-code" />
                     <label for="giftcardcouponcode" class="sr-only">@T("ShoppingCart.GiftCardCouponCode.Button")</label>
                     <span class="input-group-append">
-                        <button type="button" name="applygiftcardcouponcode" id="applygiftcardcouponcode" onclick="ApplyGiftCard(this)" class="btn btn-outline-secondary apply-discount-coupon-code-button"
-                                data-href="@Url.RouteUrl("ApplyGiftCard")">
+                        <button type="button" name="applygiftcardcouponcode" id="applygiftcardcouponcode" @@click="ApplyGiftCard('@Url.RouteUrl("ApplyGiftCard")')" class="btn btn-outline-secondary apply-discount-coupon-code-button">
                             @T("ShoppingCart.GiftCardCouponCode.Button")
                         </button>
                     </span>
@@ -24,72 +23,3 @@
                 {{cart.GiftCardBox.Message}}
             </div>
     </div>
-    <script asp-location="Footer">
-        function ApplyGiftCard(e) {
-            var href = e.getAttribute('data-href');
-            var giftCardData = {
-                giftcardcouponcode: document.getElementById('giftcardcouponcode').value,
-            };
-            addAntiForgeryToken(giftCardData);
-            var bodyFormData = new FormData();
-            bodyFormData.append('giftcardcouponcode', document.getElementById('giftcardcouponcode').value);
-            bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
-            axios({
-                method: 'post',
-                url: href,
-                data: bodyFormData,
-                headers: {'Content-Type': 'multipart/form-data' }
-            }).then(function (response) {
-                var cartall = response.data.cart;
-                var newcart = JSON.parse(cartall);
-                vm.cart.ButtonPaymentMethodViewComponentNames = newcart.ButtonPaymentMethodViewComponentNames,
-                    vm.cart.CheckoutAttributeInfo = newcart.CheckoutAttributeInfo,
-                    vm.cart.CheckoutAttributes = newcart.CheckoutAttributes,
-                    vm.cart.DiscountBox = newcart.DiscountBox,
-                    vm.cart.DisplayTaxShippingInfo = newcart.DisplayTaxShippingInfo,
-                    vm.cart.GiftCardBox = newcart.GiftCardBox,
-                    vm.cart.IsAllowOnHold = newcart.IsAllowOnHold,
-                    vm.cart.IsGuest = newcart.IsGuest,
-                    vm.cart.Items = newcart.Items,
-                    vm.cart.MinOrderSubtotalWarning = newcart.MinOrderSubtotalWarning,
-                    vm.cart.OnePageCheckoutEnabled = newcart.OnePageCheckoutEnabled,
-                    vm.cart.OrderReviewData = newcart.OrderReviewData,
-                    vm.cart.ShowCheckoutAsGuestButton = newcart.ShowCheckoutAsGuestButton,
-                    vm.cart.ShowProductImages = newcart.ShowProductImages,
-                    vm.cart.ShowSku = newcart.ShowSku,
-                    vm.cart.TermsOfServiceOnOrderConfirmPage = newcart.TermsOfServiceOnOrderConfirmPage,
-                    vm.cart.TermsOfServiceOnShoppingCartPage = newcart.TermsOfServiceOnShoppingCartPage,
-                    vm.cart.TermsOfServicePopup = newcart.TermsOfServicePopup,
-                    vm.cart.Warnings = newcart.Warnings,
-                    vm.cart.DiscountBox = newcart.DiscountBox
-                checkoutAttributeChange();
-            }).then(function () {
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => (
-                    vm.cart.DisplayTax = response.data.DisplayTax,
-                    vm.cart.DisplayTaxRates = response.data.DisplayTaxRates,
-                    vm.cart.GiftCards = response.data.GiftCards,
-                    vm.cart.OrderTotal = response.data.OrderTotal,
-                    vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount,
-                    vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee,
-                    vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints,
-                    vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount,
-                    vm.cart.RequiresShipping = response.data.RequiresShipping,
-                    vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod,
-                    vm.cart.Shipping = response.data.Shipping,
-                    vm.cart.SubTotal = response.data.SubTotal,
-                    vm.cart.SubTotalDiscount = response.data.SubTotalDiscount,
-                    vm.cart.Tax = response.data.Tax,
-                    vm.cart.TaxRates = response.data.TaxRates,
-                    vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints
-                ))
-            });
-        }
-    </script>

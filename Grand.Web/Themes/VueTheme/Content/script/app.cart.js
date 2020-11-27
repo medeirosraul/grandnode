@@ -14,11 +14,11 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
-            }).then(response => (
-                this.flycart = response.data,
-                this.flycartitems = response.data.Items,
-                this.flycartindicator = response.data.TotalProducts
-            ))
+            }).then(response => {
+                this.flycart = response.data;
+                this.flycartitems = response.data.Items;
+                this.flycartindicator = response.data.TotalProducts;
+            })
         }
     }
 }

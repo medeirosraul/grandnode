@@ -8,7 +8,6 @@
 @{
     var themeName = themeContext.WorkingThemeName;
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
-    pagebuilder.AppendScriptParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/script/cart.js", themeName));
     var firstLoad = Model != null;
 }
 <div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="cart">
@@ -19,7 +18,7 @@
         </template>
         <ul v-if="typeof cart.Warnings !== 'undefined' && cart.Warnings.length > 0" class="px-0 mb-3">
             <li v-for="item in cart.Warnings">
-                <span class="text-danger">{{item}}</span>
+                <div class="alert alert-danger mb-1">{{item}}</div>
             </li>
         </ul>
         <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
@@ -62,7 +61,7 @@
                             <tr v-for="item in cart.Items">
                                 <td v-if="cart.IsAllowOnHold && cart.IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
-                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" onchange="ChangeShoppingCart()" />
+                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" v-on:change="ChangeShoppingCart" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
@@ -102,12 +101,12 @@
                                 <td class="quantity">
                                     <div v-if="cart.IsEditable">
                                         <div v-if="item.AllowedQuantities[0]">
-                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" onchange="ChangeShoppingCart()">
+                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" v-on:change="ChangeShoppingCart">
                                                 <option v-for="qty in item.AllowedQuantities" :selected="qty.Selected" :value="qty.Value">{{qty.Value}}</option>
                                             </select>
                                         </div>
                                         <div v-else>
-                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" onchange="ChangeShoppingCart()" class="qty-input form-control text-center" />
+                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" v-on:change="ChangeShoppingCart" class="qty-input form-control text-center" />
                                         </div>
                                     </div>
                                     <div v-else>
@@ -129,7 +128,7 @@
                                     </div>
                                 </td>
                                 <td v-if="cart.IsEditable" class="remove-from-cart text-center">
-                                    <b-button variant="link" class="deleteshoppingcartitem" onclick="removefromcart(this)" :data-href="('/deletecartitem/'+ item.Id +'?shoppingcartpage=True')">
+                                    <b-button variant="link" class="deleteshoppingcartitem" @@click="deleteitem('/deletecartitem/'+ item.Id +'?shoppingcartpage=True')">
                                         <b-icon icon="trash" variant="danger"></b-icon>
                                     </b-button>
                                 </td>
@@ -196,7 +195,7 @@
                                     </b-button>
                                 </template>
                                 <template v-else>
-                                    <b-button type="button" id="checkoutasguest" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
+                                    <b-button type="button" id="checkoutasguest" v-if="cart.IsGuest" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
                                         @T("Account.Login.CheckoutAsGuest")
                                     </b-button>
                                     <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button">
@@ -231,24 +230,26 @@
 <script asp-location="Header">
     var OrderSummary = {
         props: {
-            cart: null,
-            checkoutAsGuest: false
+                cart: null,
+                totals: null,
+                checkoutAsGuest: false
         },
         mounted() {
             if (@firstLoad.ToString().ToLower() == false) {
                 this.updateCart();
+                this.updateTotals();
             }
             else {
                 this.firstLoad();
+                this.updateTotals();
             }
-        },
-        created() {
-            setTimeout(function () { ChangeShoppingCart() }, 300)
         },
         methods: {
             firstLoad() {
                 this.cart = @Json.Serialize(Model);
-                document.querySelector('.flyout-cart').style.pointerEvents = "none";
+                if (document.querySelector('.flyout-cart')) {
+                    document.querySelector('.flyout-cart').style.pointerEvents = "none";
+                }
             },
             updateCart() {
                 axios({
@@ -260,38 +261,24 @@
                         'Content-Type': 'application/json'
                     }
                 }).then(response => {
-                    this.cart = response.data
-                    document.querySelector('.flyout-cart').style.pointerEvents = "none";
-                }).then(function () {
-                    axios({
-                        baseURL: '/Common/Component?Name=OrderTotals',
-                        method: 'get',
-                        data: null,
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => {
-                        vm.cart.DisplayTax = response.data.DisplayTax;
-                        vm.cart.DisplayTaxRates = response.data.DisplayTaxRates;
-                        vm.cart.GenericAttributes = response.data.GenericAttributes;
-                        vm.cart.GiftCards = response.data.GiftCards;
-                        vm.cart.IsEditable = response.data.IsEditable;
-                        vm.cart.OrderTotal = response.data.OrderTotal;
-                        vm.cart.OrderTotalDiscount = response.data.OrderTotalDiscount;
-                        vm.cart.PaymentMethodAdditionalFee = response.data.PaymentMethodAdditionalFee;
-                        vm.cart.RedeemedRewardPoints = response.data.RedeemedRewardPoints;
-                        vm.cart.RedeemedRewardPointsAmount = response.data.RedeemedRewardPointsAmount;
-                        vm.cart.RequiresShipping = response.data.RequiresShipping;
-                        vm.cart.SelectedShippingMethod = response.data.SelectedShippingMethod;
-                        vm.cart.Shipping = response.data.Shipping;
-                        vm.cart.SubTotal = response.data.SubTotal;
-                        vm.cart.SubTotalDiscount = response.data.SubTotalDiscount;
-                        vm.cart.Tax = response.data.Tax;
-                        vm.cart.TaxRates = response.data.TaxRates;
-                        vm.cart.WillEarnRewardPoints = response.data.WillEarnRewardPoints;
-                    });
+                    this.cart = response.data;
+                    if (document.querySelector('.flyout-cart')) {
+                        document.querySelector('.flyout-cart').style.pointerEvents = "none";
+                    }
                 })
+            },
+            updateTotals() {
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    this.totals = response.data;
+                });
             },
             showMsgBoxOne(event) {
                 const h = this.$createElement
@@ -342,10 +329,105 @@
 
                     })
             },
+            ApplyGiftCard(href) {
+                var giftCardData = {
+                    giftcardcouponcode: document.getElementById('giftcardcouponcode').value,
+                };
+                addAntiForgeryToken(giftCardData);
+                var bodyFormData = new FormData();
+                bodyFormData.append('giftcardcouponcode', document.getElementById('giftcardcouponcode').value);
+                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+                axios({
+                    method: 'post',
+                    url: href,
+                    data: bodyFormData,
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then(function (response) {
+                    var cartall = response.data.cart;
+                    var newcart = JSON.parse(cartall);
+                    vm.cart = newcart;
+                }).then(function () {
+                    this.vm.updateTotals() 
+                });
+            },
+            removeGiftCard(href) {
+                addAntiForgeryToken();
+                var bodyFormData = new FormData();
+                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+                axios({
+                    method: 'post',
+                    url: href,
+                    data: bodyFormData,
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                }).then(function (response) {
+                    var cartall = response.data.cart;
+                    var newcart = JSON.parse(cartall);
+                    vm.cart = newcart 
+                }).catch(function (error) {
+                    alert(error);
+                }).then(function () {
+                    this.vm.updateTotals();
+                });
+            },
+            ChangeShoppingCart() {
+                var href = '/updatecart';
+                var form = document.getElementById('shopping-cart-form');
+                var data = new FormData(form);
+                axios({
+                    method: 'post',
+                    data: data,
+                    url: href,
+                }).then(function (response) {
+                    var cartall = response.data.cart;
+                    var newcart = JSON.parse(cartall);
+                    vm.cart = newcart;
+                }).then(function () {
+                    this.vm.updateTotals();
+                });
+            },
+            deleteitem(href) {
+                axios({
+                    method: 'post',
+                    url: href,
+                }).then(function (response) {
+                    console.log(response);
+                    var cartall = response.data.cart;
+                    var newcart = JSON.parse(cartall);
+                    vm.cart = newcart;
+                    if (document.querySelector('.flyout-cart')) {
+                        var flyoutcart = response.data.flyoutshoppingcart;
+                        var newfly = JSON.parse(flyoutcart);
+                        vm.flycart = newfly;
+                        vm.flycartitems = newfly.Items;
+                        vm.flycartindicator = newfly.TotalProducts;
+                    } else {
+                        document.querySelector('.qty-indicator.cart-qty').innerText = response.data.totalproducts;
+                    }
+                }).then(function () {
+                    this.vm.updateTotals();
+                });
+            },
+            ApplyDiscountCode(href) {
+                var DiscountCodeData = {
+                    giftcardcouponcode: document.getElementById('discountcouponcode').value,
+                };
+                addAntiForgeryToken(DiscountCodeData);
+                var bodyFormData = new FormData();
+                bodyFormData.append('discountcouponcode', document.getElementById('discountcouponcode').value);
+                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+                axios({
+                    method: 'post',
+                    url: href,
+                    data: bodyFormData,
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then(function (response) {
+                    var cartall = response.data.cart;
+                    var newcart = JSON.parse(cartall);
+                    vm.cart = newcart;
+                }).then(function () {
+                    this.vm.updateTotals();
+                });
+            }
         }
-    }
-    function removefromcart(el) {
-        var href = el.getAttribute('data-href');
-        deleteitem(href);
     }
 </script>
