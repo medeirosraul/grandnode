@@ -54,8 +54,7 @@
             <b-col cols="12">
                     @if (Model.Address != null)
                     {
-                        <b-card>
-                            <ul class="info px-0">
+                            <ul class="info px-0 mb-0">
                                 @if (Model.Address.CompanyEnabled && !String.IsNullOrEmpty(Model.Address.Company))
                                 {
                                     <li class="company">
@@ -132,7 +131,6 @@
                                     </li>
                                 }
                             </ul>
-                        </b-card>
                     }
             </b-col>
         </b-row>
