@@ -11,7 +11,7 @@
             <span v-if="attribute.IsRequired" class="required">*</span>
             <template v-if="attribute.AttributeControlType == 4">
                 <label :for="'checkout_attribute_' + attribute.Id" class="sr-only">checkout_attribute_{{attribute.Id}}</label>
-                <input :name="'checkout_attribute_' + attribute.Id" type="text" class="form-control textbox" :id="'checkout_attribute_' + attribute.Id" :value="attribute.DefaultValue" onchange="checkoutAttributeChange()" />
+                    <input :name="'checkout_attribute_' + attribute.Id" type="text" class="form-control textbox" :id="'checkout_attribute_' + attribute.Id" v-model="attribute.DefaultValue" :value="attribute.DefaultValue" onchange="checkoutAttributeChange();" />
             </template>
             <template v-if="attribute.AttributeControlType == 1">
                 <label :for="'checkout_attribute_' + attribute.Id" class="sr-only">checkout_attribute_{{attribute.Id}}</label>
@@ -76,7 +76,7 @@
                 </fieldset>
             </template>
             <template v-if="attribute.AttributeControlType == 10">
-                <textarea :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" onchange="checkoutAttributeChange()">{{attribute.DefaultValue}}</textarea>
+                <textarea class="form-control" :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" v-model="attribute.DefaultValue" :value="attribute.DefaultValue" onchange="checkoutAttributeChange()">{{attribute.DefaultValue}}</textarea>
             </template>
             <template v-if="attribute.AttributeControlType == 30">
                 <template>
@@ -84,7 +84,7 @@
                         <b-form-file :accept="attribute.AllowedFileExtensions" type="file" id="qqfile" name="qqfile" :data-url="'/uploadfilecheckoutattribute/' + attribute.Id" onchange="uploadFile(this)" />
                     </div>
                 </template>
-                <input class="hidden-upload-input" type="hidden" onchange="checkoutAttributeChange()" :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" value="" :data-value="attribute.DefaultValue" />
+                <input class="hidden-upload-input" type="hidden" onchange="checkoutAttributeChange()" :id="'checkout_attribute_' + attribute.Id" :name="'checkout_attribute_' + attribute.Id" v-model="attribute.DefaultValue" :value="attribute.DefaultValue" />
                 <div id="download-message" class="alert my-2" style="display:none;"></div>
                 <div id="'checkout_attribute_' + attribute.Id + 'downloadurl'" class="download-file" style="display:none;">
                     <a class="btn btn-outline-info">
@@ -92,10 +92,6 @@
                     </a>
                 </div>
                 <script asp-location="Footer">
-                    if (document.querySelector('.hidden-upload-input') != null) {
-                        var defVal = document.querySelector('.hidden-upload-input').getAttribute('data-value');
-                        document.querySelector('.hidden-upload-input').value = defVal;
-                    }
 
                     function uploadFile(e) {
                         var formData = new FormData();
@@ -173,22 +169,22 @@
                     url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
                 }).then(function (response) {
                     var newResponse = JSON.parse(response.data.htmlordertotal)
-                        vm.totals.DisplayTax = newResponse.DisplayTax,
-                        vm.totals.DisplayTaxRates = newResponse.DisplayTaxRates,
-                        vm.totals.GiftCards = newResponse.GiftCards,
-                        vm.totals.OrderTotal = newResponse.OrderTotal,
-                        vm.totals.OrderTotalDiscount = newResponse.OrderTotalDiscount,
-                        vm.totals.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee,
-                        vm.totals.RedeemedRewardPoints = newResponse.RedeemedRewardPoints,
-                        vm.totals.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount,
-                        vm.totals.RequiresShipping = newResponse.RequiresShipping,
-                        vm.totals.SelectedShippingMethod = newResponse.SelectedShippingMethod,
-                        vm.totals.Shipping = newResponse.Shipping,
-                        vm.totals.SubTotal = newResponse.SubTotal,
-                        vm.totals.SubTotalDiscount = newResponse.SubTotalDiscount,
-                        vm.totals.Tax = newResponse.Tax,
-                        vm.totals.TaxRates = newResponse.TaxRates,
-                        vm.totals.WillEarnRewardPoints = newResponse.WillEarnRewardPoints
+                    vm.totals.DisplayTax = newResponse.DisplayTax;
+                    vm.totals.DisplayTaxRates = newResponse.DisplayTaxRates;
+                    vm.totals.GiftCards = newResponse.GiftCards;
+                    vm.totals.OrderTotal = newResponse.OrderTotal;
+                    vm.totals.OrderTotalDiscount = newResponse.OrderTotalDiscount;
+                    vm.totals.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee;
+                    vm.totals.RedeemedRewardPoints = newResponse.RedeemedRewardPoints;
+                    vm.totals.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount;
+                    vm.totals.RequiresShipping = newResponse.RequiresShipping;
+                    vm.totals.SelectedShippingMethod = newResponse.SelectedShippingMethod;
+                    vm.totals.Shipping = newResponse.Shipping;
+                    vm.totals.SubTotal = newResponse.SubTotal;
+                    vm.totals.SubTotalDiscount = newResponse.SubTotalDiscount;
+                    vm.totals.Tax = newResponse.Tax;
+                    vm.totals.TaxRates = newResponse.TaxRates;
+                    vm.totals.WillEarnRewardPoints = newResponse.WillEarnRewardPoints;
                     if (response.data.enabledattributeids) {
                         for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                             if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
