@@ -4,7 +4,6 @@
         <label class="custom-control custom-checkbox">
             <input v-if="RewardPointsEnoughToPayForOrder" id="UseRewardPoints" name="UseRewardPoints" type="checkbox" value="true" class="custom-control-input" onchange="PaymentMethod.toggleUseRewardPoints(this);" />
             <input v-else id="UseRewardPoints" name="UseRewardPoints" type="checkbox" class="custom-control-input" value="true" />
-            <input name="UseRewardPoints" type="hidden" value="false">
             <span class="custom-control-label"></span>
             <span class="custom-control-description">        
                 @T("Checkout.UseRewardPoints").Text.Replace("{0}", "{{RewardPointsBalance}}").Replace("{1}", "{{RewardPointsAmount}}")

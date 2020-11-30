@@ -394,7 +394,6 @@
                     method: 'post',
                     url: href,
                 }).then(function (response) {
-                    console.log(response);
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
                     vm.cart = newcart;
