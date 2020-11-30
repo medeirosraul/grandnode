@@ -26,7 +26,7 @@
                 case AttributeControlType.TextBox:
                     {
                         <label for="@(controlId)" class="sr-only">"@(controlId)</label>
-                        <input name="@(controlId)" type="text" class="form-control textbox" id="@(controlId)" value="@(attribute.DefaultValue)" @(attribute.IsRequired ? "required" : "") />
+                        <input name="@(controlId)" type="text" class="form-control textbox" id="@(controlId)" value="@(attribute.DefaultValue)"/>
                     }
                     break;
                 case AttributeControlType.DropdownList:
@@ -94,7 +94,7 @@
 
                 case AttributeControlType.MultilineTextbox:
                     {
-                        <textarea id="@(controlId)" name="@(controlId)" @(attribute.IsRequired ? "required" : "")>@(attribute.DefaultValue)</textarea>
+                        <textarea id="@(controlId)" name="@(controlId)">@(attribute.DefaultValue)</textarea>
                     }
                     break;
                 case AttributeControlType.Datepicker:
