@@ -118,11 +118,19 @@ function displayPopupQuickView(html) {
                         return
                     }
                 });
+            },
+            doSomethingOnHidden() {
+                console.log(this);
             }
         },
         mounted() {
             var self = this;
             self.template = Vue.compile(html).render;
+            this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+                if (document.querySelector('#ModalQuickView___BV_modal_outer_') !== null) {
+                    document.querySelector('#ModalQuickView___BV_modal_outer_').remove();
+                }
+            })
         },
         updated: function () {
             this.showModal();
