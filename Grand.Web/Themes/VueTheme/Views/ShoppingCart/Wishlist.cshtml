@@ -131,16 +131,10 @@
         </div>
     }
 </div>
-<script>
+<script asp-location="Header">
                     Vue.mixin({
                         data() {
                             return {
-                                show: false,
-                                fluid: false,
-                                hover: false,
-                                active: false,
-                                scTimer: 0,
-                                scY: 0,
                                 fields: [
                                     @if (Model.ShowProductImages){
                                         <text>

@@ -853,6 +853,9 @@ footer .list-group-item span:last-child {
         width: 100%;
         text-align: right;
     }
+    .up-btn {
+        bottom: 75px;
+    }
 }
 @media (max-width: 768px) {
     .product-box.list .picture-container {

@@ -145,15 +145,16 @@ body:not(.modal-open) {
     height: 0;
     transform: translateX(calc(100% + 15px));
 }
-.up-btn div {
+.up-btn:not(.up-btn__hide) div {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
-.up-btn div::before {
+.up-btn:not(.up-btn__hide) div::before {
     content: "";
     position: absolute;
     left: 20px;
@@ -162,7 +163,7 @@ body:not(.modal-open) {
     background: #fff;
     transform: rotate(45deg);
 }
-.up-btn div::after {
+.up-btn:not(.up-btn__hide) div::after {
     content: "";
     position: absolute;
     right: 20px;
@@ -817,6 +818,9 @@ footer .list-group-item span:last-child {
         justify-content: space-between;
         width: 100%;
         text-align: right;
+    }
+    .up-btn  {
+        bottom: 75px;
     }
 }
 @media (max-width: 768px) {
