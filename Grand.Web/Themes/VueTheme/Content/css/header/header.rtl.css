@@ -101,6 +101,7 @@
     flex-wrap: wrap;
     width: 100%;
     background: #fff;
+    padding: 0;
 } 
 .main-nav .navbar-nav .nav-item {
     position: static;
