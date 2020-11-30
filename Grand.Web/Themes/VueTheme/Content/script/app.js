@@ -32,6 +32,7 @@ var vm = new Vue({
             hover: false,
             active: false,
             NextDropdownVisible: false,
+            value: 5,
             searchitems: null,
             searchcategories: null,
             searchmanufacturers: null,
