@@ -23,12 +23,15 @@
 @if (Model.Manufacturers.Any())
 {
 
-    <b-nav-item-dropdown id="menufacturer-menu" text="@T("Manufacturers.Menu")">
+    <b-nav-item-dropdown ref="dropdown_manucaturer-menu"  text="@T("Manufacturers.Menu")">
         <template slot="button-content">
             <span class="title">@T("Manufacturers.Menu")</span>
-            <b-icon icon="chevron-down"></b-icon>
+            <b-icon icon="chevron-right"></b-icon>
         </template>
         <b-dropdown-group>
+            <li class="nav-item back" @@click="MenuBack($event)" data-id="manucaturer-menu">
+                @T("Mobile.Categories.Back")
+            </li>
             <li class="nav-item">
                 <a class="nav-link text-info" href="@Url.RouteUrl("ManufacturerList")">
                     <strong>@T("Manufacturers.List")</strong>
@@ -36,13 +39,16 @@
             </li>
             @foreach (var manuf in Model.Manufacturers)
             {
-                <b-nav-item href="@Url.RouteUrl("Manufacturer", new { SeName = manuf.SeName })">
-                    <span class="title">@manuf.Name</span>
-                    @if (!string.IsNullOrEmpty(manuf.Icon))
-                    {
-                        <span class="category-icon @manuf.Icon"></span>
-                    }
-                </b-nav-item>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.RouteUrl("Manufacturer", new { SeName = manuf.SeName })">
+                        <span class="title">@manuf.Name</span>
+                        @if (!string.IsNullOrEmpty(manuf.Icon))
+                        {
+                            <span class="category-icon @manuf.Icon"></span>
+                        }
+
+                    </a>
+                </li>
             }
         </b-dropdown-group>
     </b-nav-item-dropdown>
