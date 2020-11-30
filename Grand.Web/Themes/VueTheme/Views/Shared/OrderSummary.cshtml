@@ -61,7 +61,7 @@
                             <tr v-for="item in cart.Items">
                                 <td v-if="cart.IsAllowOnHold && cart.IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
-                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" v-on:change="ChangeShoppingCart" />
+                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" v-on:change="ChangeShoppingCart($event)" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
@@ -101,12 +101,12 @@
                                 <td class="quantity">
                                     <div v-if="cart.IsEditable">
                                         <div v-if="item.AllowedQuantities[0]">
-                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" v-on:change="ChangeShoppingCart">
+                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" v-on:change="ChangeShoppingCart($event)">
                                                 <option v-for="qty in item.AllowedQuantities" :selected="qty.Selected" :value="qty.Value">{{qty.Value}}</option>
                                             </select>
                                         </div>
                                         <div v-else>
-                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" v-on:change="ChangeShoppingCart" class="qty-input form-control text-center" />
+                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" v-on:change="ChangeShoppingCart($event)" class="qty-input form-control text-center" />
                                         </div>
                                     </div>
                                     <div v-else>
@@ -369,8 +369,12 @@
                     this.vm.updateTotals();
                 });
             },
-            ChangeShoppingCart() {
-                var href = '/updatecart';
+            ChangeShoppingCart(event) {
+                if (event.target.getAttribute('data-href')) {
+                    var href = event.target.getAttribute('data-href');
+                } else {
+                    var href = '/updatecart';
+                }
                 var form = document.getElementById('shopping-cart-form');
                 var data = new FormData(form);
                 axios({
