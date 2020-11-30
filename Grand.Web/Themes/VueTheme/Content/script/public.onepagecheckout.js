@@ -313,7 +313,10 @@ var Shipping = {
             method: 'post',
             data: data,
         }).then(function (response) {
-            this.Shipping.nextStep(response);
+            console.log(response);
+            if (!(response.data.update_section.name == "shipping")) {
+                this.Shipping.nextStep(response);
+            }
             document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {
