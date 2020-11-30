@@ -34,6 +34,55 @@
                                 <div v-html="data.value.endtimeraw"></div>
                             </template>
                         </b-table>
+                        <script>
+                            Vue.mixin({
+                                data() {
+                                    return {
+                                        fields: [
+                                            { key: 'product', label: '@T("Account.CustomerAuctions.ProductName")', sortable: true },
+                                            { key: 'status', label: '@T("Account.CustomerAuctions.Status")', sortable: true },
+                                            { key: 'bid', label: '@T("Account.CustomerAuctions.Highestbid")', sortable: true },
+                                            { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")', sortable: true },
+                                        ],
+                                        items: [
+                                            @{
+                                                var ongoing = Model.ProductBidList.Where(x => !x.Ended);
+                                            }
+                                            @foreach (var item in ongoing)
+                                            {
+                                                        <text>
+                                            {
+                                                product: {
+                                                    nameraw: '<a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>'
+                                                },
+                                                status: {
+                                                                @if (item.HighestBidder)
+                                                                {
+                                                                    <text>
+                                                    statusraw: '<span class="text-success">@T("Account.CustomerAuctions.Status.HighestBidder")</span>'
+                                                                    </text>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <text>
+                                                                        statusraw: '<span class="text-danger">@T("Account.CustomerAuctions.Status.Outbid")</span>'
+                                                                    </text>
+                                                                }
+                                                },
+                                                bid: {
+                                                    bidraw: '@item.CurrentBidAmount @if (item.CurrentBidAmountValue > item.BidAmountValue) { <small>(@item.BidAmount)</small> }'
+                                                },
+                                                endtime: {
+                                                    endtimeraw: '@item.EndBidDate'
+                                                }
+                                            },
+                                                        </text>
+                                             }
+                                        ]
+                                    }
+                                }
+                            });
+                        </script>
                     }
                     else
                     {
