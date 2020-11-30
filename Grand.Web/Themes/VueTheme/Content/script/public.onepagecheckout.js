@@ -216,13 +216,15 @@ var Billing = {
         }).then(function (response) {
             if (!response.data.wrong_billing_address) {
                 if (document.querySelector("#billing_card").style['display'] != 'none') {
-                    document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
+                    if (document.querySelector('#back-' + response.data.goto_section)) {
+                        document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
+                    }
                     document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 }
             }
             this.Billing.nextStep(response);
         }).catch(function (error) {
-            error.axiosFailure;
+            alert(error);
         }).then(function () {
             this.Billing.resetLoadWaiting();
         }); 
@@ -258,7 +260,6 @@ var Billing = {
 
             return false;
         }
-
         Checkout.setStepResponse(response);
     }
 };
