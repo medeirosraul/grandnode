@@ -862,7 +862,7 @@ footer .list-group-item span:last-child {
         flex: 2;
     }
     .categoryGrid .card .card-body {
-        padding: 6px;
+        padding: 12px 10px;
     }
     .categoryGrid .card .card-body h5 {
         font-size: 18px;
@@ -882,5 +882,14 @@ footer .list-group-item span:last-child {
     }
     .product-box .rating .b-rating + a {
         display: none;
+    }
+    .product-box .countdown-box {
+        padding: 10px;
+    }
+    .product-box .countdown-box .col-form-label {
+        width: 100%;
+        display: flex;
+        padding: 0;
+        line-height: 1;
     }
 }
