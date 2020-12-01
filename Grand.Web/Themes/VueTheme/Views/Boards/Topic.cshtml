@@ -82,18 +82,14 @@
 <script asp-location="Footer">
         function deletepost(postId) {
             if (confirm('@T("Common.AreYouSure")')) {
-                var postData = {
-                    id: postId
-                };
-                addAntiForgeryToken(postData);
+                
+                var bodyFormData = new FormData();
+                bodyFormData.append('Id', postId);
+                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
                 axios({
                     method: 'post',
                     url: '@Url.Action("PostDelete", "Boards")',
-                    data: postData,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
+                    data: bodyFormData,                  
                 }).then(function (response) {
                     location = response.data.redirect;
                 }).catch(function (error) {
@@ -104,18 +100,15 @@
         }
         function deletetopic(topicId) {
             if (confirm('@T("Common.AreYouSure")')) {
-                var postData = {
-                    id: topicId
-                };
-                addAntiForgeryToken(postData);
+                var bodyFormData = new FormData();
+                bodyFormData.append('Id', topicId);
+                bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
+
                 axios({
                     method: 'post',
                     url: '@Url.Action("TopicDelete", "Boards")',
-                    data: postData,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
+                    data: bodyFormData,
+                    
                 }).then(function (response) {
                     location = response.data.redirect;
                 }).catch(function (error) {
