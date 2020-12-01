@@ -44,8 +44,8 @@
                 <div class="form-group">
                     <label class="col-form-label">@T("Vendors.ApplyAccount.Picture"):</label>
                     <div class="custom-file">
-                        <input class="form-control-file custom-file-input" name="uploadedFile" accept="image/*" aria-describedby="uploadedFileAddon01" type="file" />
-                        <label class="custom-file-label" for="uploadedFile"></label>
+                        <b-form-file id="uploadedFile" name="uploadedFile" accept="image/*"></b-form-file>
+                        
                     </div>
                 </div>
                 @if (Model.DisplayCaptcha)
@@ -68,12 +68,6 @@
                                  return false;
                             }
                         });
-                        document.getElementById('uploadedFile').addEventListener('change',function(){
-                            //get the file name
-                            var fileName = this.value;
-                            //replace the "Choose a file" label
-                            this.nextSibling(document.querySelector('.custom-file-label')).innerHTML = fileName;
-                        })
                                 
                     </script>
                     <div class="form-group">

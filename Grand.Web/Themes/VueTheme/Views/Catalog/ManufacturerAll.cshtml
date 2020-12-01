@@ -13,7 +13,7 @@
         <b-form-row class="flex-grid">
             @foreach (var item in Model)
             {
-                <b-col md="4" cols="6">
+                <b-col md="4" cols="6" class="mb-2">
                     <b-link class="mb-2" href="@Url.RouteUrl("Manufacturer", new { SeName = item.SeName })" title="@item.PictureModel.Title">
                         <b-card no-body
                                 tag="article">
