@@ -83,7 +83,6 @@ var Checkout = {
             }
             if (response.data.goto_section == "shipping_method") {
                 var Model = JSON.parse(response.data.update_section.html);
-                console.log(Model);
                 vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
                 vm.ShippingMethods = Model.ShippingMethods,
                 vm.ShippingMethodWarnings = Model.Warnings,
@@ -336,10 +335,12 @@ var Shipping = {
             method: 'post',
             data: data,
         }).then(function (response) {
-            if (!(response.data.update_section.name == "shipping")) {
-                this.Shipping.nextStep(response);
+            if (response.data.goto_section !== undefined) {
+                if (!(response.data.update_section.name == "shipping")) {
+                    this.Shipping.nextStep(response);
+                }
+                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
             }
-            document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {
             error.axiosFailure;
@@ -407,8 +408,10 @@ var ShippingMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
-                this.ShippingMethod.nextStep(response);
-                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
+                if (response.data.goto_section !== undefined) {
+                    this.ShippingMethod.nextStep(response);
+                    document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
+                }
                 document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             }).catch(function (error) {
                 error.axiosFailure;
@@ -485,8 +488,10 @@ var PaymentMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
-                this.PaymentMethod.nextStep(response);
-                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-method").click()');
+                if (response.data.goto_section !== undefined) {
+                    this.PaymentMethod.nextStep(response);
+                    document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-method").click()');
+                }
                 document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             }).catch(function (error) {
                 error.axiosFailure;
@@ -537,8 +542,10 @@ var PaymentInfo = {
             method: 'post',
             data: data,
         }).then(function (response) {
-            this.PaymentInfo.nextStep(response);
-            document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
+            if (response.data.goto_section !== undefined) {
+                this.PaymentInfo.nextStep(response);
+                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
+            }
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {
             error.axiosFailure;
