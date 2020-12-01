@@ -45,19 +45,6 @@ var vm = new Vue({
         if (localStorage.fluid == "fluid") this.fluid = "fluid";
         if (localStorage.fluid == "") this.fluid = "false";
         window.addEventListener('scroll', this.handleScroll);
-        this.$root.$on('bv::dropdown::show', bvEvent => {
-            if (bvEvent.vueTarget.$el.getAttribute('data-level') === 'next') {
-                this.isDropdown2Visible = true;
-            }
-        })
-        this.$root.$on('bv::dropdown::hide', bvEvent => {
-            if (bvEvent.vueTarget.$el.getAttribute('data-level') === 'next') {
-                this.isDropdown2Visible = false;
-            }
-            if (this.isDropdown2Visible) {
-                bvEvent.preventDefault()
-            }
-        });
         this.isMobile();
         this.updateFly();
     },
@@ -127,10 +114,6 @@ var vm = new Vue({
         },
         isMobile() {
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-        },
-        MenuBack(event) {
-            var dropdown = 'dropdown_' + event.srcElement.getAttribute('data-id');
-            this.$refs[dropdown].hide(true);
         }
     }
 });

@@ -49,6 +49,16 @@
     pointer-events: none !important;
     opacity: 0.5 !important;
 }
+.opc .order-summary .cart-footer {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+}
+.opc-totals {
+    top: 0;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+}
 
 @media (max-width: 991px) {
     .shopping-cart {

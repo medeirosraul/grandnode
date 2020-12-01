@@ -87,6 +87,18 @@ var Checkout = {
                 vm.ShippingMethods = Model.ShippingMethods,
                 vm.ShippingMethodWarnings = Model.Warnings,
                 vm.ShippingMethod = true;
+
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.totals = response.data;
+                });
             }
             if (response.data.goto_section == "payment_method") {
                 var Model = JSON.parse(response.data.update_section.html);
@@ -97,6 +109,18 @@ var Checkout = {
                 vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
                 vm.UseRewardPoints = Model.UseRewardPoints;
                 vm.PaymentMethod = true;
+
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.totals = response.data;
+                });
             }
             if (response.data.goto_section == "payment_info") {
                 var Model = JSON.parse(response.data.update_section.html);

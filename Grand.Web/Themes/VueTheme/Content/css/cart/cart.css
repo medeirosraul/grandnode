@@ -49,7 +49,23 @@
     pointer-events: none !important;
     opacity: 0.5 !important;
 }
+.opc .order-summary .cart-footer {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+}
+.opc-totals {
+    top: 0;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+}
 
+@media (max-width: 1200px) {
+    .opc .order-summary .cart-footer {
+        visibility: visible;
+        opacity: 1;
+        height: auto;
+    }
 @media (max-width: 991px) {
     .shopping-cart {
         border-bottom: 0;
