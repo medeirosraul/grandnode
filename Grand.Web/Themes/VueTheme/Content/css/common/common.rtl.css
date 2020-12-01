@@ -237,6 +237,12 @@ body:not(.modal-open) {
     border-color: #333;
 }
 
+/* sidebar common */
+
+.b-sidebar {
+    height: 100%;
+}
+
 /* Menu */
 
  .Menu {

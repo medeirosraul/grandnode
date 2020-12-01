@@ -173,6 +173,12 @@ body:not(.modal-open) {
     transform: rotate(-45deg);
 }
 
+/* sidebar common */
+
+.b-sidebar {
+    height: 100%;
+}
+
 /* Menu */
 
  .Menu {
