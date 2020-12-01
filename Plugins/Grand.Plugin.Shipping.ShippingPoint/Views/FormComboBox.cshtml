@@ -1,20 +1,21 @@
 ﻿@model List<SelectListItem>
-<script>
-    function renderShippingOptionInfo(param) {
-        if (param != "") {
-            var _url = '/SelectedShippingPoint/Get?shippingOptionId=' + param;
-            $.ajax({
-                url: _url,
-                success: function (data) {
-                    $("#shippingOptionInfo").html(data);
+<div class="script-tag">
+    <script>
+            function renderShippingOptionInfo(param) {
+                if (param != "") {
+                    var _url = '/SelectedShippingPoint/Get?shippingOptionId=' + param;
+                    axios({
+                        url: _url,
+                    }).then(response => {
+                        document.getElementById("shippingOptionInfo").innerHTML = response.data;
+                    });
                 }
-            });
-        }
-        else {
-            $("#shippingOptionInfo").html("");
-        }
-    }
-</script>
+                else {
+                    document.getElementById("shippingOptionInfo").innerHTML = "";
+                }
+            }
+    </script>
+</div>
 
 <h6>@T("Plugins.Shipping.ShippingPoint.ChooseShippingPoint")</h6>
 <select class="form-control" name="selectedShippingOption" onchange="renderShippingOptionInfo(value)">
