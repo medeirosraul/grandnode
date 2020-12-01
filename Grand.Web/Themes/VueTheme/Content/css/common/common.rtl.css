@@ -237,6 +237,190 @@ body:not(.modal-open) {
     border-color: #333;
 }
 
+/* Menu */
+
+ .Menu {
+     display: none;
+     position: relative;
+}
+/* Three basic menu layouts */
+/* This also enforces that menu is a ul, and that * layout modifier is specified */
+ ul.Menu.-vertical {
+     display: inline-block;
+     width: 100%;
+     overflow: hidden;
+}
+ ul.Menu.-floating {
+     display: block;
+     position: absolute;
+}
+/* Menu and menu-item layout */
+ .Menu, .Menu li, .Menu li > ul {
+     list-style: none;
+     padding: 0px;
+     margin: 0px;
+}
+ .Menu li {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     white-space: nowrap;
+     word-break: keep-all;
+     border-bottom: 1px solid #f2f2f2;
+     cursor: pointer;
+}
+ .Menu li .badge {
+     position: absolute;
+     top: 0;
+     right: 10px;
+}
+ .Menu li.sub-cat-name-container a {
+     font-weight: 500;
+}
+ .Menu li .back {
+     background: #f2f2f2;
+}
+ .Menu li .back .b-icon.bi {
+     font-size: 16px;
+     margin: 0 15px 0 0;
+}
+ .Menu li > * {
+     display: block;
+     position: relative;
+}
+ .Menu li > ul {
+     position: absolute;
+     min-width: 100%;
+     top: 0;
+     bottom: 0;
+     right: 100%;
+     -webkit-transition: transform .4s cubic-bezier(.19,1,.22,1);
+     transition: transform .4s cubic-bezier(.19,1,.22,1);
+}
+/* Menu behaviour */
+ .Menu li > ul.-visible, ul.Menu.-floating.-visible {
+     display: block;
+     -webkit-transform: translateX(100%);
+     transform: translateX(100%);
+     z-index: 2;
+}
+/* Menu animation */
+ .Menu li > ul, .Menu.-floating {
+     opacity: 1;
+     transform: scale(1) translateY(0px);
+     transform-origin: left top;
+}
+ .Menu.-alignRight li > ul, .Menu.-floating.-alignRight {
+     transform-origin: right top;
+}
+/* Menu item icons */
+ .Menu *[data-icon]:before {
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     bottom: 0px;
+     margin: auto 0px;
+}
+ .Menu .Icon, .Menu *[data-icon]:before {
+     line-height: inherit;
+}
+ .Menu .Icon {
+     padding: 0px;
+}
+ .Menu *:empty[data-icon] {
+     padding-left: 0px !important;
+     padding-right: 0px !important;
+}
+/* Submenu chevrons */
+ .Menu li.-hasSubmenu > a:after {
+     display: block;
+     position: absolute;
+     width: 8px;
+     height: 8px;
+     left: 8px;
+     bottom: 0px;
+     top: 0px;
+     margin: auto 0px;
+     transform: rotate(-135deg);
+     border-width: 1px;
+     border-color: black;
+     border-style: solid solid none none;
+     content: "";
+}
+ .Menu li.-hasSubmenu.-noChevron > a:after {
+     display: none;
+}
+ .Menu {
+     line-height: 40px;
+}
+ .Menu li, .Menu li > :first-child {
+     height: 50px;
+}
+ .Menu *[data-icon]:before, .Menu .Icon {
+     width: 40px;
+     height: 40px;
+}
+ .Menu *[data-icon] {
+     min-width: 40px;
+     min-height: 40px;
+     padding-left: 40px;
+}
+/* Default font settings for menu */
+ .Menu {
+     font-size: 16px;
+}
+/* Icon font sizes */
+ .Menu *[data-icon]:before, .Menu .Icon {
+     font-size: 24px;
+}
+/* For submenus */
+ .Menu > li ul .Icon, .Menu.-floating .Icon, .Menu > li ul *[data-icon]:before, .Menu.-floating *[data-icon]:before, {
+     font-size: 18px;
+}
+/* Colouring of menus */
+/* Foreground */
+ .Menu, .Menu li.-hasSubmenu > a:after {
+     color: black;
+     border-color: black;
+    /* chevron colour */
+}
+/* Background */
+ .Menu ul, .Menu.-floating {
+     background: white;
+}
+/* Padding for each menu item */
+ .Menu li > * {
+     padding: 0px 12px;
+}
+/* Indent of chevron */
+ .Menu li li.-hasSubmenu > a:after, .Menu > li.-hasSubmenu > a:after {
+     left: 12px;
+}
+ .Menu li li.-hasSubmenu > a {
+     padding-right: 28px;
+}
+/* Minimum width of dropdown menus */
+ .Menu.-floating {
+     min-width: 200px;
+}
+/* Styling of hyperlink text */
+ .Menu li > a {
+     display: flex;
+     align-items: center;
+     width: 100%;
+     font-weight: 500;
+     text-decoration: none;
+     color: inherit;
+}
+/* Animation speed of :hover shading */
+ .Menu li > a:first-child {
+     transition: background-color 0.2s;
+}
+/* Colour of :hover shading */
+ .Menu li:hover > a:first-child, .Menu li.-active > a:first-child {
+     background-color: rgba(0,0,0,0.1);
+}
+
 /* headings */
 
 .generalTitle {

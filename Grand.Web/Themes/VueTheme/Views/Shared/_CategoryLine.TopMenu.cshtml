@@ -2,107 +2,85 @@
 
 @if (Model.Category.IncludeInTopMenu)
 {
-    @if (Model.Category.SubCategories.Count() == 0)
-    {
-        <text>
-            <b-nav-item id="@Model.Category.Id-menu" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                @if (!string.IsNullOrEmpty(Model.Category.Icon))
+    <li class="@(Model.Category.SubCategories.Count() == 0 ? "": "-hasSubmenu" )">
+
+        <a @if (Model.Category.SubCategories.Count() == 0) {<text>href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })"</text>} else { <text>href="#"</text>}>
+            @if (!string.IsNullOrEmpty(Model.Category.Icon))
+            {
+                <span class="category-icon @Model.Category.Icon"></span>
+            }
+            <span>@Model.Category.Name</span>
+            @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
+            {
+                <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
+            }
+        </a>
+
+
+        @{
+            //subcategories
+            var subCategories =
+                Model.Category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+            var levelClass = "";
+            if (Model.Level == 0)
+            {
+                levelClass = "first-level";
+                if (subCategories.Any())
                 {
-                    <span class="category-icon @Model.Category.Icon"></span>
+                            <ul>
+                                <li class="back">
+                                    <a>
+                                        <b-icon icon="chevron-left"></b-icon>
+                                        <span>@T("Mobile.Categories.Back")</span>
+                                    </a>
+                                </li>
+                                <li class="sub-cat-name-container">
+                                    <a class="text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                                        <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
+                                    </a>
+                                </li>
+                                @foreach (var subCategory in subCategories)
+                                {
+                                    var categoryLineModel = new TopMenuModel.CategoryLineModel
+                                    {
+                                        Category = subCategory,
+                                        Level = Model.Level + 1,
+                                        ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                                    };
+                                    <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+                                }
+                            </ul>
                 }
-                <span class="title">@Model.Category.Name</span>
-                @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
-                {
-                    <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
-                }
-        </text>
-
-    }
-    else
-    {
-        <text>
-            <b-nav-item-dropdown ref="dropdown_@Model.Category.Id" @if (Model.Level == 0) { <text>data-level='first'</text> } else { <text>data-level='next'</text> } id="@Model.Category.Id-menu" text="@Model.Category.Name">
-                <template slot="button-content">
-                    @if (!string.IsNullOrEmpty(Model.Category.Icon))
+            }
+            if (Model.Level >= 1 && subCategories.Any())
+            {
+                levelClass = "next-level";
+                <ul class="sublist @levelClass">
+                    <li class="back">
+                        <a>
+                            <b-icon icon="chevron-left"></b-icon>
+                            <span>@T("Mobile.Categories.Back")</span>
+                        </a>
+                    </li>
+                    <li class="sub-cat-name-container">
+                        <a class="text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                            <span>@T("Mobile.Category.Show") @Model.Category.Name</span>
+                        </a>
+                    </li>
+                    @foreach (var subCategory in subCategories)
                     {
-                        <span class="category-icon @Model.Category.Icon"></span>
-                    }
-                    <span class="title">@Model.Category.Name</span>
-                    @if (!string.IsNullOrEmpty(Model.Category.FlagStyle))
-                    {
-                        <span class="badge @Model.Category.FlagStyle">@Model.Category.Flag</span>
-                    }
-                    <b-icon icon="chevron-right"></b-icon>
-                </template>
-        </text>
-    }
-
-    //subcategories
-    var subCategories =
-        Model.Category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
-
-    var levelClass = "";
-    if (Model.Level == 0)
-    {
-        levelClass = "first-level";
-        if (subCategories.Any())
-        {
-            
-                <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
-                        <li class="nav-item back" @@click="MenuBack($event)" data-id="@Model.Category.Id">
-                            @T("Mobile.Categories.Back")
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                                <strong>@Model.Category.Name</strong>
-                            </a> 
-                        </li>
-                        @foreach (var subCategory in subCategories)
+                        var categoryLineModel = new TopMenuModel.CategoryLineModel
                         {
-                            var categoryLineModel = new TopMenuModel.CategoryLineModel
-                            {
-                                Category = subCategory,
-                                Level = Model.Level + 1,
-                                ResponsiveMobileMenu = Model.ResponsiveMobileMenu
-                            };
-                            <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
-                        }
-                </b-dropdown-group>
-            
+                            Category = subCategory,
+                            Level = Model.Level + 1,
+                            ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                        };
+                        <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
+                    }
+                </ul>
+            }
         }
-    }
-    if (Model.Level >= 1 && subCategories.Any())
-    {
-        levelClass = "next-level";
-            <b-dropdown-group id="@Model.Category.SeName-dropdown" class="@levelClass">
-                <li class="nav-item back" @@click="MenuBack($event)" data-id="@Model.Category.Id">
-                    @T("Mobile.Categories.Back")
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
-                        <strong>@Model.Category.Name</strong>
-                    </a>
-                </li>
-                @foreach (var subCategory in subCategories)
-                {
-                    var categoryLineModel = new TopMenuModel.CategoryLineModel
-                    {
-                        Category = subCategory,
-                        Level = Model.Level + 1,
-                        ResponsiveMobileMenu = Model.ResponsiveMobileMenu
-                    };
-                    <partial name="_CategoryLine.TopMenu" model="categoryLineModel" />
-                }
-            </b-dropdown-group>
-    }
-
-    @if (Model.Category.SubCategories.Count() == 0)
-    {
-        @Html.Raw("</b-nav-item>")
-    }
-    else
-    {
-        @Html.Raw("</b-nav-item-dropdown>")
-    }
+    </li>
 }
 

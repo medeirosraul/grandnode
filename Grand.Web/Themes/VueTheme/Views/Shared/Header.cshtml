@@ -23,13 +23,9 @@
                            backdrop
                            left
                            shadow>
-                    <b-navbar toggleable type="light" variant="light" class="main-nav">
-                        <b-collapse id="main_nav" is-nav>
-                            <b-navbar-nav>
-                                @await Component.InvokeAsync("TopMenu")
-                            </b-navbar-nav>
-                        </b-collapse>
-                    </b-navbar>
+                    <ul class="Menu -vertical">
+                        @await Component.InvokeAsync("TopMenu")
+                    </ul>
                 </b-sidebar>
             </template>
             @await Component.InvokeAsync("Logo")

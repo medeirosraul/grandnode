@@ -2,7 +2,11 @@
 @await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_before" })
 @if (Model.DisplayHomePageMenu)
 {
-    <b-nav-item href="@Url.RouteUrl("HomePage")"><span class="title">@T("HomePage")</span></b-nav-item>
+    <li>
+        <a href="@Url.RouteUrl("HomePage")">
+            <span class="title">@T("HomePage")</span>
+        </a>
+    </li>
 }
 @{
     var rootCategories = Model.Categories.ToList();
@@ -18,29 +22,35 @@
 
 @foreach (var topic in Model.Topics)
 {
-    <b-nav-item href="@Url.RouteUrl("Topic", new { SeName=topic.SeName })"><span class="title">@topic.Name</span></b-nav-item>
+    <li>
+        <a href="@Url.RouteUrl("Topic", new { SeName=topic.SeName })">
+            <span class="title">@topic.Name</span>
+        </a>
+    </li>
 }
 @if (Model.Manufacturers.Any())
 {
 
-    <b-nav-item-dropdown ref="dropdown_manucaturer-menu"  text="@T("Manufacturers.Menu")">
-        <template slot="button-content">
+    <li class="-hasSubmenu" text="@T("Manufacturers.Menu")">
+        <a href="#">
             <span class="title">@T("Manufacturers.Menu")</span>
-            <b-icon icon="chevron-right"></b-icon>
-        </template>
-        <b-dropdown-group>
-            <li class="nav-item back" @@click="MenuBack($event)" data-id="manucaturer-menu">
-                @T("Mobile.Categories.Back")
+        </a>
+        <ul>
+            <li class="back">
+                <a>
+                    <b-icon icon="chevron-left"></b-icon>
+                    <span>@T("Mobile.Categories.Back")</span>
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-info" href="@Url.RouteUrl("ManufacturerList")">
-                    <strong>@T("Manufacturers.List")</strong>
+            <li class="sub-cat-name-container">
+                <a class="text-info" href="@Url.RouteUrl("ManufacturerList")">
+                    <span>@T("Mobile.Category.Show") @T("Manufacturers.List")</span>
                 </a>
             </li>
             @foreach (var manuf in Model.Manufacturers)
             {
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.RouteUrl("Manufacturer", new { SeName = manuf.SeName })">
+                <li>
+                    <a href="@Url.RouteUrl("Manufacturer", new { SeName = manuf.SeName })">
                         <span class="title">@manuf.Name</span>
                         @if (!string.IsNullOrEmpty(manuf.Icon))
                         {
@@ -50,34 +60,58 @@
                     </a>
                 </li>
             }
-        </b-dropdown-group>
-    </b-nav-item-dropdown>
+        </ul>
+    </li>
 }
 @if (Model.DisplaySearchMenu | Model.DisplayNewProductsMenu | Model.DisplayCustomerMenu | Model.DisplayBlogMenu | Model.DisplayForumsMenu | Model.DisplayContactUsMenu)
 {
     @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("NewProducts")" class="solo-link-item"><span class="title">@T("Products.NewProducts")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("NewProducts")">
+                <span class="title">@T("Products.NewProducts")</span>
+            </a>
+        </li>
     }
     @if (Model.DisplaySearchMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("ProductSearch")" class="solo-link-item"><span class="title">@T("Search")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("ProductSearch")">
+                <span class="title">@T("Search")</span>
+            </a>
+        </li>
     }
     @if (Model.DisplayCustomerMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("CustomerInfo")" class="solo-link-item"><span class="title">@T("Account.MyAccount")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("CustomerInfo")">
+                <span class="title">@T("Account.MyAccount")</span>
+            </a>
+        </li>
     }
     @if (Model.BlogEnabled && Model.DisplayBlogMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("Blog")" class="solo-link-item"><span class="title">@T("Blog")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("Blog")">
+                <span class="title">@T("Blog")</span>
+            </a>
+        </li>
     }
     @if (Model.ForumEnabled && Model.DisplayForumsMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("Boards")" class="solo-link-item"><span class="title">@T("Forum.Forums")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("Boards")">
+                <span class="title">@T("Forum.Forums")</span>
+            </a>
+        </li>
     }
     @if (Model.DisplayContactUsMenu)
     {
-        <b-nav-item href="@Url.RouteUrl("ContactUs")" class="solo-link-item"><span class="title">@T("ContactUs")</span></b-nav-item>
+        <li>
+            <a href="@Url.RouteUrl("ContactUs")">
+                <span class="title">@T("ContactUs")</span>
+            </a>
+        </li>
     }
 }
 @await Component.InvokeAsync("Widget", new { widgetZone = "header_menu_after" })

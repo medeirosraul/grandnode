@@ -92,86 +92,6 @@
     height: 3px;
     background: #000;
 }
-.main-nav {
-    padding: 0;
-}
-.main-nav .navbar-nav {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 100%;
-    background: #fff;
-    padding: 0;
-} 
-.main-nav .navbar-nav .nav-item {
-    position: static;
-    border-bottom: 1px solid #f2f2f2;
-}
-.main-nav .navbar-nav .nav-item.dropdown .dropdown-menu {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-right: 1px solid #f2f2f2;
-    border-radius: 0;
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    -webkit-transition: transform .4s cubic-bezier(.19,1,.22,1);
-    transition: transform .4s cubic-bezier(.19,1,.22,1);
-}
-.main-nav .navbar-nav .nav-item.dropdown .dropdown-menu.show {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-}
-.main-nav .navbar-nav .nav-item .nav-link {
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-    padding: 15px;
-}
-.main-nav.navbar-light .navbar-nav .nav-link .title {
-    color: #333;
-    font-weight: 500;
-}
-.main-nav .dropdown-toggle .bi-chevron-right  {
-    margin: 0 0 0 auto;
-    font-size: 14px;
-}
-.main-nav .navbar-nav .nav-item.back {
-    position: relative;
-    width: 100%;
-    height: 41px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0 0 0 35px;
-    font-size: 16px;
-    font-weight: 500;
-    background: #f2f2f2;
-}
-.main-nav .navbar-nav .nav-item.back::before,
-.main-nav .navbar-nav .nav-item.back::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 1px;
-    background: #000;
-}
-.main-nav .navbar-nav .nav-item.back::before {
-    top: 17px;
-    left: 15px;
-    transform: rotate(-45deg);
-}
-.main-nav .navbar-nav .nav-item.back::after {
-    bottom: 17px;   
-    left: 15px;   
-    transform: rotate(45deg);
-}
 
 @media (min-width: 576px) {
     .b-sidebar {
@@ -188,7 +108,7 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         z-index: 1034;
     }
-    .header-nav > .navbar:not(.main-nav) {
+    .header-nav > .navbar {
         height: 58px;
     }
     .header-nav .navbar-brand img {
