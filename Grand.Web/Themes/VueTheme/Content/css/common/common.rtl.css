@@ -248,7 +248,8 @@ body:not(.modal-open) {
  ul.Menu.-vertical {
      display: inline-block;
      width: 100%;
-     overflow: hidden;
+     overflow-x: hidden;
+     overflow-y: auto;
 }
  ul.Menu.-floating {
      display: block;
@@ -264,8 +265,7 @@ body:not(.modal-open) {
      display: flex;
      align-items: center;
      justify-content: space-between;
-     white-space: nowrap;
-     word-break: keep-all;
+     word-break: break-word;
      border-bottom: 1px solid #f2f2f2;
      cursor: pointer;
 }
@@ -408,6 +408,7 @@ body:not(.modal-open) {
      display: flex;
      align-items: center;
      width: 100%;
+     padding: 10px;
      font-weight: 500;
      text-decoration: none;
      color: inherit;
