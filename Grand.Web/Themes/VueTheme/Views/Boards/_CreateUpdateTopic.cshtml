@@ -56,7 +56,7 @@
             }
             <fieldset class="form-group mb-0">
                 <input type="submit" value="@T("Forum.Submit")" class="btn btn-success submit-topic-button" />
-                <input type="button" class="btn btn-outline-danger cancel-topic-button" value="@T("Forum.Cancel")" onclick="setLocation('@Url.RouteUrl("ForumSlug", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
+                <input type="button" class="btn btn-outline-danger cancel-topic-button" value="@T("Forum.Cancel")" onclick="location = ('@Url.RouteUrl("ForumSlug", new { id = Model.ForumId, slug = Model.ForumSeName })')" />
             </fieldset>
         </div>
     </b-card>

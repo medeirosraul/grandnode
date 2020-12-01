@@ -86,15 +86,16 @@
                     id: postId
                 };
                 addAntiForgeryToken(postData);
-                var bodyFormData = new FormData();
-                bodyFormData.append('id', postId);
                 axios({
                     method: 'post',
                     url: '@Url.Action("PostDelete", "Boards")',
-                    data: bodyFormData,
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    data: postData,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }).then(function (response) {
-                    location.href = response.data.redirect;
+                    location = response.data.redirect;
                 }).catch(function (error) {
                     alert(error);
                 })
@@ -107,15 +108,16 @@
                     id: topicId
                 };
                 addAntiForgeryToken(postData);
-                var bodyFormData = new FormData();
-                bodyFormData.append('id', postId);
                 axios({
                     method: 'post',
                     url: '@Url.Action("TopicDelete", "Boards")',
-                    data: bodyFormData,
-                    headers: { 'Content-Type': 'multipart/form-data' }
+                    data: postData,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 }).then(function (response) {
-                    location.href = response.data.redirect;
+                    location = response.data.redirect;
                 }).catch(function (error) {
                     alert(error);
                 })

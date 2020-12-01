@@ -47,7 +47,7 @@
                             }
                             @Html.RouteLink(T("Forum.QuotePost").Text, "PostCreateQuote", new { id = Model.ForumTopicId, quote = Model.Id }, new { @class = "btn btn-secondary quote-post-button" })
 
-                            <a id="link-@Model.Id" title="@T("Forum.PostLinkTitle")" onclick="CopyLink(this)" class="btn btn-secondary btn-sm post-link-button"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
+                            <a id="link-@Model.Id" title="@T("Forum.PostLinkTitle")" href="@(thisPageUrl)#@(Model.Id)" class="btn btn-secondary btn-sm post-link-button"><span class="d-none d-lg-block">@T("Forum.PostLink")</span></a>
                             <input type="text" class="sr-only" id="LinkHref-@Model.Id" value="@(thisPageUrl)#@(Model.Id)" />
                         </div>
                     </b-row>
