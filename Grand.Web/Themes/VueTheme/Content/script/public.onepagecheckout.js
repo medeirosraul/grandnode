@@ -83,6 +83,7 @@ var Checkout = {
             }
             if (response.data.goto_section == "shipping_method") {
                 var Model = JSON.parse(response.data.update_section.html);
+                console.log(Model);
                 vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
                 vm.ShippingMethods = Model.ShippingMethods,
                 vm.ShippingMethodWarnings = Model.Warnings,
@@ -102,7 +103,7 @@ var Checkout = {
                 var Model = JSON.parse(response.data.update_section.html);
                 vm.DisplayOrderTotals = Model.DisplayOrderTotals;
                 vm.PaymentViewComponentName = Model.PaymentViewComponentName,
-                    vm.PaymentInfo = true;
+                vm.PaymentInfo = true;
                 axios({
                     baseURL: '/Common/Component?Name=' + Model.PaymentViewComponentName,
                     method: 'get',
@@ -114,14 +115,25 @@ var Checkout = {
                 }).then(response => {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
-                })
+                });
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.totals = response.data;
+                });
                 
             }
             if (response.data.goto_section == "confirm_order") {
                 var Model = JSON.parse(response.data.update_section.html);
                 vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
                 vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
-                    vm.ConfirmWarnings = Model.ConfirmWarnings
+                vm.ConfirmWarnings = Model.ConfirmWarnings
                 vm.Confirm = true;
                 setTimeout(function () {
                     var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
@@ -139,7 +151,18 @@ var Checkout = {
                     }
                 }).then(response => {
                     vm.cart.OrderReviewData = response.data.OrderReviewData
-                })
+                });
+                axios({
+                    baseURL: '/Common/Component?Name=OrderTotals',
+                    method: 'get',
+                    data: null,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    vm.totals = response.data;
+                });
             }
             //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
             if (!response.data.wrong_billing_address) {
@@ -313,7 +336,6 @@ var Shipping = {
             method: 'post',
             data: data,
         }).then(function (response) {
-            console.log(response);
             if (!(response.data.update_section.name == "shipping")) {
                 this.Shipping.nextStep(response);
             }

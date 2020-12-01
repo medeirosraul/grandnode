@@ -1,25 +1,36 @@
 ﻿<div v-if="ShippingMethod" class="checkout-data">
+    <script asp-location="Footer">
+        function loadPartialView(arg_value) {
+            var url = window.location.origin + '/checkout/GetShippingFormPartialView?shippingOption=' + arg_value;
+            axios({
+                url: url,
+                method: 'post',
+            }).then(function (response) {
+                document.getElementById('shipping_form').innerHTML = response.data;
+            })
+        }
+    </script>
     <div class="shipping-method">
         @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_top" })
         <template v-if="ShippingMethodWarnings">
             <ul class="method-list px-0">
-                    <li v-for="(shippingMethod, index) in ShippingMethods">
-                        <label class="custom-control custom-checkbox">
-                            <input :id="'shippingoption_' + index" type="radio"
-                                   onclick="loadPartialView(value)"
-                                   name="shippingoption"
-                                   :value="shippingMethod.Name + '___' + shippingMethod.ShippingRateComputationMethodSystemName"
-                                   :checked="shippingMethod.Selected"
-                                   class="custom-control-input">
-                            <span class="custom-control-label"></span>
-                            <span :for="'shippingoption_' + index" class="custom-control-description">
-                                {{shippingMethod.Name}} ({{shippingMethod.Fee}})
-                                <template v-if="shippingMethod.Description !== null">
-                                    <span v-html="shippingMethod.Description"></span>
-                                </template>
-                            </span>
-                        </label>
-                    </li>
+                <li v-for="(shippingMethod, index) in ShippingMethods">
+                    <label class="custom-control custom-checkbox">
+                        <input :id="'shippingoption_' + index" type="radio"
+                               onchange="loadPartialView(value)"
+                               name="shippingoption"
+                               :value="shippingMethod.Name + '___' + shippingMethod.ShippingRateComputationMethodSystemName"
+                               :checked="shippingMethod.Selected"
+                               class="custom-control-input">
+                        <span class="custom-control-label"></span>
+                        <span :for="'shippingoption_' + index" class="custom-control-description">
+                            {{shippingMethod.Name}} ({{shippingMethod.Fee}})
+                            <template v-if="shippingMethod.Description !== null">
+                                <span v-html="shippingMethod.Description"></span>
+                            </template>
+                        </span>
+                    </label>
+                </li>
             </ul>
             <div v-if="NotifyCustomerAboutShippingFromMultipleLocations" class="multiple-locations">
                 @T("Checkout.ShippingMethod.ShippingFromMultipleLocations")
