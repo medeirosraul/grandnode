@@ -102,6 +102,14 @@ namespace Grand.Web.Controllers
             return ViewComponent(name);
         }
 
+        public IActionResult ComponentForm(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return Content("");
+
+            return ViewComponent(name);
+        }
+
 
         //page not found
         public virtual IActionResult PageNotFound()

@@ -569,6 +569,7 @@ var PaymentInfo = {
         Checkout.setLoadWaiting('payment-info');
         var form = document.querySelector(this.form);
         var data = new FormData(form);
+
         axios({
             url: this.saveUrl,
             method: 'post',
@@ -577,6 +578,35 @@ var PaymentInfo = {
             if (response.data.goto_section !== undefined) {
                 this.PaymentInfo.nextStep(response);
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
+            }
+            if (response.data.update_section !== undefined) {
+                var model = JSON.parse(response.data.update_section.html);
+                vm.DisplayOrderTotals = model.DisplayOrderTotals;
+                vm.PaymentViewComponentName = model.PaymentViewComponentName,
+                vm.PaymentInfo = true;
+
+                axios({
+                    baseURL: '/Common/ComponentForm?Name=' + model.PaymentViewComponentName,
+                    method: 'post',
+                    data: data,
+                }).then(response => {
+                    var html = response.data;
+                    document.querySelector('.payment-info .info').innerHTML = html;
+                });
+                if (model.DisplayOrderTotals) {
+
+                    axios({
+                        baseURL: '/Common/Component?Name=OrderTotals',
+                        method: 'get',
+                        data: null,
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(response => {
+                        vm.totals = response.data;
+                    });
+                }
             }
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {

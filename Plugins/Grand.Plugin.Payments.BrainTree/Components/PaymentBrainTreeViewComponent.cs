@@ -1,15 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Braintree;
+﻿using Braintree;
 using Grand.Core;
 using Grand.Domain.Orders;
-using Grand.Plugin.Payments.BrainTree;
 using Grand.Plugin.Payments.BrainTree.Models;
+using Grand.Plugin.Payments.BrainTree.Validators;
+using Grand.Services.Localization;
 using Grand.Services.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Grand.Plugin.Payments.BrainTree.Components
 {
@@ -21,18 +22,21 @@ namespace Grand.Plugin.Payments.BrainTree.Components
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IStoreContext _storeContext;
         private readonly IWorkContext _workContext;
+        private readonly ILocalizationService _localizationService;
 
-        public PaymentBrainTreeViewComponent(BrainTreePaymentSettings brainTreePaymentSettings, 
+        public PaymentBrainTreeViewComponent(BrainTreePaymentSettings brainTreePaymentSettings,
             IOrderTotalCalculationService orderTotalCalculationService,
             IShoppingCartService shoppingCartService,
             IStoreContext storeContext,
-            IWorkContext workContext)
+            IWorkContext workContext,
+            ILocalizationService localizationService)
         {
             _brainTreePaymentSettings = brainTreePaymentSettings;
             _orderTotalCalculationService = orderTotalCalculationService;
             _shoppingCartService = shoppingCartService;
             _storeContext = storeContext;
             _workContext = workContext;
+            _localizationService = localizationService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -69,8 +73,7 @@ namespace Grand.Plugin.Payments.BrainTree.Components
             for (var i = 0; i < 15; i++)
             {
                 var year = Convert.ToString(DateTime.Now.Year + i);
-                model.ExpireYears.Add(new SelectListItem
-                {
+                model.ExpireYears.Add(new SelectListItem {
                     Text = year,
                     Value = year,
                 });
@@ -80,8 +83,7 @@ namespace Grand.Plugin.Payments.BrainTree.Components
             for (var i = 1; i <= 12; i++)
             {
                 var text = (i < 10) ? "0" + i : i.ToString();
-                model.ExpireMonths.Add(new SelectListItem
-                {
+                model.ExpireMonths.Add(new SelectListItem {
                     Text = text,
                     Value = i.ToString(),
                 });
@@ -106,6 +108,14 @@ namespace Grand.Plugin.Payments.BrainTree.Components
             if (selectedYear != null)
                 selectedYear.Selected = true;
 
+            var validator = new PaymentInfoValidator(_brainTreePaymentSettings, _localizationService);
+            var results = validator.Validate(model);
+            if (!results.IsValid)
+            {
+                var query = from error in results.Errors
+                            select error.ErrorMessage;
+                model.Errors = string.Join(", ", query);
+            }
             return View("~/Plugins/Payments.BrainTree/Views/PaymentInfo.cshtml", model);
         }
     }
