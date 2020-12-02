@@ -83,53 +83,35 @@ var Checkout = {
                 vm.ShippingAddress = true;
             }
             if (response.data.goto_section == "shipping_method") {
-                var Model = JSON.parse(response.data.update_section.html);
-                vm.NotifyCustomerAboutShippingFromMultipleLocations = Model.NotifyCustomerAboutShippingFromMultipleLocations;
-                vm.ShippingMethods = Model.ShippingMethods,
-                vm.ShippingMethodWarnings = Model.Warnings,
+                var model = JSON.parse(response.data.update_section.html);
+                vm.NotifyCustomerAboutShippingFromMultipleLocations = model.NotifyCustomerAboutShippingFromMultipleLocations;
+                vm.ShippingMethods = model.ShippingMethods,
+                vm.ShippingMethodWarnings = model.Warnings,
                 vm.ShippingMethod = true;
 
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.totals = response.data;
-                });
+                this.updateOrderTotal();
             }
             if (response.data.goto_section == "payment_method") {
-                var Model = JSON.parse(response.data.update_section.html);
-                vm.DisplayRewardPoints = Model.DisplayRewardPoints;
-                vm.PaymentMethods = Model.PaymentMethods,
-                vm.RewardPointsAmount = Model.RewardPointsAmount,
-                vm.RewardPointsBalance = Model.RewardPointsBalance;
-                vm.RewardPointsEnoughToPayForOrder = Model.RewardPointsEnoughToPayForOrder;
-                vm.UseRewardPoints = Model.UseRewardPoints;
+                var model = JSON.parse(response.data.update_section.html);
+                vm.DisplayRewardPoints = model.DisplayRewardPoints;
+                vm.PaymentMethods = model.PaymentMethods,
+                vm.RewardPointsAmount = model.RewardPointsAmount,
+                vm.RewardPointsBalance = model.RewardPointsBalance;
+                vm.RewardPointsEnoughToPayForOrder = model.RewardPointsEnoughToPayForOrder;
+                vm.UseRewardPoints = model.UseRewardPoints;
                 vm.PaymentMethod = true;
 
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.totals = response.data;
-                });
+                this.updateOrderTotal();
+
             }
             if (response.data.goto_section == "payment_info") {
-                var Model = JSON.parse(response.data.update_section.html);
-                vm.DisplayOrderTotals = Model.DisplayOrderTotals;
-                vm.PaymentViewComponentName = Model.PaymentViewComponentName,
-                vm.PaymentInfo = true;
+                var model = JSON.parse(response.data.update_section.html);
+                vm.DisplayOrderTotals = model.DisplayOrderTotals;
+                vm.PaymentViewComponentName = model.PaymentViewComponentName,
+                    vm.PaymentInfo = true;
+
                 axios({
-                    baseURL: '/Common/Component?Name=' + Model.PaymentViewComponentName,
+                    baseURL: '/Common/Component?Name=' + model.PaymentViewComponentName,
                     method: 'get',
                     data: null,
                     headers: {
@@ -140,59 +122,35 @@ var Checkout = {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
                 });
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.totals = response.data;
-                });
+
+                if (model.DisplayOrderTotals) {
+                    this.updateOrderSummary(false);
+                }
+
+                this.updateOrderTotal();
                 
             }
             if (response.data.goto_section == "confirm_order") {
-                var Model = JSON.parse(response.data.update_section.html);
-                vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
-                vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage;
-                vm.ConfirmWarnings = Model.Warnings;
-                if (Model.Warnings.length !== 0) {
+                var model = JSON.parse(response.data.update_section.html);
+                vm.MinOrderTotalWarning = model.MinOrderTotalWarning;
+                vm.TermsOfServiceOnOrderConfirmPage = model.TermsOfServiceOnOrderConfirmPage;
+                vm.ConfirmWarnings = model.Warnings;
+
+                if (model.Warnings.length !== 0) {
                     var button = document.querySelector('#button-' + response.data.update_section.name);
                     resetSteps(button);
                 }
                 vm.Confirm = true;
+
                 setTimeout(function () {
                     var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
                     document.getElementById('new-back-confirm_order').setAttribute('onclick', c_back);
                 }, 300);
-                axios({
-                    baseURL: '/Common/Component?Name=OrderSummary',
-                    method: 'post',
-                    data: {
-                        prepareAndDisplayOrderReviewData: true,
-                    },
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.cart.OrderReviewData = response.data.OrderReviewData
-                });
-                axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
-                    method: 'get',
-                    data: null,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    vm.totals = response.data;
-                });
+
+                this.updateOrderSummary(true);
+                this.updateOrderTotal();
             }
-            //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
+
             if (!response.data.wrong_billing_address) {
                 if (!(document.querySelector("#opc-confirm-order").classList.contains('show'))) {
                     document.querySelector('#button-' + response.data.update_section.name).click();
@@ -221,7 +179,36 @@ var Checkout = {
             return true;
         }
         return false;
-    }
+    },
+    updateOrderSummary: function (displayOrderReviewData) {
+        axios({
+            baseURL: '/Common/Component?Name=OrderSummary',
+            method: 'post',
+            data: {
+                prepareAndDisplayOrderReviewData: displayOrderReviewData,
+            },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            vm.cart.OrderReviewData = response.data.OrderReviewData
+        });
+    },
+
+    updateOrderTotal: function () {
+        axios({
+            baseURL: '/Common/Component?Name=OrderTotals',
+            method: 'get',
+            data: null,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            vm.totals = response.data;
+        });
+    },
 };
 
 
@@ -296,7 +283,6 @@ var Billing = {
             if (response.data.wrong_billing_address) {
                 document.querySelector("#billing_card").style.display = "flex";
                 document.getElementById('button-billing').classList.add('allow');
-                //setTimeout(function () { document.querySelector("#opc-billing").style.display = "flex"; }, 300);
             } else {
                 document.getElementById('button-billing').classList.remove('allow');
             }
@@ -574,7 +560,7 @@ var PaymentInfo = {
                 this.PaymentInfo.nextStep(response);
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
             }
-            if (response.data.update_section !== undefined) {
+            if (response.data.update_section !== undefined && response.data.update_section.name == 'payment-info') {
                 var model = JSON.parse(response.data.update_section.html);
                 vm.DisplayOrderTotals = model.DisplayOrderTotals;
                 vm.PaymentViewComponentName = model.PaymentViewComponentName,
@@ -588,22 +574,10 @@ var PaymentInfo = {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
                 });
-                if (model.DisplayOrderTotals) {
-
-                    axios({
-                        baseURL: '/Common/Component?Name=OrderTotals',
-                        method: 'get',
-                        data: null,
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => {
-                        vm.totals = response.data;
-                    });
-                }
+                
             }
             document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
+
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
