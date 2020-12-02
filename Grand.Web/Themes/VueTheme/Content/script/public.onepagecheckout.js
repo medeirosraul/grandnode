@@ -423,10 +423,7 @@ var ShippingMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
-                if (response.data.goto_section !== undefined) {
                     this.ShippingMethod.nextStep(response);
-                    document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
-                }
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
