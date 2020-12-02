@@ -7,7 +7,7 @@
         <div class="col-md-4 col-12 text-md-right">
             <label class="col-form-label" asp-for="CardholderName">@T("Payment.CardholderName"):</label>
         </div>
-        <div class="col-md-4 col-12 text-right">
+        <div class="col-md-6 col-12 text-right">
             <input asp-for="CardholderName" class="form-control" autofocus="autofocus" />
             <span asp-validation-for="CardholderName"></span>
         </div>
@@ -17,7 +17,7 @@
         <div class="col-md-4 col-12 text-md-right">
             <label class="col-form-label" asp-for="CardNumber">@T("Payment.CardNumber"):</label>
         </div>
-        <div class="col-md-4 col-12 text-right">
+        <div class="col-md-6 col-12 text-right">
             <input asp-for="CardNumber" class="form-control" autofocus="autofocus" />
             <span asp-validation-for="CardNumber"></span>
         </div>
@@ -27,7 +27,7 @@
         <div class="col-md-4 col-12 text-md-right">
             <label class="col-form-label" asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
         </div>
-        <div class="col-md-4 col-12 text-right d-md-flex input-group">
+        <div class="col-md-6 col-12 text-right d-md-flex input-group">
             <select asp-for="ExpireMonth" class="form-control col-md-4 col-12" asp-items="Model.ExpireMonths"></select>
             <select asp-for="ExpireYear" class="form-control col-md-4 col-12" asp-items="Model.ExpireYears"></select>
         </div>
@@ -37,7 +37,7 @@
         <div class="col-md-4 col-12 text-md-right">
             <label class="col-form-label" asp-for="CardCode">@T("Payment.CardCode"):</label>
         </div>
-        <div class="col-md-4 col-12 text-right">
+        <div class="col-md-6 col-12 text-right">
             <input asp-for="CardCode" class="form-control" autofocus="autofocus" />
             <span asp-validation-for="CardCode"></span>
         </div>
