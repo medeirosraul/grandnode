@@ -48,6 +48,7 @@ function displayPopupPrivacyPreference(html) {
 }
 
 function displayPopupAddToCart(html) {
+    document.querySelector('.modal-place').innerHTML = html;
         new Vue({
             el: '#ModalAddToCart',
             data: {
@@ -65,6 +66,9 @@ function displayPopupAddToCart(html) {
             methods: {
                 showModal() {
                     this.$refs['ModalAddToCart'].show()
+                },
+                onShown() {
+                    runScripts(document.querySelector('.script-tag'))
                 }
             },
             mounted() {
