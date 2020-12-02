@@ -52,7 +52,7 @@
                     <div class="accordion opc" id="checkout-steps" role="tablist">
                         <b-card id="billing_card" no-body class="mb-1" @if (Model.DisableBillingAddressCheckoutStep) { <text> style="display:none;" </text> }>
                             <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-billing id="button-billing" class="allow" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@billingAddressStepNumber. @T("Checkout.BillingAddress")</b-button>
+                                <b-button block v-b-toggle.opc-billing id="button-billing" class="allow" variant="info" onclick="resetSteps(this)">@billingAddressStepNumber. @T("Checkout.BillingAddress")</b-button>
                             </b-card-header>
                             <b-collapse id="opc-billing" visible accordion="my-accordion" role="tabpanel" appear>
                                 <b-card-body>
@@ -78,7 +78,7 @@
                         {
                             <b-card no-body class="mb-1">
                                 <b-card-header header-tag="header" class="p-1" role="tab">
-                                    <b-button block v-b-toggle.opc-shipping id="button-shipping" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@shippingAddressStepNumber. @T("Checkout.ShippingAddress")</b-button>
+                                    <b-button block v-b-toggle.opc-shipping id="button-shipping" variant="info" onclick="resetSteps(this)">@shippingAddressStepNumber. @T("Checkout.ShippingAddress")</b-button>
                                 </b-card-header>
                                 <b-collapse id="opc-shipping" accordion="my-accordion" role="tabpanel" appear>
                                     <b-card-body>
@@ -109,7 +109,7 @@
                         }
                         <b-card no-body class="mb-1">
                             <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-shipping-method id="button-shipping-method" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@shippingMethodStepNumber. @T("Checkout.ShippingMethod")</b-button>
+                                <b-button block v-b-toggle.opc-shipping-method id="button-shipping-method" variant="info" onclick="resetSteps(this)">@shippingMethodStepNumber. @T("Checkout.ShippingMethod")</b-button>
                             </b-card-header>
                             <b-collapse id="opc-shipping-method" accordion="my-accordion" role="tabpanel" appear>
                                 <b-card-body>
@@ -132,7 +132,7 @@
                         </b-card>
                         <b-card no-body class="mb-1">
                             <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-payment-method id="button-payment-method" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@paymentMethodStepNumber. @T("Checkout.PaymentMethod")</b-button>
+                                <b-button block v-b-toggle.opc-payment-method id="button-payment-method" variant="info" onclick="resetSteps(this)">@paymentMethodStepNumber. @T("Checkout.PaymentMethod")</b-button>
                             </b-card-header>
                             <b-collapse id="opc-payment-method" accordion="my-accordion" role="tabpanel" appear>
                                 <b-card-body>
@@ -158,7 +158,7 @@
                         </b-card>
                         <b-card no-body class="mb-1">
                             <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-payment-info id="button-payment-info" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@paymentInfoStepNumber. @T("Checkout.PaymentInfo")</b-button>
+                                <b-button block v-b-toggle.opc-payment-info id="button-payment-info" variant="info" onclick="resetSteps(this)">@paymentInfoStepNumber. @T("Checkout.PaymentInfo")</b-button>
                             </b-card-header>
                             <b-collapse id="opc-payment-info" accordion="my-accordion" role="tabpanel" appear>
                                 <b-card-body>
@@ -184,7 +184,7 @@
                         </b-card>
                         <b-card no-body class="mb-1">
                             <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-confirm-order id="button-confirm-order" variant="info" onclick="document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); }); this.parentElement.parentElement.classList.add('active');">@confirmOrderStepNumber. @T("Checkout.ConfirmOrder")</b-button>
+                                <b-button block v-b-toggle.opc-confirm-order id="button-confirm-order" variant="info" onclick="resetSteps(this)">@confirmOrderStepNumber. @T("Checkout.ConfirmOrder")</b-button>
                             </b-card-header>
                             <b-collapse id="opc-confirm-order" accordion="my-accordion" role="tabpanel" appear>
                                 <b-card-body>
@@ -219,7 +219,23 @@
         if (Billing.disableBillingAddressCheckoutStep)
         {
             Billing.save();
+    }
+    var getClosest = function (elem, selector) {
+        for (; elem && elem !== document; elem = elem.parentNode) {
+            if (elem.matches(selector)) return elem;
         }
+        return null;
+    };
+    function resetSteps(e) {
+        var card = getClosest(e, '.card');
+        document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); });
+        card.classList.add('active');
+    }
+    vm.$root.$on('bv::collapse::state', (id, state) => {
+        if (state == true) {
+            document.getElementById(id).parentElement.classList.add('active');
+        }
+    })
 </script>
 <script>
     Vue.mixin({

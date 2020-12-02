@@ -1,6 +1,7 @@
 /*
 ** one page checkout
 */
+
 var Checkout = {
     loadWaiting: false,
     failureUrl: false,
@@ -157,9 +158,12 @@ var Checkout = {
                 vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
                 vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage;
                 vm.ConfirmWarnings = Model.Warnings;
-                console.log(Model.Warnings);
                 if (Model.Warnings.length !== 0) {
-                    document.querySelector('#button-confirm-order').click();
+                    vm.$root.$on('bv::collapse::state', (id, state) => {
+                        if (state == false) {
+                            vm.$root.$emit('bv::toggle::collapse', id)
+                        }
+                    })
                 }
                 vm.Confirm = true;
                 setTimeout(function () {
@@ -640,7 +644,6 @@ var ConfirmOrder = {
     },
 
     nextStep: function (response) {
-        console.log(response);
         if (response.data.error) {
             if ((typeof response.data.message) == 'string') {
                 alert(response.data.message);
