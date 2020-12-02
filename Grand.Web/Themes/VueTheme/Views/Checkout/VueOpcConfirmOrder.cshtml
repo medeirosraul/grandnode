@@ -10,7 +10,7 @@
                 {{MinOrderTotalWarning}}
             </div>
         </div>
-        <div v-if="ConfirmWarnings !== undefined" class="alert alert-danger my-3">
+        <div v-if="ConfirmWarnings !== 'undefined' && ConfirmWarnings.length > 0" class="alert alert-danger my-3">
             <template v-for="warning in ConfirmWarnings">
                 <span>{{warning}}</span>
             </template>

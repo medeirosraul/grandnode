@@ -155,8 +155,12 @@ var Checkout = {
             if (response.data.goto_section == "confirm_order") {
                 var Model = JSON.parse(response.data.update_section.html);
                 vm.MinOrderTotalWarning = Model.MinOrderTotalWarning;
-                vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage,
-                vm.ConfirmWarnings = Model.ConfirmWarnings
+                vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage;
+                vm.ConfirmWarnings = Model.Warnings;
+                console.log(Model.Warnings);
+                if (Model.Warnings.length !== 0) {
+                    document.querySelector('#button-confirm-order').click();
+                }
                 vm.Confirm = true;
                 setTimeout(function () {
                     var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
@@ -636,6 +640,7 @@ var ConfirmOrder = {
     },
 
     nextStep: function (response) {
+        console.log(response);
         if (response.data.error) {
             if ((typeof response.data.message) == 'string') {
                 alert(response.data.message);
