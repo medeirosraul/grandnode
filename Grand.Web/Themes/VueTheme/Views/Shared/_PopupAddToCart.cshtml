@@ -14,9 +14,7 @@
         text = string.Format(T("Addtocart.Auctions.Ongoing").Text, Model.TotalItems);
     }
 }
-@await Component.InvokeAsync("Widget", new { widgetZone = "popup_add_to_cart_content_before", additionalData = Model })
-<div>
-    <b-modal ref="ModalAddToCart" id="ModalAddToCart" body-class="p-0" size="lg" centered hide-footer hide-header>
+    <b-modal ref="ModalAddToCart" id="ModalAddToCart" body-class="p-0" size="lg" @@shown="onShown" centered hide-footer hide-header>
         <b-button class="modal-close" block @@click="$bvModal.hide('ModalAddToCart')"><b-icon icon="x" variant="white"></b-icon></b-button>
         <b-card header-tag="header" footer-tag="footer" header-bg-variant="info" footer-bg-variant="white" footer-class="pt-0 border-0">
             <template v-slot:header>
@@ -175,4 +173,6 @@
             </template>
         </b-card>
     </b-modal>
-</div>
+    <div class="script-tag">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "popup_add_to_cart_content_before", additionalData = Model })
+    </div>

@@ -59,6 +59,9 @@
     position: -webkit-sticky !important;
     position: sticky !important;
 }
+.opc .shopping-cart .qty-input {
+    padding: 0;
+}
 
 @media (max-width: 1200px) {
     .opc .order-summary .cart-footer {

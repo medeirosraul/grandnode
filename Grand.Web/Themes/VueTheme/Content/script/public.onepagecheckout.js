@@ -159,11 +159,8 @@ var Checkout = {
                 vm.TermsOfServiceOnOrderConfirmPage = Model.TermsOfServiceOnOrderConfirmPage;
                 vm.ConfirmWarnings = Model.Warnings;
                 if (Model.Warnings.length !== 0) {
-                    vm.$root.$on('bv::collapse::state', (id, state) => {
-                        if (state == false) {
-                            vm.$root.$emit('bv::toggle::collapse', id)
-                        }
-                    })
+                    var button = document.querySelector('#button-' + response.data.update_section.name);
+                    resetSteps(button);
                 }
                 vm.Confirm = true;
                 setTimeout(function () {
@@ -197,7 +194,9 @@ var Checkout = {
             }
             //document.querySelector('#checkout-' + response.data.update_section.name + '-load').innerHTML = response.data.update_section.html;
             if (!response.data.wrong_billing_address) {
-                document.querySelector('#button-' + response.data.update_section.name).click();
+                if (!(document.querySelector("#opc-confirm-order").classList.contains('show'))) {
+                    document.querySelector('#button-' + response.data.update_section.name).click();
+                }
             }
         }
         if (response.data.allow_sections) {
@@ -273,7 +272,6 @@ var Billing = {
                     if (document.querySelector('#back-' + response.data.goto_section)) {
                         document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-billing").click()');
                     }
-                    document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
                 }
             }
             this.Billing.nextStep(response);
@@ -373,7 +371,6 @@ var Shipping = {
                 }
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping").click()');
             }
-            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
         }).catch(function (error) {
             error.axiosFailure;
         }).then(function () {
@@ -444,7 +441,6 @@ var ShippingMethod = {
                     this.ShippingMethod.nextStep(response);
                     document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
                 }
-                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
@@ -524,7 +520,6 @@ var PaymentMethod = {
                     this.PaymentMethod.nextStep(response);
                     document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-method").click()');
                 }
-                document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
