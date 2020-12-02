@@ -380,7 +380,7 @@ body:not(.modal-open) {
      font-size: 24px;
 }
 /* For submenus */
- .Menu > li ul .Icon, .Menu.-floating .Icon, .Menu > li ul *[data-icon]:before, .Menu.-floating *[data-icon]:before, {
+ .Menu > li ul .Icon, .Menu.-floating .Icon, .Menu > li ul *[data-icon]:before, .Menu.-floating *[data-icon]:before {
      font-size: 18px;
 }
 /* Colouring of menus */
