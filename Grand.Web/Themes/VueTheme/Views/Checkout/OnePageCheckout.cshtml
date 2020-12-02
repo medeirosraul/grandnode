@@ -231,11 +231,6 @@
         document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); });
         card.classList.add('active');
     }
-    vm.$root.$on('bv::collapse::state', (id, state) => {
-        if (state == true) {
-            document.getElementById(id).parentElement.classList.add('active');
-        }
-    })
 </script>
 <script>
     Vue.mixin({

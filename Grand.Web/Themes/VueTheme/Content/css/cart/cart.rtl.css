@@ -44,8 +44,8 @@
     pointer-events: none;
     opacity: 0.5;
 }
-.opc .card.active ~ .card:not(.active),
-.opc .card.active ~ .card:not(.active) .btn.allow {
+.opc .card.active + .card:not(.active),
+.opc .card.active + .card:not(.active) .btn.allow {
     pointer-events: none !important;
     opacity: 0.5 !important;
 }
@@ -58,6 +58,9 @@
     top: 0;
     position: -webkit-sticky !important;
     position: sticky !important;
+}
+.opc .shopping-cart .qty-input  {
+    padding: 0;
 }
 
 @media (max-width: 991px) {
