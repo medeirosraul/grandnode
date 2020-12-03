@@ -18,3 +18,25 @@
         </form>
     </b-modal>
 }
+<script>
+    var myMixin = {
+        created: function () {
+            this.showBanner();
+        },
+        methods: {
+            showBanner: function () {
+                setTimeout(function () {
+                    if (vm.$refs['ModalBanner']) {
+                        vm.$bvModal.show('ModalBanner');
+                    }
+                }, 300);
+            }
+        }
+    }
+    // define a component that uses this mixin
+    var Component = Vue.extend({
+        mixins: [myMixin]
+    })
+
+    var component = new Component();
+</script>

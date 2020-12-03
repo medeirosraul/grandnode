@@ -47,9 +47,6 @@ var vm = new Vue({
         window.addEventListener('scroll', this.handleScroll);
         this.isMobile();
         this.updateFly();
-        if (this.$refs['ModalBanner']) {
-            this.showBanner();
-        }
     },
     watch: {
         fluid(newName) {
@@ -86,9 +83,6 @@ var vm = new Vue({
         },
         showModalBackInStock() {
             this.$refs['back-in-stock'].show()
-        },
-        showBanner() {
-            this.$refs['ModalBanner'].show()
         },
         validateBeforeSubmit(event) {
             this.$validator.validateAll().then((result) => {
