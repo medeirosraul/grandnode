@@ -374,33 +374,18 @@
             <h5 class="generalTitle">@T("Order.Product(s)")</h5>
             <div class="mt-1">
                 <div class="shopping-cart-container">
-                    <b-table :fields="fields" :items="items" class="shopping-cart">
-                        <template v-slot:cell(picture)="data">
-                            <div v-html="data.value.picture"></div>
-                        </template>
-                        <template v-slot:cell(product)="data">
-                            <div v-html="data.value.product"></div>
-                        </template>
-                        <template v-slot:cell(unitprice)="data">
-                            <div v-html="data.value.unitprice"></div>
-                        </template>
-                        <template v-slot:cell(quantity)="data">
-                            <div v-html="data.value.quantity"></div>
-                        </template>
-                        <template v-slot:cell(subtotal)="data">
-                            <div v-html="data.value.subtotal"></div>
-                        </template>
-                    </b-table>
+                    <div id="order-details"></div>
                     <script>
-                        Vue.mixin({
-                                data() {
+                            var OrderDetails = Vue.extend({
+                                    template: '<b-table :fields="fields" :items="items" class="shopping-cart"> <template v-slot:cell(picture)="data"> <div v-html="data.value.picture"></div></template> <template v-slot:cell(product)="data"> <div v-html="data.value.product"></div></template> <template v-slot:cell(unitprice)="data"> <div v-html="data.value.unitprice"></div></template> <template v-slot:cell(quantity)="data"> <div v-html="data.value.quantity"></div></template> <template v-slot:cell(subtotal)="data"> <div v-html="data.value.subtotal"></div></template> </b-table>',
+                                    data: function () {
                                     return {
-                                        fields: [
+                                         fields: [
                                             { key: 'picture', label: '@T("Order.Product(s).Picture")', class: 'text-center' },
-                                            { key: 'product', label: '@T("Order.Product(s).Name")', sortable: true, class: 'text-center' },
-                                            { key: 'unitprice', label: '@T("Order.Product(s).Price")', sortable: true, class: 'text-center'  },
-                                            { key: 'quantity', label: '@T("Order.Product(s).Quantity")', sortable: true, class: 'text-center' },
-                                            { key: 'subtotal', label: '@T("Order.Product(s).Total")', sortable: true, class: 'text-center' },
+                                            { key: 'product', label: '@T("Order.Product(s).Name")', class: 'text-center' },
+                                            { key: 'unitprice', label: '@T("Order.Product(s).Price")', class: 'text-center'  },
+                                            { key: 'quantity', label: '@T("Order.Product(s).Quantity")',  class: 'text-center' },
+                                            { key: 'subtotal', label: '@T("Order.Product(s).Total")', class: 'text-center' },
                                         ],
                                         items: [
                                              @foreach (var item in Model.Items)
@@ -426,9 +411,10 @@
                                             </text>
                                             }
                                                 ]
-                                        }
                                     }
-                                });
+                                }
+                            })
+                        new OrderDetails().$mount('#order-details')
                     </script>
                 </div>
             </div>

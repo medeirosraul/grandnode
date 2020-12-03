@@ -23,29 +23,17 @@
         <h5><strong>@T("RewardPoints.History")</strong></h5>
         @if (Model.RewardPoints.Any())
         {
-            <b-table :fields="fields" :items="items">
-                <template v-slot:cell(date)="data">
-                    <div v-html="data.value.date"></div>
-                </template>
-                <template v-slot:cell(points)="data">
-                    <div v-html="data.value.points"></div>
-                </template>
-                <template v-slot:cell(pointsbalance)="data">
-                    <div v-html="data.value.pointsbalance"></div>
-                </template>
-                <template v-slot:cell(message)="data">
-                    <div v-html="data.value.message"></div>
-                </template>
-            </b-table>
-            <script>
-                Vue.mixin({
-                                data() {
+                        <div id="customer-reward-points"></div>
+                        <script>
+                            var CustomerRewardPoints = Vue.extend({
+                                template: '<b-table :fields="fields" :items="items"> <template v-slot:cell(date)="data"> <div v-html="data.value.date"></div></template> <template v-slot:cell(points)="data"> <div v-html="data.value.points"></div></template> <template v-slot:cell(pointsbalance)="data"> <div v-html="data.value.pointsbalance"></div></template> <template v-slot:cell(message)="data"> <div v-html="data.value.message"></div></template> </b-table>',
+                                data: function () {
                                     return {
-                                        fields: [
-                                            { key: 'date', label: '@T("RewardPoints.Fields.Date")', sortable: true },
-                                            { key: 'points', label: '@T("RewardPoints.Fields.Points")', sortable: true },
-                                            { key: 'pointsbalance', label: '@T("RewardPoints.Fields.PointsBalance")', sortable: true  },
-                                            { key: 'message', label: '@T("RewardPoints.Fields.Message")', sortable: true },
+                                         fields: [
+                                            { key: 'date', label: '@T("RewardPoints.Fields.Date")'},
+                                            { key: 'points', label: '@T("RewardPoints.Fields.Points")'},
+                                            { key: 'pointsbalance', label: '@T("RewardPoints.Fields.PointsBalance")'},
+                                            { key: 'message', label: '@T("RewardPoints.Fields.Message")'},
                                         ],
                                         items: [
                                              @for (int i = 0; i < Model.RewardPoints.Count; i++)
@@ -69,11 +57,12 @@
                                             },
                                             </text>
                                             }
-                                                ]
-                                        }
+                                        ]
                                     }
-                                });
-            </script>
+                                }
+                            })
+                            new CustomerRewardPoints().$mount('#customer-reward-points')
+                        </script>
         }
         else
         {

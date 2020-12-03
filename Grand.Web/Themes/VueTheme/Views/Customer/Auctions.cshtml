@@ -20,29 +20,17 @@
                 <b-tab title="@T("Account.Auctions.Tab.Ongoing")" active>
                     @if (Model.ProductBidList.Where(x => !x.Ended).Any())
                     {
-                        <b-table :fields="fields" :items="items">
-                            <template v-slot:cell(product)="data">
-                                <div v-html="data.value.nameraw"></div>
-                            </template>
-                            <template v-slot:cell(status)="data">
-                                <div v-html="data.value.statusraw"></div>
-                            </template>
-                            <template v-slot:cell(bid)="data">
-                                <div v-html="data.value.bidraw"></div>
-                            </template>
-                            <template v-slot:cell(endtime)="data">
-                                <div v-html="data.value.endtimeraw"></div>
-                            </template>
-                        </b-table>
+                        <div id="auction-table-ongoing"></div>
                         <script>
-                            Vue.mixin({
-                                data() {
+                            var AuctionTableOngoing = Vue.extend({
+                                template: '<b-table :fields="fields" :items="items"><template v-slot:cell(product)="data"><div v-html="data.value.nameraw"></div></template><template v-slot:cell(status)="data"><div v-html="data.value.statusraw"></div></template><template v-slot:cell(bid)="data"><div v-html="data.value.bidraw"></div></template><template v-slot:cell(endtime)="data"><div v-html="data.value.endtimeraw"></div></template></b-table>',
+                                data: function () {
                                     return {
                                         fields: [
-                                            { key: 'product', label: '@T("Account.CustomerAuctions.ProductName")', sortable: true },
-                                            { key: 'status', label: '@T("Account.CustomerAuctions.Status")', sortable: true },
-                                            { key: 'bid', label: '@T("Account.CustomerAuctions.Highestbid")', sortable: true },
-                                            { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")', sortable: true },
+                                            { key: 'product', label: '@T("Account.CustomerAuctions.ProductName")'},
+                                            { key: 'status', label: '@T("Account.CustomerAuctions.Status")'},
+                                            { key: 'bid', label: '@T("Account.CustomerAuctions.Highestbid")'},
+                                            { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")'},
                                         ],
                                         items: [
                                             @{
@@ -81,7 +69,8 @@
                                         ]
                                     }
                                 }
-                            });
+                            })
+                            new AuctionTableOngoing().$mount('#auction-table-ongoing')
                         </script>
                     }
                     else
@@ -94,29 +83,18 @@
                 <b-tab title="@T("Account.Auctions.Tab.Ended")">
                     @if (Model.ProductBidList.Where(x => x.Ended).Any())
                     {
-                        <b-table :fields="fields" :items="items">
-                            <template v-slot:cell(product)="data">
-                                <div v-html="data.value.nameraw"></div>
-                            </template>
-                            <template v-slot:cell(status)="data">
-                                <div v-html="data.value.statusraw"></div>
-                            </template>
-                            <template v-slot:cell(bid)="data">
-                                <div v-html="data.value.bidraw"></div>
-                            </template>
-                            <template v-slot:cell(endtime)="data">
-                                <div v-html="data.value.endtimeraw"></div>
-                            </template>
-                        </b-table>
+
+                        <div id="auction-table-ended"></div>
                         <script>
-                            Vue.mixin({
-                                data() {
+                            var AuctionTableEnded = Vue.extend({
+                                template: '<b-table :fields="fields" :items="items"><template v-slot:cell(product)="data"><div v-html="data.value.nameraw"></div></template><template v-slot:cell(status)="data"><div v-html="data.value.statusraw"></div></template><template v-slot:cell(bid)="data"><div v-html="data.value.bidraw"></div></template><template v-slot:cell(endtime)="data"><div v-html="data.value.endtimeraw"></div></template></b-table>',
+                                data: function () {
                                     return {
                                         fields: [
-                                            { key: 'product', label: '@T("Account.CustomerAuctions.ProductName")', sortable: true },
-                                            { key: 'status', label: '@T("Account.CustomerAuctions.Status")', sortable: true },
-                                            { key: 'bid', label: '@T("Account.CustomerAuctions.Highestbid")', sortable: true  },
-                                            { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")', sortable: true  },
+                                            { key: 'product', label: '@T("Account.CustomerAuctions.ProductName")'},
+                                            { key: 'status', label: '@T("Account.CustomerAuctions.Status")'},
+                                            { key: 'bid', label: '@T("Account.CustomerAuctions.Highestbid")'},
+                                            { key: 'endtime', label: '@T("Account.CustomerAuctions.AuctionEndTime")'},
                                         ],
                                         items:  [
                                             @{
@@ -157,12 +135,14 @@
                                         }
                                     }
                                 })
+                            new AuctionTableEnded().$mount('#auction-table-ended')
                         </script>
-                    } else 
+                    }
+                    else
                     {
                         <div class="no-data alert alert-info">
                             @T("Account.Auctions.NoOngoingAuctions")
-                        </div>                     
+                        </div>
                     }
                 </b-tab>
             </b-tabs>
