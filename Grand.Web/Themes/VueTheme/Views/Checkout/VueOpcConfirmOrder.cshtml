@@ -17,7 +17,7 @@
         </div>
     </div>
     @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_confirm_bottom" })
-        <template v-if="MinOrderTotalWarning == null && TermsOfServiceOnOrderConfirmPage">
+        <template v-if="MinOrderTotalWarning == null && cart.TermsOfServiceOnOrderConfirmPage">
             <div id="confirm-data-modal" data-title="@T("Checkout.TermsOfService")" data-body="@T("Checkout.TermsOfService.PleaseAccept")" data-terms="@T("Checkout.TermsOfService.PleaseAccept")" data-link="@Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Conditionsofuse })" data-linkname="@T("Checkout.TermsOfService.Read")"></div>
             <b-button id="new-back-confirm_order">@T("Common.Back")</b-button>
             <b-button variant="info" @@click="showMsgBoxOne">

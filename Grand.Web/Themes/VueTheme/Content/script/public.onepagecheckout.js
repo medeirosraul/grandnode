@@ -133,13 +133,8 @@ var Checkout = {
             if (response.data.goto_section == "confirm_order") {
                 var model = JSON.parse(response.data.update_section.html);
                 vm.MinOrderTotalWarning = model.MinOrderTotalWarning;
-                vm.TermsOfServiceOnOrderConfirmPage = model.TermsOfServiceOnOrderConfirmPage;
                 vm.ConfirmWarnings = model.Warnings;
 
-                if (model.Warnings.length !== 0) {
-                    var button = document.querySelector('#button-' + response.data.update_section.name);
-                    resetSteps(button);
-                }
                 vm.Confirm = true;
 
                 setTimeout(function () {
@@ -153,7 +148,8 @@ var Checkout = {
 
             if (!response.data.wrong_billing_address) {
                 if (!(document.querySelector("#opc-confirm-order").classList.contains('show'))) {
-                    document.querySelector('#button-' + response.data.update_section.name).click();
+                    vm.$root.$emit('bv::toggle::collapse', 'opc-' + response.data.update_section.name)
+                    resetSteps(document.querySelector('#opc-' + response.data.update_section.name));
                 }
             }
         }
@@ -423,7 +419,8 @@ var ShippingMethod = {
                 method: 'post',
                 data: data,
             }).then(function (response) {
-                    this.ShippingMethod.nextStep(response);
+                this.ShippingMethod.nextStep(response);
+                document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-shipping-method").click()');
             }).catch(function (error) {
                 error.axiosFailure;
             }).then(function () {
@@ -573,7 +570,6 @@ var PaymentInfo = {
                 });
                 
             }
-            document.querySelector('#opc-' + response.data.update_section.name).parentElement.classList.remove('active');
 
         }).catch(function (error) {
             error.axiosFailure;
@@ -659,7 +655,6 @@ var ConfirmOrder = {
             ConfirmOrder.isSuccess = true;
             window.location = ConfirmOrder.successUrl;
         }
-
         Checkout.setStepResponse(response);
     }
 };  
