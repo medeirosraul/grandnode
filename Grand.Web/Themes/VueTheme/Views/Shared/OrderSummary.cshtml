@@ -182,7 +182,7 @@
                         <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
                             <div v-if-else="cart.MinOrderSubtotalWarning !== null">
                                 <template v-if="cart.TermsOfServiceOnShoppingCartPage">
-                                    <b-button type="button" id="checkoutasguest"  v-if="cart.IsGuest" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
+                                    <b-button type="button" id="checkoutasguest"  v-if="cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
                                         @T("Account.Login.CheckoutAsGuest")
                                     </b-button>
                                     <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
@@ -195,7 +195,7 @@
                                     </b-button>
                                 </template>
                                 <template v-else>
-                                    <b-button type="button" id="checkoutasguest" v-if="cart.IsGuest" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
+                                    <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
                                         @T("Account.Login.CheckoutAsGuest")
                                     </b-button>
                                     <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button mt-sm-0 mt-1">
