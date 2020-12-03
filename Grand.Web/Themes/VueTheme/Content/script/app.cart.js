@@ -59,6 +59,9 @@ var vm = new Vue({
                 bvEvent.preventDefault()
             }
         });
+        if (this.$refs['ModalBanner']) {
+            this.showBanner();
+        }
         this.isMobile();
         this.updateFly();
     },
@@ -97,6 +100,9 @@ var vm = new Vue({
         },
         showModalBackInStock() {
             this.$refs['back-in-stock'].show()
+        },
+        showBanner() {
+            this.$refs['ModalBanner'].show()
         },
         validateBeforeSubmit(event) {
             this.$validator.validateAll().then((result) => {

@@ -7,18 +7,6 @@
             @Html.Raw(Model.Body)
         </div>
     </b-modal>
-    <script asp-location="Header">
-        Vue.mixin({
-            methods: {
-                showBanner() {
-                    this.$refs['ModalBanner'].show()
-                }
-            },
-            mounted() {
-                this.showBanner();
-            }
-        })
-    </script>
 }
 
 @if (Model.PopupType == Grand.Domain.Messages.PopupType.InteractiveForm)
@@ -29,16 +17,4 @@
             <div id="action-body-form">@Html.Raw(Model.Body)</div>
         </form>
     </b-modal>
-    <script asp-location="Header">
-        Vue.mixin({
-            methods: {
-                showBanner() {
-                    this.$refs['ModalBanner'].show()
-                }
-            },
-            mounted() {
-                this.showBanner();
-            }
-        })
-    </script>
 }
