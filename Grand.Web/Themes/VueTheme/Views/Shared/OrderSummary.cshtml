@@ -8,7 +8,7 @@
 @{
     var themeName = themeContext.WorkingThemeName;
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
-    var firstLoad = Model != null;
+    var modelExists = Model != null;
 }
 <div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="cart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
@@ -137,89 +137,107 @@
                     </table>
                 </div>
             </div>
-            <div v-if="cart.IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
-                <a onclick="location.href='@(Url.RouteUrl("ClearCart"))'" class="btn btn-danger removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></a>
-                <a onclick="location.href=('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary continue-shopping-button">@T("shoppingcart.continueshopping")</a>
-            </div>
+            @if (modelExists)
+            {
+                <div v-if="cart.IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
+                    <a onclick="location.href='@(Url.RouteUrl("ClearCart"))'" class="btn btn-danger removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></a>
+                    <a onclick="location.href=('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary continue-shopping-button">@T("shoppingcart.continueshopping")</a>
+                </div>
+            }
             <div class="cart-options">
                 <div class="row">
-                    <div v-if="cart.IsEditable" class="col-12 col-md-6 checkoutAttributes">
-                        <partial name="_CheckoutAttributes" />
-                    </div>
+                    @if (modelExists)
+                    {
+                        <div v-if="cart.IsEditable" class="col-12 col-md-6 checkoutAttributes">
+                            <partial name="_CheckoutAttributes" />
+                        </div>
+                    }
                     <div v-if="cart.CheckoutAttributeInfo" class="selected-checkout-attributes col-sm-3 col-md-6 col-12 ml-auto justify-content-end text-right mt-3">
                         <div v-html="cart.CheckoutAttributeInfo"></div>
                     </div>
                 </div>
             </div>
-            <div v-if="cart.IsEditable && cart.Items != null && cart.DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
-                <div class="taxHelper">
-                    @{
-                        var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
-                    }
-                    <div class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
-                        <span class="taxHelper">
-                            @T(inclTax ? "ShoppingCart.TaxShipping.InclTax" : "ShoppingCart.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Shippinginfo }))
-                        </span>
+            @if (modelExists)
+            {
+                <div v-if="cart.IsEditable && cart.Items != null && cart.DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
+                    <div class="taxHelper">
+                        @{
+                            var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
+                        }
+                        <div class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
+                            <span class="taxHelper">
+                                @T(inclTax ? "ShoppingCart.TaxShipping.InclTax" : "ShoppingCart.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = TopicSeNameConstants.Shippinginfo }))
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             <div class="cart-footer mt-3 mb-3">
                 <div class="row">
                     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_cart_footer" })
-                    <div v-if="cart.IsEditable" class="col-sm-6 col-12 cart-collaterals">
-                        <div v-if="cart.GiftCardBox || cart.DiscountBox" class="deals">
-                            <partial name="_GiftCardBox" />
-                            <partial name="_DiscountBox" />
-                            @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_deals" })
+                    @if (modelExists)
+                    {
+                        <div v-if="cart.IsEditable" class="col-sm-6 col-12 cart-collaterals">
+                            <div v-if="cart.GiftCardBox || cart.DiscountBox" class="deals">
+                                <partial name="_GiftCardBox" />
+                                <partial name="_DiscountBox" />
+                                @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_deals" })
+                            </div>
+                            @await Component.InvokeAsync("EstimateShipping")
                         </div>
-                        @await Component.InvokeAsync("EstimateShipping")
-                    </div>
+                    }
                     <div class="col-sm-6 col-12 totals float-sm-right ml-auto pt-0">
                         <partial name="OrderTotals" />
-                        <div v-if="cart.IsEditable && cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
-                            {{cart.MinOrderSubtotalWarning}}
-                        </div>
-                        <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
-                            <div v-if-else="cart.MinOrderSubtotalWarning !== null">
-                                <template v-if="cart.TermsOfServiceOnShoppingCartPage">
-                                    <b-button type="button" id="checkoutasguest"  v-if="cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
-                                        @T("Account.Login.CheckoutAsGuest")
-                                    </b-button>
-                                    <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
-                                        <span v-if="cart.IsGuest">
-                                            @T("Checkout.Button.Login")
-                                        </span>
-                                        <span v-else>
-                                            @T("Checkout.Button")
-                                        </span>
-                                    </b-button>
-                                </template>
-                                <template v-else>
-                                    <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
-                                        @T("Account.Login.CheckoutAsGuest")
-                                    </b-button>
-                                    <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button mt-sm-0 mt-1">
-                                        <span v-if="cart.IsGuest">
-                                            @T("Checkout.Button.Login")
-                                        </span>
-                                        <span v-else>
-                                            @T("Checkout.Button")
-                                        </span>
-                                    </b-button>
-                                </template>
+                        @if (modelExists)
+                        {
+                            <div v-if="cart.IsEditable && cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
+                                {{cart.MinOrderSubtotalWarning}}
                             </div>
-                        </div>
-                        <div class="addon-buttons">
-                            <div v-for="pm in cart.ButtonPaymentMethodViewComponentNames">
-                                <div v-html="pm"></div>
+                            <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
+                                <div v-if-else="cart.MinOrderSubtotalWarning !== null">
+                                    <template v-if="cart.TermsOfServiceOnShoppingCartPage">
+                                        <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
+                                            @T("Account.Login.CheckoutAsGuest")
+                                        </b-button>
+                                        <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
+                                            <span v-if="cart.IsGuest">
+                                                @T("Checkout.Button.Login")
+                                            </span>
+                                            <span v-else>
+                                                @T("Checkout.Button")
+                                            </span>
+                                        </b-button>
+                                    </template>
+                                    <template v-else>
+                                        <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
+                                            @T("Account.Login.CheckoutAsGuest")
+                                        </b-button>
+                                        <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button mt-sm-0 mt-1">
+                                            <span v-if="cart.IsGuest">
+                                                @T("Checkout.Button.Login")
+                                            </span>
+                                            <span v-else>
+                                                @T("Checkout.Button")
+                                            </span>
+                                        </b-button>
+                                    </template>
+                                </div>
                             </div>
-                        </div>
+                            <div class="addon-buttons">
+                                <div v-for="pm in cart.ButtonPaymentMethodViewComponentNames">
+                                    <div v-html="pm"></div>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
-            <div>
-                @await Component.InvokeAsync("CrossSellProducts")
-            </div>
+            @if (modelExists)
+            {
+                <div>
+                    @await Component.InvokeAsync("CrossSellProducts")
+                </div>
+            }
         </form>
     </div>
     <div v-else class="no-data alert alert-info text-center">
@@ -267,7 +285,7 @@
             ConfirmWarnings: null
         },
         mounted() {
-            if (@firstLoad.ToString().ToLower() == false) {
+            if (@modelExists.ToString().ToLower() == false) {
                 this.updateCart();
                 this.updateTotals();
             }
