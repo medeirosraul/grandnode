@@ -88,7 +88,10 @@ var Checkout = {
                 vm.ShippingMethods = model.ShippingMethods,
                 vm.ShippingMethodWarnings = model.Warnings,
                 vm.ShippingMethod = true;
-
+                if (model.ShippingMethods.length > 0) {
+                    var elem = model.ShippingMethods[0].Name + '___' + model.ShippingMethods[0].ShippingRateComputationMethodSystemName;
+                    loadPartialView(elem);
+                }
                 this.updateOrderTotal();
             }
             if (response.data.goto_section == "payment_method") {
