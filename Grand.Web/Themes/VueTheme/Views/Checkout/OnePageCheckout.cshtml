@@ -106,30 +106,30 @@
                                     </b-card-body>
                                 </b-collapse>
                             </b-card>
-                        }
-                        <b-card no-body class="mb-1">
-                            <b-card-header header-tag="header" class="p-1" role="tab">
-                                <b-button block v-b-toggle.opc-shipping-method id="button-shipping-method" variant="info" onclick="resetSteps(this)">@shippingMethodStepNumber. @T("Checkout.ShippingMethod")</b-button>
-                            </b-card-header>
-                            <b-collapse id="opc-shipping-method" accordion="my-accordion" role="tabpanel" appear>
-                                <b-card-body>
-                                    <form id="co-shipping-method-form" action="">
-                                        <div id="checkout-shipping-method-load">
-                                            @*shipping methods content will be loaded here*@
-                                            <partial name="VueOpcShippingMethods" model="Model" />
-                                        </div>
-                                        <script asp-location="Footer">
+                            <b-card no-body class="mb-1">
+                                <b-card-header header-tag="header" class="p-1" role="tab">
+                                    <b-button block v-b-toggle.opc-shipping-method id="button-shipping-method" variant="info" onclick="resetSteps(this)">@shippingMethodStepNumber. @T("Checkout.ShippingMethod")</b-button>
+                                </b-card-header>
+                                <b-collapse id="opc-shipping-method" accordion="my-accordion" role="tabpanel" appear>
+                                    <b-card-body>
+                                        <form id="co-shipping-method-form" action="">
+                                            <div id="checkout-shipping-method-load">
+                                                @*shipping methods content will be loaded here*@
+                                                <partial name="VueOpcShippingMethods" model="Model" />
+                                            </div>
+                                            <script asp-location="Footer">
                                             ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
-                                        </script>
-                                        <div class="col-12 buttons pt-1 pb-1 px-0 my-3" id="shipping-method-buttons-container">
-                                            <a class="btn btn-secondary" href="#" id="back-shipping_method" onclick="Checkout.back(); return false;">@T("Common.Back")</a>
-                                            <input type="button" class="btn btn-info shipping-method-next-step-button" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
-                                            <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                                        </div>
-                                    </form>
-                                </b-card-body>
-                            </b-collapse>
-                        </b-card>
+                                            </script>
+                                            <div class="col-12 buttons pt-1 pb-1 px-0 my-3" id="shipping-method-buttons-container">
+                                                <a class="btn btn-secondary" href="#" id="back-shipping_method" onclick="Checkout.back(); return false;">@T("Common.Back")</a>
+                                                <input type="button" class="btn btn-info shipping-method-next-step-button" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
+                                                <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                                            </div>
+                                        </form>
+                                    </b-card-body>
+                                </b-collapse>
+                            </b-card>
+                        }
                         <b-card no-body class="mb-1">
                             <b-card-header header-tag="header" class="p-1" role="tab">
                                 <b-button block v-b-toggle.opc-payment-method id="button-payment-method" variant="info" onclick="resetSteps(this)">@paymentMethodStepNumber. @T("Checkout.PaymentMethod")</b-button>
@@ -231,42 +231,4 @@
         document.querySelectorAll('.opc > .card').forEach(function (e) { e.classList.remove('active'); });
         card.classList.add('active');
     }
-</script>
-<script>
-    Vue.mixin({
-        props: {
-            ShippingAddress: false,
-            ShippingMethod: false,
-            PaymentMethod: false,
-            PaymentInfo: false,
-            Confirm: false,
-            // shipping address
-            ShippingAllowPickUpInStore: null,
-            ShippingExistingAddresses: null,
-            ShippingNewAddress: null,
-            ShippingNewAddressPreselected: null,
-            ShippingPickUpInStore: null,
-            ShippingPickUpInStoreOnly: null,
-            ShippingPickupPoints: null,
-            ShippingWarnings: null,
-            // shipping method
-            NotifyCustomerAboutShippingFromMultipleLocations: null,
-            ShippingMethods: null,
-            ShippingMethodWarnings: null,
-            // payment methods
-            DisplayRewardPoints: null,
-            PaymentMethods: null,
-            RewardPointsAmount: null,
-            RewardPointsBalance: null,
-            RewardPointsEnoughToPayForOrder: null,
-            UseRewardPoints: null,
-            // payment info
-            DisplayOrderTotals: null,
-            PaymentViewComponentName: null,
-            // confirm order
-            MinOrderTotalWarning: null,
-            TermsOfServiceOnOrderConfirmPage: null,
-            ConfirmWarnings: null,
-        }
-    })
 </script>
