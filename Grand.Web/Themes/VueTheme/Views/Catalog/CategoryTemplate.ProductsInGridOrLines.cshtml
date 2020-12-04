@@ -23,7 +23,6 @@
 
         var count = 0;
 
-        <template>
             <b-breadcrumb itemscope itemtype="http://schema.org/BreadcrumbList">
                 <b-breadcrumb-item href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">
                     <b-icon icon="house-door" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
@@ -53,7 +52,6 @@
 
                 }
             </b-breadcrumb>
-        </template>
         @await Component.InvokeAsync("Widget", new { widgetZone = "categorydetails_after_breadcrumb", additionalData = Model.Id })
 
     }

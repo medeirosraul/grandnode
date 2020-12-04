@@ -17,7 +17,6 @@
                 ratingValue = Convert.ToDecimal(((Model.RatingSum * (double)100) / Model.TotalReviews) / (double)100);
             }
         }
-                <template>
                     <div class="rating">
                         <b-form-rating id="rating-inline" class="p-0" variant="warning" no-border size="sm" show-value precision="2" readonly inline value="@(ratingValue)"></b-form-rating>
                         <span class="h6 mb-0 text-info">@Model.TotalReviews @T("Reviews.Overview.Reviews")</span>
@@ -41,6 +40,5 @@
                             </div>
                         }
                     </div>
-                </template>
     </div>
 }

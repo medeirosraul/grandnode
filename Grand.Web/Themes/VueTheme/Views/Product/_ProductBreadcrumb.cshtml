@@ -2,7 +2,6 @@
 @if (Model.Enabled)
 {
     var count = 1;
-    <template>
         <b-container class="px-0">
             <b-breadcrumb class="mb-0" itemscope itemtype="http://schema.org/BreadcrumbList">
                 @await Component.InvokeAsync("Widget", new { widgetZone = "productbreadcrumb_before" })
@@ -28,5 +27,4 @@
                 </b-breadcrumb-item>
             </b-breadcrumb>      
         </b-container>
-    </template>
 }
