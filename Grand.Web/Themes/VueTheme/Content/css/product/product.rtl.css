@@ -105,7 +105,8 @@
 
 /* product add to cart */
 
-.product-add-to-cart .qty-input {
+.product-add-to-cart .qty-input,
+.product-add-to-cart .qty-dropdown {
     width: 75px;
     height: 45px;
 }

@@ -19,7 +19,7 @@
     </b-modal>
 }
 <script>
-    var myMixin = {
+    var BannerMixin = {
         created: function () {
             this.showBanner();
         },
@@ -34,9 +34,9 @@
         }
     }
     // define a component that uses this mixin
-    var Component = Vue.extend({
-        mixins: [myMixin]
+    var Banner = Vue.extend({
+        mixins: [BannerMixin]
     })
 
-    var component = new Component();
+    var banner = new Banner();
 </script>
