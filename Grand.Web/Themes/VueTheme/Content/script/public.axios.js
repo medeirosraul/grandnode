@@ -67,7 +67,11 @@ var AxiosCart = {
             return;
         }
         this.setLoadWaiting(true);
-        var form = document.querySelector(formselector);
+        if (document.querySelector("#ModalQuickView")) {
+            var form = document.querySelector('#ModalQuickView #product-details-form');
+        } else {
+            var form = document.querySelector('.product-standard #product-details-form');
+        }
         var data = new FormData(form);
         axios({
             url: urladd,
