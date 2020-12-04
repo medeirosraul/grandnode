@@ -93,7 +93,7 @@
                                 {
                                     var dataDictAttributes = new ViewDataDictionary(ViewData);
                                     dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                                    <partial name="_ProductAttributes" model="Model.ProductAttributes" view-data="dataDictAttributes" />
+                                    <partial name="VueProductAttributes" model="Model.ProductAttributes" view-data="dataDictAttributes" />
                                 }
                             }
                             <!--warehouses-->

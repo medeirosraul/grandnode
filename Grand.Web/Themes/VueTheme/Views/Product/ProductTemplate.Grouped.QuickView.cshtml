@@ -163,7 +163,7 @@
                                                 {
                                                     var dataDictAttributes = new ViewDataDictionary(ViewData);
                                                     dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", variant.Id);
-                                                    <partial name="_ProductAttributes" model="variant.ProductAttributes" view-data="dataDictAttributes" />
+                                                    <partial name="VueProductAttributes" model="variant.ProductAttributes" view-data="dataDictAttributes" />
                                                 }
                                             }
                                             <!--gift card-->
