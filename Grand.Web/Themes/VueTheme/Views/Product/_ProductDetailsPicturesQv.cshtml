@@ -3,7 +3,7 @@
     <div class="gallery">
         @if (Model.PictureModels.Count > 1)
         {
-            <img id="main-product-img-@Model.Id" class="image main-image"
+            <b-img-lazy id="main-product-img-@Model.Id" class="image main-image"
                  src="@Model.DefaultPictureModel.ImageUrl"
                  alt="@Model.DefaultPictureModel.AlternateText"
                  title="@Model.DefaultPictureModel.Title" />

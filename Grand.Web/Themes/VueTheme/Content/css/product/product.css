@@ -10,6 +10,9 @@
     max-width: 100%;
     margin: 0 0 15px 0;
 }
+.product-details-page .gallery img.image.main-image + div {
+    width: 100%;
+}
 .product-details-page .gallery img.image.thumb-image {
     max-width: 100px;
     margin: 0 7px 7px 0;
