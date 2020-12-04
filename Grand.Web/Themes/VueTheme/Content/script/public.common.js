@@ -249,15 +249,17 @@ function seq(arr, callback, index) {
     if (typeof index === 'undefined') {
         index = 0
     }
+    if (arr.length > 0) {
 
-    arr[index](function () {
-        index++
-        if (index === arr.length) {
-            callback()
-        } else {
-            seq(arr, callback, index)
-        }
-    })
+        arr[index](function () {
+            index++
+            if (index === arr.length) {
+                callback()
+            } else {
+                seq(arr, callback, index)
+            }
+        })
+    }
 }
 
 // trigger DOMContentLoaded
