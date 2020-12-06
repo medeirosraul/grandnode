@@ -303,12 +303,13 @@
             },
             updateCart() {
                 axios({
-                    baseURL: '/Common/Component?Name=OrderSummary',
+                    baseURL: '/Component/Index?Name=OrderSummary',
                     method: 'get',
                     data: null,
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Response-View': 'Json'
                     }
                 }).then(response => {
                     this.cart = response.data;
@@ -319,12 +320,13 @@
             },
             updateTotals() {
                 axios({
-                    baseURL: '/Common/Component?Name=OrderTotals',
+                    baseURL: '/Component/Index?Name=OrderTotals',
                     method: 'get',
                     data: null,
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Response-View': 'Json'
                     }
                 }).then(response => {
                     this.totals = response.data;

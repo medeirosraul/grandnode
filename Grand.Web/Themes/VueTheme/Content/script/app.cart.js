@@ -7,12 +7,13 @@
     methods: {
         updateFly() {
             axios({
-                baseURL: '/Common/Component?Name=FlyoutShoppingCart',
+                baseURL: '/Component/Index?Name=FlyoutShoppingCart',
                 method: 'get',
                 data: null,
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Response-View': 'Json'
                 }
             }).then(response => {
                 this.flycart = response.data;

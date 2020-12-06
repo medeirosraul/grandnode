@@ -114,12 +114,12 @@ var Checkout = {
                     vm.PaymentInfo = true;
 
                 axios({
-                    baseURL: '/Common/Component?Name=' + model.PaymentViewComponentName,
+                    baseURL: '/Component/Index?Name=' + model.PaymentViewComponentName,
                     method: 'get',
                     data: null,
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     }
                 }).then(response => {
                     var html = response.data;
@@ -181,14 +181,15 @@ var Checkout = {
     },
     updateOrderSummary: function (displayOrderReviewData) {
         axios({
-            baseURL: '/Common/Component?Name=OrderSummary',
+            baseURL: '/Component/Index?Name=OrderSummary',
             method: 'post',
             data: {
                 prepareAndDisplayOrderReviewData: displayOrderReviewData,
             },
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Response-View': 'Json'
             }
         }).then(response => {
             vm.cart.OrderReviewData = response.data.OrderReviewData
@@ -197,12 +198,13 @@ var Checkout = {
 
     updateOrderTotal: function () {
         axios({
-            baseURL: '/Common/Component?Name=OrderTotals',
+            baseURL: '/Component/Index?Name=OrderTotals',
             method: 'get',
             data: null,
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Response-View': 'Json'
             }
         }).then(response => {
             vm.totals = response.data;
@@ -564,7 +566,7 @@ var PaymentInfo = {
                 vm.PaymentInfo = true;
 
                 axios({
-                    baseURL: '/Common/ComponentForm?Name=' + model.PaymentViewComponentName,
+                    baseURL: '/Component/Form?Name=' + model.PaymentViewComponentName,
                     method: 'post',
                     data: data,
                 }).then(response => {

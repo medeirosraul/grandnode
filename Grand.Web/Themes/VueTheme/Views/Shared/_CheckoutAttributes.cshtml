@@ -159,7 +159,7 @@
     </div>
 
    <script asp-location="Footer">
-       checkoutAttributeChange();
+       window.onload = checkoutAttributeChange();
         function checkoutAttributeChange() {
             if (document.querySelector('#shopping-cart-form')) {
                 var form = document.querySelector('#shopping-cart-form');
@@ -169,23 +169,8 @@
                     data: data,
                     url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
                 }).then(function (response) {
-                    var newResponse = JSON.parse(response.data.htmlordertotal)
-                    vm.totals.DisplayTax = newResponse.DisplayTax;
-                    vm.totals.DisplayTaxRates = newResponse.DisplayTaxRates;
-                    vm.totals.GiftCards = newResponse.GiftCards;
-                    vm.totals.OrderTotal = newResponse.OrderTotal;
-                    vm.totals.OrderTotalDiscount = newResponse.OrderTotalDiscount;
-                    vm.totals.PaymentMethodAdditionalFee = newResponse.PaymentMethodAdditionalFee;
-                    vm.totals.RedeemedRewardPoints = newResponse.RedeemedRewardPoints;
-                    vm.totals.RedeemedRewardPointsAmount = newResponse.RedeemedRewardPointsAmount;
-                    vm.totals.RequiresShipping = newResponse.RequiresShipping;
-                    vm.totals.SelectedShippingMethod = newResponse.SelectedShippingMethod;
-                    vm.totals.Shipping = newResponse.Shipping;
-                    vm.totals.SubTotal = newResponse.SubTotal;
-                    vm.totals.SubTotalDiscount = newResponse.SubTotalDiscount;
-                    vm.totals.Tax = newResponse.Tax;
-                    vm.totals.TaxRates = newResponse.TaxRates;
-                    vm.totals.WillEarnRewardPoints = newResponse.WillEarnRewardPoints;
+                    var newResponse = JSON.parse(response.data.htmlordertotal);
+                    vm.totals = newResponse;
                     if (response.data.enabledattributeids) {
                         for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                             if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
