@@ -1,4 +1,12 @@
-﻿.shopping-cart {
+﻿/* commons */
+
+.cart-view .flyout-cart {
+    pointer-events: none;
+}
+
+/* shopping cart */
+
+.shopping-cart {
     margin: 0 0 15px 0;
     color: #333;
     border-bottom: 2px solid #333;

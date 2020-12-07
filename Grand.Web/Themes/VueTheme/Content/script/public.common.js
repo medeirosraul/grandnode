@@ -123,9 +123,6 @@ function displayPopupQuickView(html) {
                     }
                 });
             },
-            doSomethingOnHidden() {
-                console.log(this);
-            },
             changeImg(event) {
                 var img = event.srcElement.getAttribute('data-src');
                 var mainImg = document.querySelector('#ModalQuickView .gallery .main-image');
@@ -136,8 +133,10 @@ function displayPopupQuickView(html) {
             var self = this;
             self.template = Vue.compile(html).render;
             this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
-                if (document.querySelector('#ModalQuickView___BV_modal_outer_') !== null) {
-                    document.querySelector('#ModalQuickView___BV_modal_outer_').remove();
+                if (modalId == 'ModalQuickView') {
+                    if (document.querySelector('#ModalQuickView___BV_modal_outer_') !== null) {
+                        document.querySelector('#ModalQuickView___BV_modal_outer_').remove();
+                    }
                 }
             })
         },

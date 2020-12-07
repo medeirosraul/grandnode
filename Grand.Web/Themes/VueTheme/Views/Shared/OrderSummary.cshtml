@@ -293,13 +293,15 @@
                 this.firstLoad();
                 this.updateTotals();
             }
+            this.cartView();
         },
         methods: {
+            cartView() {
+                var body = document.body;
+                body.classList.add("cart-view");
+            },
             firstLoad() {
                 this.cart = @Json.Serialize(Model);
-                if (document.querySelector('.flyout-cart')) {
-                    document.querySelector('.flyout-cart').style.pointerEvents = "none";
-                }
             },
             updateCart() {
                 axios({
@@ -313,9 +315,6 @@
                     }
                 }).then(response => {
                     this.cart = response.data;
-                    if (document.querySelector('.flyout-cart')) {
-                        document.querySelector('.flyout-cart').style.pointerEvents = "none";
-                    }
                 })
             },
             updateTotals() {
@@ -431,6 +430,7 @@
                     url: href,
                 }).then(function (response) {
                     vmorder.cart = response.data.model;
+                    vm.flycartindicator = response.data.totalproducts;
                 }).then(function () {
                     this.vmorder.updateTotals();
                 });
