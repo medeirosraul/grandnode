@@ -58,6 +58,29 @@ var vm = new Vue({
         showModalBackInStock() {
             this.$refs['back-in-stock'].show()
         },
+        productImage: function (event) {
+            var Imagesrc = event.target.parentElement.getAttribute('data-href');
+            function collectionHas(a, b) {
+                for (var i = 0, len = a.length; i < len; i++) {
+                    if (a[i] == b) return true;
+                }
+                return false;
+            }
+            function findParentBySelector(elm, selector) {
+                var all = document.querySelectorAll(selector);
+                var cur = elm.parentNode;
+                while (cur && !collectionHas(all, cur)) {
+                    cur = cur.parentNode;
+                }
+                return cur;
+            }
+
+            var yourElm = event.target
+            var selector = ".product-box";
+            var parent = findParentBySelector(yourElm, selector);
+            var Image = parent.querySelectorAll(".main-product-img")[0];
+            Image.setAttribute('src', Imagesrc);
+        },
         validateBeforeSubmit(event) {
             this.$validator.validateAll().then((result) => {
                 if (result) {
