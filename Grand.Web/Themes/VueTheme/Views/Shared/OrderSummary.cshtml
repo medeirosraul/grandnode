@@ -196,10 +196,10 @@
                             <div v-if="vmorder.cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
                                 <div v-if-else="vmorder.cart.MinOrderSubtotalWarning !== null">
                                     <template v-if="vmorder.cart.TermsOfServiceOnShoppingCartPage">
-                                        <b-button type="button" id="checkoutasguest" v-if="vmorder.cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
+                                        <b-button type="button" id="checkoutasguest" v-if="vmorder.cart.ShowCheckoutAsGuestButton" @@click="vmorder.showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
                                             @T("Account.Login.CheckoutAsGuest")
                                         </b-button>
-                                        <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
+                                        <b-button id="checkout" name="checkout" @@click="vmorder.showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
                                             <span v-if="vmorder.cart.IsGuest">
                                                 @T("Checkout.Button.Login")
                                             </span>
