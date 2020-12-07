@@ -395,9 +395,7 @@
                     data: bodyFormData,
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vmorder.cart = newcart;
+                    vmorder.cart = response.data.model;
                 }).then(function () {
                     this.vmorder.updateTotals()
                 });
@@ -412,9 +410,7 @@
                     data: bodyFormData,
                     headers: { 'Content-Type': 'multipart/form-data' },
                 }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vmorder.cart = newcart
+                    vmorder.cart = response.data.model;
                 }).catch(function (error) {
                     alert(error);
                 }).then(function () {
@@ -434,9 +430,7 @@
                     data: data,
                     url: href,
                 }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vmorder.cart = newcart;
+                    vmorder.cart = response.data.model;
                 }).then(function () {
                     this.vmorder.updateTotals();
                 });
@@ -446,9 +440,7 @@
                     method: 'post',
                     url: href,
                 }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vmorder.cart = newcart;
+                    vmorder.cart = response.data.model;
                     if (document.querySelector('.flyout-cart')) {
                         var flyoutcart = response.data.flyoutshoppingcart;
                         var newfly = JSON.parse(flyoutcart);
@@ -476,9 +468,7 @@
                     url: href,
                     data: bodyFormData,
                 }).then(function (response) {
-                    var cartall = response.data.cart;
-                    var newcart = JSON.parse(cartall);
-                    vmorder.cart = newcart;
+                    vmorder.cart = response.data.model;
                 }).then(function () {
                     this.vmorder.updateTotals();
                 });
