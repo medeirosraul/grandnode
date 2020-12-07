@@ -10,14 +10,14 @@
     pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/cart/cart.css", themeName));
     var modelExists = Model != null;
 }
-<div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="cart">
+<div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="vmorder.cart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
-    <div v-if="typeof cart.Items !== 'undefined' && cart.Items.length > 0">
-        <template v-if="cart.OrderReviewData.Display">
-            <partial name="_OrderReviewData" />
+    <div v-if="typeof vmorder.cart.Items !== 'undefined' && vmorder.cart.Items.length > 0">
+        <template v-if="vmorder.cart.OrderReviewData.Display">
+            @*<partial name="_OrderReviewData" />*@
         </template>
-        <ul v-if="typeof cart.Warnings !== 'undefined' && cart.Warnings.length > 0" class="px-0 mb-3">
-            <li v-for="item in cart.Warnings">
+        <ul v-if="typeof vmorder.cart.Warnings !== 'undefined' && vmorder.cart.Warnings.length > 0" class="px-0 mb-3">
+            <li v-for="item in vmorder.cart.Warnings">
                 <div class="alert alert-danger mb-1">{{item}}</div>
             </li>
         </ul>
@@ -36,8 +36,8 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th v-if="cart.IsAllowOnHold && cart.IsEditable" class="cart text-center"></th>
-                                <th v-if="cart.ShowProductImages" class="product-picture text-center">
+                                <th v-if="vmorder.cart.IsAllowOnHold && vmorder.cart.IsEditable" class="cart text-center"></th>
+                                <th v-if="vmorder.cart.ShowProductImages" class="product-picture text-center">
                                     @T("ShoppingCart.Image")
                                 </th>
                                 <th class="product text-center">
@@ -52,20 +52,20 @@
                                 <th class="subtotal text-center">
                                     @T("ShoppingCart.ItemTotal")
                                 </th>
-                                <th v-if="cart.IsEditable" class="remove-from-cart text-center">
+                                <th v-if="vmorder.cart.IsEditable" class="remove-from-cart text-center">
                                     @T("Remove")
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in cart.Items">
-                                <td v-if="cart.IsAllowOnHold && cart.IsEditable" class="onhold-cart">
+                            <tr v-for="item in vmorder.cart.Items">
+                                <td v-if="vmorder.cart.IsAllowOnHold && vmorder.cart.IsEditable" class="onhold-cart">
                                     <label class="custom-control custom-switch mb-0 pl-0">
-                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" v-on:change="ChangeShoppingCart($event)" />
+                                        <input :id="'checkbox_' + item.Id" type="checkbox" :checked="item.IsCart" class="custom-control-input changeshoppingcartitem" :data-href="'/changetypecartitem/' + item.Id + '?status=' + !item.IsCart" v-on:change="vmorder.ChangeShoppingCart($event)" />
                                         <span class="custom-control-label ml-5"></span>
                                     </label>
                                 </td>
-                                <td v-if="cart.ShowProductImages" class="product-picture text-center">
+                                <td v-if="vmorder.cart.ShowProductImages" class="product-picture text-center">
                                     <a :href="'/' + item.ProductSeName">
                                         <img alt="item.Picture.AlternateText" :src="item.Picture.ImageUrl" title="item.Picture.Title" />
                                     </a>
@@ -74,7 +74,7 @@
                                     <a :href="'/' + item.ProductSeName" class="product-name">
                                         {{item.ProductName}}
                                     </a>
-                                    <span v-if="cart.ShowSku" class="sku-number">
+                                    <span v-if="vmorder.cart.ShowSku" class="sku-number">
                                         {{item.Sku}}
                                     </span>
                                     <div v-if="item.AttributeInfo != ''" v-html="item.AttributeInfo" class="attributes small"></div>
@@ -83,7 +83,7 @@
                                     <div v-if="item.AuctionInfo != ''" v-html="item.AuctionInfo" class="attributes small"></div>
                                     <div v-if="item.RecurringInfo != null" v-html="item.RecurringInfo" class="recurring-info"></div>
                                     <div v-if="item.ReservationInfo != null" v-html="item.ReservationInfo" class="rental-info attributes small"></div>
-                                    <div v-if="cart.IsEditable && item.AllowItemEditing" class="edit-item mb-1 mt-1">
+                                    <div v-if="vmorder.cart.IsEditable && item.AllowItemEditing" class="edit-item mb-1 mt-1">
                                         <a class="btn btn-sm btn-secondary" :href="'/' + item.ProductSeName + '?updatecartitemid=' + item.Id">@T("Common.Edit")</a>
                                     </div>
                                     <div v-if="typeof item.Warnings !== 'undefined' && item.Warnings.length > 0" class="message-error alert alert-danger">
@@ -99,14 +99,14 @@
                                     </div>
                                 </td>
                                 <td class="quantity">
-                                    <div v-if="cart.IsEditable">
+                                    <div v-if="vmorder.cart.IsEditable">
                                         <div v-if="item.AllowedQuantities[0]">
-                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" v-on:change="ChangeShoppingCart($event)">
+                                            <select :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" class="custom-select form-control qty-dropdown" v-on:change="vmorder.ChangeShoppingCart($event)">
                                                 <option v-for="qty in item.AllowedQuantities" :selected="qty.Selected" :value="qty.Value">{{qty.Value}}</option>
                                             </select>
                                         </div>
                                         <div v-else>
-                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" v-on:change="ChangeShoppingCart($event)" class="qty-input form-control text-center" />
+                                            <input :id="'itemquantity' + item.Id" :name="'itemquantity' + item.Id" type="number" :value="item.Quantity" min="1" v-on:change="vmorder.ChangeShoppingCart($event)" class="qty-input form-control text-center" />
                                         </div>
                                     </div>
                                     <div v-else>
@@ -127,8 +127,8 @@
                                         <p class="mb-0 prod-total">{{item.SubTotal}}</p>
                                     </div>
                                 </td>
-                                <td v-if="cart.IsEditable" class="remove-from-cart text-center">
-                                    <b-button variant="link" class="deleteshoppingcartitem" @@click="deleteitem('/deletecartitem/'+ item.Id +'?shoppingcartpage=True')">
+                                <td v-if="vmorder.cart.IsEditable" class="remove-from-cart text-center">
+                                    <b-button variant="link" class="deleteshoppingcartitem" @@click="vmorder.deleteitem('/deletecartitem/'+ item.Id +'?shoppingcartpage=True')">
                                         <b-icon icon="trash" variant="danger"></b-icon>
                                     </b-button>
                                 </td>
@@ -139,7 +139,7 @@
             </div>
             @if (modelExists)
             {
-                <div v-if="cart.IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
+                <div v-if="vmorder.cart.IsEditable" class="common-buttons btn-group btn-group-sm mb-3">
                     <a onclick="location.href='@(Url.RouteUrl("ClearCart"))'" class="btn btn-danger removeAll-cart-button"><span>@T("shoppingcart.clearcart")</span></a>
                     <a onclick="location.href=('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary continue-shopping-button">@T("shoppingcart.continueshopping")</a>
                 </div>
@@ -148,18 +148,18 @@
                 <div class="row">
                     @if (modelExists)
                     {
-                        <div v-if="cart.IsEditable" class="col-12 col-md-6 checkoutAttributes">
+                        <div v-if="vmorder.cart.IsEditable" class="col-12 col-md-6 checkoutAttributes">
                             <partial name="_CheckoutAttributes" />
                         </div>
                     }
-                    <div v-if="cart.CheckoutAttributeInfo" class="selected-checkout-attributes col-sm-3 col-md-6 col-12 ml-auto justify-content-end text-right mt-3">
-                        <div v-html="cart.CheckoutAttributeInfo"></div>
+                    <div class="selected-checkout-attributes col-sm-3 col-md-6 col-12 ml-auto justify-content-end text-right mt-3">
+                        <div v-html="vmorder.cart.CheckoutAttributeInfo"></div>
                     </div>
                 </div>
             </div>
             @if (modelExists)
             {
-                <div v-if="cart.IsEditable && cart.Items != null && cart.DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
+                <div v-if="vmorder.cart.IsEditable && vmorder.cart.Items != null && vmorder.cart.DisplayTaxShippingInfo" class="tax-shipping-info d-flex justify-content-end mt-2 mb-2">
                     <div class="taxHelper">
                         @{
                             var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
@@ -177,8 +177,8 @@
                     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_cart_footer" })
                     @if (modelExists)
                     {
-                        <div v-if="cart.IsEditable" class="col-sm-6 col-12 cart-collaterals">
-                            <div v-if="cart.GiftCardBox || cart.DiscountBox" class="deals">
+                        <div v-if="vmorder.cart.IsEditable" class="col-sm-6 col-12 cart-collaterals">
+                            <div v-if="vmorder.cart.GiftCardBox || vmorder.cart.DiscountBox" class="deals">
                                 <partial name="_GiftCardBox" />
                                 <partial name="_DiscountBox" />
                                 @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_deals" })
@@ -190,17 +190,17 @@
                         <partial name="OrderTotals" />
                         @if (modelExists)
                         {
-                            <div v-if="cart.IsEditable && cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
+                            <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
                                 {{cart.MinOrderSubtotalWarning}}
                             </div>
-                            <div v-if="cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
-                                <div v-if-else="cart.MinOrderSubtotalWarning !== null">
-                                    <template v-if="cart.TermsOfServiceOnShoppingCartPage">
-                                        <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
+                            <div v-if="vmorder.cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
+                                <div v-if-else="vmorder.cart.MinOrderSubtotalWarning !== null">
+                                    <template v-if="vmorder.cart.TermsOfServiceOnShoppingCartPage">
+                                        <b-button type="button" id="checkoutasguest" v-if="vmorder.cart.ShowCheckoutAsGuestButton" @@click="showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
                                             @T("Account.Login.CheckoutAsGuest")
                                         </b-button>
                                         <b-button id="checkout" name="checkout" @@click="showMsgBoxOne" variant="info" class="checkout-button mt-sm-0 mt-1">
-                                            <span v-if="cart.IsGuest">
+                                            <span v-if="vmorder.cart.IsGuest">
                                                 @T("Checkout.Button.Login")
                                             </span>
                                             <span v-else>
@@ -209,11 +209,11 @@
                                         </b-button>
                                     </template>
                                     <template v-else>
-                                        <b-button type="button" id="checkoutasguest" v-if="cart.ShowCheckoutAsGuestButton" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
+                                        <b-button type="button" id="checkoutasguest" v-if="vmorder.cart.ShowCheckoutAsGuestButton" @@click="location.href='@Url.RouteUrl("Checkout")'" variant="secondary" class="checkout-as-guest-button mx-1">
                                             @T("Account.Login.CheckoutAsGuest")
                                         </b-button>
                                         <b-button id="checkout" name="checkout" @@click="document.querySelector('#shopping-cart-form').setAttribute('action', '@Url.RouteUrl("StartCheckout")');document.querySelector('#shopping-cart-form').submit();" variant="info" class="checkout-button mt-sm-0 mt-1">
-                                            <span v-if="cart.IsGuest">
+                                            <span v-if="vmorder.cart.IsGuest">
                                                 @T("Checkout.Button.Login")
                                             </span>
                                             <span v-else>
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             <div class="addon-buttons">
-                                <div v-for="pm in cart.ButtonPaymentMethodViewComponentNames">
+                                <div v-for="pm in vmorder.cart.ButtonPaymentMethodViewComponentNames">
                                     <div v-html="pm"></div>
                                 </div>
                             </div>
@@ -246,7 +246,7 @@
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
 </div>
 <script asp-location="Header">
-    var OrderSummary = {
+ var Order = Vue.extend({
         props: {
             cart: null,
             totals: null,
@@ -352,9 +352,9 @@
                 })
                     .then(value => {
                         this.boxOne = value
-                        if (vm.cart.MinOrderSubtotalWarning == null && vm.cart.Warnings.length == 0) {
+                        if (vmorder.cart.MinOrderSubtotalWarning == null && vmorder.cart.Warnings.length == 0) {
                             if (value == true) {
-                                if (vm.Confirm == true) {
+                                if (vmorder.Confirm == true) {
                                     ConfirmOrder.save();
                                 } else {
                                     if (document.querySelector('#confirm-order-form') !== null) {
@@ -370,7 +370,7 @@
                                 }
                             }
                         } else {
-                            this.$bvToast.toast(vm.cart.MinOrderSubtotalWarning, {
+                            this.$bvToast.toast(vmorder.cart.MinOrderSubtotalWarning, {
                                 title: '@T("vue.shoppingcart.warning")',
                                 variant: 'danger',
                                 solid: true
@@ -397,9 +397,9 @@
                 }).then(function (response) {
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
-                    vm.cart = newcart;
+                    vmorder.cart = newcart;
                 }).then(function () {
-                    this.vm.updateTotals() 
+                    this.vmorder.updateTotals()
                 });
             },
             removeGiftCard(href) {
@@ -414,11 +414,11 @@
                 }).then(function (response) {
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
-                    vm.cart = newcart 
+                    vmorder.cart = newcart
                 }).catch(function (error) {
                     alert(error);
                 }).then(function () {
-                    this.vm.updateTotals();
+                    this.vmorder.updateTotals();
                 });
             },
             ChangeShoppingCart(event) {
@@ -436,9 +436,9 @@
                 }).then(function (response) {
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
-                    vm.cart = newcart;
+                    vmorder.cart = newcart;
                 }).then(function () {
-                    this.vm.updateTotals();
+                    this.vmorder.updateTotals();
                 });
             },
             deleteitem(href) {
@@ -448,7 +448,7 @@
                 }).then(function (response) {
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
-                    vm.cart = newcart;
+                    vmorder.cart = newcart;
                     if (document.querySelector('.flyout-cart')) {
                         var flyoutcart = response.data.flyoutshoppingcart;
                         var newfly = JSON.parse(flyoutcart);
@@ -459,7 +459,7 @@
                         document.querySelector('.qty-indicator.cart-qty').innerText = response.data.totalproducts;
                     }
                 }).then(function () {
-                    this.vm.updateTotals();
+                    this.vmorder.updateTotals();
                 });
             },
             ApplyDiscountCode(href) {
@@ -467,6 +467,7 @@
                     giftcardcouponcode: document.getElementById('discountcouponcode').value,
                 };
                 addAntiForgeryToken(DiscountCodeData);
+
                 var bodyFormData = new FormData();
                 bodyFormData.append('discountcouponcode', document.getElementById('discountcouponcode').value);
                 bodyFormData.append('__RequestVerificationToken', document.querySelector('input[name=__RequestVerificationToken]').value);
@@ -474,15 +475,17 @@
                     method: 'post',
                     url: href,
                     data: bodyFormData,
-                    headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(function (response) {
                     var cartall = response.data.cart;
                     var newcart = JSON.parse(cartall);
-                    vm.cart = newcart;
+                    vmorder.cart = newcart;
                 }).then(function () {
-                    this.vm.updateTotals();
+                    this.vmorder.updateTotals();
                 });
             }
         }
-    }
+    });
+
+    var vmorder = new Order().$mount('#ordersummarypagecart')
+
 </script>

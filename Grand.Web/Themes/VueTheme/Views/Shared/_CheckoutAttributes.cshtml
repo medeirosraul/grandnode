@@ -1,5 +1,5 @@
-﻿   <div v-if="cart.CheckoutAttributes[0]" class="checkout-attributes p-0">
-        <div v-for="attribute in cart.CheckoutAttributes" :id="'checkout_attribute_label_' + attribute.Id" class="col-12 px-0 mb-2">
+﻿   <div v-if="vmorder.cart.CheckoutAttributes[0]" class="checkout-attributes p-0">
+        <div v-for="attribute in vmorder.cart.CheckoutAttributes" :id="'checkout_attribute_label_' + attribute.Id" class="col-12 px-0 mb-2">
             <span class="col-form-label text-prompt">
                 <template v-if="attribute.TextPrompt !== null">
                     {{attribute.TextPrompt}}
@@ -170,7 +170,7 @@
                     url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
                 }).then(function (response) {
                     var newResponse = JSON.parse(response.data.htmlordertotal);
-                    vm.totals = newResponse;
+                    vmorder.totals = newResponse;
                     if (response.data.enabledattributeids) {
                         for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                             if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {
@@ -192,7 +192,10 @@
                         }
                     }
                     if (response.data.checkoutattributeinfo) {
-                        vm.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
+                        vmorder.cart.CheckoutAttributeInfo = response.data.checkoutattributeinfo
+                    }
+                    else {
+                        vmorder.cart.CheckoutAttributeInfo = '';
                     }
                 })
             }

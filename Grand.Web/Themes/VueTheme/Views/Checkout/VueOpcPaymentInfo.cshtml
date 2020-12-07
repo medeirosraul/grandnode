@@ -1,4 +1,4 @@
-﻿<div v-if="PaymentInfo" class="checkout-data">
+﻿<div v-if="vmorder.PaymentInfo" class="checkout-data">
     <div class="col-12 px-0">
         @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_payment_info_top" })
         <div class="section payment-info">
@@ -7,7 +7,7 @@
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
         </div>
         @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_payment_info_bottom" })
-            <div v-if="DisplayOrderTotals" class="order-summary">
+            <div v-if="vmorder.DisplayOrderTotals" class="order-summary">
                 <partial name="OrderSummary" model="null" />
             </div>
     </div>

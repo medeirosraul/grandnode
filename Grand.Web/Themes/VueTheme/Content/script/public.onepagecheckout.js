@@ -71,23 +71,23 @@ var Checkout = {
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
                 var Model = JSON.parse(response.data.update_section.html);
-                vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
-                vm.ShippingAllowPickUpInStore = Model.AllowPickUpInStore,
-                vm.ShippingExistingAddresses = Model.ExistingAddresses,
-                vm.ShippingNewAddress = Model.NewAddress,
-                vm.ShippingNewAddressPreselected = Model.NewAddressPreselected,
-                vm.ShippingPickUpInStore = Model.PickUpInStore,
-                vm.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly,
-                vm.ShippingPickupPoints = Model.PickupPoints,
-                vm.ShippingWarnings = Model.Warnings,
-                vm.ShippingAddress = true;
+                vmorder.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
+                vmorder.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
+                vmorder.ShippingExistingAddresses = Model.ExistingAddresses;
+                vmorder.ShippingNewAddress = Model.NewAddress;
+                vmorder.ShippingNewAddressPreselected = Model.NewAddressPreselected;
+                vmorder.ShippingPickUpInStore = Model.PickUpInStore;
+                vmorder.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly;
+                vmorder.ShippingPickupPoints = Model.PickupPoints;
+                vmorder.ShippingWarnings = Model.Warnings;
+                vmorder.ShippingAddress = true;
             }
             if (response.data.goto_section == "shipping_method") {
                 var model = JSON.parse(response.data.update_section.html);
-                vm.NotifyCustomerAboutShippingFromMultipleLocations = model.NotifyCustomerAboutShippingFromMultipleLocations;
-                vm.ShippingMethods = model.ShippingMethods,
-                vm.ShippingMethodWarnings = model.Warnings,
-                vm.ShippingMethod = true;
+                vmorder.NotifyCustomerAboutShippingFromMultipleLocations = model.NotifyCustomerAboutShippingFromMultipleLocations;
+                vmorder.ShippingMethods = model.ShippingMethods;
+                vmorder.ShippingMethodWarnings = model.Warnings;
+                vmorder.ShippingMethod = true;
                 if (model.ShippingMethods.length > 0) {
                     var elem = model.ShippingMethods[0].Name + '___' + model.ShippingMethods[0].ShippingRateComputationMethodSystemName;
                     loadPartialView(elem);
@@ -96,22 +96,22 @@ var Checkout = {
             }
             if (response.data.goto_section == "payment_method") {
                 var model = JSON.parse(response.data.update_section.html);
-                vm.DisplayRewardPoints = model.DisplayRewardPoints;
-                vm.PaymentMethods = model.PaymentMethods,
-                vm.RewardPointsAmount = model.RewardPointsAmount,
-                vm.RewardPointsBalance = model.RewardPointsBalance;
-                vm.RewardPointsEnoughToPayForOrder = model.RewardPointsEnoughToPayForOrder;
-                vm.UseRewardPoints = model.UseRewardPoints;
-                vm.PaymentMethod = true;
+                vmorder.DisplayRewardPoints = model.DisplayRewardPoints;
+                vmorder.PaymentMethods = model.PaymentMethods;
+                vmorder.RewardPointsAmount = model.RewardPointsAmount;
+                vmorder.RewardPointsBalance = model.RewardPointsBalance;
+                vmorder.RewardPointsEnoughToPayForOrder = model.RewardPointsEnoughToPayForOrder;
+                vmorder.UseRewardPoints = model.UseRewardPoints;
+                vmorder.PaymentMethod = true;
 
                 this.updateOrderTotal();
 
             }
             if (response.data.goto_section == "payment_info") {
                 var model = JSON.parse(response.data.update_section.html);
-                vm.DisplayOrderTotals = model.DisplayOrderTotals;
-                vm.PaymentViewComponentName = model.PaymentViewComponentName,
-                    vm.PaymentInfo = true;
+                vmorder.DisplayOrderTotals = model.DisplayOrderTotals;
+                vmorder.PaymentViewComponentName = model.PaymentViewComponentName;
+                vmorder.PaymentInfo = true;
 
                 axios({
                     baseURL: '/Component/Index?Name=' + model.PaymentViewComponentName,
@@ -135,10 +135,10 @@ var Checkout = {
             }
             if (response.data.goto_section == "confirm_order") {
                 var model = JSON.parse(response.data.update_section.html);
-                vm.MinOrderTotalWarning = model.MinOrderTotalWarning;
-                vm.ConfirmWarnings = model.Warnings;
+                vmorder.MinOrderTotalWarning = model.MinOrderTotalWarning;
+                vmorder.ConfirmWarnings = model.Warnings;
 
-                vm.Confirm = true;
+                vmorder.Confirm = true;
 
                 setTimeout(function () {
                     var c_back = document.getElementById('back-confirm_order').getAttribute('onclick');
@@ -192,7 +192,7 @@ var Checkout = {
                 'X-Response-View': 'Json'
             }
         }).then(response => {
-            vm.cart.OrderReviewData = response.data.OrderReviewData
+            vmorder.cart.OrderReviewData = response.data.OrderReviewData
         });
     },
 
@@ -207,7 +207,7 @@ var Checkout = {
                 'X-Response-View': 'Json'
             }
         }).then(response => {
-            vm.totals = response.data;
+            vmorder.totals = response.data;
         });
     },
 };

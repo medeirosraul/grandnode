@@ -1,5 +1,5 @@
-﻿<div v-if="ShippingAddress" class="col-12 checkout-data px-0">
-    <div v-if="ShippingAllowPickUpInStore && ShippingPickUpInStoreOnly == false && ShippingPickupPoints[0]" class="section pickup-in-store">
+﻿<div v-if="vmorder.ShippingAddress" class="col-12 checkout-data px-0">
+    <div v-if="vmorder.ShippingAllowPickUpInStore && vmorder.ShippingPickUpInStoreOnly == false && vmorder.ShippingPickupPoints[0]" class="section pickup-in-store">
         <p class="selector">
             <label class="custom-control custom-checkbox">
                 <input class="custom-control-input" onclick="Shipping.togglePickUpInStore(this)" type="checkbox" id="PickUpInStore" name="PickUpInStore" value="true">
@@ -16,12 +16,12 @@
             Shipping.togglePickUpInStore(document.querySelector('#PickUpInStore'));
         </script>
     </div>
-    <div v-if="ShippingAllowPickUpInStore">
+    <div v-if="vmorder.ShippingAllowPickUpInStore">
         <div class="pickup-points" id="pickup-points-form" style="display:none;">
-            <template v-if="ShippingPickupPoints[0]">
-                <input v-if="ShippingPickUpInStoreOnly" id="PickUpInStore" name="PickUpInStore" type="hidden" />
-                <template v-if="ShippingPickupPoints[1] == null">
-                    <template v-for="point in ShippingPickupPoints">
+            <template v-if="vmorder.ShippingPickupPoints[0]">
+                <input v-if="vmorder.ShippingPickUpInStoreOnly" id="PickUpInStore" name="PickUpInStore" type="hidden" />
+                <template v-if="vmorder.ShippingPickupPoints[1] == null">
+                    <template v-for="point in vmorder.ShippingPickupPoints">
                         <input id="pickup-point-id" name="pickup-point-id" type="hidden" :value="point.Id">
                         <div class="section single-pickup-point">
                             <ul>
@@ -35,7 +35,7 @@
                 <template v-else>
                     <label for="pickup-points-select">@T("Checkout.PickupPoints.SelectPickupPoint")</label>
                     <select name="pickup-point-id" id="pickup-points-select" class="custom-select address-select" title="">
-                        <template v-for="point in ShippingPickupPoints">
+                        <template v-for="point in vmorder.ShippingPickupPoints">
                             <option :value="point.Id">
                                 {{point.Name}}
                                 <template v-if="point.Address.City !== null">
@@ -57,13 +57,13 @@
             </template>
         </div>
     </div>
-    <div v-if="ShippingPickUpInStoreOnly == false" class="shipping-addresses" id="shipping-addresses-form">
+    <div v-if="vmorder.ShippingPickUpInStoreOnly == false" class="shipping-addresses" id="shipping-addresses-form">
         @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_address_top" })
-        <div class="section select-shipping-address" v-if="ShippingExistingAddresses[0]">
+        <div class="section select-shipping-address" v-if="vmorder.ShippingExistingAddresses[0]">
             <label for="shipping-address-select">@T("Checkout.SelectShippingAddressOrEnterNewOne")</label>
             <div>
                 <select name="shipping_address_id" id="shipping-address-select" class="custom-select address-select" title="" onchange="Shipping.newAddress(!this.value)">
-                    <template v-for="address in ShippingExistingAddresses">
+                    <template v-for="address in vmorder.ShippingExistingAddresses">
                         <option :value="address.Id">
                             {{address.FirstName}}
                             {{address.LastName}}
@@ -84,7 +84,7 @@
                             </template>
                         </option>
                     </template>
-                    <option value="" :selected="ShippingNewAddressPreselected">@T("Checkout.NewAddress")</option>
+                    <option value="" :selected="vmorder.ShippingNewAddressPreselected">@T("Checkout.NewAddress")</option>
                 </select>
             </div>
         </div>
