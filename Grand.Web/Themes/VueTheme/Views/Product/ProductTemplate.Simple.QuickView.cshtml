@@ -50,7 +50,7 @@
                             <!--product reviews-->
                             @if (Model.ProductReviewOverview.AllowCustomerReviews)
                             {
-                                <partial name="_ProductReviewOverviewQv" model="Model.ProductReviewOverview" />
+                                <partial name="_ProductReviewOverview" model="Model.ProductReviewOverview" />
                             }
                             <vc:widget widget-zone="productdetails_overview_top" additional-data="@Model.Id"></vc:widget>
                             @if (!String.IsNullOrEmpty(Model.ShortDescription))
@@ -202,7 +202,7 @@
                             @if (Model.AskQuestionOnProduct)
                             {
                                 <b-tab title="@T("Products.ContactUs")">
-                                    <partial name="_AskQuestionOnProductQV" model="Model.ProductAskQuestion" />
+                                    <partial name="_AskQuestionOnProduct" model="Model.ProductAskQuestion" />
                                 </b-tab>
                             }
                         </b-tabs>

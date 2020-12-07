@@ -338,108 +338,108 @@ function runScripts($container) {
 }
 
 function sendcontactusform(urladd) {
-    if (document.querySelector(".product-standard #product-details-form").checkValidity()) {
-        if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
-            var contactData = {
-                AskQuestionEmail: document.querySelector('.product-standard #AskQuestionEmail').value,
-                AskQuestionFullName: document.querySelector('.product-standard #AskQuestionFullName').value,
-                AskQuestionPhone: document.querySelector('.product-standard #AskQuestionPhone').value,
-                AskQuestionMessage: document.querySelector('.product-standard #AskQuestionMessage').value,
-                Id: document.querySelector('.product-standard #AskQuestionProductId').value,
-                'g-recaptcha-response-value': document.querySelector(".product-standard textarea[id^='g-recaptcha-response']").value
-            };
-        } else {
-            var contactData = {
-                AskQuestionEmail: document.querySelector('.product-standard #AskQuestionEmail').value,
-                AskQuestionFullName: document.querySelector('.product-standard #AskQuestionFullName').value,
-                AskQuestionPhone: document.querySelector('.product-standard #AskQuestionPhone').value,
-                AskQuestionMessage: document.querySelector('.product-standard #AskQuestionMessage').value,
-                Id: document.querySelector('.product-standard #AskQuestionProductId').value
-            };
-        }
-        addAntiForgeryToken(contactData);
-        var bodyFormData = new FormData();
-        bodyFormData.append('AskQuestionEmail', document.querySelector('.product-standard #AskQuestionEmail').value);
-        bodyFormData.append('AskQuestionFullName', document.querySelector('.product-standard #AskQuestionFullName').value);
-        bodyFormData.append('AskQuestionPhone', document.querySelector('.product-standard #AskQuestionPhone').value);
-        bodyFormData.append('AskQuestionMessage', document.querySelector('.product-standard #AskQuestionMessage').value);
-        bodyFormData.append('Id', document.querySelector('.product-standard #AskQuestionProductId').value);
-        bodyFormData.append('__RequestVerificationToken', document.querySelector('.product-standard input[name=__RequestVerificationToken]').value);
-        if (document.querySelector(".product-standard textarea[id^='g-recaptcha-response']")) {
-            bodyFormData.append('g-recaptcha-response-value', document.querySelector(".product-standard textarea[id^='g-recaptcha-response']").value);
-        }
-        axios({
-            url: urladd,
-            data: bodyFormData,
-            method: 'post',
-            headers: { 'Content-Type': 'multipart/form-data' }
-        }).then(function (response) {
-            if (response.data.success) {
-                document.querySelector('.product-standard #contact-us-product').style.display = "none";
-                document.querySelector('.product-standard .product-contact-error').style.display = "none";
-                document.querySelector('.product-standard .product-contact-send').innerHTML = response.data.message;
-                document.querySelector('.product-standard .product-contact-send').style.display = "block";
+    if (document.querySelector('#ModalQuickView') == null) {
+        if (document.querySelector(".product-standard #product-details-form").checkValidity()) {
+            if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
+                var contactData = {
+                    AskQuestionEmail: document.querySelector('.product-standard #AskQuestionEmail').value,
+                    AskQuestionFullName: document.querySelector('.product-standard #AskQuestionFullName').value,
+                    AskQuestionPhone: document.querySelector('.product-standard #AskQuestionPhone').value,
+                    AskQuestionMessage: document.querySelector('.product-standard #AskQuestionMessage').value,
+                    Id: document.querySelector('.product-standard #AskQuestionProductId').value,
+                    'g-recaptcha-response-value': document.querySelector(".product-standard textarea[id^='g-recaptcha-response']").value
+                };
+            } else {
+                var contactData = {
+                    AskQuestionEmail: document.querySelector('.product-standard #AskQuestionEmail').value,
+                    AskQuestionFullName: document.querySelector('.product-standard #AskQuestionFullName').value,
+                    AskQuestionPhone: document.querySelector('.product-standard #AskQuestionPhone').value,
+                    AskQuestionMessage: document.querySelector('.product-standard #AskQuestionMessage').value,
+                    Id: document.querySelector('.product-standard #AskQuestionProductId').value
+                };
             }
-            else {
-                document.querySelector('.product-standard .product-contact-error').innerHTML = response.data.message;
-                document.querySelector('.product-standard .product-contact-error').style.display = "block";
+            addAntiForgeryToken(contactData);
+            var bodyFormData = new FormData();
+            bodyFormData.append('AskQuestionEmail', document.querySelector('.product-standard #AskQuestionEmail').value);
+            bodyFormData.append('AskQuestionFullName', document.querySelector('.product-standard #AskQuestionFullName').value);
+            bodyFormData.append('AskQuestionPhone', document.querySelector('.product-standard #AskQuestionPhone').value);
+            bodyFormData.append('AskQuestionMessage', document.querySelector('.product-standard #AskQuestionMessage').value);
+            bodyFormData.append('Id', document.querySelector('.product-standard #AskQuestionProductId').value);
+            bodyFormData.append('__RequestVerificationToken', document.querySelector('.product-standard input[name=__RequestVerificationToken]').value);
+            if (document.querySelector(".product-standard textarea[id^='g-recaptcha-response']")) {
+                bodyFormData.append('g-recaptcha-response-value', document.querySelector(".product-standard textarea[id^='g-recaptcha-response']").value);
             }
-        }).catch(function (error) {
-            alert(error);
-        });
-    }
-}
-
-function sendcontactusformQuickview(urladd) {
-    if (document.querySelector("#ModalQuickView #product-details-form").checkValidity()) {
-        if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
-            var contactData = {
-                AskQuestionEmail: document.querySelector('#ModalQuickView #AskQuestionEmail').value,
-                AskQuestionFullName: document.querySelector('#ModalQuickView #AskQuestionFullName').value,
-                AskQuestionPhone: document.querySelector('#ModalQuickView #AskQuestionPhone').value,
-                AskQuestionMessage: document.querySelector('#ModalQuickView #AskQuestionMessage').value,
-                Id: document.querySelector('#ModalQuickView #AskQuestionProductId').value,
-                'g-recaptcha-response-value': document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']").value
-            };
-        } else {
-            var contactData = {
-                AskQuestionEmail: document.querySelector('#ModalQuickView #AskQuestionEmail').value,
-                AskQuestionFullName: document.querySelector('#ModalQuickView #AskQuestionFullName').value,
-                AskQuestionPhone: document.querySelector('#ModalQuickView #AskQuestionPhone').value,
-                AskQuestionMessage: document.querySelector('#ModalQuickView #AskQuestionMessage').value,
-                Id: document.querySelector('#ModalQuickView #AskQuestionProductId').value
-            };
+            axios({
+                url: urladd,
+                data: bodyFormData,
+                method: 'post',
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(function (response) {
+                if (response.data.success) {
+                    document.querySelector('.product-standard #contact-us-product').style.display = "none";
+                    document.querySelector('.product-standard .product-contact-error').style.display = "none";
+                    document.querySelector('.product-standard .product-contact-send').innerHTML = response.data.message;
+                    document.querySelector('.product-standard .product-contact-send').style.display = "block";
+                }
+                else {
+                    document.querySelector('.product-standard .product-contact-error').innerHTML = response.data.message;
+                    document.querySelector('.product-standard .product-contact-error').style.display = "block";
+                }
+            }).catch(function (error) {
+                alert(error);
+            });
         }
-        addAntiForgeryToken(contactData);
-        var bodyFormData = new FormData();
-        bodyFormData.append('AskQuestionEmail', document.querySelector('#ModalQuickView #AskQuestionEmail').value);
-        bodyFormData.append('AskQuestionFullName', document.querySelector('#ModalQuickView #AskQuestionFullName').value);
-        bodyFormData.append('AskQuestionPhone', document.querySelector('#ModalQuickView #AskQuestionPhone').value);
-        bodyFormData.append('AskQuestionMessage', document.querySelector('#ModalQuickView #AskQuestionMessage').value);
-        bodyFormData.append('Id', document.querySelector('#ModalQuickView #AskQuestionProductId').value);
-        bodyFormData.append('__RequestVerificationToken', document.querySelector('#ModalQuickView input[name=__RequestVerificationToken]').value);
-        if (document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']")) {
-            bodyFormData.append('g-recaptcha-response-value', document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']").value);
+    } else {
+        if (document.querySelector("#ModalQuickView #product-details-form").checkValidity()) {
+            if (document.querySelector("textarea[id^='g-recaptcha-response']")) {
+                var contactData = {
+                    AskQuestionEmail: document.querySelector('#ModalQuickView #AskQuestionEmail').value,
+                    AskQuestionFullName: document.querySelector('#ModalQuickView #AskQuestionFullName').value,
+                    AskQuestionPhone: document.querySelector('#ModalQuickView #AskQuestionPhone').value,
+                    AskQuestionMessage: document.querySelector('#ModalQuickView #AskQuestionMessage').value,
+                    Id: document.querySelector('#ModalQuickView #AskQuestionProductId').value,
+                    'g-recaptcha-response-value': document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']").value
+                };
+            } else {
+                var contactData = {
+                    AskQuestionEmail: document.querySelector('#ModalQuickView #AskQuestionEmail').value,
+                    AskQuestionFullName: document.querySelector('#ModalQuickView #AskQuestionFullName').value,
+                    AskQuestionPhone: document.querySelector('#ModalQuickView #AskQuestionPhone').value,
+                    AskQuestionMessage: document.querySelector('#ModalQuickView #AskQuestionMessage').value,
+                    Id: document.querySelector('#ModalQuickView #AskQuestionProductId').value
+                };
+            }
+            addAntiForgeryToken(contactData);
+            var bodyFormData = new FormData();
+            bodyFormData.append('AskQuestionEmail', document.querySelector('#ModalQuickView #AskQuestionEmail').value);
+            bodyFormData.append('AskQuestionFullName', document.querySelector('#ModalQuickView #AskQuestionFullName').value);
+            bodyFormData.append('AskQuestionPhone', document.querySelector('#ModalQuickView #AskQuestionPhone').value);
+            bodyFormData.append('AskQuestionMessage', document.querySelector('#ModalQuickView #AskQuestionMessage').value);
+            bodyFormData.append('Id', document.querySelector('#ModalQuickView #AskQuestionProductId').value);
+            bodyFormData.append('__RequestVerificationToken', document.querySelector('#ModalQuickView input[name=__RequestVerificationToken]').value);
+            if (document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']")) {
+                bodyFormData.append('g-recaptcha-response-value', document.querySelector("#ModalQuickView textarea[id^='g-recaptcha-response']").value);
+            }
+            axios({
+                url: urladd,
+                data: bodyFormData,
+                method: 'post',
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(function (response) {
+                if (response.data.success) {
+                    document.querySelector('#ModalQuickView #contact-us-product').style.display = "none";
+                    document.querySelector('#ModalQuickView .product-contact-error').style.display = "none";
+                    document.querySelector('#ModalQuickView .product-contact-send').innerHTML = response.data.message;
+                    document.querySelector('#ModalQuickView .product-contact-send').style.display = "block";
+                }
+                else {
+                    document.querySelector('#ModalQuickView .product-contact-error').innerHTML = response.data.message;
+                    document.querySelector('#ModalQuickView .product-contact-error').style.display = "block";
+                }
+            }).catch(function (error) {
+                alert(error);
+            });
         }
-        axios({
-            url: urladd,
-            data: bodyFormData,
-            method: 'post',
-            headers: { 'Content-Type': 'multipart/form-data' }
-        }).then(function (response) {
-            if (response.data.success) {
-                document.querySelector('#ModalQuickView #contact-us-product').style.display = "none";
-                document.querySelector('#ModalQuickView .product-contact-error').style.display = "none";
-                document.querySelector('#ModalQuickView .product-contact-send').innerHTML = response.data.message;
-                document.querySelector('#ModalQuickView .product-contact-send').style.display = "block";
-            }
-            else {
-                document.querySelector('#ModalQuickView .product-contact-error').innerHTML = response.data.message;
-                document.querySelector('#ModalQuickView .product-contact-error').style.display = "block";
-            }
-        }).catch(function (error) {
-            alert(error);
-        });
     }
 }
 

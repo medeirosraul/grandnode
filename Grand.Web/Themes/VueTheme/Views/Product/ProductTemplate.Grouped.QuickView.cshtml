@@ -66,7 +66,7 @@
                                 <!--product reviews-->
                                 @if (Model.ProductReviewOverview.AllowCustomerReviews)
                                 {
-                                    <partial name="_ProductReviewOverviewQv" model="Model.ProductReviewOverview" />
+                                    <partial name="_ProductReviewOverview" model="Model.ProductReviewOverview" />
                                 }
                                 <!--product manufacturers-->
                                 @if (Model.ProductManufacturers.Any())
@@ -120,7 +120,7 @@
                             @if (Model.AskQuestionOnProduct)
                             {
                                 <b-tab title="@T("Products.ContactUs")">
-                                    <partial name="_AskQuestionOnProductQV" model="Model.ProductAskQuestion" />
+                                    <partial name="_AskQuestionOnProduct" model="Model.ProductAskQuestion" />
                                 </b-tab>
                             }
                         </b-tabs>

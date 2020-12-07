@@ -87,15 +87,13 @@ var vm = new Vue({
                     event.srcElement.submit();
                     return
                 } else {
-                    if (document.querySelector('#PickUpInStore:checked')) {
+                    if (vm.$refs.selected !== undefined && vm.$refs.selected.checked) {
                         event.srcElement.submit();
                         return
                     }
-                    if (event.target.querySelectorAll('#pickup-new-address-form').length > 0) {
-                        if (event.target.querySelector('#pickup-new-address-form').style['display'] === 'none') {
-                            event.srcElement.submit();
-                            return
-                        }
+                    if (vm.$refs.visible !== undefined && vm.$refs.visible.style.display == "none") {
+                        event.srcElement.submit();
+                        return
                     }
                 }
             });
