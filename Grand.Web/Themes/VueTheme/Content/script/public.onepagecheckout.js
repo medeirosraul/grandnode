@@ -124,7 +124,11 @@ var Checkout = {
                 }).then(response => {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
-                });
+                }).then(function () {
+                    if (document.querySelector('.script-tag-info')) {
+                        runScripts(document.querySelector('.script-tag-info'))
+                    }
+                })
 
                 if (model.DisplayOrderTotals) {
                     this.updateOrderSummary(false);
@@ -572,7 +576,7 @@ var PaymentInfo = {
                 }).then(response => {
                     var html = response.data;
                     document.querySelector('.payment-info .info').innerHTML = html;
-                });
+                })
                 
             }
 
