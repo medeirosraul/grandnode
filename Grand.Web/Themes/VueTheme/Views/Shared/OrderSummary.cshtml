@@ -13,9 +13,12 @@
 <div class="order-summary-content mt-3" id="ordersummarypagecart" v-if="vmorder.cart">
     @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_before" })
     <div v-if="typeof vmorder.cart.Items !== 'undefined' && vmorder.cart.Items.length > 0">
-        <template v-if="vmorder.cart.OrderReviewData.Display">
-            @*<partial name="_OrderReviewData" />*@
-        </template>
+        @if (!modelExists)
+        {
+            <template v-if="vmorder.cart.OrderReviewData.Display">
+                <partial name="_OrderReviewData" />
+            </template>
+        }
         <ul v-if="typeof vmorder.cart.Warnings !== 'undefined' && vmorder.cart.Warnings.length > 0" class="px-0 mb-3">
             <li v-for="item in vmorder.cart.Warnings">
                 <div class="alert alert-danger mb-1">{{item}}</div>
@@ -190,9 +193,9 @@
                         <partial name="OrderTotals" />
                         @if (modelExists)
                         {
-                            <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
-                                {{cart.MinOrderSubtotalWarning}}
-                            </div>
+                    <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
+                        {{vmorder.cart.MinOrderSubtotalWarning}}
+                    </div>
                             <div v-if="vmorder.cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
                                 <div v-if-else="vmorder.cart.MinOrderSubtotalWarning !== null">
                                     <template v-if="vmorder.cart.TermsOfServiceOnShoppingCartPage">
