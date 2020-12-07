@@ -169,8 +169,7 @@
                     data: data,
                     url: '@Html.Raw(Url.Action("checkoutattributechange", "shoppingcart"))',
                 }).then(function (response) {
-                    var newResponse = JSON.parse(response.data.htmlordertotal);
-                    vmorder.totals = newResponse;
+                    vmorder.totals = response.data.model;
                     if (response.data.enabledattributeids) {
                         for (var i = 0; i < response.data.enabledattributeids.length; i++) {
                             if (document.querySelector('#checkout_attribute_label_' + response.data.enabledattributeids[i])) {

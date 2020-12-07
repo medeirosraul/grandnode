@@ -70,20 +70,20 @@ var Checkout = {
     setStepResponse: function (response) {
         if (response.data.update_section.name) {
             if (response.data.goto_section == "shipping") {
-                var Model = JSON.parse(response.data.update_section.html);
-                vmorder.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
-                vmorder.ShippingAllowPickUpInStore = Model.AllowPickUpInStore;
-                vmorder.ShippingExistingAddresses = Model.ExistingAddresses;
-                vmorder.ShippingNewAddress = Model.NewAddress;
-                vmorder.ShippingNewAddressPreselected = Model.NewAddressPreselected;
-                vmorder.ShippingPickUpInStore = Model.PickUpInStore;
-                vmorder.ShippingPickUpInStoreOnly = Model.PickUpInStoreOnly;
-                vmorder.ShippingPickupPoints = Model.PickupPoints;
-                vmorder.ShippingWarnings = Model.Warnings;
+                var model = response.data.update_section.model;
+                vmorder.ShippingAllowPickUpInStore = model.AllowPickUpInStore;
+                vmorder.ShippingAllowPickUpInStore = model.AllowPickUpInStore;
+                vmorder.ShippingExistingAddresses = model.ExistingAddresses;
+                vmorder.ShippingNewAddress = model.NewAddress;
+                vmorder.ShippingNewAddressPreselected = model.NewAddressPreselected;
+                vmorder.ShippingPickUpInStore = model.PickUpInStore;
+                vmorder.ShippingPickUpInStoreOnly = model.PickUpInStoreOnly;
+                vmorder.ShippingPickupPoints = model.PickupPoints;
+                vmorder.ShippingWarnings = model.Warnings;
                 vmorder.ShippingAddress = true;
             }
             if (response.data.goto_section == "shipping_method") {
-                var model = JSON.parse(response.data.update_section.html);
+                var model = response.data.update_section.model;
                 vmorder.NotifyCustomerAboutShippingFromMultipleLocations = model.NotifyCustomerAboutShippingFromMultipleLocations;
                 vmorder.ShippingMethods = model.ShippingMethods;
                 vmorder.ShippingMethodWarnings = model.Warnings;
@@ -95,7 +95,7 @@ var Checkout = {
                 this.updateOrderTotal();
             }
             if (response.data.goto_section == "payment_method") {
-                var model = JSON.parse(response.data.update_section.html);
+                var model = response.data.update_section.model;
                 vmorder.DisplayRewardPoints = model.DisplayRewardPoints;
                 vmorder.PaymentMethods = model.PaymentMethods;
                 vmorder.RewardPointsAmount = model.RewardPointsAmount;
@@ -108,7 +108,7 @@ var Checkout = {
 
             }
             if (response.data.goto_section == "payment_info") {
-                var model = JSON.parse(response.data.update_section.html);
+                var model = response.data.update_section.model;
                 vmorder.DisplayOrderTotals = model.DisplayOrderTotals;
                 vmorder.PaymentViewComponentName = model.PaymentViewComponentName;
                 vmorder.PaymentInfo = true;
@@ -134,7 +134,7 @@ var Checkout = {
                 
             }
             if (response.data.goto_section == "confirm_order") {
-                var model = JSON.parse(response.data.update_section.html);
+                var model = response.data.update_section.model;
                 vmorder.MinOrderTotalWarning = model.MinOrderTotalWarning;
                 vmorder.ConfirmWarnings = model.Warnings;
 
@@ -560,7 +560,7 @@ var PaymentInfo = {
                 document.querySelector('#back-' + response.data.goto_section).setAttribute('onclick', 'document.querySelector("#button-payment-info").click()');
             }
             if (response.data.update_section !== undefined && response.data.update_section.name == 'payment-info') {
-                var model = JSON.parse(response.data.update_section.html);
+                var model = response.data.update_section.model;
                 vm.DisplayOrderTotals = model.DisplayOrderTotals;
                 vm.PaymentViewComponentName = model.PaymentViewComponentName,
                 vm.PaymentInfo = true;
