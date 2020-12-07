@@ -193,10 +193,10 @@
                         <partial name="OrderTotals" />
                         @if (modelExists)
                         {
-                    <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
-                        {{vmorder.cart.MinOrderSubtotalWarning}}
-                    </div>
-                            <div v-if="vmorder.cart.IsEditable" class="checkout-buttons text-center float-sm-right mt-3">
+                            <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning != null" class="alert alert-danger">
+                                {{vmorder.cart.MinOrderSubtotalWarning}}
+                            </div>
+                            <div v-if="vmorder.cart.IsEditable && vmorder.cart.MinOrderSubtotalWarning == null" class="checkout-buttons text-center float-sm-right mt-3">
                                 <div v-if-else="vmorder.cart.MinOrderSubtotalWarning !== null">
                                     <template v-if="vmorder.cart.TermsOfServiceOnShoppingCartPage">
                                         <b-button type="button" id="checkoutasguest" v-if="vmorder.cart.ShowCheckoutAsGuestButton" @@click="vmorder.showMsgBoxOne($event)" variant="secondary" class="checkout-as-guest-button mx-1">
@@ -354,7 +354,7 @@
                 })
                     .then(value => {
                         this.boxOne = value
-                        if (vmorder.cart.MinOrderSubtotalWarning == null && vmorder.cart.Warnings.length == 0) {
+                        if (vmorder.cart.MinOrderSubtotalWarning == null) {
                             if (value == true) {
                                 if (vmorder.Confirm == true) {
                                     ConfirmOrder.save();
