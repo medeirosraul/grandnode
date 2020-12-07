@@ -6,7 +6,7 @@
             <input v-else id="UseRewardPoints" name="UseRewardPoints" type="checkbox" class="custom-control-input" value="true" />
             <span class="custom-control-label"></span>
             <span class="custom-control-description">        
-                @T("Checkout.UseRewardPoints").Text.Replace("{0}", "{{RewardPointsBalance}}").Replace("{1}", "{{RewardPointsAmount}}")
+                @T("Checkout.UseRewardPoints").Text.Replace("{0}", "{{vmorder.RewardPointsBalance}}").Replace("{1}", "{{vmorder.RewardPointsAmount}}")
             </span>
         </label>
     </div>
