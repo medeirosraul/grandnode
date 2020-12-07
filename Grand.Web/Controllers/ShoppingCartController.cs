@@ -141,6 +141,7 @@ namespace Grand.Web.Controllers
                 enabledattributeids = enabledAttributeIds.ToArray(),
                 disabledattributeids = disabledAttributeIds.ToArray(),
                 htmlordertotal = await RenderPartialViewToString("Components/OrderTotals/Default", model),
+                model = model,
                 checkoutattributeinfo = await checkoutAttributeFormatter.FormatAttributes(attributeXml, _workContext.CurrentCustomer),
             });
         }
