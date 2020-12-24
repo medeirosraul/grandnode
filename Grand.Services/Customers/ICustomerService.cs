@@ -26,6 +26,7 @@ namespace Grand.Services.Customers
         /// <param name="vendorId">Vendor identifier</param>
         /// <param name="storeId">Store identifier</param>
         /// <param name="ownerId">Owner identifier</param>
+        /// <param name="salesEmployeeId">Sales employee identifier</param>
         /// <param name="customerRoleIds">A list of customer role identifiers to filter by (at least one match); pass null or empty list in order to load all customers; </param>
         /// <param name="email">Email; null to load all customers</param>
         /// <param name="username">Username; null to load all customers</param>
@@ -43,7 +44,7 @@ namespace Grand.Services.Customers
         /// <returns>Customers</returns>
         Task<IPagedList<Customer>> GetAllCustomers(DateTime? createdFromUtc = null,
             DateTime? createdToUtc = null, string affiliateId = "", string vendorId = "", string storeId = "", string ownerId = "",
-            string[] customerRoleIds = null, string[] customerTagIds = null, string email = null, string username = null,
+            string salesEmployeeId = "", string[] customerRoleIds = null, string[] customerTagIds = null, string email = null, string username = null,
             string firstName = null, string lastName = null,
             string company = null, string phone = null, string zipPostalCode = null,
             bool loadOnlyWithShoppingCart = false, ShoppingCartType? sct = null,
@@ -61,13 +62,22 @@ namespace Grand.Services.Customers
         /// </summary>
         /// <param name="lastActivityFromUtc">Customer last activity date (from)</param>
         /// <param name="customerRoleIds">A list of customer role identifiers to filter by (at least one match); pass null or empty list in order to load all customers; </param>
+        /// <param name="storeId">Store ident</param>
+        /// <param name="salesEmployeeId">Sales employee ident</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <returns>Customers</returns>
         Task<IPagedList<Customer>> GetOnlineCustomers(DateTime lastActivityFromUtc,
-            string[] customerRoleIds, int pageIndex = 0, int pageSize = int.MaxValue, string storeId = "");
+            string[] customerRoleIds, string storeId = "", string salesEmployeeId = "", int pageIndex = 0, int pageSize = int.MaxValue);
 
-        Task<int> GetCountOnlineShoppingCart(DateTime lastActivityFromUtc, string storeId);
+        /// <summary>
+        /// Gets count online customers
+        /// </summary>
+        /// <param name="lastActivityFromUtc">Customer last activity date (from)</param>
+        /// <param name="storeId">Store ident</param>
+        /// <param name="salesEmployeeId">Sales employee ident</param>
+        /// <returns>Int</returns>
+        Task<int> GetCountOnlineShoppingCart(DateTime lastActivityFromUtc, string storeId = "", string salesEmployeeId = "");
 
         /// <summary>
         /// Delete a customer

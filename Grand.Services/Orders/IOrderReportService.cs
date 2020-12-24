@@ -42,11 +42,12 @@ namespace Grand.Services.Orders
         /// <summary>
         /// Get order average report
         /// </summary>
-        /// <param name="storeId">Store identifier; pass 0 to ignore this parameter</param>
-        /// <param name="customerId">Customer identifier; pass 0 to ignore this parameter</param>
-        /// <param name="vendorId">Vendor identifier; pass 0 to ignore this parameter</param>
-        /// <param name="billingCountryId">Billing country identifier; 0 to load all orders</param>
-        /// <param name="orderId">Order identifier; pass 0 to ignore this parameter</param>
+        /// <param name="storeId">Store identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="vendorId">Vendor identifier</param>
+        /// <param name="SalesEmployeeId">Sales employee identifier</param>
+        /// <param name="billingCountryId">Billing country identifier</param>
+        /// <param name="orderId">Order identifier</param>
         /// <param name="paymentMethodSystemName">Payment method system name; null to load all records</param>
         /// <param name="os">Order status</param>
         /// <param name="ps">Payment status</param>
@@ -59,7 +60,7 @@ namespace Grand.Services.Orders
         /// <param name="tagid">Tag ident</param>
         /// <returns>Result</returns>
         Task<OrderAverageReportLine> GetOrderAverageReportLine(string storeId = "", 
-            string customerId = "", string vendorId = "",
+            string customerId = "", string vendorId = "", string salesEmployeeId = "",
             string billingCountryId = "", string orderId = "", string paymentMethodSystemName = null,
             OrderStatus? os = null, PaymentStatus? ps = null, ShippingStatus? ss = null,
             DateTime? startTimeUtc = null, DateTime? endTimeUtc = null,
@@ -109,8 +110,9 @@ namespace Grand.Services.Orders
         /// </summary>
         /// <param name="days">Orders in the last days</param>
         /// <param name="storeId">Store ident</param>
+        /// <param name="salesEmployeeId">Sales employee ident</param>
         /// <returns>ReportPeriodOrder</returns>
-        Task<ReportPeriodOrder> GetOrderPeriodReport(int days, string storeId);
+        Task<ReportPeriodOrder> GetOrderPeriodReport(int days, string storeId = "", string salesEmployeeId = "");
 
         /// <summary>
         /// Gets a list of products (identifiers) purchased by other customers who purchased a specified product
@@ -141,11 +143,12 @@ namespace Grand.Services.Orders
         /// <summary>
         /// Get profit report
         /// </summary>
-        /// <param name="storeId">Store identifier; pass 0 to ignore this parameter</param>
-        /// <param name="customerId">Customer identifier; pass 0 to ignore this parameter</param>
-        /// <param name="vendorId">Vendor identifier; pass 0 to ignore this parameter</param>
+        /// <param name="storeId">Store identifier</param>
+        /// <param name="customerId">Customer identifier</param>
+        /// <param name="vendorId">Vendor identifier</param>
+        /// <param name="SalesEmployeeId">Sales employee identifier</param>
+        /// <param name="billingCountryId">Billing country identifier</param>
         /// <param name="orderId">Order identifier; pass 0 to ignore this parameter</param>
-        /// <param name="billingCountryId">Billing country identifier; 0 to load all orders</param>
         /// <param name="paymentMethodSystemName">Payment method system name; null to load all records</param>
         /// <param name="startTimeUtc">Start date</param>
         /// <param name="endTimeUtc">End date</param>
@@ -156,7 +159,7 @@ namespace Grand.Services.Orders
         /// <param name="billingLastName">Billing last name. Leave empty to load all records.</param>
         /// <param name="tagid">tag ident</param>
         /// <returns>Result</returns>
-        Task<decimal> ProfitReport(string storeId = "", string customerId = "", string vendorId = "",
+        Task<decimal> ProfitReport(string storeId = "", string customerId = "", string vendorId = "", string salesEmployeeId = "",
             string billingCountryId = "", string orderId = "", string paymentMethodSystemName = null,
             OrderStatus? os = null, PaymentStatus? ps = null, ShippingStatus? ss = null,
             DateTime? startTimeUtc = null, DateTime? endTimeUtc = null,

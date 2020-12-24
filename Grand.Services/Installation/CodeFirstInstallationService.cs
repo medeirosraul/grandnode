@@ -4014,6 +4014,14 @@ namespace Grand.Services.Installation
             };
             await _customerRoleRepository.InsertAsync(crStaff);
 
+            var crSalesManager = new CustomerRole {
+                Name = "Sales manager",
+                Active = true,
+                IsSystemRole = true,
+                SystemName = SystemCustomerRoleNames.SalesManager,
+            };
+            await _customerRoleRepository.InsertAsync(crSalesManager);
+
             //admin user
             var adminUser = new Customer {
                 CustomerGuid = Guid.NewGuid(),
@@ -9675,6 +9683,12 @@ namespace Grand.Services.Installation
                                                   Enabled = true,
                                                   Name = "Add a new product attribute"
                                               },
+                                           new ActivityLogType
+                                              {
+                                                  SystemKeyword = "AddNewSalesEmployee",
+                                                  Enabled = true,
+                                                  Name = "Add a sales employee"
+                                              },
                                           new ActivityLogType
                                               {
                                                   SystemKeyword = "AddNewSetting",
@@ -9741,7 +9755,6 @@ namespace Grand.Services.Installation
                                                   Enabled = true,
                                                   Name = "Delete a discount"
                                               },
-
                                           new ActivityLogType
                                               {
                                                   SystemKeyword = "DeleteDocument",
@@ -9789,6 +9802,12 @@ namespace Grand.Services.Installation
                                                   SystemKeyword = "DeleteReturnRequest",
                                                   Enabled = true,
                                                   Name = "Delete a return request"
+                                              },
+                                          new ActivityLogType
+                                              {
+                                                  SystemKeyword = "DeleteSalesEmployee",
+                                                  Enabled = true,
+                                                  Name = "Delete a sales employee"
                                               },
                                           new ActivityLogType
                                               {
@@ -9903,6 +9922,12 @@ namespace Grand.Services.Installation
                                                   SystemKeyword = "EditReturnRequest",
                                                   Enabled = true,
                                                   Name = "Edit a return request"
+                                              },
+                                          new ActivityLogType
+                                              {
+                                                  SystemKeyword = "EditSalesEmployee",
+                                                  Enabled = true,
+                                                  Name = "Edit a sales employee"
                                               },
                                           new ActivityLogType
                                               {

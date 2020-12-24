@@ -68,7 +68,7 @@ namespace Grand.Web.Areas.Admin.Services
         private readonly IDownloadService _downloadService;
         private readonly IStoreService _storeService;
         private readonly IVendorService _vendorService;
-        private readonly IShippingService _shippingService;
+        private readonly ISalesEmployeeService _salesEmployeeService;
         private readonly IAddressAttributeParser _addressAttributeParser;
         private readonly IAddressAttributeService _addressAttributeService;
         private readonly IAddressAttributeFormatter _addressAttributeFormatter;
@@ -110,9 +110,9 @@ namespace Grand.Web.Areas.Admin.Services
             IProductAttributeParser productAttributeParser,
             IGiftCardService giftCardService,
             IDownloadService downloadService,
-            IShippingService shippingService,
             IStoreService storeService,
             IVendorService vendorService,
+            ISalesEmployeeService salesEmployeeService,
             IAddressAttributeParser addressAttributeParser,
             IAddressAttributeService addressAttributeService,
             IAddressAttributeFormatter addressAttributeFormatter,
@@ -151,9 +151,9 @@ namespace Grand.Web.Areas.Admin.Services
             _productAttributeParser = productAttributeParser;
             _giftCardService = giftCardService;
             _downloadService = downloadService;
-            _shippingService = shippingService;
             _storeService = storeService;
             _vendorService = vendorService;
+            _salesEmployeeService = salesEmployeeService;
             _addressAttributeParser = addressAttributeParser;
             _addressAttributeService = addressAttributeService;
             _addressAttributeFormatter = addressAttributeFormatter;
@@ -294,6 +294,8 @@ namespace Grand.Web.Areas.Admin.Services
             if (product != null && _workContext.HasAccessToProduct(product))
                 filterByProductId = model.ProductId;
 
+            var salesEmployeeId = _workContext.CurrentCustomer.IsSalesManager() ? _workContext.CurrentCustomer.SeId : "";
+
             //load orders
             var orders = await _orderService.SearchOrders(
                 storeId: model.StoreId,
@@ -301,6 +303,7 @@ namespace Grand.Web.Areas.Admin.Services
                 customerId: model.CustomerId,
                 productId: filterByProductId,
                 warehouseId: model.WarehouseId,
+                salesEmployeeId: salesEmployeeId,
                 paymentMethodSystemName: model.PaymentMethodSystemName,
                 createdFromUtc: startDateValue,
                 createdToUtc: endDateValue,
@@ -322,6 +325,7 @@ namespace Grand.Web.Areas.Admin.Services
                 storeId: model.StoreId,
                 customerId: model.CustomerId,
                 vendorId: model.VendorId,
+                salesEmployeeId: salesEmployeeId,
                 orderId: "",
                 paymentMethodSystemName: model.PaymentMethodSystemName,
                 os: orderStatus,
@@ -337,6 +341,7 @@ namespace Grand.Web.Areas.Admin.Services
             var profit = await _orderReportService.ProfitReport(
                 storeId: model.StoreId,
                 vendorId: model.VendorId,
+                salesEmployeeId: salesEmployeeId,
                 paymentMethodSystemName: model.PaymentMethodSystemName,
                 os: orderStatus,
                 ps: paymentStatus,
@@ -424,11 +429,24 @@ namespace Grand.Web.Areas.Admin.Services
             model.AllowCustomersToSelectTaxDisplayType = _taxSettings.AllowCustomersToSelectTaxDisplayType;
             model.TaxDisplayType = _taxSettings.TaxDisplayType;
 
-            var affiliate = await _affiliateService.GetAffiliateById(order.AffiliateId);
-            if (affiliate != null)
+            if (!string.IsNullOrEmpty(order.AffiliateId))
             {
-                model.AffiliateId = affiliate.Id;
-                model.AffiliateName = affiliate.GetFullName();
+                var affiliate = await _affiliateService.GetAffiliateById(order.AffiliateId);
+                if (affiliate != null)
+                {
+                    model.AffiliateId = affiliate.Id;
+                    model.AffiliateName = affiliate.GetFullName();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(order.SeId))
+            {
+                var salesEmployee = await _salesEmployeeService.GetSalesEmployeeById(order.SeId);
+                if (salesEmployee != null)
+                {
+                    model.SalesEmployeeId = salesEmployee.Id;
+                    model.SalesEmployeeName = salesEmployee.Name;
+                }
             }
 
             //a vendor should have access only to his products
@@ -1352,10 +1370,13 @@ namespace Grand.Web.Areas.Admin.Services
             if (product != null && _workContext.HasAccessToProduct(product))
                 filterByProductId = model.ProductId;
 
+            var salesEmployeeId = _workContext.CurrentCustomer.IsSalesManager() ? _workContext.CurrentCustomer.SeId : "";
+
             //load orders
             var orders = await _orderService.SearchOrders(storeId: model.StoreId,
                 vendorId: model.VendorId,
                 productId: filterByProductId,
+                salesEmployeeId: salesEmployeeId,
                 warehouseId: model.WarehouseId,
                 paymentMethodSystemName: model.PaymentMethodSystemName,
                 createdFromUtc: startDateValue,

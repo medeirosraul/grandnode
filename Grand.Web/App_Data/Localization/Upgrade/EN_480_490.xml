@@ -92,4 +92,73 @@
   <LocaleResource Name="Admin.Configuration.Settings.Vendor.DefaultAdminTheme.Hint">
     <Value>Enter the name of the default admin theme</Value>
   </LocaleResource>
+  <LocaleResource Name="Account.Fields.Password.Validation">
+    <Value>Your password does not meet our requirements</Value>
+  </LocaleResource>
+  <LocaleResource Name="Account.ChangePassword.Fields.NewPassword.Validation">
+    <Value>Your password does not meet our requirements</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.CustomerUser.PasswordRegularExpression">
+    <Value>Regular Expression for password validation</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.CustomerUser.PasswordRegularExpression.hint">
+    <Value>Enter the regular expression for password validation</Value>
+  </LocaleResource>
+  <LocaleResource Name="Search.Products">
+    <Value>Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployees">
+    <Value>Sales employees</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Salesemployee.Fields.Active">
+    <Value>Active</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.DisplayOrder">
+    <Value>Display order</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Email">
+    <Value>Email</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Name">
+    <Value>Name</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Phone">
+    <Value>Phone</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Name.Required">
+    <Value>Sales employee name is required</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Commission">
+    <Value>Commisssion</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Commission.Hint">
+    <Value>Commission percentage rate for each sales employee</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.SalesEmployee.Fields.Commission.IsCommissionValid">
+    <Value>Commission`s rate is no valid</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.Fields.SeId">
+    <Value>Sales employee</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.Fields.SeId.hint">
+    <Value>Choose a sales employee associated to this customer account.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Orders.Fields.SalesEmployee">
+    <Value>Sales employee</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.Fields.SalesEmployee.None">
+    <Value>Not set</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.CannotBeInSalesManagerRoleWithoutSalesEmployeeAssociated">
+    <Value>A customer in the Sales manager role should have a sales employee account associated.</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.AddNewSalesEmployee">
+    <Value>Added a new sales employee ('{0}')</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.EditSalesEmployee">
+    <Value>Edited a sales employee ('{0}')</Value>
+  </LocaleResource>
+  <LocaleResource Name="ActivityLog.DeleteSalesEmployee">
+    <Value>Deleted a sales employee ('{0}')</Value>
+  </LocaleResource>
 </Language>
