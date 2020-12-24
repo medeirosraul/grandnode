@@ -1,0 +1,54 @@
+﻿@model EstimateShippingModel
+<div class="shipping">
+    <script asp-location="Footer">
+        $(document).ready(function () {
+            $('#estimate-shipping-button').click(function() {
+                displayAjaxLoading(true);
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "@(Url.RouteUrl("EstimateShipping"))",
+                    data: $("#shopping-cart-form").serialize(),
+                    success: function(data) {
+                        displayAjaxLoading();
+                        $('.estimate-shipping-result').html(data);
+                        fbq('trackCustom', 'ShippingCalc', {cep: $("#ZipPostalCode").val()});
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        displayAjaxLoading();
+                        alert('Failed to retrieve estimate shipping.');
+                    }
+                });
+            });
+            
+            $("#@Html.IdFor(model => model.ZipPostalCode)").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    $("#estimate-shipping-button").trigger("click")
+                    return false;
+                }
+            });
+        });
+    </script>
+
+    <div class="estimate-shipping">
+        <div class="title">
+            <strong>@T("ShoppingCart.EstimateShipping")</strong>
+        </div>
+        <div class="hint generalMarginSupporter">
+            <p>
+                Você poderá selecionar o frete escolhido quando <strong>finalizar a compra</strong>.<br/><br/>
+                Para fretes acima de R$50,00, damos a opção de <strong>combinar o envio</strong>, onde nós organizamos melhor os produtos e diminuimos o pacote, deixando o frete mais barato. Ao selecionar esta opção, entraremos em contato logo em seguida.
+
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ZipPostalCode">CEP:</label>
+            <input asp-for="ZipPostalCode" class="form-control zip-input" />
+        </div>
+        <div class="buttons">
+            <input id="estimate-shipping-button" type="button" value="@T("ShoppingCart.EstimateShipping.Button")" class="btn btn-outline-secondary float-xs-right estimate-shipping-button" />
+        </div>
+    </div>
+    <div class="col-12 px-0 estimate-shipping-result generalMarginSupporter"></div>
+</div>

@@ -1,0 +1,192 @@
+<div style="font-family: Segoe Ui, Helvetica, Arial; background-color: #FAFAFA;">
+    <div style="background-color: #fecaff">
+      <img src="https://corujinhapresentes.com.br/Themes/Corujinha/Content/Images/email-head.png" style="display:block; margin-left:auto; margin-right:auto;" alt="Corujinha Presentes"/>
+    </div>
+    <div style="margin-left:15px; margin-right:15px; margin-top:15px; padding:15px; background-color: #FFF; border-radius: 5px;">
+      <h2 style="font-weight:400">
+        Olá, {{Order.CustomerFullName}}.
+      </h2>
+      <p>
+        Obrigado por comprar na <a href="{{Store.URL}}">{{Store.Name}}</a>. 
+        <br/>
+        <a target="_blank" href="{{Order.OrderURLForCustomer}}">Clique aqui</a> para visualizar os detalhes do seu pedido e realizar o pagamento caso ainda não o tenha feito. Se tiver dúvidas, basta responder este email ou entrar em contato pelo WhatsApp: 11 97491-5290.
+        <br/>
+        <br/>
+        Abaixo está o resumo do seu pedido.
+      </p>
+    </div>
+    <div style="margin-left:15px; margin-right:15px; margin-top:15px; padding:15px; background-color: #FFF; border-radius: 5px;">
+      <h3 style="font-weight:400">
+        Pedido #{{Order.OrderNumber}}
+      </h3>
+      <p>
+        {{Order.CreatedOn}}
+        <br />
+        <a target="_blank" href="{{Order.OrderURLForCustomer}}">Ver detalhes</a>
+      </p>
+  
+      <div style="border: 1px #EEE solid; border-radius: 5px; width: 280px; height:250px; margin-right:10px; display:block; float:left; background-color: #FAFAFA; padding-left: 10px; padding-right:10px;">
+        <h4 style="font-weight:600">
+          COBRANÇA
+        </h4>
+        <p>
+          {{Order.BillingFirstName}} {{Order.BillingLastName}}<br />
+          {{Order.BillingAddress1}}<br />
+          {{Order.BillingCity}}, {{Order.BillingZipPostalCode}}<br />
+          {{Order.BillingStateProvince}}, {{Order.BillingCountry}}<br />
+          Método de cobrança: {{Order.PaymentMethod}}
+        </p>
+      </div>
+  
+      <div style="border: 1px #EEE solid; border-radius: 5px; width: 280px;  height:250px; display: block; float:left; background-color: #FAFAFA; padding-left: 10px; padding-right:10px;">
+        <h4 style="font-weight:600">
+          ENTREGA
+        </h4>
+        <P>
+          {{Order.ShippingFirstName}} {{Order.ShippingLastName}}<br />
+          {{Order.ShippingAddress1}}<br />
+          {{Order.ShippingCity}}, {{Order.ShippingZipPostalCode}}<br />
+          {{Order.ShippingStateProvince}}, {{Order.ShippingCountry}}<br />
+          Método de envio: {{Order.ShippingMethod}}
+        </P>
+      </div>
+      <div style="clear: both;"> </div>
+  
+      <hr style="border: 1px #EEE solid; margin-top:15px;" />
+  
+      <table style="width: 100%; border-collapse: collapse;" border="0">
+        <tr style="background-color: #FFF;">
+          <th style="font-weight: 600; text-align: left; border-bottom: 1px #EEE solid; padding: 5px;">Produto</th>
+          <th style="font-weight: 600; border-bottom: 1px #EEE solid; padding: 5px;">Preço</th>
+          <th style="font-weight: 600; border-bottom: 1px #EEE solid; padding: 5px;">Quantidade</th>
+          <th style="font-weight: 600; text-align: right; border-bottom: 1px #EEE solid; padding: 5px;">Total</th>
+        </tr>
+        {% for item in Order.OrderItems -%}
+        <tr style="text-align: center;">
+          <td style="padding: 0.6em 0.4em; text-align: left; border-bottom: 1px #EEE solid;">{{item.ProductName}}
+            {% if item.IsDownloadAllowed -%}
+            <br />
+            <a class="link" href="{{item.DownloadUrl}}">Download</a>
+            {% endif %}
+  
+            {% if item.IsLicenseDownloadAllowed -%}
+            <br />
+            <a class="link" href="{{item.LicenseUrl}}">Download license</a>
+            {% endif %}
+  
+            {% if item.AttributeDescription != null and item.AttributeDescription != "" %}
+            <br />
+            {{item.AttributeDescription}}
+            {% endif %}
+  
+            {% if item.ShowSkuOnProductDetailsPage and item.ProductSku != null and item.ProductSku != "" %}
+            <br />
+            Sku: {{item.ProductSku}}
+            {% endif %}
+  
+          </td>
+          <td style="padding: 0.6em 0.4em; text-align: right;border-bottom: 1px #EEE solid;">{{item.UnitPrice}}</td>
+          <td style="padding: 0.6em 0.4em; text-align: center;border-bottom: 1px #EEE solid;">{{item.Quantity}}</td>
+          <td style="padding: 0.6em 0.4em; text-align: right;border-bottom: 1px #EEE solid;">{{item.TotalPrice}}</td>
+        </tr>
+        {% endfor -%}
+  
+        {% if Order.CheckoutAttributeDescription != null and Order.CheckoutAttributeDescription != "" %}
+        <tr>
+          <td style="text-align:right;" colspan="1">&nbsp;</td>
+          <td colspan="3" style="text-align:right">
+            {{Order.CheckoutAttributeDescription}}
+          </td>
+        </tr>
+        {% endif %}
+  
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Sub-Total:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.SubTotal}}</td>
+        </tr>
+  
+        {% if Order.DisplaySubTotalDiscount %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Desconto:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.SubTotalDiscount}}</td>
+        </tr>
+        {% endif %}
+  
+        {% if Order.DisplayShipping %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Envio:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.Shipping}}</td>
+        </tr>
+        {% endif %}
+  
+        {% if Order.DisplayPaymentMethodFee %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Taxas adicionais de pagamento:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.PaymentMethodAdditionalFee}}</td>
+        </tr>
+        {% endif %}
+  
+        {% if Order.DisplayTax %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Taxas:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.Tax}}</td>
+        </tr>
+        {% endif %}
+  
+        {% if Order.DisplayTaxRates %}
+        {% for item in Order.TaxRates -%}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">{{item.Key}}</td>
+          <td style="padding:0.6em 0.4 em;">{{item.Value}}</td>
+        </tr>
+        {% endfor -%}
+        {% endif %}
+  
+        {% if Order.DisplayDiscount %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">Desconto:</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.Discount}}</td>
+        </tr>
+        {% endif %}
+  
+        {% for item in Order.GiftCards -%}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">{{item.Key}}</td>
+          <td style="padding:0.6em 0.4 em;">{{item.Value}}</td>
+        </tr>
+        {% endfor -%}
+  
+        {% if Order.RedeemedRewardPointsEntryExists %}
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;">{{Order.RPTitle}}</td>
+          <td style="padding:0.6em 0.4 em;">{{Order.RPAmount}}</td>
+        </tr>
+        {% endif %}
+  
+        <tr style="text-align:right;">
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding:0.6em 0.4 em;"><strong>Total do pedido:</strong></td>
+          <td style="padding:0.6em 0.4 em;"><strong>{{Order.Total}}</strong></td>
+        </tr>
+      </table>
+      
+      <div style="clear: both;"> </div>
+    </div>
+    <div style="background-color: #fecaff; color:white; margin-top: 15px;">
+    <p style="text-align: center">
+        <br />
+        Caso tenha dúvidas, pode entrar em contato conosco respondendo este email. Estamos a disposição!
+        <br />
+        <br />
+      </p>
+    </div>
+  </div>

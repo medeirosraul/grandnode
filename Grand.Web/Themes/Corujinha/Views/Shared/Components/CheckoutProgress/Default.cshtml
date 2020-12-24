@@ -1,0 +1,125 @@
+﻿@model CheckoutProgressModel
+@using Grand.Framework.UI
+@inject IPageHeadBuilder pagebuilder
+@{
+    pagebuilder.AppendScriptParts(ResourceLocation.Footer, string.Format("~/Themes/{0}/Content/js/bs-stepper.min.js", "Corujinha"));
+    pagebuilder.AppendCssFileParts(ResourceLocation.Head, string.Format("~/Themes/{0}/Content/css/bs-stepper.min.css", "Corujinha"));
+}
+@await Component.InvokeAsync("Widget", new { widgetZone = "checkout_progress_before" })
+<div class="bs-stepper fade show">
+    <div class="bs-stepper-header" role="tablist">
+        <!-- your steps here -->
+        <div class="step" data-target="#cart-step">
+            <button type="button" class="step-trigger" id="cart-trigger" onclick="goToStep('@Url.RouteUrl("ShoppingCart")')">
+                <span class="bs-stepper-circle"><span class="mdi mdi-cart" aria-hidden="true"></span></span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#address-step">
+            <button type="button" class="step-trigger" id="address-trigger" onclick="goToStep('@Url.RouteUrl("CheckoutBillingAddress")')">
+                <span class="bs-stepper-circle"><span class="mdi mdi-map-marker" aria-hidden="true"></span></span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#shipping-step">
+            <button type="button" class="step-trigger" id="shipping-trigger" onclick="goToStep('@Url.RouteUrl("CheckoutShippingMethod")')">
+                <span class="bs-stepper-circle"><span class="mdi mdi-truck" aria-hidden="true"></span></span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#payment-step">
+            <button type="button" class="step-trigger" id="payment-trigger" onclick="goToStep('@Url.RouteUrl("CheckoutPaymentMethod")')">
+                <span class="bs-stepper-circle"><span class="mdi mdi-cash-usd" aria-hidden="true"></span></span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#confirm-step">
+            <button type="button" class="step-trigger" id="confirm-trigger" onclick="goToStep('@Url.RouteUrl("CheckoutConfirm")')">
+                <span class="bs-stepper-circle"><span class="mdi mdi-send" aria-hidden="true"></span></span>
+            </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#complete-step">
+            <button type="button" class="step-trigger" id="complete-trigger">
+                <span class="bs-stepper-circle"><span class="mdi mdi-check-decagram" aria-hidden="true"></span></span>
+            </button>
+        </div>
+    </div>
+    <div class="bs-stepper-content">
+        <div id="cart-step" class="content"> </div>
+        <div id="address-step" class="content"> </div>
+        <div id="shipping-step" class="content"> </div>
+        <div id="payment-step" class="content"> </div>
+        <div id="confirm-step" class="content"> </div>
+        <div id="complete-step" class="content"> </div>
+    </div>
+</div>
+@await Component.InvokeAsync("Widget", new { widgetZone = "checkout_progress_after" })
+
+<script asp-location="Footer">
+    $(document).ready(function () {
+        var stepper = new Stepper($('.bs-stepper')[0], {
+            linear: false,
+            animation: true
+        });
+
+        disableTrigger = (id) => {
+            $(id).attr('disabled', 'disabled')
+        }
+
+        goToStep = (step) =>
+        {
+            window.location = step;
+        }
+
+        @{
+            switch (Model.CheckoutProgressStep)
+            {
+                case CheckoutProgressStep.Cart:
+                <Text>stepper.to(1)</Text>
+                <Text>disableTrigger("#address-trigger")</Text>
+                <Text>disableTrigger("#shipping-trigger")</Text>
+                <Text>disableTrigger("#payment-trigger")</Text>
+                <Text>disableTrigger("#confirm-trigger")</Text>
+                <Text>disableTrigger("#complete-trigger")</Text>
+                break;
+
+                case CheckoutProgressStep.Address:
+                <Text>stepper.to(2)</Text>
+                <Text>disableTrigger("#shipping-trigger")</Text>
+                <Text>disableTrigger("#payment-trigger")</Text>
+                <Text>disableTrigger("#confirm-trigger")</Text>
+                <Text>disableTrigger("#complete-trigger")</Text>
+                break;
+
+                case CheckoutProgressStep.Shipping:
+                <Text>stepper.to(3)</Text>
+                <Text>disableTrigger("#payment-trigger")</Text>
+                <Text>disableTrigger("#confirm-trigger")</Text>
+                <Text>disableTrigger("#complete-trigger")</Text>
+                break;
+
+                case CheckoutProgressStep.Payment:
+                <Text>stepper.to(4)</Text>
+                <Text>disableTrigger("#confirm-trigger")</Text>
+                <Text>disableTrigger("#complete-trigger")</Text>
+                break;
+
+                case CheckoutProgressStep.Confirm:
+                <Text>stepper.to(5)</Text>
+                <Text>disableTrigger("#complete-trigger")</Text>
+                break;
+
+                case CheckoutProgressStep.Complete:
+                <Text>stepper.to(6)</Text>
+                <Text>disableTrigger("#cart-trigger")</Text>
+                <Text>disableTrigger("#address-trigger")</Text>
+                <Text>disableTrigger("#shipping-trigger")</Text>
+                <Text>disableTrigger("#payment-trigger")</Text>
+                <Text>disableTrigger("#confirm-trigger")</Text>
+                break;
+            }
+        }
+    });
+</script>
+

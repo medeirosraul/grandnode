@@ -10,6 +10,11 @@
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>20b891c8-c6ab-4ad8-b0fc-46c7cd28c905</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/0e85429e-777a-4678-b4e7-c9493f0a9f60/resourceGroups/CorujinhaPresentes/providers/microsoft.insights/components/corujinhapresentes</ApplicationInsightsResourceId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Grand.Domain\Grand.Domain.csproj" />
@@ -19,12 +24,16 @@
     <ProjectReference Include="..\Grand.Api\Grand.Api.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\**" CopyToPublishDirectory="PreserveNewest" Exclude="App_Data\appsettings.json;App_Data\sitemap.config;App_Data\DataProtectionKeys\*.xml;App_Data\Settings.txt;App_Data\InstalledPlugins.txt;" />
+    <Content Include="App_Data\**" CopyToPublishDirectory="PreserveNewest" Exclude="App_Data\appsettings.json;App_Data\sitemap.config;App_Data\DataProtectionKeys\*.xml;App_Data\InstalledPlugins.txt" />
     <Content Include="Themes\**" CopyToPublishDirectory="PreserveNewest" Exclude="Themes\**\*.config;Themes\**\*.cshtml" />
     <Content Include="Roslyn\**" CopyToPublishDirectory="PreserveNewest" Exclude="Roslyn\**\*.dll" />
     <Content Include="logs\**" CopyToPublishDirectory="PreserveNewest" />
+    <Compile Remove="Plugins\**" />
+    <Content Remove="Plugins\**" />
     <Content Remove="wwwroot\content\images\thumbs\*.jpeg;wwwroot\content\images\thumbs\*.jpg;wwwroot\content\images\thumbs\*.png" />
     <Content Remove="wwwroot\bundles\*.css;wwwroot\bundles\*.js" />
+    <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="Plugins\**" />
   </ItemGroup>
   <Target Name="PublishViews" BeforeTargets="PrepareForPublish">
     <ItemGroup>
@@ -35,12 +44,45 @@
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(PublishDir)/Plugins/%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
   <ItemGroup>
-    <Content Remove="Plugins\**" />
-    <Compile Remove="Plugins\**" />
-    <EmbeddedResource Remove="Plugins\**" />
-    <None Remove="Plugins\**" />
-    <Content Update="Plugins\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Remove="App_Data\Settings.txt" />
+    <Content Remove="Themes\Corujinha\Content\images\payment-methods.png" />
+    <None Remove="Themes\Corujinha\Content\css\animate.min.css" />
+    <None Remove="Themes\Corujinha\Content\css\bs-stepper.min.css" />
+    <None Remove="Themes\Corujinha\Content\css\js-offcanvas.css" />
+    <None Remove="Themes\Corujinha\Content\css\js-offcanvas.css.map" />
+    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.css" />
+    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.css.map" />
+    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.min.css" />
+    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.min.css.map" />
+    <None Remove="Themes\Corujinha\Content\css\materialdesigniconsSlim.min.css" />
+    <None Remove="Themes\Corujinha\Content\css\print.css" />
+    <None Remove="Themes\Corujinha\Content\css\style.css" />
+    <None Remove="Themes\Corujinha\Content\css\style.rtl.css" />
+    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.eot" />
+    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.woff" />
+    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.woff2" />
+    <None Remove="Themes\Corujinha\Content\fonts\MaterialDesignIconsSlim.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\MaterialDesignIconsSlim.woff2" />
+    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Light.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Medium.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Regular.ttf" />
+    <None Remove="Themes\Corujinha\Content\images\banner.jpg" />
+    <None Remove="Themes\Corujinha\Content\images\email-head.png" />
+    <None Remove="Themes\Corujinha\Content\images\logo.png" />
+    <None Remove="Themes\Corujinha\Content\js\bs-stepper.min.js" />
+    <None Remove="Themes\Corujinha\Content\js\js-offcanvas.pkgd.min.js" />
+    <None Remove="Themes\Corujinha\Content\js\public.onepagecheckout.js" />
+    <None Remove="Themes\Corujinha\Content\templates\welcome-email.html" />
+    <None Remove="Themes\Corujinha\preview.jpg" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Themes\Corujinha\Content\images\email-head.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\js\public.onepagecheckout.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +93,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Themes\Corujinha\Content\images\payment-methods.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

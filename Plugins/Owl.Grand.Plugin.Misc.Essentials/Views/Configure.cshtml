@@ -1,0 +1,39 @@
+﻿@model OwlEssentialsSettingsModel
+@inject AdminAreaSettings adminAreaSettings
+@using Owl.Grand.Plugin.Misc.Essentials.Models;
+@using Grand.Domain.Common;
+@{
+    Layout = "_ConfigurePlugin";
+}
+<form asp-controller="OwlEssentials" asp-action="Configure" method="post" id="shipping-melhorenvio-form">
+    <div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="IsSandbox" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <label class="mt-checkbox mt-checkbox-outline control control-checkbox">
+                <admin-input asp-for="IsSandbox" />
+                <div class="control__indicator"></div>
+            </label>
+            <span asp-validation-for="IsSandbox"></span>
+        </div>
+    </div>
+
+    @*<div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="ClientId" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <admin-input asp-for="ClientId" />
+            <span asp-validation-for="ClientId"></span>
+        </div>
+    </div>*@
+
+    <div class="form-actions">
+        <div class="row">
+            <div class="offset-md-3 offset-sm-3 col-md-9 col-sm-9">
+                <input type="submit" name="save" class="btn green" value="@T("Admin.Common.Save")" />
+            </div>
+        </div>
+    </div>
+</form>

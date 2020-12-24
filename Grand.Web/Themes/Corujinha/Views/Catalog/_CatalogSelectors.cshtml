@@ -1,0 +1,64 @@
+﻿@model CatalogPagingFilteringModel
+
+<div class="generalMarginSupporter categoryGrid catalog-selectors">
+    <div class="d-flex flex-row row px-3">
+        
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-4">
+                    <div class="row">
+                        <label class="col-12">@T("Catalog.PageSize")</label>
+                        <div class="selectdiv col-12 pr-0">
+                            @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { @class = "custom-select form-control", onchange = "setLocation(this.value);" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-8">
+                    <div class="row">
+                        <label class="col-12">@T("Catalog.OrderBy")</label>
+                        <div class="selectdiv col-12 pr-0">
+                            @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { @class = "form-control custom-select", onchange = "setLocation(this.value);" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex">
+            <div class="row w-100 align-items-end">
+                <div class="col">
+                    <a class="js-offcanvas-trigger filter-button btn btn-outline-info d-lg-none d-flex mb-1" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi mdi-tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>
+                </div>
+                <div class="col col-lg-12">
+                    <div class="d-lg-flex d-none align-items-center mx-auto order-2 float-left mt-2" id="items_statistics">
+                        <div class="items-page-size d-none">@Model.PageSize</div>
+                        <div class="items-per-page d-lg-inline-flex"><span>@T("catalog.selectors.items")</span><span class="number"></span></div>
+                        <div class="items-separator">@T("catalog.selectors.of")</div>
+                        <div class="items-total">@Model.TotalItems</div>
+                    </div>
+                    @if (Model.AllowProductViewModeChanging)
+                    {
+                        <div class="sort-container order-3 d-inline-flex ml-sm-0 ml-auto float-right">
+                            @if (Model.AvailableViewModes.Count > 1)
+                            {
+                                var gridMode = Model.AvailableViewModes[0];
+                                var listMode = Model.AvailableViewModes[1];
+                                @*<label class="mb-0">@T("Catalog.ViewMode")</label>*@
+                                <a class="viewmode-icon grid mr-3 @if(gridMode.Selected){<text>selected</text>}" href="@gridMode.Value" title="@gridMode.Text">
+                                    <span class="mdi mdi-view-grid"></span>
+                                    <span class="sr-only">viewmode grid</span>
+                                </a>
+                                <a class="viewmode-icon list @if (listMode.Selected){<text>selected</text>}" href="@listMode.Value" title="@listMode.Text">
+                                    <span class="mdi mdi-view-list"></span>
+                                    <span class="sr-only">viewmode list</span>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

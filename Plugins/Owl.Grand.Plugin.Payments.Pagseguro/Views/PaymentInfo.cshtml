@@ -1,0 +1,91 @@
+﻿@model Owl.Grand.Plugin.Payments.PagSeguro.Models.PaymentInfoModel
+
+@{
+    Layout = "";
+}
+
+
+<div class="container">
+    <div class="row align-items-center mb-3">
+        <div class="col-md-4 col-12 text-md-right">
+            <label class="col-form-label" asp-for="CardholderName">@T("Payment.CardholderName"):</label>
+        </div>
+        <div class="col-md-4 col-12 text-right">
+            <input asp-for="CardholderName" class="form-control" autofocus="autofocus" />
+            <span asp-validation-for="CardholderName"></span>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-md-4 col-12 text-md-right">
+            <label class="col-form-label" asp-for="CardNumber">@T("Payment.CardNumber"):</label>
+        </div>
+        <div class="col-md-4 col-12 text-right">
+            <input asp-for="CardNumber" class="form-control" autofocus="autofocus" />
+            <span asp-validation-for="CardNumber"></span>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-md-4 col-12 text-md-right">
+            <label class="col-form-label" asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
+        </div>
+        <div class="col-md-4 col-12 text-right d-md-flex input-group">
+            <select asp-for="ExpireMonth" class="form-control col-md-4 col-12" asp-items="Model.ExpireMonths"></select>
+            <select asp-for="ExpireYear" class="form-control col-md-4 col-12" asp-items="Model.ExpireYears"></select>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-3">
+        <div class="col-md-4 col-12 text-md-right">
+            <label class="col-form-label" asp-for="CardCode">@T("Payment.CardCode"):</label>
+        </div>
+        <div class="col-md-4 col-12 text-right">
+            <input asp-for="CardCode" class="form-control" autofocus="autofocus" />
+            <span asp-validation-for="CardCode"></span>
+        </div>
+    </div>
+
+    <input asp-for="CardCryptography" type="hidden"/>
+
+    <script src="https://assets.pagseguro.com.br/checkout-sdk-js/rc/dist/browser/pagseguro.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            // var publicKey = '@Model.PagSeguroSettings.PublicKey';
+            var publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+ZqgD892U9/HXsa7XqBZUayPquAfh9xx4iwUbTSUAvTlmiXFQNTp0Bvt/5vK2FhMj39qSv1zi2OuBjvW38q1E374nzx6NNBL5JosV0+SDINTlCG0cmigHuBOyWzYmjgca+mtQu4WczCaApNaSuVqgb8u7Bd9GCOL4YJotvV5+81frlSwQXralhwRzGhj/A57CGPgGKiuPT+AOGmykIGEZsSD9RKkyoKIoc0OS8CPIzdBOtTQCIwrLn2FxI83Clcg55W8gkFSOS6rWNbG5qFZWMll6yl02HtunalHmUlRUL66YeGXdMDC2PuRcmZbGO5a/2tbVppW6mfSWG3NPRpgwIDAQAB';
+            $('input.payment-info-next-step-button').attr('onclick', '');
+            $('input.payment-info-next-step-button').on('click', () => {
+                $("#co-payment-info-form").validate();
+
+                if ($("#co-payment-info-form").valid()) {
+                    // Cryptograph credit card
+                    @if(Model.PagSeguroSettings.IsSandbox)
+                    {
+                        <Text>
+                            console.log("PagSeguro Public Key: ");
+                            console.log(publicKey);
+                        </Text>
+                    }
+                    PagSeguro.env = 'SANDBOX';
+                    var card = PagSeguro.encryptCard({
+                        publicKey: publicKey,
+                        holder: $('#CardholderName').val(),
+                        number: $('#CardNumber').val(),
+                        expMonth: $('#ExpireMonth').val(),
+                        expYear: $('#ExpireYear').val(),
+                        securityCode: $('#CardCode').val()
+                    });
+
+                    if (card.hasErrors) {
+                        console.log(card);
+                        alert('Cartão de crédito inválido!');
+                        return;
+                    }
+
+                    var encrypted = card.encryptedCard;
+                    $("#CardCryptography").val(encrypted);
+                }
+            });
+        });
+    </script>
+</div>

@@ -1,0 +1,79 @@
+﻿@model ShippingMelhorEnvioSettingsModel
+@inject AdminAreaSettings adminAreaSettings
+@using Owl.Grand.Plugin.Shipping.MelhorEnvio.Models;
+@using Grand.Domain.Common;
+@{
+    Layout = "_ConfigurePlugin";
+}
+<form asp-controller="ShippingMelhorEnvio" asp-action="Configure" method="post" id="shipping-melhorenvio-form">
+    <div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="IsSandbox" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <label class="mt-checkbox mt-checkbox-outline control control-checkbox">
+                <admin-input asp-for="IsSandbox" />
+                <div class="control__indicator"></div>
+            </label>
+            <span asp-validation-for="IsSandbox"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="ClientId" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <admin-input asp-for="ClientId" />
+            <span asp-validation-for="ClientId"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="ClientSecret" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <admin-input asp-for="ClientSecret" />
+            <span asp-validation-for="ClientSecret"></span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ClientId) && !string.IsNullOrEmpty(Model.ClientSecret))
+    {
+        <div class="form-group">
+            <div class="col-md-3 col-sm-3 text-right">
+                <label asp-for="ClientSecret" class="control-label">
+                    -
+                </label>
+            </div>
+            <div class="col-md-9 col-sm-9">
+                @if (Model.IsSandbox)
+                {
+                    <a href="https://sandbox.melhorenvio.com.br/oauth/authorize?client_id=@(Model.ClientId)&redirect_uri=@(Model.RedirectUrl)&response_type=code&state=teste&scope=cart-read cart-write companies-read companies-write coupons-read coupons-write notifications-read orders-read products-read products-write purchases-read shipping-calculate shipping-cancel shipping-checkout shipping-companies shipping-generate shipping-preview shipping-print shipping-share shipping-tracking ecommerce-shipping transactions-read users-read users-write">Fazer login em Melhor Envio Sandbox</a>
+                }
+                else
+                {
+                    <a href="https://melhorenvio.com.br/oauth/authorize?client_id=@(Model.ClientId)&redirect_uri=@(Model.RedirectUrl)&response_type=code&state=teste&scope=cart-read cart-write companies-read companies-write coupons-read coupons-write notifications-read orders-read products-read products-write purchases-read shipping-calculate shipping-cancel shipping-checkout shipping-companies shipping-generate shipping-preview shipping-print shipping-share shipping-tracking ecommerce-shipping transactions-read users-read users-write">Fazer login em Melhor Envio</a>
+                }
+            </div>
+        </div>
+    }
+    <hr/>
+    <div class="form-group">
+        <div class="col-md-3 col-sm-3 text-right">
+            <admin-label asp-for="PostalCodeFrom" class="control-label" />
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <admin-input asp-for="PostalCodeFrom" />
+            <span asp-validation-for="PostalCodeFrom"></span>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <div class="row">
+            <div class="offset-md-3 offset-sm-3 col-md-9 col-sm-9">
+                <input type="submit" name="save" class="btn green" value="@T("Admin.Common.Save")" />
+            </div>
+        </div>
+    </div>
+</form>

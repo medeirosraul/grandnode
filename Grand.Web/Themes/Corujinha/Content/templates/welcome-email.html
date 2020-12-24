@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>welcome-email</title>
+</head>
+<body>
+    <div style="font-family: Segoe Ui, Helvetica, Arial; background-color: #FAFAFA;">
+        <div style="background-color: #fecaff">
+            <img src="https://corujinhapresentes.com.br/Themes/Corujinha/Content/Images/email-head.png" style="display:block; margin-left:auto; margin-right:auto;" alt="Corujinha Presentes">
+        </div>
+        <div style="margin-left:15px; margin-right:15px; margin-top:15px; padding:15px; background-color: #FFF; color:#333; border-radius: 5px;">
+            <h2 style="font-weight:400">
+                Bem vindo(a), {{Order.CustomerFullName}}!
+            </h2>
+            <p>
+                Seja muito bem vindo(a) a <a href="{{Store.URL}}">{{Store.Name}}</a>.<br />
+                Agora você tem acesso a uma variedade de serviços, como:
+
+                <h3>Carrinho permanente</h3>
+                Você não perderá o carrinho ao sair. Todos os produtos que você adicionar ao carrinho permanecerão lá até que você os remova ou complete sua compra. <br />
+                
+                <h3>Livro de endereços</h3>
+                Nós podemos agora enviar suas compras para outros endereços além do seu. Isso é perfeito para enviar aquele presente de aniversário aos seus amigos. <br />
+                
+                <h3>Histórico de pedidos</h3>
+                Veja seu histórico de pedidos feitos com a gente (e repita-os se quiser). <br />
+                
+                <h3>Avaliação de produtos</h3>
+                Compartilhe com outros clientes o que você achou dos nossos produtos. <br />
+
+                <h3>E muito mais!</h3>
+                Se precisar de ajuda com qualquer coisa em nosso site, você pode entrar em contato diretamente com a gente respondendo este email ou enviando um email para vendas@corujinhapresentes.com.br.
+                <br /><br />
+                Novamente gostaríamos de agradecer, muito obrigado e boas compras!
+                
+            </p>
+        </div>
+        <div style="background-color: #fecaff; color:white; margin-top: 15px; padding-left:5px; padding-right: 5px;">
+            <p style="text-align: center">
+                <br />
+                Caso tenha dúvidas, pode entrar em contato conosco respondendo este email. Estamos a disposição!
+                <br />
+                <br />
+            </p>
+        </div>
+    </div>
+</body>
+</html>

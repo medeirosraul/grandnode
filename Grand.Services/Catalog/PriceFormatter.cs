@@ -206,7 +206,7 @@ namespace Grand.Services.Catalog
 
             //round before rendering
             //should we use RoundingHelper.RoundPrice here?
-            price = RoundingHelper.RoundPrice(price, targetCurrency);
+            //price = RoundingHelper.RoundPrice(price, targetCurrency);
 
             string currencyString = GetCurrencyString(price, showCurrency, targetCurrency);
             if (showTax)
