@@ -13,5 +13,8 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
         public string RefreshToken { get; set; }
         public DateTime AccessTokenExpiration { get; set; }
         public string PostalCodeFrom { get; set; }
+        public decimal CombineShippingOver { get; set; }
+        public decimal FreeShippingOver { get; set; }
+        public string FreeShippingStates { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Services
         #region Constants
         private const string MELHOR_ENVIO_URL = "https://melhorenvio.com.br";
         private const string MELHOR_ENVIO_URL_SANDBOX = "https://sandbox.melhorenvio.com.br";
+        private const string CEP_URL = "https://viacep.com.br/";
         #endregion
 
         #region Fields
@@ -45,6 +46,22 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Services
             _logger.InsertLog(Logging.LogLevel.Information, "Return of shipping calculation for " + shipment.To.PostalCode, result);
 
             return result;
+        }
+
+        public string GetCepInfo(string cep)
+        {
+            var client = new RestClient($"{CEP_URL}/ws/{cep}/json");
+            var request = new RestRequest(Method.GET);
+
+            var response = client.Execute(request);
+
+            // Validate response
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return null;
+            }
+
+            return response.Content;
         }
 
         public async Task<string> PostRequest(string endpoint, object content)

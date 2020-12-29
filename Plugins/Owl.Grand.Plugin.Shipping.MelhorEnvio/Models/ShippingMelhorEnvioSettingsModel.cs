@@ -17,6 +17,15 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Models
         [GrandResourceDisplayName("CEP de origem")]
         public string PostalCodeFrom { get; set; }
 
+        [GrandResourceDisplayName("Combinar envio a partir de X")]
+        public decimal CombineShippingOver { get; set; }
+
+        [GrandResourceDisplayName("Frete grátis a partir de X")]
+        public decimal FreeShippingOver { get; set; }
+
+        [GrandResourceDisplayName("Estados com frete grátis")]
+        public string FreeShippingStates { get; set; }
+
         public string RedirectUrl { get; set; }
     }
 }

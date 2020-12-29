@@ -14,34 +14,64 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using Grand.Services.Logging;
 using Logging = Grand.Domain.Logging;
+using Grand.Services.Orders;
+using Grand.Domain.Orders;
+using System.Linq;
+using Grand.Domain.Shipping;
+using Grand.Services.Common;
+using Grand.Domain.Customers;
+using System.Collections.Generic;
+using Grand.Services.Shipping;
+using MediatR;
+using Grand.Domain.Common;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
 {
-    [AuthorizeAdmin]
-    [Area("Admin")]
-    [PermissionAuthorize(PermissionSystemName.ShippingSettings)]
+    
     public class ShippingMelhorEnvioController : BaseShippingController
     {
         private readonly ShippingMelhorEnvioSettings _shippingMelhorEnvioSettings;
+        private readonly MelhorEnvioShippingComputationMethod _shippingComputationMethod;
         private readonly ISettingService _settingService;
         private readonly ILocalizationService _localizationService;
         private readonly IWebHelper _webHelper;
         private readonly ILogger _logger;
+        private readonly IShoppingCartService _shoppingCartService;
+        private readonly IStoreContext _storeContext;
+        private readonly IWorkContext _workContext;
+        private readonly IGenericAttributeService _genericAttributeService;
+        private readonly IShippingService _shippingService;
+        private readonly IMediator _mediator;
 
         public ShippingMelhorEnvioController(
             ShippingMelhorEnvioSettings shippingMelhorEnvioSettings,
             ISettingService settingService,
             ILocalizationService localizationService,
             IWebHelper webHelper,
-            ILogger logger)
+            ILogger logger,
+            MelhorEnvioShippingComputationMethod shippingComputationMethod,
+            IShoppingCartService shoppingCartService,
+            IStoreContext storeContext,
+            IWorkContext workContext,
+            IGenericAttributeService genericAttributeService,
+            IShippingService shippingService, IMediator mediator)
         {
             _shippingMelhorEnvioSettings = shippingMelhorEnvioSettings;
             _settingService = settingService;
             _localizationService = localizationService;
             _webHelper = webHelper;
             _logger = logger;
+            _shippingComputationMethod = shippingComputationMethod;
+            _shoppingCartService = shoppingCartService;
+            _storeContext = storeContext;
+            _workContext = workContext;
+            _genericAttributeService = genericAttributeService;
+            _shippingService = shippingService;
+            _mediator = mediator;
         }
 
+        [AuthorizeAdmin]
+        [Area("Admin")]
         public IActionResult Configure()
         {
             var model = new ShippingMelhorEnvioSettingsModel();
@@ -50,11 +80,16 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             model.ClientId = _shippingMelhorEnvioSettings.ClientId;
             model.ClientSecret = _shippingMelhorEnvioSettings.ClientSecret;
             model.PostalCodeFrom = _shippingMelhorEnvioSettings.PostalCodeFrom;
+            model.CombineShippingOver = _shippingMelhorEnvioSettings.CombineShippingOver;
+            model.FreeShippingOver = _shippingMelhorEnvioSettings.FreeShippingOver;
+            model.FreeShippingStates = _shippingMelhorEnvioSettings.FreeShippingStates;
             model.RedirectUrl = $"{_webHelper.GetStoreLocation()}Admin/ShippingMelhorEnvio/Callback";
 
             return View("~/Plugins/Shipping.MelhorEnvio/Views/Configure.cshtml", model);
         }
 
+        [AuthorizeAdmin]
+        [Area("Admin")]
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Configure(ShippingMelhorEnvioSettingsModel model)
@@ -64,6 +99,9 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             _shippingMelhorEnvioSettings.ClientId = model.ClientId;
             _shippingMelhorEnvioSettings.ClientSecret = model.ClientSecret;
             _shippingMelhorEnvioSettings.PostalCodeFrom = model.PostalCodeFrom;
+            _shippingMelhorEnvioSettings.CombineShippingOver = model.CombineShippingOver;
+            _shippingMelhorEnvioSettings.FreeShippingOver = model.FreeShippingOver;
+            _shippingMelhorEnvioSettings.FreeShippingStates = model.FreeShippingStates;
 
             await _settingService.SaveSetting(_shippingMelhorEnvioSettings);
             await _settingService.ClearCache();
@@ -74,6 +112,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
         }
 
         [AuthorizeAdmin]
+        [Area("Admin")]
         public async Task<IActionResult> Callback([FromQuery] string code, [FromQuery] string error)
         {
             // Validate parameters
@@ -126,5 +165,44 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             return Configure();
         }
 
+        public async Task<IActionResult> SaveShippingMethod([FromForm]string name, [FromForm]string cep)
+        {
+            //validation
+            var cart = _shoppingCartService.GetShoppingCart(_storeContext.CurrentStore.Id, ShoppingCartType.ShoppingCart, ShoppingCartType.Auctions);
+
+            var customer = _workContext.CurrentCustomer;
+            var store = _storeContext.CurrentStore;
+
+            //clear shipping option XML/Description
+            await _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.ShippingOptionAttributeXml, "", store.Id);
+            await _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.ShippingOptionAttributeDescription, "", store.Id);
+
+            //find it
+            //performance optimization. try cache first
+            var shippingOptions = await customer.GetAttribute<List<ShippingOption>>(_genericAttributeService, SystemCustomerAttributeNames.OfferedShippingOptions, store.Id);
+            if (shippingOptions == null || shippingOptions.Count == 0)
+            {
+                var address = new Address { ZipPostalCode = cep };
+                //not found? let's load them using shipping service
+                shippingOptions = (await _shippingService
+                    .GetShippingOptions(customer, cart, address, "Shipping.MelhorEnvio", store))
+                    .ShippingOptions
+                    .ToList();
+            }
+            else
+            {
+                //loaded cached results. let's filter result by a chosen shipping rate computation method
+                shippingOptions = shippingOptions.Where(so => so.ShippingRateComputationMethodSystemName.Equals("Shipping.MelhorEnvio", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            var shippingOption = shippingOptions
+                .Find(so => !String.IsNullOrEmpty(so.Name) && so.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            //save
+            await _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.SelectedShippingOption, shippingOption, store.Id);
+
+            return Ok();
+        }
     }
 }

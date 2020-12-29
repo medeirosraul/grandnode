@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Owl.Grand.Plugin.Shipping.MelhorEnvio.Domain;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using DotLiquid.Tags;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
 {
@@ -33,6 +35,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
         private readonly ILocalizationService _localizationService;
         private readonly ILanguageService _languageService;
         private readonly IProductService _productService;
+        private readonly IPriceFormatter _priceFormatter;
         private readonly ShippingMelhorEnvioService _shippingMelhorEnvioService;
         private readonly ShippingMelhorEnvioSettings _settings;
         #endregion
@@ -49,7 +52,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
             ILanguageService languageService,
             IProductService productService,
             IServiceProvider serviceProvider,
-            ShippingMelhorEnvioService shippingMelhorEnvioService, ShippingMelhorEnvioSettings settings)
+            ShippingMelhorEnvioService shippingMelhorEnvioService, ShippingMelhorEnvioSettings settings, IPriceFormatter priceFormatter)
         {
             _shippingService = shippingService;
             _shippingMethodService = shippingMethodService;
@@ -64,6 +67,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
             _serviceProvider = serviceProvider;
             _shippingMelhorEnvioService = shippingMelhorEnvioService;
             _settings = settings;
+            _priceFormatter = priceFormatter;
         }
         #endregion
 
@@ -172,6 +176,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
             var result =  await _shippingMelhorEnvioService.CalcShipping(melhorEnvioShipment);
             var resultObject = JObject.Parse("{ \"result\": " + result + "}");
             var shippingOptionsList = resultObject["result"].Children();
+            decimal minShippingValue = 0;
 
             // Show ship options
             foreach(var option in shippingOptionsList)
@@ -179,10 +184,73 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
                 if (!string.IsNullOrEmpty(option["error"]?.ToString()))
                     continue;
                 var description = $"{option["custom_delivery_range"]["min"]}-{option["custom_delivery_range"]["max"]} dias úteis.";
+                var shippingValue = Convert.ToDecimal(option["custom_price"]);
                 var shippingOption = new ShippingOption {
                     Name = option["company"]["name"].ToString() + " - " + option["name"].ToString(),
                     Description = description,
-                    Rate = Convert.ToDecimal(option["custom_price"])
+                    Rate = shippingValue,
+                    ShippingRateComputationMethodSystemName = "Shipping.MelhorEnvio"
+                };
+
+                response.ShippingOptions.Add(shippingOption);
+
+                if (minShippingValue == 0 || minShippingValue > shippingValue) 
+                    minShippingValue = shippingValue;
+            }
+
+            
+
+            // Free shipping over
+            if (_settings.FreeShippingOver > 0 && subTotal >= _settings.FreeShippingOver)
+            {
+                var canFreeShipping = false;
+
+                // Validate free shipping state
+                if(!string.IsNullOrEmpty(_settings.FreeShippingStates))
+                {
+                    var cepInfo = _shippingMelhorEnvioService.GetCepInfo(melhorEnvioShipment.To.PostalCode);
+                    var cepInfoObject = JObject.Parse(cepInfo);
+
+                    if (string.IsNullOrEmpty(cepInfoObject["error"]?.ToString()))
+                    {
+                        var uf = cepInfoObject["uf"]?.ToString();
+                        if (!string.IsNullOrEmpty(uf))
+                        {
+                            if (_settings.FreeShippingStates.Split(';').Any(x => x.Trim().ToUpper() == uf))
+                                canFreeShipping = true;
+                        }
+                    }
+                }
+                else
+                {
+                    canFreeShipping = true;
+                }
+
+                if(canFreeShipping)
+                {
+                    var shippingOption = new ShippingOption {
+                        Name = "Frete grátis",
+                        Description = $"5-11 dias úteis. Frete grátis a partir de {_priceFormatter.FormatPrice(_settings.FreeShippingOver)} em compras. ",
+                        Rate = 0,
+                        ShippingRateComputationMethodSystemName = "Shipping.MelhorEnvio"
+                    };
+
+                    if(!string.IsNullOrWhiteSpace(_settings.FreeShippingStates))
+                    {
+                        shippingOption.Description += $"Estados: {string.Join(", ", _settings.FreeShippingStates.Split(';'))}.";
+                    }
+                    response.ShippingOptions.Add(shippingOption);
+                }
+            }
+
+            // Combine shipping over
+            if (_settings.CombineShippingOver > 0 && minShippingValue >= _settings.CombineShippingOver)
+            {
+                var shippingOption = new ShippingOption {
+                    Name = "Combinar envio",
+                    Description = $"Disponível somente para as regiões Sul e Sudeste quando o frete mínimo ultrapassa {_priceFormatter.FormatPrice(_settings.CombineShippingOver)}.",
+                    Rate = _settings.CombineShippingOver,
+                    ShippingRateComputationMethodSystemName = "Shipping.MelhorEnvio"
                 };
 
                 response.ShippingOptions.Add(shippingOption);
