@@ -1,8 +1,8 @@
 ﻿@model SearchBoxModel
 @using System.Text.Encodings.Web
-<form asp-route="ProductSearch" method="get" id="small-search-box-form" class="w-100">
+<form asp-route="ProductSearch" method="get" id="small-search-box-form" class="w-100 search-form">
     <input type="hidden" asp-for="Box" value="true" />
-    <label for="small-searchterms" class="sr-only">@T("Search.SearchBox.Tooltip")</label>
+    <label for="small-searchterms" class="visually-hidden">@T("Search.SearchBox.Tooltip")</label>
     <div class="input-group flex-row">
         <input type="search" class="form-control search-box-text" id="small-searchterms" autocomplete="off" name="q" placeholder="@T("Search.SearchBox.Tooltip")">
         @if (Model.AvailableCategories.Any())
@@ -11,12 +11,11 @@
         }
         @await Component.InvokeAsync("Widget", new { widgetZone = "searchbox_before_search_button" })
 
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-secondary search-box-button float-sm-right d-inline-flex">
-                <span class="sr-only">@T("Search.SearchBox.Tooltip")</span>
-                <span class="mdi mdi-magnify"></span>
-            </button>
-        </div>
+        <button type="submit" class="btn btn-secondary search-box-button">
+            <span class="visually-hidden">@T("Search.SearchBox.Tooltip")</span>
+            <span class="iconify mdi" data-icon="mdi:magnify"></span>
+        </button>
+
         <ul class="advanced-search-results row">
             <li class="left-side col-md-6 col-12">
                 <ul>

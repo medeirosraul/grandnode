@@ -1,29 +1,19 @@
 ﻿@model ShoppingCartLinksModel
-<div class="align-items-center w-50 w-lg-auto">
-    <ul class="shopping-links">
-        @if (Model.WishlistEnabled)
+<div class="col-auto d-flex align-items-center">
+    <a class="theme-color-dark position-relative" href="@Url.RouteUrl("Wishlist")">
+        <span class="icon iconify" data-icon="bi:heart"></span>
+        @if (Model.WishlistItems > 0)
         {
-            <li class="nav-item wishlist-container pl-lg-3">
-                <a class="nav-link" href="@Url.RouteUrl("Wishlist")">
-                    <span class="wishlist-label hl-label">
-                        <span class="mdi mdi-heart-outline"></span>
-                    </span>
-                    <span class="wishlist-qty ml-lg-4">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
-                </a>
-            </li>
+            <span class="icon-quantity">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
         }
-        @if (Model.ShoppingCartEnabled)
+    </a>
+</div>
+<div class="col-auto d-flex align-items-center">
+    <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="right" href="#right">
+        <span class="icon iconify" data-icon="bi:cart3"></span>
+        @if (Model.ShoppingCartItems > 0)
         {
-            <li class="nav-item cart-container pl-lg-3" id="topcartlink">
-                <div class="btn-group dropdown d-inline-block">
-                    <a @if (Model.MiniShoppingCartEnabled) { <text> class="nav-link js-offcanvas-trigger" data-offcanvas-trigger="right" href="#right" </text>  } else { <text> class="nav-link" href="@Url.RouteUrl("ShoppingCart")" </text> }>
-                        <span class="cart-label hl-label">
-                            <span class="mdi mdi-cart-outline"></span>
-                        </span>
-                        <span class="cart-qty ml-lg-2">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
-                    </a>
-                </div>
-            </li>
+            <span class="icon-quantity">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
         }
-    </ul>
+    </a>
 </div>

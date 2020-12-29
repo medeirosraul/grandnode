@@ -45,36 +45,48 @@
   </Target>
   <ItemGroup>
     <Content Remove="App_Data\Settings.txt" />
+    <Content Remove="compilerconfig.json" />
     <Content Remove="Themes\Corujinha\Content\images\payment-methods.png" />
     <None Remove="Themes\Corujinha\Content\css\animate.min.css" />
     <None Remove="Themes\Corujinha\Content\css\bs-stepper.min.css" />
+    <None Remove="Themes\Corujinha\Content\css\corujinha.scss" />
     <None Remove="Themes\Corujinha\Content\css\js-offcanvas.css" />
     <None Remove="Themes\Corujinha\Content\css\js-offcanvas.css.map" />
-    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.css" />
-    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.css.map" />
-    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.min.css" />
-    <None Remove="Themes\Corujinha\Content\css\materialdesignicons.min.css.map" />
-    <None Remove="Themes\Corujinha\Content\css\materialdesigniconsSlim.min.css" />
     <None Remove="Themes\Corujinha\Content\css\print.css" />
     <None Remove="Themes\Corujinha\Content\css\style.css" />
     <None Remove="Themes\Corujinha\Content\css\style.rtl.css" />
-    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.eot" />
-    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.ttf" />
-    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.woff" />
-    <None Remove="Themes\Corujinha\Content\fonts\materialdesignicons-webfont.woff2" />
-    <None Remove="Themes\Corujinha\Content\fonts\MaterialDesignIconsSlim.ttf" />
-    <None Remove="Themes\Corujinha\Content\fonts\MaterialDesignIconsSlim.woff2" />
-    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Light.ttf" />
-    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Medium.ttf" />
-    <None Remove="Themes\Corujinha\Content\fonts\Poppins-Regular.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Light.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Medium.ttf" />
+    <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Regular.ttf" />
     <None Remove="Themes\Corujinha\Content\images\banner.jpg" />
+    <None Remove="Themes\Corujinha\Content\images\coupon.png" />
+    <None Remove="Themes\Corujinha\Content\images\delivery-truck.png" />
     <None Remove="Themes\Corujinha\Content\images\email-head.png" />
+    <None Remove="Themes\Corujinha\Content\images\free-shipping.jpg" />
+    <None Remove="Themes\Corujinha\Content\images\Google-Site-Seguro.png" />
+    <None Remove="Themes\Corujinha\Content\images\Icone.png" />
     <None Remove="Themes\Corujinha\Content\images\logo.png" />
+    <None Remove="Themes\Corujinha\Content\images\money.png" />
+    <None Remove="Themes\Corujinha\Content\images\shopping-cart.png" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.bundle.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.bundle.js.map" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.bundle.min.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.bundle.min.js.map" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.esm.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.esm.js.map" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.esm.min.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.esm.min.js.map" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.js.map" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.min.js" />
+    <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.min.js.map" />
     <None Remove="Themes\Corujinha\Content\js\bs-stepper.min.js" />
     <None Remove="Themes\Corujinha\Content\js\js-offcanvas.pkgd.min.js" />
     <None Remove="Themes\Corujinha\Content\js\public.onepagecheckout.js" />
+    <None Remove="Themes\Corujinha\Content\scss\corujinha.min.css" />
     <None Remove="Themes\Corujinha\Content\templates\welcome-email.html" />
     <None Remove="Themes\Corujinha\preview.jpg" />
+    <_ContentIncludedByDefault Remove="Themes\Corujinha\Content\scss\corujinha.min.css" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
   </ItemGroup>
   <ItemGroup>
@@ -98,5 +110,11 @@
     <None Update="Themes\Corujinha\Content\images\payment-methods.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\Corujinha\Content\scss\bootstrap\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 </Project>

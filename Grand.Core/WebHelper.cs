@@ -208,6 +208,7 @@ namespace Grand.Core
         /// <returns>Store host location</returns>
         public virtual string GetStoreHost(bool useSsl)
         {
+            useSsl = true;
             if (!IsRequestAvailable())
                 return string.Empty;
 

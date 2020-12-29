@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** one page checkout
 */
 
@@ -286,7 +286,7 @@ var ShippingMethod = {
                 return true;
             }
         }
-        alert('Please specify shipping method.');
+        alert('Selecione um método de envio.');
         return false;
     },
     

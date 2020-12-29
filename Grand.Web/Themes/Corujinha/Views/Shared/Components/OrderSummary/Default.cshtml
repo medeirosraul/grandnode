@@ -150,7 +150,7 @@
                                     <span class="product-unit-price price">@item.UnitPrice</span>
                                     @if (item.UnitPriceWithoutDiscountValue != item.UnitPriceValue && item.UnitPriceWithoutDiscountValue > 0)
                                     {
-                                        <div class="text-center"><del class="small text-danger">(@item.UnitPriceWithoutDiscount)</del></div>
+                                        <div class="text-center"><del class="small text-danger" style="font-size:80%;">(@item.UnitPriceWithoutDiscount)</del></div>
                                     }
                                 </td>
                                 @if (Model.IsEditable)
@@ -213,7 +213,7 @@
                                 {
                                     <td class="remove-from-cart text-center">
                                         <button type="button" class="btn btn-link text-secondary deleteshoppingcartitem" data-href="@Url.RouteUrl("DeleteCartItem", new { id = item.Id, shoppingcartpage = true })">
-                                            <span class="mdi mdi-close pr-1"></span>
+                                            <span class="mdi iconify pr-1" data-icon="mdi:close"></span>
                                         </button>
                                     </td>
                                 }
@@ -225,7 +225,7 @@
             @if (Model.IsEditable)
             {
                 <div class="common-buttons btn-group btn-group-sm mb-3">
-                    <button type="button" onclick="setLocation('@(Url.RouteUrl("ClearCart"))')" class="btn btn-danger d-flex justify-content-center removeAll-cart-button"><span class="mdi mdi-delete-forever-outline pr-1"></span><span class="d-sm-block">@T("shoppingcart.clearcart")</span></button>
+                    <button type="button" onclick="setLocation('@(Url.RouteUrl("ClearCart"))')" class="btn btn-danger d-flex justify-content-center removeAll-cart-button"><span class="mdi iconify pr-1" data-icon="mdi:delete-forever-outline"></span><span class="d-sm-block">@T("shoppingcart.clearcart")</span></button>
                     <button type="button" onclick="setLocation('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary d-flex justify-content-center continue-shopping-button"><span class="d-sm-block">@T("shoppingcart.continueshopping")</span></button>
                 </div>
             }
@@ -295,7 +295,7 @@
                                 <div class="col-sm-12 terms-of-service">
                                     <label class="custom-control custom-checkbox">
                                         <input class="custom-control-input" id="termsofservice" type="checkbox" name="termsofservice" />
-                                        <span class="sr-only">checkbox</span>
+                                        <span class="visually-hidden">checkbox</span>
                                         <span class="custom-control-label"></span>
                                         @if (Model.TermsOfServicePopup)
                                         {
@@ -313,7 +313,7 @@
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="ModalLabel">@T("Checkout.TermsOfService")</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span class="mdi mdi-close"></span>
+                                                    <span class="mdi iconify" data-icon="mdi:close"></span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">

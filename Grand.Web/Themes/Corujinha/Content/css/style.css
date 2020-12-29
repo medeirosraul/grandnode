@@ -1,4 +1,85 @@
-﻿/* material icons */
+﻿
+/* loading spinner */
+.loading,
+.loading:after {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.loading {
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 5px solid rgba(255, 255, 255, 0.2);
+    border-right: 5px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 5px solid rgba(255, 255, 255, 0.2);
+    border-left: 5px solid #ffffff;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.loading-wrapper {
+    position: fixed;
+    background-color: #1e1e25;
+    height: 40px;
+    width: 100%;
+    z-index: 2000;
+    animation-name: loadingwrapper;
+    animation-duration: .2s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes loadingwrapper {
+    0% {
+        top:-40px;
+    }
+    100% {
+        top:0;
+    }
+}
+
+@-webkit-keyframes loadingwrapper {
+    0% {
+        top: -40px;
+    }
+
+    100% {
+        top: 0;
+    }
+}
+
+/* material icons */
 
 .mdi {
     font-size: 24px;
@@ -491,11 +572,6 @@ span.rotate {
 .c-offcanvas {
     display: flex;
     flex-direction: column;
-}
-.js-offcanvas-trigger .c-button__text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .c-offcanvas-content-wrap {
@@ -4261,7 +4337,7 @@ valid mgs .input-validation-error {
         display: none;
     }
 
-.shopping-cart-page .totals,
+.shopping-cart-page .total-info,
 .shopping-cart-page .deals,
 .shopping-cart-page .estimate-shipping {
     background: #fff;
@@ -4269,7 +4345,8 @@ valid mgs .input-validation-error {
 }
 
 .shopping-cart-page .deals,
-.shopping-cart-page .estimate-shipping {
+.shopping-cart-page .estimate-shipping,
+.shopping-cart-page .total-info{
     margin-bottom: 15px;
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 5px;

@@ -48,7 +48,8 @@ namespace Grand.Web
         /// <param name="services">Collection of service descriptors</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureApplicationServices(Configuration);
+            services.ConfigureApplicationServices(Configuration); 
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         /// <summary>
@@ -58,6 +59,11 @@ namespace Grand.Web
         /// <param name="env">IWebHostEnvironment</param>
         public void Configure(IApplicationBuilder application, IWebHostEnvironment webHostEnvironment)
         {
+            application.Use((context, next) =>
+            {
+                context.Request.Scheme = "https";
+                return next();
+            });
             application.ConfigureRequestPipeline(webHostEnvironment);
         }
 

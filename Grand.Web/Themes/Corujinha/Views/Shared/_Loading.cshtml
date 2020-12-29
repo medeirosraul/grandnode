@@ -1,0 +1,14 @@
+﻿<div class="loading-wrapper" style="display: none;">
+    <div class="loading" >Carregando...</div>
+</div>
+
+<script asp-location="Footer">
+    $('a').on('click', e => {
+        a = $(e.currentTarget);
+        if (!a.attr('href').includes('#')) {
+            if (a.attr('target') === undefined || !a.attr('target').includes('_blank')) {
+                $(".loading-wrapper").removeAttr('style');
+            }
+        }
+    });
+</script>

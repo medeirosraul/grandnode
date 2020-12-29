@@ -1,0 +1,5 @@
+﻿@model LogoModel
+<a class="w-100 d-block" href="@Url.RouteUrl("HomePage")">
+    <img class="img-fluid pt-2 pb-2 pt-md-3 pb-md-3 mx-auto d-block" title="@Model.StoreName" alt="@Model.StoreName" src="@Model.LogoPath">
+    <span class="visually-hidden">@T("admin.configuration.shipping.providers.fields.logo")</span>
+</a>

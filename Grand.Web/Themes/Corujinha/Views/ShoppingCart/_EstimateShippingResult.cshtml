@@ -1,0 +1,73 @@
+﻿@model EstimateShippingResultModel
+@{
+    var i = 0;
+}
+@if (Model.ShippingOptions.Any())
+{
+    <div class="shipping-results list-group pb-0">
+        @foreach (var shippingOption in Model.ShippingOptions)
+        {
+        <button id="shipping-option-@(i++)" class="list-group-item list-group-item-action shipping-option" type="button" data-value="@shippingOption.Name">
+            <p class="mb-0">
+                <span class="text-success">@shippingOption.Price</span><br />
+                <strong>@shippingOption.Name</strong>  @Html.Raw(shippingOption.Description)
+            </p>
+        </button>
+        }
+    </div>
+}
+else if (Model.Warnings.Any())
+{
+    <div class="message-error">
+        <ul>
+            @foreach (var error in Model.Warnings)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+<a href="#" data-toggle="modal" data-target="#shipping-info-modal">
+    Saiba mais sobre Combinar Envio
+</a>
+<div class="modal fade" id="shipping-info-modal" tabindex="-1" role="dialog" aria-labelledby=".modal-content" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="text-justify">
+                    Para fretes acima de R$50,00, damos a opção de <strong>combinar o envio</strong>, onde nós organizamos melhor os produtos e diminuimos o pacote, deixando o frete mais barato. Ao selecionar esta opção, entraremos em contato logo em seguida.<br/><br/>
+                    Caso tenha dúvidas, entre em contato pelo <strong>WhatsApp</strong>: (11) 97491-5290
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script asp-location="Footer">
+    $(".shipping-option").on('click', e => {
+        var button = $(e.currentTarget);
+        var name = button.attr('data-value');
+
+        $.ajax({
+            cache: false,
+            url: '/ShippingMelhorEnvio/SaveShippingMethod',
+            data: {
+                name: name,
+                cep: $('#ZipPostalCode').val()
+            },
+            type: 'post',
+            success: () => {
+                location.reload();
+            },
+            complete: console.log('completo'),
+            error: console.log('erro')
+        });
+
+        $('.loading-wrapper').removeAttr('style');
+    });
+
+    
+</script>

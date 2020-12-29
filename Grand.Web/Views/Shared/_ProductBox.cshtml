@@ -65,7 +65,7 @@
                         <input class="form-control input-group-addon catalog-quantity" type="number" id="@qtyId" name="@qtyId" value="1">
                     }
                     <button type="button" value="@T("Products.QuickView")" title="@T("Products.QuickView")" class="btn btn-secondary" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl')">
-                        <span class="mdi mdi-magnify"></span>
+                        <span class="mdi iconify" data-icon="mdi:magnify"></span>
                         <span>@T("Products.QuickView")</span>
                     </button>
                 </div>
@@ -81,7 +81,7 @@
                         <input class="form-control input-group-addon catalog-quantity" type="number" id="@qtyId" name="@qtyId" value="1">
                     }
                     <button type="button" value="@T("Products.QuickView")" title="@T("Products.QuickView")" class="btn btn-secondary" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl')">
-                        <span class="mdi mdi-magnify mr-1"></span>
+                        <span class="mdi iconify mr-1" data-icon="mdi:magnify"></span>
                         <span>@T("Products.QuickView")</span>
                     </button>
                 </div>
@@ -272,7 +272,7 @@
                 @if (!Model.ProductPrice.DisableWishlistButton && Model.ProductType == ProductType.SimpleProduct)
                 {
                     <button type="button" data-toggle="title" title="@T("ShoppingCart.AddToWishlist")" class="btn btn-secondary" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;">
-                        <span class="mdi mdi-heart-outline">
+                        <span class="mdi iconify" data-icon="mdi:heart-outline">
                         </span>
                         <span class="sr-only">AddToWishlist</span>
                     </button>
@@ -289,7 +289,7 @@
                         addToCartText = T("ShoppingCart.PreOrder").Text;
                     }
                     <button type="button" class="btn btn-info justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', '@Model.ShowQty', '@Model.Id');return false;">
-                        <span class="mdi mdi-cart-outline"></span>
+                        <span class="mdi iconify" data-icon="mdi:cart-outline"></span>
                         <span class="add-cart-text">@(addToCartText)</span>
                         <span class="sr-only">AddToCart</span>
                     </button>
@@ -300,7 +300,7 @@
                     {
                         var addToCartText = T("ShoppingCart.Bids").Text;
                         <button type="button" class="btn btn-info justify-content-center w-100" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', 'false', '@Model.Id');return false;">
-                            <span class="mdi mdi-gavel"></span>
+                            <span class="mdi iconify" data-icon="mdi:gravel"></span>
                             <span class="add-cart-text">@(addToCartText)</span>
                             <span class="sr-only">AddToCart</span>
                         </button>
@@ -310,7 +310,7 @@
                 {
                     <button type="button" data-tooltip="title" title="@T("ShoppingCart.AddToCompareList")" class="btn btn-secondary" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;">
                         <span class="sr-only">AddToCompareList</span>
-                        <span class="mdi mdi-repeat"></span>
+                        <span class="mdi iconify" data-icon="mdi:repeat"></span>
                     </button>
                 }
             </div>

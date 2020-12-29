@@ -35,6 +35,16 @@
 <div class="page home-page custom-container d-flex flex-column mt-0">
     @await Component.InvokeAsync("PushNotificationsRegistration")
     @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" })
+    <div class="row justify-content-center bottom-divider">
+        <div class="col-auto d-flex align-items-center">
+            <a href="https://transparencyreport.google.com/safe-browsing/search?url=https:%2F%2Fcorujinhapresentes.com.br&hl=pt_BR" target="_blank">
+                <img src="~/Themes/Corujinha/Content/Images/Google-Site-Seguro.png" style="max-width: 120px;" alt="Site Seguro" />
+            </a>
+        </div>
+        <div class="col-auto d-flex align-items-center">
+            <img src="~/Themes/Corujinha/Content/Images/Icone.png" style="max-width: 120px;" alt="Frete Grátis" />
+        </div>
+    </div>
     @await Component.InvokeAsync("TopicBlock", new { systemName = "HomePageText" })
     @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_before_categories" })
     @await Component.InvokeAsync("HomePageCategories")

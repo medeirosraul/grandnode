@@ -399,10 +399,10 @@ function displayBarNotification(message, messagetype, timeout) {
     //add new notifications
     var htmlcode = '';
     if ((typeof message) == 'string') {
-        htmlcode = '<div class="toast show"><span class="close"><span class="mdi mdi-close" aria-hidden="true"></span></span><div class="content">' + message + '</div></div>';
+        htmlcode = '<div class="toast show"><span class="close"><span class="mdi iconify" data-icon="mdi:close" aria-hidden="true"></span></span><div class="content">' + message + '</div></div>';
     } else {
         for (var i = 0; i < message.length; i++) {
-            htmlcode = htmlcode + '<div class="toast show"><span class="close"><span class="mdi mdi-close" aria-hidden="true"></span></span><div class="content">' + message[i] + '</div></div>';
+            htmlcode = htmlcode + '<div class="toast show"><span class="close"><span class="mdi iconify" data-icon="mdi:close" aria-hidden="true"></span></span><div class="content">' + message[i] + '</div></div>';
         }
     }
     $('#bar-notification').append(htmlcode)

@@ -1,6 +1,6 @@
 ﻿@inject Grand.Core.Configuration.GrandConfig config
 <!DOCTYPE html>
-<html use-lang="true">
+<html use-lang="false">
 <head>
     <title asp-default-title="true"></title>
     <meta charset="utf-8">
@@ -43,6 +43,7 @@
 </head>
 <body>
     <resources asp-type="ScriptHeader" />
+    <partial name="_Loading"/>
     @RenderBody()
     <css-files asp-location="Footer">
         <script-files asp-location="Footer">

@@ -230,7 +230,7 @@
             @if (Model.IsEditable)
             {
         <div class="common-buttons btn-group btn-group-sm mb-3">
-            <button type="button" onclick="setLocation('@(Url.RouteUrl("ClearCart"))')" class="btn btn-danger d-flex justify-content-center removeAll-cart-button"><span class="mdi mdi-delete-forever-outline pr-1"></span><span class="d-sm-block">@T("shoppingcart.clearcart")</span></button>
+            <button type="button" onclick="setLocation('@(Url.RouteUrl("ClearCart"))')" class="btn btn-danger d-flex justify-content-center removeAll-cart-button"><span class="mdi iconify pr-1" data-icon="mdi:delete-forever-outline"></span><span class="d-sm-block">@T("shoppingcart.clearcart")</span></button>
             <button type="button" onclick="setLocation('@(Url.RouteUrl("ContinueShopping"))')" class="btn btn-outline-secondary d-flex justify-content-center continue-shopping-button"><span class="d-sm-block">@T("shoppingcart.continueshopping")</span></button>
         </div>
             }
@@ -318,7 +318,7 @@
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="ModalLabel">@T("Checkout.TermsOfService")</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span class="mdi mdi-close"></span>
+                                                    <span class="mdi iconify" data-icon="mdi:close"></span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">

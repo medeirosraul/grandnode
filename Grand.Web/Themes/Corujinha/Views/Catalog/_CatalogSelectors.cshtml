@@ -29,7 +29,7 @@
         <div class="col-12 col-md-6 d-flex">
             <div class="row w-100 align-items-end">
                 <div class="col">
-                    <a class="js-offcanvas-trigger filter-button btn btn-outline-info d-lg-none d-flex mb-1" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi mdi-tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>
+                    <a class="js-offcanvas-trigger filter-button btn btn-outline-info d-lg-none d-flex mb-1" data-offcanvas-trigger="leftSide" href="#leftSide"><span class="mdi iconify" data-icon="mdi:tune"></span><span class="ml-3">@T("catalog.selectors.fiters")</span></a>
                 </div>
                 <div class="col col-lg-12">
                     <div class="d-lg-flex d-none align-items-center mx-auto order-2 float-left mt-2" id="items_statistics">
@@ -47,12 +47,12 @@
                                 var listMode = Model.AvailableViewModes[1];
                                 @*<label class="mb-0">@T("Catalog.ViewMode")</label>*@
                                 <a class="viewmode-icon grid mr-3 @if(gridMode.Selected){<text>selected</text>}" href="@gridMode.Value" title="@gridMode.Text">
-                                    <span class="mdi mdi-view-grid"></span>
-                                    <span class="sr-only">viewmode grid</span>
+                                    <span class="mdi iconify" data-icon="mdi:view-grid"></span>
+                                    <span class="visually-hidden">viewmode grid</span>
                                 </a>
                                 <a class="viewmode-icon list @if (listMode.Selected){<text>selected</text>}" href="@listMode.Value" title="@listMode.Text">
-                                    <span class="mdi mdi-view-list"></span>
-                                    <span class="sr-only">viewmode list</span>
+                                    <span class="mdi iconify" data-icon="mdi:view-list"></span>
+                                    <span class="visually-hidden">viewmode list</span>
                                 </a>
                             }
                         </div>

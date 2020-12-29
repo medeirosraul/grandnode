@@ -12,6 +12,7 @@
                     success: function(data) {
                         displayAjaxLoading();
                         $('.estimate-shipping-result').html(data);
+                        $('.shipping-obs').removeAttr('style');
                         fbq('trackCustom', 'ShippingCalc', {cep: $("#ZipPostalCode").val()});
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
@@ -30,25 +31,26 @@
         });
     </script>
 
-    <div class="estimate-shipping">
-        <div class="title">
+    <div id="estimate-shipping" class="estimate-shipping">
+        <div class="title mb-2">
+            <img src="Themes/Corujinha/Content/Images/delivery-truck.png" height="60" class="mr-3"/>
             <strong>@T("ShoppingCart.EstimateShipping")</strong>
-        </div>
-        <div class="hint generalMarginSupporter">
-            <p>
-                Você poderá selecionar o frete escolhido quando <strong>finalizar a compra</strong>.<br/><br/>
-                Para fretes acima de R$50,00, damos a opção de <strong>combinar o envio</strong>, onde nós organizamos melhor os produtos e diminuimos o pacote, deixando o frete mais barato. Ao selecionar esta opção, entraremos em contato logo em seguida.
-
-            </p>
         </div>
 
         <div class="form-group">
             <label asp-for="ZipPostalCode">CEP:</label>
-            <input asp-for="ZipPostalCode" class="form-control zip-input" />
-        </div>
-        <div class="buttons">
-            <input id="estimate-shipping-button" type="button" value="@T("ShoppingCart.EstimateShipping.Button")" class="btn btn-outline-secondary float-xs-right estimate-shipping-button" />
+            <div class="input-group">
+                <input asp-for="ZipPostalCode" class="form-control zip-input" />
+                <div class="input-group-append">
+                    <input id="estimate-shipping-button" type="button" value="Calcular frete" class="btn btn-outline-secondary float-xs-right estimate-shipping-button" />
+                </div>
+            </div>
+            <small class="form-text text-muted"><strong>Frete grátis</strong> para compras acima de <strong class="text-success">R$169,00</strong>.</small>
         </div>
     </div>
-    <div class="col-12 px-0 estimate-shipping-result generalMarginSupporter"></div>
+    <div class="col-12 px-0 generalMarginSupporter">
+        <div class="estimate-shipping-result pb-3">
+
+        </div>
+    </div>
 </div>

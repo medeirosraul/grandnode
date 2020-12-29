@@ -1,8 +1,86 @@
 ﻿@model OrderTotalsModel
 
-<div class="total-info table-responsive pl-0 pr-0">
-    <table class="table table-hover">
+<div class="total-info">
+    <h2 class="h5">
+        <strong>
+            <img src="Themes/Corujinha/Content/Images/money.png" height="60" class="mr-3" />
+            Resumo
+        </strong>
+    </h2>
+    <div class="row">
+        <div class="col-6">
+            <span>@T("ShoppingCart.Totals.SubTotal"):</span>
+        </div>
+        <div class="col-6 text-right">
+            <span class="value-summary">@Model.SubTotal</span>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.SubTotalDiscount))
+    {
+        <div class="row">
+            <div class="col-6">
+                <span>Desconto no subtotal:</span>
+            </div>
+            <div class="col-6 text-right">
+                <span class="value-summary text-success">@Model.SubTotalDiscount</span>
+            </div>
+        </div>
+    }
+    <hr />
+    <div class="row">
+        <div class="col-8">
+            <span>Frete:</span>
+            @if (Model.RequiresShipping && !String.IsNullOrEmpty(Model.SelectedShippingMethod))
+            {
+                <span class="selected-shipping-method">@T("ShoppingCart.Totals.Shipping.Method", Model.SelectedShippingMethod)</span>
+            }
+        </div>
+        @if (Model.RequiresShipping)
+        {
+            if (!String.IsNullOrEmpty(Model.Shipping))
+            {
+                <div class="col-4 text-right">
+                    <span class="value-summary">@Model.Shipping</span>
+                </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <span>Calcule o valor do frete <strong><a href="#estimate-shipping">aqui</a></strong> e selecione um método de envio.</span>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-4 text-right">
+                <span>@T("ShoppingCart.Totals.Shipping.NotRequired")</span>
+            </div>
+        }
+    </div>
+    <hr style="border-width: 2px;" />
+    <div class="row">
+        <div class="col-6">
+            <span style="font-size: 24px;">@T("ShoppingCart.Totals.OrderTotal"):</span>
+        </div>
+        @if (!String.IsNullOrEmpty(Model.OrderTotal))
+        {
+            <div class="col-6 text-right align-items-center">
+                <span class="value-summary" style="font-size: 24px;"><strong>@Model.OrderTotal</strong></span>
+            </div>
+        }
+        else
+        {
+            <div class="col-12">
+                <span>@T("ShoppingCart.Totals.CalculatedDuringCheckout")</span>
+            </div>
+        }
+    </div>
+    <table class="table table-hover d-none">
         <tbody>
+            <tr>
+                <td colspan="2">
+                </td>
+            </tr>
             <tr class="col-12 pr-0 order-subtotal d-flex justify-content-start">
                 <td class="col-6 cart-total-left">
                     <span>@T("ShoppingCart.Totals.SubTotal"):</span>
@@ -113,7 +191,7 @@
                                 <button type="button" name="removegiftcard"
                                         data-href="@Url.RouteUrl("RemoveGiftCardCode", new { giftCardId = gc.Id})"
                                         title="@T("Common.Remove")" class="btn btn-sm btn-secondary remove-gift-card-button">
-                                    <span class="mdi mdi-close" aria-hidden="true"></span>
+                                    <span class="mdi iconify" data-icon="mdi:close" aria-hidden="true"></span>
                                 </button>
                             }
                         </td>
