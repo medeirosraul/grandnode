@@ -127,11 +127,12 @@
         if (Model.PagingFilteringContext.ViewMode == "grid")
         {
             <div class="product-grid col-12 px-0">
-                <div class="row flex-grid">
+                <div class="row flex-grid g-0">
                     @foreach (var product in Model.Products)
                     {
-                        <div class="col-lg-4 col-sm-6 col-6 product-container mb-2">
-                            <partial name="_ProductBox" model="product" />
+                        <div class="col-lg-4 col-sm-6 col-6 product-container mb-3">
+                            <partial name="_ProductBoxFixedSize" model="product" />
+                            @*<partial name="_ProductBox" model="product" />*@
                         </div>
                     }
                 </div>

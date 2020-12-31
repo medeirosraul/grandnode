@@ -2,15 +2,14 @@
 @inject DisplayOrderHomePage order
 @if (Model.Any())
 {
-    <div class="product-grid bestsellers order-@order.HomePageBestSellers">
+    <div class="product-grid order-@order.HomePageBestSellers">
         <h2 class="generalTitle text-center">@T("Bestsellers")</h2>
-        <hr class="gradient-divider"/>
         <div class="col-12 px-0">
-            <div class="row">
+            <div class="row g-0">
                 @foreach (var item in Model)
                 {
                     <div class="col-xl-@order.Bs_Xl col-lg-@order.Bs_Lg col-md-@order.Bs_Md col-sm-@order.Bs_Sm col-@order.Bs_Col  product-container mb-2">
-                        <partial name="_ProductBox" model="item" />
+                        <partial name="_ProductBoxFixedSize" model="item" />
                     </div>
                 }
             </div>

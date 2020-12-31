@@ -9,11 +9,16 @@
                 @await Component.InvokeAsync("SearchBox")
             </div>
 
-            <div class="col-auto d-flex d-none d-md-block">
-                <div class="row">
-                    <div class="col-auto">
+            <div class="col-auto d-flex user-menu">
+                <div class="row col">
+                    <div class="d-none d-md-block col-auto">
                         <a class="theme-color-dark js-offcanvas-trigger d-block position-relative" data-offcanvas-trigger="user_panel" href="#user_panel">
                             <span class="icon-lg iconify" data-icon="bi:person"></span>
+                        </a>
+                    </div>
+                    <div class="d-md-none col d-flex align-items-center justify-content-center">
+                        <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="mobile_menu" href="#mobile_menu">
+                            <span class="icon iconify" data-icon="bi:list"></span>
                         </a>
                     </div>
                     @await Component.InvokeAsync("ShoppingCartLinks")

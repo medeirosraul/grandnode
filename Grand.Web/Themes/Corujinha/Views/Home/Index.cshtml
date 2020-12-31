@@ -32,7 +32,7 @@
         pagebuilder.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + this.Url.ActionContext.HttpContext.Request.GetEncodedUrl() + "\" />");
     }
 }
-<div class="page home-page custom-container d-flex flex-column mt-0">
+<div class="home-page custom-container d-flex flex-column mt-0">
     @await Component.InvokeAsync("PushNotificationsRegistration")
     @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_top" })
     <div class="row justify-content-center bottom-divider">

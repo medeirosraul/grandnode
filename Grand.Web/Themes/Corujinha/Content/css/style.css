@@ -146,13 +146,7 @@ hr.gradient-divider {
     padding: 0 !important;
 }
 
-.product-grid {
-    border-bottom: 1px solid #EEE;
-}
 
-.featured-list {
-    border-bottom: 1px solid #EEE !important;
-}
 
 @media (min-width: 992px) {
     .featured-list {

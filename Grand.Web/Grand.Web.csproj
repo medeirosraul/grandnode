@@ -82,6 +82,28 @@
     <None Remove="Themes\Corujinha\Content\js\bootstrap\bootstrap.min.js.map" />
     <None Remove="Themes\Corujinha\Content\js\bs-stepper.min.js" />
     <None Remove="Themes\Corujinha\Content\js\js-offcanvas.pkgd.min.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-fb-comment-box.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-fb-comment-box.css.map" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-fb-comment-box.min.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-transitions.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-transitions.css.map" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lg-transitions.min.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lightgallery.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lightgallery.css.map" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\css\lightgallery.min.css" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.svg" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.ttf" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.woff" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\img\loading.gif" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\img\video-play.png" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\img\vimeo-play.png" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\img\youtube-play.png" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lg-thumbnail.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lg-thumbnail.min.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lg-zoom.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lg-zoom.min.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lightgallery.js" />
+    <None Remove="Themes\Corujinha\Content\lib\lightgallery\js\lightgallery.min.js" />
     <None Remove="Themes\Corujinha\Content\js\public.onepagecheckout.js" />
     <None Remove="Themes\Corujinha\Content\scss\corujinha.min.css" />
     <None Remove="Themes\Corujinha\Content\templates\welcome-email.html" />
@@ -95,6 +117,45 @@
     </Content>
     <Content Update="Themes\Corujinha\Content\js\public.onepagecheckout.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\css\lg-fb-comment-box.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\css\lg-transitions.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\css\lightgallery.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\fonts\lg.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\img\loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\img\video-play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\img\vimeo-play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\img\youtube-play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\js\lg-thumbnail.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\js\lg-zoom.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Themes\Corujinha\Content\lib\lightgallery\js\lightgallery.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

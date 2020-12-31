@@ -64,6 +64,7 @@ namespace Grand.Framework.Infrastructure.Extensions
             {
                 //get detailed exceptions for developing and testing purposes
                 application.UseDeveloperExceptionPage();
+                application.UseBrowserLink();
             }
             else
             {

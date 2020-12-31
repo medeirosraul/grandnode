@@ -2,17 +2,18 @@
 @inject DisplayOrderHomePage order
 <div class="product-grid col-12 px-0 order-@order.CategoryFeaturedProducts">
     <div class="flex-grid row">
+    
         @foreach (var item in Model)
         {
             <div class="col-xl-@order.CF_c_Xl col-lg-@order.CF_c_Lg col-12 mb-3">
-                    <div class="card p-0 featured-list h-100">
-                        <div class="featured-list-picture ml-lg-auto pr-1">
+                    <div class="card p-0 featured-list h-100 d-flex justify-content-center">
+                        <div class="featured-list-picture mx-auto me-lg-0 pr-lg-1">
                             <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
                                 <img class="img-fluid" alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
                             </a>
                         </div>
-                        <div class="list-title mt-3">
-                            <h3 class="h5 card-title m-0 p-0 text-lg-right pr-3">
+                        <div class="list-title mt-3 text-center text-lg-end">
+                            <h3 class="h5 card-title m-0 p-0 text-lg-right pe-lg-3">
                                 <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">
                                     @item.Name
                                 </a>
@@ -20,7 +21,7 @@
                         </div>
                     </div>
             </div>
-            <div class="col-xl-@order.CF_p_Xl col-lg-@order.CF_p_Lg col-md-@order.CF_p_Md col-sm-@order.CF_p_Sm col-@order.CF_p_Col">
+            <div class="mb-5 col-xl-@order.CF_p_Xl col-lg-@order.CF_p_Lg col-md-@order.CF_p_Md col-sm-@order.CF_p_Sm col-@order.CF_p_Col ">
                 <div class="row flex-grid">
                     @foreach (var product in item.FeaturedProducts)
                     {
@@ -29,7 +30,7 @@
                         </div>
                     }
                 </div>
-                <div class="col-12 mb-5">
+                <div class="col-12 mb-2 d-flex justify-content-center">
                     <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="Ver mais">Ver mais @item.Name</a>
                 </div>
             </div>

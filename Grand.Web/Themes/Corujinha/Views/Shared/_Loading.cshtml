@@ -5,10 +5,12 @@
 <script asp-location="Footer">
     $('a').on('click', e => {
         a = $(e.currentTarget);
-        if (!a.attr('href').includes('#')) {
-            if (a.attr('target') === undefined || !a.attr('target').includes('_blank')) {
-                $(".loading-wrapper").removeAttr('style');
-            }
-        }
+        if (a.attr('href').includes('#')) return;
+
+        if (a.attr('data-ignore-loading') !== undefined) return;
+
+        if (a.attr('target') !== undefined && a.attr('target').includes('_blank')) return;
+
+        $(".loading-wrapper").removeAttr('style');
     });
 </script>

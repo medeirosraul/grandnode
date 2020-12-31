@@ -9,6 +9,8 @@ $theme-primary-light: #00D0C6;
 $theme-primary-dark: #05A7A3;
 $theme-secondary: #FAC60A;
 $theme-divider-color: #AEACAE;
+$theme-border-color: #DEDCDE;
+$theme-border-color-light: #EEECEE;
 
 .theme-color-dark {
     color: $theme-dark;
@@ -95,6 +97,14 @@ a.theme-color-dark:hover {
     color: $theme-dark-less;
 }
 
+/* Buttons */
+.btn-rounded {
+    border-radius: 100%;
+    background-color:red;
+    width:40px;
+    height:40px;
+}
+
 /* Search */
 
 .search-form {
@@ -130,3 +140,283 @@ a.theme-color-dark:hover {
     }
 }
 
+/* Product box*/
+
+.product-grid {
+    border-bottom: 1px solid #EEE;
+}
+
+.product-box-fixed-size {
+    position: relative;
+    min-height: 300px;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px;
+
+    .product-picture {
+        position: absolute;
+        max-height: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    a {
+        color: $theme-dark;
+    }
+
+    a:hover {
+        color: $theme-dark-less;
+    }
+
+    h5 {
+        font-size: 15px;
+    }
+
+    .action-main {
+        height: 45px;
+        overflow: hidden;
+
+        .prices {
+            height: 46px;
+            color: $theme-primary-dark;
+            -webkit-transition: all .1s ease,-webkit-transform .1s ease;
+            -moz-transition: all .1s ease,-webkit-transform .1s ease;
+            -o-transition: all .1s ease,-webkit-transform .1s ease;
+            transition: all .1s ease,-webkit-transform .1s ease;
+
+            .discount-legend {
+                color: $theme-dark-less;
+                font-size: 11px;
+                margin-top: -12px;
+            }
+        }
+
+        .buy-button {
+            -webkit-transition: all .1s ease,-webkit-transform .1s ease;
+            -moz-transition: all .1s ease,-webkit-transform .1s ease;
+            -o-transition: all .1s ease,-webkit-transform .1s ease;
+            transition: all .1s ease,-webkit-transform .1s ease;
+        }
+    }
+
+    .action-side {
+        width: 55px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 57px;
+
+        button {
+            background-color: white;
+            color: $theme-dark-less;
+        }
+
+        .icon {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+    // Animations
+    -webkit-transition: border .1s ease,-webkit-transform .1s ease;
+    -moz-transition: border .1s ease,-webkit-transform .1s ease;
+    -o-transition: border .1s ease,-webkit-transform .1s ease;
+    transition: border .1s ease,-webkit-transform .1s ease;
+}
+
+.product-box-fixed-size:hover {
+    border: 1px solid $theme-border-color-light;
+
+    .action-main {
+        .prices {
+            margin-top: -45px;
+        }
+    }
+
+    .action-side {
+        padding-left: 5px;
+
+        button {
+            box-shadow: 0 0.135rem 0.25rem rgba(0, 0, 0, 0.15) !important;
+        }
+    }
+
+    .product-picture {
+        max-width: 110%;
+        max-height: 110%;
+    }
+}
+
+.featured-product-box-fixed-size {
+    position: relative;
+    min-height: 140px;
+    border-bottom: 1px solid #EEE;
+
+    h5 {
+        color: $theme-dark;
+        font-size: 14px;
+        margin-top: 15px;
+        margin-left: 10px;
+        margin-bottom: 0;
+    }
+
+    .title {
+        margin-bottom: -10px;
+    }
+
+    .product-picture {
+        min-width: 130px;
+        max-width: 130px;
+        max-height: 130px;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    .prices {
+        margin-left: 10px;
+        color: $theme-primary-dark;
+
+        .discount-legend {
+            color: $theme-dark-less;
+            font-size: 11px;
+            margin-top: -6px;
+        }
+    }
+}
+
+.buy-button {
+    margin-left: 10px;
+
+    button {
+        background-color: $theme-primary-dark;
+        color: white;
+        border: none;
+        font-size: 13px;
+        padding: 7px 7px;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: $theme-primary-light;
+    }
+}
+
+.featured-list {
+    border-bottom: 0 !important;
+}
+
+.featured-product-container:last-child .featured-product-box-fixed-size {
+    border-bottom: 0;
+}
+/* Home Page */
+
+.home-page {
+    .category-grid {
+        .card {
+            margin-bottom: 0;
+            width: 100%;
+            border: 0 !important;
+            border-radius: 5px;
+            padding: 5px !important;
+            height: 100%;
+            background-color: #FBFBFB;
+            //box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.15) !important;
+        }
+
+        h5 {
+            font-size: 11px;
+            color: $theme-dark;
+        }
+    }
+
+    .product-grid {
+        padding: 30px 0;
+    }
+}
+
+/* Utilities */
+.square-box {
+    position: relative;
+    width: 100%;
+}
+
+.square-box:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.square-content {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.animate-short {
+    -webkit-transition: all .1s ease,-webkit-transform .1s ease;
+    -moz-transition: all .1s ease,-webkit-transform .1s ease;
+    -o-transition: all .1s ease,-webkit-transform .1s ease;
+    transition: all .1s ease,-webkit-transform .1s ease;
+}
+
+.shadow {
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.shadow-bottom {
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* Responsive */
+@media (max-width: 767px) {
+    /* Header */
+    .user-menu {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding:10px;
+        background-color: white;
+        box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.15) !important;
+        z-index: 2000;
+    }
+
+    /* Product box */
+    .product-box-fixed-size {
+        .action-main {
+            height: 100px;
+            margin-top: -15px;
+        }
+
+        .action-side {
+            width: 35px;
+            padding-left: 5px;
+            overflow: visible;
+
+            button {
+                width: 26px;
+                height: 26px;
+                box-shadow: 0 0.135rem 0.25rem rgba(0, 0, 0, 0.15) !important;
+            }
+
+            .icon {
+                width: 16px !important;
+                height: 16px !important;
+            }
+        }
+    }
+
+    .product-box-fixed-size:hover {
+        .action-main {
+            .prices {
+                margin-top: 0;
+            }
+        }
+    }
+}
