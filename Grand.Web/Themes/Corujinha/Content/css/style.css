@@ -4670,34 +4670,8 @@ span.product-quantity {
     font-size: 18px;
     font-weight: 400;
 }
-
-#newsletter-email {
-    color: #fff;
-    border: 1px solid #fff;
-    background: 0;
-    border-radius: 0;
-    margin-right: 5px;
-}
-
-    #newsletter-email::placeholder {
-        color: #fff;
-    }
-
-    #newsletter-email::-webkit-input-placeholder {
-        color: #fff;
-    }
-
-    #newsletter-email::-moz-placeholder {
-        color: #fff;
-    }
-
 #newsletter-subscribe-button {
     border-width: 1px;
-}
-
-#newsletter-email,
-.newsletter-button-container {
-    height: 50px;
 }
 
 .newsletter-subscribe-unsubscribe {

@@ -40,13 +40,15 @@
 else
 {
     <li class="nav-item sidebar-info d-inline-flex justify-content-center flex-wrap my-3">
-        <h5 class="d-flex justify-content-center mb-3 w-100">@T("Account.Login.ReturningCustomer") / @T("SideBar.NewCustomer")</h5>
-        <a class="d-flex align-items-center nav-link btn btn-secondary" href="@Url.RouteUrl("Login")">
-            <span class="mdi iconify" data-icon="mdi:lock"></span>
-            <span class="text text-uppercase ml-sm-3 ml-2">@T("Account.Login")</span>
+        <h5 class="text-center mb-3 w-100">Já sou cliente / Quero me cadastrar</h5>
+        <a class="d-flex justify-content-center align-items-center btn theme-btn-primary rounded me-3" href="@Url.RouteUrl("Login")">
+            <span class="icon-sm iconify me-2" data-icon="bi:lock"></span>
+            Entrar
         </a>
-        <a class="d-flex align-items-center nav-link btn btn-outline-secondary ml-3" href="@registerUrl">
-            <span class="text text-uppercase">@T("Account.Register")</span>
+
+        <a class="d-flex justify-content-center align-items-center btn theme-btn theme-btn-white rounded" href="@registerUrl">
+            <span class="icon-sm iconify me-2" data-icon="bi:person-plus"></span>
+            Cadastrar
         </a>
     </li>
     <li class="nav-item">
