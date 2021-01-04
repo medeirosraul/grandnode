@@ -1,0 +1,97 @@
+﻿@model CheckoutCompletedModel
+@inject IPageHeadBuilder pagebuilder
+@{
+    Layout = "_ColumnsOneClean";
+    var paymentStatus = Context.Request.Query["status"];
+
+    //title
+    pagebuilder.AddTitleParts(T("PageTitle.Checkout").Text);
+}
+<div class="page checkout-page order-completed-page text-xs-center">
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_completed_top", additionalData = Model.OrderId })
+    @if (!Model.OnePageCheckoutEnabled)
+    {
+        @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Complete })
+    }
+    <div class="page-title-clean row">
+        <h2>Pedido confirmado</h2>
+    </div>
+    <div class="row">
+        @if (paymentStatus == "null")
+        {
+            <div class="col-12 d-flex justify-content-center mt-3 ">
+                <span class="icon iconify" data-icon="bi:emoji-frown"></span>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <h3 class="text-center">mas parece que você não realizou o pagamento.</h3>
+            </div>
+            <p><a class="btn theme-btn-primary rounded" href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">Clique aqui</a> para revisar as informações do seu pedido e realizar o pagamento caso ainda não tenha o feito.</p>
+
+            <h4 class="mt-3">O que eu faço agora?</h4>
+            <p>
+                Não se preocupe! Apenas não identificamos seu pagamento no momento. Caso tenha o feito, identificaremos mais tarde, fique tranquilo.
+                <br />
+                <br />
+                Caso não tenha realizado o pagamento, você pode <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">clicar aqui</a> e revisar as informações do seu pedido. Se estiver tudo correto, basta clicar em "Realizar pagamento" e você será redirecionado para o pagamento novamente.
+            </p>
+
+            <h4 class="mt-3">Preciso de ajuda!</h4>
+            <p>
+                Nós iremos te ajudar. Se está com dificuldades ou não sabe como prosseguir, pode nos enviar uma mensagem por <strong>WhatsApp</strong>. Ou se preferir, nos envie um <strong>Email</strong>.
+            </p>
+            <div class="mt-3">
+                <a class="d-flex align-items-center theme-color-gray-50" href="https://wa.me/5511974915290?text=Oi%2C+tenho+uma+d%C3%BAvida+sobre+o+pedido+@Model.OrderId.&lang=pt_br" target="_blank"><span class="icon iconify theme-color-primary me-2" data-icon="mdi:whatsapp"></span>Clique para enviar uma mensagem WhatsApp</a>
+            </div>
+            <div class="mt-3">
+                <a class="d-flex align-items-center theme-color-gray-50" href="mailto:vendas@corujinhapresentes.com.br" target="_blank"><span class="icon iconify theme-color-primary me-2" data-icon="mdi:email-outline"></span>vendas@corujinhapresentes.com.br</a>
+            </div>
+        }
+        else if (paymentStatus == "approved")
+        {
+            <div class="col-12 d-flex justify-content-center mt-3 theme-color-primary">
+                <span class="icon iconify" data-icon="bi:emoji-laughing"></span>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <h3 class="text-center">e seu pagamento já foi aprovado.</h3>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center mt-4">
+                <a class="btn theme-btn-primary rounded" href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">Ver detalhes do pedido</a>
+                <a class="btn">Ou continuar</a>
+            </div>
+        }
+        else if (paymentStatus == "pending")
+        {
+            <div class="col-12 d-flex justify-content-center mt-3 theme-color-primary">
+                <span class="icon iconify" data-icon="bi:emoji-smile"></span>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center">
+                <h3 class="text-center">e o pagamento está pendente.</h3>
+            </div>
+            <p class="text-center">Não se preocupe, o pagamento apenas não foi identificado ainda.</p>
+
+            <h4 class="mt-3">O que eu faço agora?</h4>
+            <p>Se você escolheu a forma de pagamento <strong>Boleto</strong> ou <strong>Lotérica</strong>, basta realizar o pagamento e ele será confirmado automaticamente em até 48h.</p>
+            <p>Se você escolheu outra forma de pagamento (como <strong>cartão de crédito</strong>) e já pagou, basta aguardar algumas horas.</p>
+            
+            <h4 class="mt-3">Preciso de ajuda!</h4>
+            <p>
+                Nós iremos te ajudar. Se está com dificuldades ou não sabe como prosseguir, pode nos enviar uma mensagem por <strong>WhatsApp</strong>. Ou se preferir, nos envie um <strong>Email</strong>.
+            </p>
+            <div class="mt-3">
+                <a class="d-flex align-items-center theme-color-gray-50" href="https://wa.me/5511974915290?text=Oi%2C+tenho+uma+d%C3%BAvida+sobre+o+pedido+@Model.OrderId.&lang=pt_br" target="_blank"><span class="icon iconify theme-color-primary me-2" data-icon="mdi:whatsapp"></span>Clique para enviar uma mensagem WhatsApp</a>
+            </div>
+            <div class="mt-3">
+                <a class="d-flex align-items-center theme-color-gray-50" href="mailto:vendas@corujinhapresentes.com.br" target="_blank"><span class="icon iconify theme-color-primary me-2" data-icon="mdi:email-outline"></span>vendas@corujinhapresentes.com.br</a>
+            </div>
+
+            <div class="col-12 d-flex justify-content-center mt-4">
+                <a class="btn theme-btn-primary rounded" href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">Ver detalhes do pedido</a>
+                <a class="btn">Ou continuar</a>
+            </div>
+        }
+
+    </div>
+    @await Component.InvokeAsync("Widget", new { widgetZone = "checkout_completed_bottom", additionalData = Model.OrderId })
+</div>

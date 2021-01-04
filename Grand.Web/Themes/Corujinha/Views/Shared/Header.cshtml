@@ -16,34 +16,22 @@
                             <span class="icon-lg iconify" data-icon="bi:person"></span>
                         </a>
                     </div>
+
                     <div class="d-md-none col d-flex align-items-center justify-content-center">
                         <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="mobile_menu" href="#mobile_menu">
                             <span class="icon iconify" data-icon="bi:list"></span>
                         </a>
                     </div>
+
+                    <div class="d-md-none col d-flex align-items-center justify-content-center">
+                        <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="user_panel" href="#user_panel">
+                            <span class="icon iconify" data-icon="bi:person"></span>
+                        </a>
+                    </div>
+
                     @await Component.InvokeAsync("ShoppingCartLinks")
+
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="container px-lg-3 px-2 d-none">
-        <div class="headBottom d-flex align-items-center d-lg-inline-flex text-lg-left text-center mt-0 mb-0">
-            <div class="header-logo">
-                @await Component.InvokeAsync("Logo")
-            </div>
-            <div class="formSearch ml-auto pl-sm-3 pl-2 d-inline-flex align-items-end w-100">
-                @await Component.InvokeAsync("SearchBox")
-            </div>
-            <div class="side-panel d-inline-flex">
-                <a class="js-offcanvas-trigger mobile-menu-trigger d-lg-none d-flex justify-content-center align-content-center" data-offcanvas-trigger="mobile_menu" href="#mobile_menu">
-                    <span class="mdi iconify mb-2" data-icon="mdi:menu"></span>
-                    <span class="position-absolute text-uppercase text-secondary" style="bottom: 0; font-size: 11px;">categorias</span>
-                </a>
-                <a class="js-offcanvas-trigger user-panel-trigger d-flex justify-content-center align-content-center ml-lg-5 ml-0 text-secondary text-uppercase" data-offcanvas-trigger="user_panel" href="#user_panel">
-                    <span class="mdi iconify mb-2" data-icon="mdi:account"></span>
-                    <span class="position-absolute text-uppercase text-secondary mb-lg-3" style="bottom: 0; font-size: 11px;">@T("Account.MyAccount")</span>
-                </a>
-                @await Component.InvokeAsync("ShoppingCartLinks")
             </div>
         </div>
     </div>

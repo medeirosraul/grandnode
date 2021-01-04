@@ -122,12 +122,22 @@
                 }
                 <fieldset class="form-group col-md-12 mail">
                     <legend class="visually-hidden">@T("account.fields.email")</legend>
-                    <div class="row">
-                        <label asp-for="Email" class="col-form-label">@T("Account.Fields.Email"):</label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email"></span>
-                    </div>
+                    <label asp-for="Email" class="col-form-label">@T("Account.Fields.Email"):</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email"></span>
                 </fieldset>
+
+                @if (Model.NewsletterEnabled)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="Newsletter" />
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Receber novidades por email
+                        </label>
+                        <span asp-validation-for="Newsletter"></span>
+                    </div>
+                    <partial name="_NewsLetterCategories" model="Model.NewsletterCategories" />
+                }
 
                 @if (Model.UsernamesEnabled)
                 {
@@ -275,31 +285,6 @@
             </div>
         }
 
-        @if (Model.NewsletterEnabled || Model.CustomerAttributes.Any())
-        {
-            <div class="card mb-3">
-                <h3 class="h5 card-header">@T("Account.Options")</h3>
-                <div class="card-body">
-                    @if (Model.NewsletterEnabled)
-                    {
-                        <div class="form-group">
-                            <label for="Newsletter" class="ml-1 custom-control custom-checkbox">
-                                <input class="custom-control-input" asp-for="Newsletter" />
-                                <span class="custom-control-label"></span>
-                                <span class="custom-control-description">@T("account.fields.newsletter")</span>
-                                <span class="visually-hidden">@T("account.fields.newsletter")</span>
-                            </label>
-                            <span asp-validation-for="Newsletter"></span>
-                        </div>
-                        <partial name="_NewsLetterCategories" model="Model.NewsletterCategories" />
-                    }
-                    @if (Model.CustomerAttributes.Any())
-                    {
-                        <partial name="_CustomerAttributes" model="Model.CustomerAttributes" />
-                    }
-                </div>
-            </div>
-        }
         @if (Model.AllowCustomersToSetTimeZone)
         {
             <div class="card mb-3">
@@ -320,18 +305,14 @@
             <h3 class="h5 card-header">@T("Account.YourPassword")</h3>
             <div class="card-body">
                 <div class="form-group col-12">
-                    <div class="row">
-                        <label asp-for="Password" class="col-form-label">@T("Account.Fields.Password"):</label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password"></span>
-                    </div>
+                    <label asp-for="Password" class="col-form-label">@T("Account.Fields.Password"):</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password"></span>
                 </div>
                 <div class="form-group col-12">
-                    <div class="row">
-                        <label asp-for="ConfirmPassword" class="col-form-label">@T("Account.Fields.ConfirmPassword"):</label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
-                        <span asp-validation-for="ConfirmPassword"></span>
-                    </div>
+                    <label asp-for="ConfirmPassword" class="col-form-label">@T("Account.Fields.ConfirmPassword"):</label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword"></span>
                 </div>
                 @if (Model.DisplayCaptcha)
                 {

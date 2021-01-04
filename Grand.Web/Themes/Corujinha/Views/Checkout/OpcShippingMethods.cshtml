@@ -15,57 +15,11 @@
     }
 </script>
 
-<div class="checkout-data">
-    <div class="shipping-method">
-        @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_top" })
-        @if (Model.Warnings.Count == 0)
-        {
-            var selectedShippingMethod = Model.ShippingMethods.FirstOrDefault(x => x.Selected);
-            if (selectedShippingMethod != null)
-            {
-                <script>
-                    $(document).ready(function () {
-                        loadPartialView('@(selectedShippingMethod.Name)___@(selectedShippingMethod.ShippingRateComputationMethodSystemName)');
-                    });
-                </script>
-            }
-            <div class="mb-3"><strong>Selecione seu método de envio:</strong> </div>
-
-            <ul class="method-list">
-                @for (int i = 0; i < Model.ShippingMethods.Count; i++)
-                {
-                    var shippingMethod = Model.ShippingMethods[i];
-
-                    <li>
-                        <label class="custom-control custom-radio">
-                            <input id="shippingoption_@(i)" type="radio" 
-                                   onclick="loadPartialView(value)"
-                                   name="shippingoption" 
-                                   value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)"
-                                   class="custom-control-input">
-                            <span class="custom-control-label"></span>
-                            <span  for="shippingoption_@(i)" class="custom-control-description">
-                                @T("Checkout.SelectShippingMethod.MethodAndFee", shippingMethod.Name, shippingMethod.Fee)
-                            
-                                @if (!String.IsNullOrEmpty(shippingMethod.Description))
-                                {
-                                        @Html.Raw(shippingMethod.Description)
-                                }
-                            
-                            </span>
-                        </label>
-                    </li>
-                }
-            </ul>
-            if (Model.NotifyCustomerAboutShippingFromMultipleLocations)
-            {
-                <div class="multiple-locations">
-                    @T("Checkout.ShippingMethod.ShippingFromMultipleLocations")
-                </div>
-            }
-            <div id="shipping_form"></div>
-        }
-        else
+<div class="onepage-checkout-shipping-method">
+    @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_top" })
+    <div class="mb-3">
+        <label class="form-label mb-3">Escolha um método de envio</label>
+        @if (Model.Warnings.Count > 0)
         {
             <div class="message-error">
                 <ul>
@@ -76,6 +30,36 @@
                 </ul>
             </div>
         }
-        @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_bottom" })
+        else
+        {
+            var selectedShippingMethod = Model.ShippingMethods.FirstOrDefault(x => x.Selected);
+            if (selectedShippingMethod != null)
+            {
+                <script>
+                    $(document).ready(function () {
+                        loadPartialView('@(selectedShippingMethod.Name)___@(selectedShippingMethod.ShippingRateComputationMethodSystemName)');
+                    });
+                </script>
+            }
+
+            @for (int i = 0; i < Model.ShippingMethods.Count; i++)
+            {
+                var shippingMethod = Model.ShippingMethods[i];
+
+                <div class="form-check mb-3 pb-2 border-bottom">
+                    <input id="shippingoption_@(i)"
+                           class="form-check-input"
+                           type="radio"
+                           name="shippingoption"
+                           value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)"
+                           onclick="loadPartialView(value)" />
+                    <label class="form-check-label" for="shippingoption_@(i)">
+                        <strong>@shippingMethod.Name (@shippingMethod.Fee)</strong> - @shippingMethod.Description
+                    </label>
+                </div>
+            }
+            <div id="shipping_form"></div>
+        }
     </div>
+    @await Component.InvokeAsync("Widget", new { widgetZone = "op_checkout_shipping_method_bottom" })
 </div>

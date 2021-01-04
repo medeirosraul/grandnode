@@ -51,21 +51,31 @@
     </a>
 
     <!-- Badges -->
-    @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-    {
-        <div class="badges position-absolute top-0">
-            <div class="badge bg-danger">
-                -@(Convert.ToInt32((1 - Model.ProductPrice.PriceValue / Model.ProductPrice.OldPriceValue) * 100))%
+    <div class="badge-container position-absolute top-0">
+        @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+        {
+            <div class="badges">
+                <div class="badge bg-danger ">
+                    -@(Convert.ToInt32((1 - Model.ProductPrice.PriceValue / Model.ProductPrice.OldPriceValue) * 100))%
+                </div>
             </div>
-        </div>
-    }
+        }
 
+        @if (Model.ProductPrice.DisableBuyButton)
+        {
+            <div class="badges">
+                <div class="badge bg-light text-dark">
+                    Indisponível
+                </div>
+            </div>
+        }
+    </div>
     <!-- Side buttons -->
     <div class="action-side position-absolute top-0 end-0 animate-short overflow-hidden d-flex flex-column">
         <button class="btn btn-rounded position-relative mb-2" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', '@Model.ShowQty', '@Model.Id');return false;">
             <span class="icon iconify position-absolute top-50 start-50 translate-middle" data-icon="bi:heart"></span>
         </button>
-        <button class="btn btn-rounded position-relative mb-2" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl')">
+        <button class="btn btn-rounded position-relative mb-2" data-toggle="modal" data-target="ModalQuickView" onclick="AjaxCart.quickview_product('@quickviewurl'); return false;">
             <span class="icon iconify position-absolute top-50 start-50 translate-middle" data-icon="bi:eye"></span>
         </button>
     </div>
@@ -117,6 +127,10 @@
             }
             else
             {
+                <button type="button" class="justify-content-center text-uppercase" disabled>
+                    <span>Indisponível</span>
+                </button>
+
                 if (Model.ProductType == ProductType.Auction)
                 {
                     var addToCartText = T("ShoppingCart.Bids").Text;

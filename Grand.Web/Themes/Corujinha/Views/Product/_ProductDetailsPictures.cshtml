@@ -1,0 +1,50 @@
+﻿@model ProductDetailsModel
+<div id="light-gallery" class="col-12 col-md-6 mt-4">
+    <div class="main-picture">
+        <div class="square-box">
+            <div class="square-content">
+                <a class="light-gallery-item" href="@Model.DefaultPictureModel.FullSizeImageUrl" data-ignore-loading>
+                    <img class="img-fluid product-picture top-50 start-50 translate-middle position-absolute"
+                         src="@Model.DefaultPictureModel.ImageUrl"
+                         data-fullsize="@Model.DefaultPictureModel.FullSizeImageUrl"
+                         title="@Model.DefaultPictureModel.Title"
+                         alt="@Model.DefaultPictureModel.AlternateText"
+                         itemprop="image"
+                         id="main-product-img-@Model.Id" />
+                </a>
+            </div>
+        </div>
+    </div>
+    @if (Model.PictureModels.Count > 1)
+    {
+        <div class="picture-thumbs row justify-content-center">
+            @foreach (var picture in Model.PictureModels)
+            {
+                <div class="picture-thumb col">
+                    <div class="square-box">
+                        <div class="square-content">
+                            <a class="light-gallery-item" href="@picture.FullSizeImageUrl" data-ignore-loading>
+                                <img class="img-fluid product-picture top-50 start-50 translate-middle position-absolute"
+                                     src="@picture.ThumbImageUrl"
+                                     data-size="@picture.ImageUrl"
+                                     data-fullsize="@picture.FullSizeImageUrl"
+                                     title="@picture.Title"
+                                     alt="@picture.AlternateText"
+                                     />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+<script asp-location="Footer">
+    $(document).ready(() => {
+        lightGallery(document.getElementById('light-gallery'), {
+            thumbnail: true,
+            animateThumb: true,
+            selector: '.light-gallery-item'
+        });
+    })
+</script>

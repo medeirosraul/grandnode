@@ -10,10 +10,11 @@
 {
     @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Cart })
 }
-<hr/> 
+<div class="page-title-clean row">
+    <h2>@T("ShoppingCart")</h2>
+</div>
+
 <div class="page shopping-cart-page">
-    <img src="Themes/Corujinha/Content/Images/shopping-cart.png" height="80" class="mx-auto d-block mb-2" style="padding-right: 18px;" />
-    <h2 class="generalTitle text-center mt-3">@T("ShoppingCart")</h2>
     <div class="page-body">
         @await Component.InvokeAsync("OrderSummary", new { overriddenModel = Model })
     </div>

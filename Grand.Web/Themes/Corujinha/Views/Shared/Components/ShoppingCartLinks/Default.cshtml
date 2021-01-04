@@ -2,18 +2,12 @@
 <div class="col col-md-auto d-flex align-items-center justify-content-center">
     <a class="theme-color-dark position-relative" href="@Url.RouteUrl("Wishlist")">
         <span class="icon iconify" data-icon="bi:heart"></span>
-        @if (Model.WishlistItems > 0)
-        {
-            <span class="icon-quantity">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
-        }
+        <span class="icon-quantity wishlist-qty">@(Model.WishlistItems > 0 ? Model.WishlistItems.ToString() : "")</span>
     </a>
 </div>
 <div class="col col-md-auto d-flex align-items-center justify-content-center">
     <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="right" href="#right">
         <span class="icon iconify" data-icon="bi:cart3"></span>
-        @if (Model.ShoppingCartItems > 0)
-        {
-            <span class="icon-quantity">@T("ShoppingCart.HeaderQuantity", Model.ShoppingCartItems)</span>
-        }
+        <span class="icon-quantity cart-qty">@(Model.ShoppingCartItems > 0 ? Model.ShoppingCartItems.ToString() : "")</span>
     </a>
 </div>

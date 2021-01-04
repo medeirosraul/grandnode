@@ -99,16 +99,14 @@
     @if (Model.FeaturedProducts.Any())
     {
         <div class="page-separator"></div>
-        <div class="col-12 product-grid customGrid text-center featured-product-grid px-0">
-            <h2 class="h5">
-                <span>@T("Products.FeaturedProducts")</span>
-            </h2>
-            <hr class="gradient-divider" />
-            <div class="row">
+        <div class="col-12 product-grid px-0 border-0">
+            <h2 class="generalTitle text-center">Produtos em destaque</h2>
+            <div class="row flex-grid g-0">
                 @foreach (var item in Model.FeaturedProducts)
                 {
-                    <div class="col-lg-4 col-sm-6 col-6 product-container mb-2">
-                        <partial name="_ProductBox" model="item" />
+                    <div class="col-lg-4 col-sm-6 col-6 product-container mb-3">
+                        <partial name="_ProductBoxFixedSize" model="item" />
+                        @*<partial name="_ProductBox" model="product" />*@
                     </div>
                 }
             </div>

@@ -29,11 +29,15 @@
     <Content Include="Roslyn\**" CopyToPublishDirectory="PreserveNewest" Exclude="Roslyn\**\*.dll" />
     <Content Include="logs\**" CopyToPublishDirectory="PreserveNewest" />
     <Compile Remove="Plugins\**" />
+    <Compile Remove="Themes\Corujinha\Content\node_modules\**" />
     <Content Remove="Plugins\**" />
+    <Content Remove="Themes\Corujinha\Content\node_modules\**" />
     <Content Remove="wwwroot\content\images\thumbs\*.jpeg;wwwroot\content\images\thumbs\*.jpg;wwwroot\content\images\thumbs\*.png" />
     <Content Remove="wwwroot\bundles\*.css;wwwroot\bundles\*.js" />
     <EmbeddedResource Remove="Plugins\**" />
+    <EmbeddedResource Remove="Themes\Corujinha\Content\node_modules\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Themes\Corujinha\Content\node_modules\**" />
   </ItemGroup>
   <Target Name="PublishViews" BeforeTargets="PrepareForPublish">
     <ItemGroup>
@@ -47,6 +51,10 @@
     <Content Remove="App_Data\Settings.txt" />
     <Content Remove="compilerconfig.json" />
     <Content Remove="Themes\Corujinha\Content\images\payment-methods.png" />
+    <Content Remove="Themes\Corujinha\Content\package-lock.json" />
+    <Content Remove="Themes\Corujinha\Content\package-lock.json" />
+    <Content Remove="Themes\Corujinha\Content\package.json" />
+    <Content Remove="Themes\Corujinha\Content\package.json" />
     <None Remove="Themes\Corujinha\Content\css\animate.min.css" />
     <None Remove="Themes\Corujinha\Content\css\bs-stepper.min.css" />
     <None Remove="Themes\Corujinha\Content\css\corujinha.scss" />

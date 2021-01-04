@@ -1,0 +1,46 @@
+﻿@model ProductDetailsModel.ProductPriceModel
+@inject IWorkContext workContext
+
+<div class="row">
+    
+    @if (Model.CustomerEntersPrice)
+    {
+        @*display nothing*@
+    }
+    else if (Model.CallForPrice)
+    {
+        @*call for price*@
+        <div class="col-12">
+            <strong>@T("Products.CallForPrice")</strong>
+        </div>
+    }
+    else
+    {
+    <div class="prices">
+        @if (!string.IsNullOrEmpty(Model.OldPrice))
+        {
+            var haveDiscountClass = string.IsNullOrEmpty(Model.PriceWithDiscount) ? "" : "have-discount";
+
+            <div>
+                <span class="actual-price @haveDiscountClass">@Model.Price</span>
+                <span class="old-price ms-2 text-muted small text-decoration-line-through">@Model.OldPrice</span>
+            </div>
+        }else if (!string.IsNullOrEmpty(Model.Price))
+        {
+            <div>
+                <span class="actual-price">@Model.Price</span>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.PriceWithDiscount))
+        {
+            <div>
+                
+                <span class="price-with-discount">
+                    @Model.PriceWithDiscount
+                </span>
+                <span class="small text-muted">(com o desconto)</span>
+            </div>
+        }
+    </div>
+    }
+</div>

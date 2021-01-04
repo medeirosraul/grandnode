@@ -43,29 +43,31 @@
 {
     @await Component.InvokeAsync("Widget", new { widgetZone = "home_page_manufacturer", additionalData = Model.Id })
 }
-<div class="d-lg-flex d-grid flex-md-row custom-container mx-0">
-    <div class="col-lg-3 col-md-12 generalLeftSide pl-lg-0 px-3">
-        @if (IsSectionDefined("left"))
-        {
-            @RenderSection("left")
-        }
-        else
-        {
-            if (IsSectionDefined("filters"))
+<div class="d-lg-flex d-grid flex-md-row custom-container mx-0 g-1">
+    <div class="col-lg-3 col-md-12 generalLeftSide mt-lg-2">
+        <div class="left-panel me-lg-3 p-2 pt-3">
+            @if (IsSectionDefined("left"))
             {
-                @RenderSection("filters")
+                @RenderSection("left")
             }
+            else
+            {
+                if (IsSectionDefined("filters"))
+                {
+                    @RenderSection("filters")
+                }
 
-            @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_before" })
-            @await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
-            @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_after_category_navigation" })
-            @await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId })
-            @await Component.InvokeAsync("VendorNavigation")
-            @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 64 })
-            @await Component.InvokeAsync("PopularProductTags")
-            @await Component.InvokeAsync("PollBlock", new { systemKeyword = "LeftColumnPoll" })
-            @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_after" })
-        }
+                @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_before" })
+                @await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+                @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_after_category_navigation" })
+                @await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId })
+                @await Component.InvokeAsync("VendorNavigation")
+                @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 64 })
+                @await Component.InvokeAsync("PopularProductTags")
+                @await Component.InvokeAsync("PollBlock", new { systemKeyword = "LeftColumnPoll" })
+                @await Component.InvokeAsync("Widget", new { widgetZone = "left_side_column_after" })
+            }
+        </div>
     </div>
     <div class="col-lg-9 col-md-12 generalSideRight pl-lg-3 pl-0 pr-0">
         @await Component.InvokeAsync("Widget", new { widgetZone = "main_column_before" })

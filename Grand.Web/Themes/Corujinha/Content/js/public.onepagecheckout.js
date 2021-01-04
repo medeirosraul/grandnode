@@ -10,8 +10,6 @@ var Checkout = {
     init: function (failureUrl) {
         this.loadWaiting = false;
         this.failureUrl = failureUrl;
-
-        Accordion.disallowAccessToNextSections = true;
     },
 
     ajaxFailure: function () {
@@ -60,15 +58,44 @@ var Checkout = {
         this.loadWaiting = step;
     },
 
-    gotoSection: function (section) {
-        section = $('#opc-' + section);
-        section.addClass('allow');
-        Accordion.openSection(section);
+    gotoSection: function (id) {
+
+        var sectionId = '#opc-' + id;
+        var section = $(sectionId);
+
+        var button = $('.accordion-button', section);
+        button.removeAttr('disabled');
+        button.trigger('click');
+
+        this.disableSubsequents(id);
     },
+
+    disableSubsequents: function (id) {
+        var sectionId = '#opc-' + id;
+        var section = $(sectionId);
+
+        // disable subsequents
+        var disable = false;
+        $('.accordion-item').each((i, e) => {
+            if (disable) $('.accordion-button', $(e)).attr('disabled', 'disabled');
+            if ('#' + $(e).attr('id') === sectionId) disable = true;
+        })
+    },
+
 
     back: function () {
         if (this.loadWaiting) return;
-        Accordion.openPrevSection(true, true);
+
+        var prev;
+        var ignore = false;
+        $('.accordion-item').each((i, item) => {
+            var collapse = $('.accordion-collapse.show', $(item)).length > 0;
+            if (collapse !== false && !ignore) {
+                ignore = true;
+                this.gotoSection(prev.id.replace('opc-', ''));
+            }
+            prev = item;
+        })
     },
 
     setStepResponse: function (response) {
@@ -163,6 +190,7 @@ var Billing = {
         if (typeof response.wrong_billing_address == 'undefined') {
             response.wrong_billing_address = false;
         }
+
         if (Billing.disableBillingAddressCheckoutStep) {
             if (response.wrong_billing_address) {
                 Accordion.showSection('#opc-billing');

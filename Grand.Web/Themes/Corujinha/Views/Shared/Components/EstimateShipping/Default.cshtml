@@ -33,7 +33,7 @@
 
     <div id="estimate-shipping" class="estimate-shipping">
         <div class="title mb-2">
-            <img src="Themes/Corujinha/Content/Images/delivery-truck.png" height="60" class="mr-3"/>
+            <img src="/Themes/Corujinha/Content/Images/delivery-truck.png" height="60" class="mr-3"/>
             <strong>@T("ShoppingCart.EstimateShipping")</strong>
         </div>
 
@@ -41,9 +41,7 @@
             <label asp-for="ZipPostalCode">CEP:</label>
             <div class="input-group">
                 <input asp-for="ZipPostalCode" class="form-control zip-input" />
-                <div class="input-group-append">
-                    <input id="estimate-shipping-button" type="button" value="Calcular frete" class="btn btn-outline-secondary float-xs-right estimate-shipping-button" />
-                </div>
+                <input id="estimate-shipping-button" type="button" value="Calcular frete" class="btn btn-secondary estimate-shipping-button" />
             </div>
             <small class="form-text text-muted"><strong>Frete grátis</strong> para compras acima de <strong class="text-success">R$169,00</strong>.</small>
         </div>

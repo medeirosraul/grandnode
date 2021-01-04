@@ -1,16 +1,15 @@
 ﻿@model IList<ProductOverviewModel>
 @if (Model.Any())
 {
-    <div class="col-12 customGrid similar-products-grid text-center product-grid px-0">
-        <h2 class="h3 generalTitle text-center">@T("Products.SimilarProducts")</h2>
-        <hr class="gradient-divider"/>
-        <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-lg-3 col-sm-6 col-6 product-container mb-2">
-                        <partial name="_ProductBox" model="item" />
-                    </div>
-                }
-         </div>
+    <div class="col-12 text-center px-0">
+        <h4 class="text-center mb-4">@T("Products.SimilarProducts")</h4>
+        <div class="row g-0">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-sm-6 col-6 product-container mb-2">
+                    <partial name="_ProductBoxFixedSize" model="item" />
+                </div>
+            }
+        </div>
     </div>
 }

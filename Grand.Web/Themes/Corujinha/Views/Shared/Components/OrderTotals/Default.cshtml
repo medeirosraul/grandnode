@@ -3,7 +3,7 @@
 <div class="total-info">
     <h2 class="h5">
         <strong>
-            <img src="Themes/Corujinha/Content/Images/money.png" height="60" class="mr-3" />
+            <img src="/Themes/Corujinha/Content/Images/money.png" height="60" class="mr-3" />
             Resumo
         </strong>
     </h2>
@@ -11,7 +11,7 @@
         <div class="col-6">
             <span>@T("ShoppingCart.Totals.SubTotal"):</span>
         </div>
-        <div class="col-6 text-right">
+        <div class="col-6 text-end">
             <span class="value-summary">@Model.SubTotal</span>
         </div>
     </div>
@@ -21,7 +21,7 @@
             <div class="col-6">
                 <span>Desconto no subtotal:</span>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-6 text-end">
                 <span class="value-summary text-success">@Model.SubTotalDiscount</span>
             </div>
         </div>
@@ -39,7 +39,7 @@
         {
             if (!String.IsNullOrEmpty(Model.Shipping))
             {
-                <div class="col-4 text-right">
+                <div class="col-4 text-end">
                     <span class="value-summary">@Model.Shipping</span>
                 </div>
             }
@@ -52,19 +52,19 @@
         }
         else
         {
-            <div class="col-4 text-right">
+            <div class="col-4 text-end">
                 <span>@T("ShoppingCart.Totals.Shipping.NotRequired")</span>
             </div>
         }
     </div>
     <hr style="border-width: 2px;" />
-    <div class="row">
+    <div class="row total">
         <div class="col-6">
             <span style="font-size: 24px;">@T("ShoppingCart.Totals.OrderTotal"):</span>
         </div>
         @if (!String.IsNullOrEmpty(Model.OrderTotal))
         {
-            <div class="col-6 text-right align-items-center">
+            <div class="col-6 text-end align-items-center">
                 <span class="value-summary" style="font-size: 24px;"><strong>@Model.OrderTotal</strong></span>
             </div>
         }

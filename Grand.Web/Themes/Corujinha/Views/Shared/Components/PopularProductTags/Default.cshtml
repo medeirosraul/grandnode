@@ -5,12 +5,12 @@
     <div class="viewBox btn-toolbar">
         @foreach (var item in Model.Tags)
         {
-                <a class="btn btn-sm btn-outline-secondary d-flex align-items-center" href="@Url.RouteUrl("ProductsByTagName", new { SeName = item.SeName })" style="font-size:@(Model.GetFontSize(item))%;">@item.Name</a>
+                <a class="btn theme-btn-primary rounded text-white d-flex align-items-center" href="@Url.RouteUrl("ProductsByTagName", new { SeName = item.SeName })" style="font-size:@(Model.GetFontSize(item))%;">@item.Name</a>
         }
         @if (Model.TotalTags > Model.Tags.Count)
         {
             <div class="view-all mt-2">
-                <a class="btn btn-outline-info" href="@Url.RouteUrl("ProductTagsAll")">@T("Products.Tags.Popular.ViewAll")</a>
+                <a class="btn theme-btn theme-btn-white rounded" href="@Url.RouteUrl("ProductTagsAll")">@T("Products.Tags.Popular.ViewAll")</a>
             </div>
         }
     </div>

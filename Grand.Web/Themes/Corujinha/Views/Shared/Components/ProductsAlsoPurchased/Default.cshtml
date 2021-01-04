@@ -1,13 +1,13 @@
 ﻿@model IList<ProductOverviewModel>
 @if (Model.Any())
 {
-    <div class="col-12 customGrid also-purchased-products-grid text-center generalFlexBox px-0">
-        <h2 class="h3 generalTitle text-center">@T("Products.AlsoPurchased")</h2>
-        <div class="flex-grid row">
+    <div class="col-12 text-center px-0">
+        <h4 class="text-center mb-4">@T("Products.AlsoPurchased")</h4>
+        <div class="row g-0">
             @foreach (var item in Model)
             {
                 <div class="col-lg-3 col-sm-6 col-6 product-container mb-2">
-                    <partial name="_ProductBox" model="item" />
+                    <partial name="_ProductBoxFixedSize" model="item" />
                 </div>
             }
         </div>
