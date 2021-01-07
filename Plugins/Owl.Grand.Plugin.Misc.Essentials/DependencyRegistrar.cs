@@ -21,6 +21,9 @@ namespace Owl.Grand.Plugin.Misc.Essentials
             // Admin addons
             builder.RegisterType<MercadoLivreService>().InstancePerLifetimeScope();
 
+            // Analytics
+            builder.RegisterType<AnalyticsService>().SingleInstance();
+
         }
 
         public int Order

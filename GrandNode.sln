@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{615BCD39-09A7-4924-AB80-AA4032D477D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grand.Web", "Grand.Web\Grand.Web.csproj", "{818D02E0-8955-47B2-B893-AC7EE390D27A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{102575C1-82F6-40A4-BD6C-E27D7AC000A4} = {102575C1-82F6-40A4-BD6C-E27D7AC000A4}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grand.Core", "Grand.Core\Grand.Core.csproj", "{B6301890-5E30-4429-8A92-F473974028F0}"
 EndProject

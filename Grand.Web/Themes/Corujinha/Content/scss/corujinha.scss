@@ -122,6 +122,28 @@ a.theme-color-dark:hover {
     color: $theme-dark-less;
 }
 
+/* Inputs */
+.theme-input {
+    border: 1px solid $theme-dark-less;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 40px;
+}
+
+.theme-input.rounded {
+    border-radius: 25px !important;
+}
+
+.theme-input-line {
+    border: 0;
+    border-bottom: 1px solid $theme-border-color-light
+}
+
+.container-light .theme-input {
+    border: 0;
+}
+
+
 /* Buttons */
 .btn-rounded {
     border-radius: 100%;
@@ -162,13 +184,17 @@ a.theme-color-dark:hover {
 .theme-btn-white {
     background-color: white;
     color: $theme-dark-less;
-    border: 1px solid $theme-light;
+    border: 1px solid $theme-border-color;
 }
 
 .theme-btn-white:hover {
     background-color: $theme-light;
 }
 
+.theme-btn {
+    display: flex;
+    align-items: center;
+}
 
 .theme-btn.rounded {
     border-radius: 25px !important;
@@ -183,6 +209,13 @@ a.theme-color-dark:hover {
         margin-bottom: 0;
         font-weight: 300;
     }
+}
+
+/* Container */
+.container-light {
+    background-color: $theme-light;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 /* Pagination */
@@ -268,6 +301,22 @@ a.theme-color-dark:hover {
     background-color: $theme-light;
     border-radius: 10px;
     padding: 10px;
+}
+.category .c-button__text {
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    div {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    span {
+        font-size: 11px;
+        color: $theme-dark-less;
+        bottom: -8px !important;
+    }
 }
 
 /* Left Panel*/
@@ -924,6 +973,32 @@ a.theme-color-dark:hover {
 }
 
 /* Responsive */
+
+@media (max-width: 575px) {
+    .product-grid nav {
+        .pagination {
+            .individual-page a {
+                width: 30px;
+                height: 30px;
+            }
+
+            .current-page a {
+                width: 38px;
+                height: 38px;
+                font-weight: bold !important;
+                box-shadow: 0 0 0 0.25rem #EEE;
+                margin-left: 2px;
+                margin-right: 8px;
+            }
+
+            .previous-page a, .next-page a {
+                padding: 4px 2px;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
 @media (max-width: 767px) {
     /* Header */
     .user-menu {

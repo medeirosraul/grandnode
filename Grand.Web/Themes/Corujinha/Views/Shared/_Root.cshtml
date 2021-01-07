@@ -53,5 +53,6 @@
 <script asp-location="Footer">
     AjaxCart.init('.cart-qty', '.wishlist-qty', '.flyout-cart');
 </script>
+<script asp-location="Footer" src="/Themes/Corujinha/Content/js/Analytics.js"></script>
 @await Component.InvokeAsync("EuCookieLaw")
 @await Component.InvokeAsync("Widget", new { widgetZone = "body_end_html_tag_before" })

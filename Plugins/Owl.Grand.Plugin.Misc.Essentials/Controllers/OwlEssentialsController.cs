@@ -67,6 +67,5 @@ namespace Owl.Grand.Plugin.Misc.Essentials.Controllers
             byte[] bytes = await _mercadoLivreService.ExportProductsToMercadoLivre();
             return File(bytes, "text/xls", "products.xlsx");
         }
-
     }
 }

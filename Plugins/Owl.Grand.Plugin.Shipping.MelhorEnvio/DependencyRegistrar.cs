@@ -4,6 +4,7 @@ using Grand.Core.Infrastructure;
 using Grand.Core.Infrastructure.DependencyManagement;
 using Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers;
 using Owl.Grand.Plugin.Shipping.MelhorEnvio.Services;
+using Owl.Grand.Plugin.Shipping.MelhorEnvio.Widgets;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
 {
@@ -14,7 +15,10 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
             builder.RegisterType<ShippingMelhorEnvioService>().InstancePerLifetimeScope();
             //base shipping controller
             builder.RegisterType<ShippingMelhorEnvioController>();
+
+            // Plugins
             builder.RegisterType<MelhorEnvioShippingComputationMethod>().InstancePerLifetimeScope();
+            builder.RegisterType<MelhorEnvioProductEstimateWidget>().InstancePerLifetimeScope();
         }
 
         public int Order

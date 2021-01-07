@@ -17,17 +17,18 @@
                         </a>
                     </div>
 
-                    <div class="d-md-none col d-flex align-items-center justify-content-center">
-                        <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="mobile_menu" href="#mobile_menu">
+                    <a class="d-md-none col d-flex align-items-center justify-content-center category js-offcanvas-trigger" data-offcanvas-trigger="mobile_menu" href="#mobile_menu">
+                        <div class="theme-color-dark position-relative ">
                             <span class="icon iconify" data-icon="bi:list"></span>
-                        </a>
-                    </div>
+                        </div>
+                        <span class="position-absolute start-50 translate-middle-x">CATEGORIAS</span>
+                    </a>
 
-                    <div class="d-md-none col d-flex align-items-center justify-content-center">
-                        <a class="theme-color-dark position-relative js-offcanvas-trigger" data-offcanvas-trigger="user_panel" href="#user_panel">
+                    <a class="d-md-none col d-flex align-items-center justify-content-center js-offcanvas-trigger" data-offcanvas-trigger="user_panel" href="#user_panel">
+                        <div class="theme-color-dark position-relative" >
                             <span class="icon iconify" data-icon="bi:person"></span>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
 
                     @await Component.InvokeAsync("ShoppingCartLinks")
 

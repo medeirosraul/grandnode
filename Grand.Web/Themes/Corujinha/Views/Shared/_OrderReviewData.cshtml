@@ -21,12 +21,12 @@
                 @if (!String.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
                 {
                     @Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)
+                    <br/>
                 }
-                <br/>
                 <br/>
                 @Model.ShippingAddress.ZipPostalCode
                 <br/>
-                @Model.ShippingAddress.Address1
+                @Model.ShippingAddress.Address1@(string.IsNullOrEmpty(Model.ShippingAddress.Address2) ? "" : ", " + Model.ShippingAddress.Address2)
                 <br/>
                 @if (Model.ShippingAddress.CityEnabled)
                 {

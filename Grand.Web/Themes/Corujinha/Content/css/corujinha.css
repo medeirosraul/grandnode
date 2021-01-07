@@ -7483,6 +7483,23 @@ hr.gradient-divider {
 a.theme-color-dark:hover {
   color: #6E6C6E; }
 
+/* Inputs */
+.theme-input {
+  border: 1px solid #6E6C6E;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 40px; }
+
+.theme-input.rounded {
+  border-radius: 25px !important; }
+
+.theme-input-line {
+  border: 0;
+  border-bottom: 1px solid #EEECEE; }
+
+.container-light .theme-input {
+  border: 0; }
+
 /* Buttons */
 .btn-rounded {
   border-radius: 100%;
@@ -7517,10 +7534,14 @@ a.theme-color-dark:hover {
 .theme-btn-white {
   background-color: white;
   color: #6E6C6E;
-  border: 1px solid #F4F2F4; }
+  border: 1px solid #DEDCDE; }
 
 .theme-btn-white:hover {
   background-color: #F4F2F4; }
+
+.theme-btn {
+  display: flex;
+  align-items: center; }
 
 .theme-btn.rounded {
   border-radius: 25px !important; }
@@ -7533,6 +7554,12 @@ a.theme-color-dark:hover {
   .page-title-clean h2, .page-title-clean .h2 {
     margin-bottom: 0;
     font-weight: 300; }
+
+/* Container */
+.container-light {
+  background-color: #F4F2F4;
+  border-radius: 10px;
+  padding: 5px; }
 
 /* Pagination */
 .product-grid nav {
@@ -7594,6 +7621,18 @@ a.theme-color-dark:hover {
   background-color: #F4F2F4;
   border-radius: 10px;
   padding: 10px; }
+
+.category .c-button__text {
+  display: flex;
+  position: relative;
+  width: 100%; }
+  .category .c-button__text div {
+    margin-left: auto;
+    margin-right: auto; }
+  .category .c-button__text span {
+    font-size: 11px;
+    color: #6E6C6E;
+    bottom: -8px !important; }
 
 /* Left Panel*/
 .left-panel h2, .left-panel .h2 {
@@ -8047,6 +8086,21 @@ a.theme-color-dark:hover {
   width: 300px; }
 
 /* Responsive */
+@media (max-width: 575px) {
+  .product-grid nav .pagination .individual-page a {
+    width: 30px;
+    height: 30px; }
+  .product-grid nav .pagination .current-page a {
+    width: 38px;
+    height: 38px;
+    font-weight: bold !important;
+    box-shadow: 0 0 0 0.25rem #EEE;
+    margin-left: 2px;
+    margin-right: 8px; }
+  .product-grid nav .pagination .previous-page a, .product-grid nav .pagination .next-page a {
+    padding: 4px 2px;
+    font-size: 12px; } }
+
 @media (max-width: 767px) {
   /* Header */
   .user-menu {

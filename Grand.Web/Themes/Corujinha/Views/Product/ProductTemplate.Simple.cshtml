@@ -184,6 +184,87 @@
                         </div>
                     </div>
 
+                    <!-- shipping info -->
+                    <div class="container-light p-3 mt-3">
+                        <div class="d-flex flex-column">
+                            <label class="form-label">Calcule o frete e prazo de entrega</label>
+                            <input class="theme-input rounded me-2 text-center" placeholder="Digite o CEP" type="text" name="shippingCep" id="shipping-cep" style="width: 140px;" />
+                            <div class="mt-2 d-flex align-items-center d-none" id="shipping-loading">
+                                <span class="icon iconify mx-auto theme-color-primary" data-icon="bi:hourglass-split"></span>
+                            </div>
+                            <div id="shipping-response" class="mt-2">
+
+                            </div>
+                            @*<button type="button" class="btn theme-btn theme-btn-white rounded" style="height: 40px;"><span class="icon-sm iconify me-2" data-icon="bi:truck"></span>Estimar frete</button>*@
+                        <script asp-location="Footer" type="text/javascript">
+                                $(document).ready(() => {
+                                    $("#shipping-cep").on('input', (e) => {
+                                        if (e.originalEvent.data !== undefined && !e.originalEvent.data.match(/\d+/g)) {
+                                            e.currentTarget.value = e.currentTarget.value.replace(e.originalEvent.data, "");
+                                            return false;
+                                        };
+
+                                        // Validate
+                                        var actualValue = e.currentTarget.value.replace("-", "");
+
+                                        if (actualValue.length > 8) {
+                                            actualValue = actualValue.substring(0, 8);
+                                        }
+
+                                        // append-filter
+                                        var finalValue = actualValue;
+                                        if (actualValue.length > 5) {
+                                            finalValue = actualValue.slice(0, 5) + "-" + actualValue.slice(5);
+                                        }
+
+                                        e.currentTarget.value = finalValue;
+
+                                        if (actualValue.length != 8) return false;
+
+                                        // Get shipping methods
+                                        $('#shipping-loading').removeClass('d-none');
+                                        $.ajax({
+                                            cache: false,
+                                            type: "POST",
+                                            url: "/ShippingMelhorEnvio/EstimateProductShippingValue",
+                                            data: {
+                                                productId: '@Model.Id',
+                                                cep: actualValue,
+                                                quantity: $('addtocart_@(Model.Id)_EnteredQuantity').val()
+                                            },
+                                            success: function (data) {
+                                                if (data.error !== undefined) {
+                                                    $('#shipping-response').html("Não foi possível calcular o frete.")
+                                                } else {
+                                                    $('#shipping-response').html('<div class="mt-2">Fretes disponíveis</div>')
+                                                    if (data.length == 0) {
+                                                        $('#shipping-response').html('<div class="mt-2">Não foi possível calcular o frete. Verifique o CEP e tente novamente.</div>')
+                                                    }
+                                                    data.forEach((item) => {
+                                                        $('#shipping-response').append('<div><span class="text-success">R$' + item.Rate.toFixed(2) +'</span> - <strong>' + item.Name + '</strong> - '+item.Description+'</div>')
+                                                    });
+                                                }
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError) {
+                                                displayAjaxLoading();
+                                                alert('Failed to retrieve estimate shipping.');
+                                            },
+                                            complete: function () {
+                                                $('#shipping-loading').addClass('d-none');
+                                                fbq('trackCustom', 'product-shipping-calc', { cep: actualValue });
+                                            }
+                                        });
+                                        return false;
+                                    });
+
+                                    $("#shipping-cep").on("focus", (e) => {
+                                        e.currentTarget.value = "";
+                                    })
+                                });
+                        </script>
+                        </div>
+                    </div>
+
                     <!-- purchase info -->
                     <div class="mt-4">
                         <div class="d-flex w-100 theme-color-gray-50">
@@ -202,6 +283,7 @@
                             <a class="d-flex align-items-center theme-color-gray-50" href="https://wa.me/5511974915290?text=Oi%2C+tenho+uma+d%C3%BAvida+sobre+o+produto+@Model.Name.&lang=pt_br" target="_blank"><span class="icon iconify theme-color-primary me-2" data-icon="mdi:whatsapp"></span>Faça uma pergunta</a>
                         </div>
                     </div>
+
 
                     @if (!String.IsNullOrWhiteSpace(Model.PageShareCode))
                     {

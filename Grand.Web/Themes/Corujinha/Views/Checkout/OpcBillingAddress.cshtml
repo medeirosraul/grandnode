@@ -27,6 +27,10 @@
                     {
                         addressLine += ", " + address.Address1;
                     }
+                    if (address.StreetAddressEnabled && !String.IsNullOrEmpty(address.Address2))
+                    {
+                        addressLine += ", " + address.Address2;
+                    }
                     if (address.CityEnabled && !String.IsNullOrEmpty(address.City))
                     {
                         addressLine += ", " + address.City;

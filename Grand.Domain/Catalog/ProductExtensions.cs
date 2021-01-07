@@ -55,6 +55,10 @@ namespace Grand.Domain.Catalog
             if (product == null)
                 throw new ArgumentNullException("product");
 
+            // -- BEGIN CORUJINHA
+            if (!product.Published) return false;
+            // -- END CORUJINHA
+
             if (product.AvailableStartDateTimeUtc.HasValue && product.AvailableStartDateTimeUtc.Value > dateTime)
             {
                 return false;

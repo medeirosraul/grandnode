@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -19,6 +19,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
+        "GoogleTagManager": "TagValue",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "nativeDebugging": true,

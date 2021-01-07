@@ -24,6 +24,11 @@ using System.Collections.Generic;
 using Grand.Services.Shipping;
 using MediatR;
 using Grand.Domain.Common;
+using Grand.Services.Catalog;
+using static Grand.Services.Shipping.GetShippingOptionRequest;
+using MongoDB.Bson.IO;
+using Newtonsoft.Json;
+using Microsoft.Net.Http.Headers;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
 {
@@ -42,7 +47,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly IShippingService _shippingService;
         private readonly IMediator _mediator;
-
+        private readonly IProductService _productService;
         public ShippingMelhorEnvioController(
             ShippingMelhorEnvioSettings shippingMelhorEnvioSettings,
             ISettingService settingService,
@@ -54,7 +59,8 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             IStoreContext storeContext,
             IWorkContext workContext,
             IGenericAttributeService genericAttributeService,
-            IShippingService shippingService, IMediator mediator)
+            IShippingService shippingService, IMediator mediator, 
+            IProductService productService)
         {
             _shippingMelhorEnvioSettings = shippingMelhorEnvioSettings;
             _settingService = settingService;
@@ -68,6 +74,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             _genericAttributeService = genericAttributeService;
             _shippingService = shippingService;
             _mediator = mediator;
+            _productService = productService;
         }
 
         [AuthorizeAdmin]
@@ -203,6 +210,39 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             await _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.SelectedShippingOption, shippingOption, store.Id);
 
             return Ok();
+        }
+
+        public async Task<IActionResult> EstimateProductShippingValue([FromForm]string productId, [FromForm]int quantity, [FromForm]string cep)
+        {
+            var request = new GetShippingOptionRequest {
+                ZipPostalCodeFrom = _shippingMelhorEnvioSettings.PostalCodeFrom,
+                ShippingAddress = new Address {
+                    ZipPostalCode = cep
+                },
+                Items = new List<PackageItem> {
+                    new PackageItem(new ShoppingCartItem {
+                        ProductId = productId
+                    }, quantity)
+                }
+            };
+
+            var response = await _shippingComputationMethod.GetShippingOptions(request);
+
+            if (response.Errors.Any()) return Content("erro");
+
+            var result = new List<MelhorEnvioShippingOption>();
+
+            foreach(var option in response.ShippingOptions)
+            {
+                result.Add(new MelhorEnvioShippingOption {
+                    ShippingRateComputationMethodSystemName = option.ShippingRateComputationMethodSystemName,
+                    Name = option.Name,
+                    Description = option.Description,
+                    Rate = option.Rate
+                });
+            }
+
+            return Json(result);
         }
     }
 }

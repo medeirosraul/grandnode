@@ -51,6 +51,7 @@
     <Content Remove="App_Data\Settings.txt" />
     <Content Remove="compilerconfig.json" />
     <Content Remove="Themes\Corujinha\Content\images\payment-methods.png" />
+    <Content Remove="Themes\Corujinha\Content\js\Analytics.js" />
     <Content Remove="Themes\Corujinha\Content\package-lock.json" />
     <Content Remove="Themes\Corujinha\Content\package-lock.json" />
     <Content Remove="Themes\Corujinha\Content\package.json" />
