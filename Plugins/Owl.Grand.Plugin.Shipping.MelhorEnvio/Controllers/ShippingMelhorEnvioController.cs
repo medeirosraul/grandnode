@@ -26,9 +26,6 @@ using MediatR;
 using Grand.Domain.Common;
 using Grand.Services.Catalog;
 using static Grand.Services.Shipping.GetShippingOptionRequest;
-using MongoDB.Bson.IO;
-using Newtonsoft.Json;
-using Microsoft.Net.Http.Headers;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
 {
@@ -90,6 +87,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             model.CombineShippingOver = _shippingMelhorEnvioSettings.CombineShippingOver;
             model.FreeShippingOver = _shippingMelhorEnvioSettings.FreeShippingOver;
             model.FreeShippingStates = _shippingMelhorEnvioSettings.FreeShippingStates;
+            model.FreeShippingFlags = _shippingMelhorEnvioSettings.FreeShippingFlags;
             model.RedirectUrl = $"{_webHelper.GetStoreLocation()}Admin/ShippingMelhorEnvio/Callback";
 
             return View("~/Plugins/Shipping.MelhorEnvio/Views/Configure.cshtml", model);
@@ -109,6 +107,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Controllers
             _shippingMelhorEnvioSettings.CombineShippingOver = model.CombineShippingOver;
             _shippingMelhorEnvioSettings.FreeShippingOver = model.FreeShippingOver;
             _shippingMelhorEnvioSettings.FreeShippingStates = model.FreeShippingStates;
+            _shippingMelhorEnvioSettings.FreeShippingFlags = model.FreeShippingFlags;
 
             await _settingService.SaveSetting(_shippingMelhorEnvioSettings);
             await _settingService.ClearCache();

@@ -26,6 +26,9 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio.Models
         [GrandResourceDisplayName("Estados com frete grátis")]
         public string FreeShippingStates { get; set; }
 
+        [GrandResourceDisplayName("Flags com frete grátis (flag1:state1,state2;)")]
+        public string FreeShippingFlags { get; set; }
+
         public string RedirectUrl { get; set; }
     }
 }

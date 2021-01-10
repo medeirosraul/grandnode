@@ -1,5 +1,11 @@
 ﻿@model ProductOverviewModel
+@inject Grand.Services.Configuration.ISettingService _settings
+
 @{
+    // Free shipping
+    var freeShippingFlagActive = _settings.GetSettingByKey<bool>("owl.grand.plugin.shipping.melhorenvio.freeshippingflagactive");
+    var freeShippingBadge = string.Empty;
+
     //prepare "Add to cart" AJAX link
     string addtocartlink = "";
     string addtowishlistlink = "";
@@ -7,6 +13,7 @@
 
     var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
     var quantity = 1;
+
     if (!Model.ShowQty)
     {
         if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
@@ -32,6 +39,26 @@
         addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist });
     }
     var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+
+    // Verify free shipping
+    if (freeShippingFlagActive && !string.IsNullOrEmpty(Model.Flag) && Model.Flag.Contains("free-shipping"))
+    {
+        freeShippingBadge = "Frete Grátis";
+
+        var flagSplitted = Model.Flag.Split(';');
+        foreach(var flag in flagSplitted)
+        {
+            if(flag.Contains("free-shipping"))
+            {
+                var individualFlagSplitted = flag.Split(':');
+                if(individualFlagSplitted.Length > 1)
+                {
+                    var states = individualFlagSplitted[1];
+                    freeShippingBadge += " para " + string.Join(", ", states.Split(','));
+                }
+            }
+        }
+    }
 }
 
 @await Component.InvokeAsync("Widget", new { widgetZone = "productbox_before_content", additionalData = Model})
@@ -52,23 +79,31 @@
 
     <!-- Badges -->
     <div class="badge-container position-absolute top-0">
-        @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-        {
-            <div class="badges">
-                <div class="badge bg-danger ">
+        <div class="badges d-flex flex-column align-items-start">
+            @if (!Model.ProductPrice.DisableBuyButton && !string.IsNullOrEmpty(freeShippingBadge))
+            {
+                <div class="badge bg-success mt-2">
+                    @freeShippingBadge
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+            {
+                <div class="badge bg-danger mt-2">
                     -@(Convert.ToInt32((1 - Model.ProductPrice.PriceValue / Model.ProductPrice.OldPriceValue) * 100))%
                 </div>
-            </div>
-        }
+            }
 
-        @if (Model.ProductPrice.DisableBuyButton)
-        {
-            <div class="badges">
-                <div class="badge bg-light text-dark">
+            @if (Model.ProductPrice.DisableBuyButton)
+            {
+
+                <div class="badge bg-light text-dark mt-2">
                     Indisponível
                 </div>
-            </div>
-        }
+            }
+
+
+        </div>
     </div>
     <!-- Side buttons -->
     <div class="action-side position-absolute top-0 end-0 animate-short overflow-hidden d-flex flex-column">

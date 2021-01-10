@@ -23,7 +23,6 @@
     <ProjectReference Include="..\..\Grand.Services\Grand.Services.csproj" />
     <ProjectReference Include="..\..\Grand.Api\Grand.Api.csproj" />
     <ProjectReference Include="..\..\Grand.Web\Grand.Web.csproj" />
-    <ProjectReference Include="..\..\Plugins\Grand.Plugin.ExchangeRate.McExchange\Grand.Plugin.ExchangeRate.McExchange.csproj" />
     <ProjectReference Include="..\Grand.Services.Tests\Grand.Services.Tests.csproj" />
   </ItemGroup>
 </Project>

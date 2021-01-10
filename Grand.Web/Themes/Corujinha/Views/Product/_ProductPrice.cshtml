@@ -17,9 +17,12 @@
     else
     {
     <div class="prices">
+        @{
+            var haveDiscountClass = string.IsNullOrEmpty(Model.PriceWithDiscount) ? "" : "have-discount";
+        }
+
         @if (!string.IsNullOrEmpty(Model.OldPrice))
         {
-            var haveDiscountClass = string.IsNullOrEmpty(Model.PriceWithDiscount) ? "" : "have-discount";
 
             <div>
                 <span class="actual-price @haveDiscountClass">@Model.Price</span>
@@ -28,7 +31,7 @@
         }else if (!string.IsNullOrEmpty(Model.Price))
         {
             <div>
-                <span class="actual-price">@Model.Price</span>
+                <span class="actual-price @haveDiscountClass">@Model.Price</span>
             </div>
         }
         @if (!string.IsNullOrEmpty(Model.PriceWithDiscount))

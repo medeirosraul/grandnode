@@ -13,8 +13,14 @@
         pagebuilder.AddCanonicalUrlParts(categoryUrl);
     }
 
+    var i = 0;
 }
 
+<!-- Google Ecommerce -->
+<script>
+    let categoryImpressions = new Array();
+</script>
+<!-- End Google Ecommerce -->
 @*category breadcrumb*@
 @section Breadcrumb
     {
@@ -108,6 +114,19 @@
                         <partial name="_ProductBoxFixedSize" model="item" />
                         @*<partial name="_ProductBox" model="product" />*@
                     </div>
+
+                    <!-- Google Ecommerce -->
+                    <script>
+                        categoryImpressions.push({
+                            'name': '@item.Name',
+                            'id': '@item.Id',
+                            'price': '@item.ProductPrice.PriceValue',
+                            'category' : '@Model.Name',
+                            'list': 'CategoryFeaturedProducts',
+                            'position': @(i++)
+                        });
+                    </script>
+                    <!-- End Google Ecommerce -->
                 }
             </div>
         </div>
@@ -132,6 +151,19 @@
                             <partial name="_ProductBoxFixedSize" model="product" />
                             @*<partial name="_ProductBox" model="product" />*@
                         </div>
+
+                        <!-- Google Ecommerce -->
+                        <script>
+                            categoryImpressions.push({
+                                'name': '@product.Name',
+                                'id': '@product.Id',
+                                'price': '@product.ProductPrice.PriceValue',
+                                'category' : '@Model.Name',
+                                'list': 'CategoryProducts',
+                                'position': @(i++)
+                            });
+                        </script>
+                        <!-- End Google Ecommerce -->
                     }
                 </div>
                 <page-navigation asp-query-param="pagenumber" asp-pagination="Model.PagingFilteringContext" />
@@ -178,3 +210,16 @@
         <partial name="_FilterSpecsBox" model="Model.PagingFilteringContext.SpecificationFilter" />
     }
 }
+
+<!-- Google Ecommerce -->
+<script asp-location="Footer">
+    $(document).ready(() => {
+        dataLayer.push({
+            'ecommerce': {
+                'currencyCode': 'BRL',
+                'impressions': categoryImpressions
+            }
+        });
+    });
+</script>
+<!-- End Google Ecommerce -->

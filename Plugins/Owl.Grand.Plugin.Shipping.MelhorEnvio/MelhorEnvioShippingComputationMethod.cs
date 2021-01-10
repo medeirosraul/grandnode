@@ -17,6 +17,7 @@ using Owl.Grand.Plugin.Shipping.MelhorEnvio.Domain;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using DotLiquid.Tags;
+using Grand.Domain.Catalog;
 
 namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
 {
@@ -126,17 +127,18 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
 
             if (getShippingOptionRequest.Items == null || getShippingOptionRequest.Items.Count == 0)
             {
-                response.AddError("No shipment items");
+                response.AddError("Sem items para calcular o frete.");
                 return response;
             }
 
             if (getShippingOptionRequest.ShippingAddress == null)
             {
-                response.AddError("Shipping address is not set");
+                response.AddError("Sem endereço para calcular o frete.");
                 return response;
             }
 
             var shippingItems = new List<MelhorEnvioShipmentProduct>();
+            var products = new List<Product>();
 
             decimal subTotal = decimal.Zero;
             foreach (var packageItem in getShippingOptionRequest.Items)
@@ -145,6 +147,7 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
                     continue;
 
                 var product = await _productService.GetProductById(packageItem.ShoppingCartItem.ProductId);
+                products.Add(product);
 
                 // Add product to ship calc
                 var productSubtotal = (await _priceCalculationService.GetSubTotal(packageItem.ShoppingCartItem, product)).subTotal;
@@ -198,9 +201,10 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
                     minShippingValue = shippingValue;
             }
 
-            
+
 
             // Free shipping over
+            /*
             if (_settings.FreeShippingOver > 0 && subTotal >= _settings.FreeShippingOver)
             {
                 var canFreeShipping = false;
@@ -242,6 +246,10 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
                     response.ShippingOptions.Add(shippingOption);
                 }
             }
+            */
+
+            var freeShippingOption = CalculateFreeShipping(melhorEnvioShipment.To.PostalCode, subTotal, products);
+            if (freeShippingOption != null) response.ShippingOptions.Add(freeShippingOption);
 
             // Combine shipping over
             if (_settings.CombineShippingOver > 0 && minShippingValue >= _settings.CombineShippingOver)
@@ -279,40 +287,6 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
                 
             };
             await _settingService.SaveSetting(settings);
-
-            //locales
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Store", "Store");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Store.Hint", "If an asterisk is selected, then this shipping rate will apply to all stores.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Warehouse", "Warehouse");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Warehouse.Hint", "If an asterisk is selected, then this shipping rate will apply to all warehouses.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Country", "Country");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Country.Hint", "If an asterisk is selected, then this shipping rate will apply to all customers, regardless of the country.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.StateProvince", "State / province");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.StateProvince.Hint", "If an asterisk is selected, then this shipping rate will apply to all customers from the given country, regardless of the state.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Zip", "Zip");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.Zip.Hint", "Zip / postal code. If zip is empty, then this shipping rate will apply to all customers from the given country or state, regardless of the zip code.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.ShippingMethod", "Shipping method");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.ShippingMethod.Hint", "The shipping method.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.From", "Order weight from");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.From.Hint", "Order weight from.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.To", "Order weight to");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.To.Hint", "Order weight to.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.AdditionalFixedCost", "Additional fixed cost");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.AdditionalFixedCost.Hint", "Specify an additional fixed cost per shopping cart for this option. Set to 0 if you don't want an additional fixed cost to be applied.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.LowerWeightLimit", "Lower weight limit");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.LowerWeightLimit.Hint", "Lower weight limit. This field can be used for \"per extra weight unit\" scenarios.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.PercentageRateOfSubtotal", "Charge percentage (of subtotal)");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.PercentageRateOfSubtotal.Hint", "Charge percentage (of subtotal).");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.RatePerWeightUnit", "Rate per weight unit");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.RatePerWeightUnit.Hint", "Rate per weight unit.");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.LimitMethodsToCreated", "Limit shipping methods to configured ones");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.LimitMethodsToCreated.Hint", "If you check this option, then your customers will be limited to shipping options configured here. Otherwise, they'll be able to choose any existing shipping options even they've not configured here (zero shipping fee in this case).");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Fields.DataHtml", "Data");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.AddRecord", "Add record");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Formula", "Formula to calculate rates");
-            await this.AddOrUpdatePluginLocaleResource(_localizationService, _languageService, "Plugins.Shipping.MelhorEnvio.Formula.Value", "[additional fixed cost] + ([order total weight] - [lower weight limit]) * [rate per weight unit] + [order subtotal] * [charge percentage]");
-
-            await base.Install();
         }
 
         /// <summary>
@@ -334,6 +308,90 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
             //for example, hide this shipping methods if all products in the cart are downloadable
             //or hide this shipping methods if current customer is from certain country
             return await Task.FromResult(false);
+        }
+
+        private ShippingOption CalculateFreeShipping(string postalCode, decimal subtotal, List<Product> products)
+        {
+            var canFreeShipping = false;
+            var uf = string.Empty;
+
+            // Get cep info
+            var cepInfo = _shippingMelhorEnvioService.GetCepInfo(postalCode);
+            var cepInfoObject = JObject.Parse(cepInfo);
+
+            if (string.IsNullOrEmpty(cepInfoObject["error"]?.ToString()))
+            {
+                uf = cepInfoObject["uf"]?.ToString();
+            }
+
+            // Free shipping over
+            if (_settings.FreeShippingOver > 0 && subtotal >= _settings.FreeShippingOver)
+            {
+                // Validate free shipping state
+                if (!string.IsNullOrEmpty(_settings.FreeShippingStates))
+                {
+                    if (!string.IsNullOrEmpty(uf))
+                    {
+                        if (_settings.FreeShippingStates.Split(';').Any(x => x.Trim().ToUpper() == uf))
+                            canFreeShipping = true;
+                    }
+                }
+                else
+                {
+                    canFreeShipping = true;
+                }
+            }
+
+            // Free Shipping Flag
+            if (!string.IsNullOrEmpty(_settings.FreeShippingFlags))
+            {
+                var flags = _settings.FreeShippingFlags.Split(';');
+                var containsFlag = false;
+
+                foreach(var f in flags)
+                {
+                    // validate flag
+                    var product = products.FirstOrDefault(p => !string.IsNullOrEmpty(p.Flag) &&  p.Flag.Contains(f));
+                    if (product == null) continue;
+
+                    // validate state
+                    var flagSplitted = f.Split(':');
+
+                    if(flagSplitted.Length > 1)
+                    {
+                        
+                        if (!string.IsNullOrEmpty(uf) && flagSplitted[1].Contains(uf))
+                        {
+                            containsFlag = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        containsFlag = true;
+                    }
+                }
+
+                if (containsFlag) canFreeShipping = true;
+            }
+
+            // Done free shipping
+            if (canFreeShipping)
+            {
+                var shippingOption = new ShippingOption {
+                    Name = "Frete grátis",
+                    Description = $"5-11 dias úteis.",
+                    Rate = 0,
+                    ShippingRateComputationMethodSystemName = "Shipping.MelhorEnvio"
+                };
+
+                //if (!string.IsNullOrWhiteSpace(_settings.FreeShippingStates))
+                //{
+                //    shippingOption.Description += $"Estados: {string.Join(", ", _settings.FreeShippingStates.Split(';'))}.";
+                //}
+                return shippingOption;
+            }
+            return null;
         }
 
         #endregion

@@ -16,5 +16,6 @@ namespace Owl.Grand.Plugin.Shipping.MelhorEnvio
         public decimal CombineShippingOver { get; set; }
         public decimal FreeShippingOver { get; set; }
         public string FreeShippingStates { get; set; }
+        public string FreeShippingFlags { get; set; }
     }
 }

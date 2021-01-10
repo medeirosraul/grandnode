@@ -4,13 +4,46 @@
     <h2 class="generalTitle text-center">@T("HomePage.NewProducts")</h2>
     <div class="col-12 px-0">
         <div class="row g-0">
+            @{
+                var i = 0;
+            }
             @foreach (var item in Model)
             {
                 <div class="col-xl-@order.Np_Xl col-lg-@order.Np_Lg col-md-@order.Np_Md col-sm-@order.Np_Sm col-@order.Np_Col product-container mb-2">
                     <partial name="_ProductBoxFixedSize" model="item" />
                 </div>
+
+                <!-- Google Ecommerce -->
+                <script>
+                    productItems.push({
+                        'item_name': '@item.Name',
+                        'item_id': '@item.Id',
+                        'price': '@item.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)',
+                        'item_list_name': 'HomePageNewProducts',
+                        'position': @(i++)
+                    })
+                </script>
+                <!-- End Google Ecommerce -->
             }
         </div>
     </div>
 </div>
 
+<!-- Google Ecommerce -->
+<script asp-location="Header">  
+    if (typeof productItems == 'undefined') {
+        productItems = new Array();
+    }  
+</script>
+
+<script asp-location="Footer">
+    $(document).ready(() => {
+        dataLayer.push({
+            'event': 'view_item_list',
+            'ecommerce': {
+                'items': productItems
+            }
+        });
+    });
+</script>
+<!-- End Google Ecommerce -->

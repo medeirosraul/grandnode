@@ -2,7 +2,9 @@
 @using Microsoft.AspNetCore.Http.Extensions
 @inject SeoSettings seoSettings
 @inject IPageHeadBuilder pagebuilder
+@inject Grand.Services.Configuration.ISettingService _settings
 @{
+
     Layout = "_ColumnsOne";
 
     // Styles
@@ -47,6 +49,29 @@
         pagebuilder.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
         pagebuilder.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + this.Url.ActionContext.HttpContext.Request.GetEncodedUrl() + "\" />");
     }
+
+    var freeShippingFlagActive = _settings.GetSettingByKey<bool>("owl.grand.plugin.shipping.melhorenvio.freeshippingflagactive");
+    var freeShippingBadge = string.Empty;
+
+    // Verify free shipping
+    if (freeShippingFlagActive && !string.IsNullOrEmpty(Model.Flag) && Model.Flag.Contains("free-shipping"))
+    {
+        freeShippingBadge = "Frete Grátis";
+
+        var flagSplitted = Model.Flag.Split(';');
+        foreach (var flag in flagSplitted)
+        {
+            if (flag.Contains("free-shipping"))
+            {
+                var individualFlagSplitted = flag.Split(':');
+                if (individualFlagSplitted.Length > 1)
+                {
+                    var states = individualFlagSplitted[1];
+                    freeShippingBadge += " para " + string.Join(", ", states.Split(','));
+                }
+            }
+        }
+    }
 }
 <!--product breadcrumb-->
 @section Breadcrumb
@@ -60,12 +85,6 @@
     <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
         <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
             <div class="row p-3">
-                @if (!string.IsNullOrEmpty(Model.Flag))
-                {
-                    <div class="product-labels">
-                        <span class="product-label badge bg-info text-white">@Model.Flag</span>
-                    </div>
-                }
 
                 <vc:widget widget-zone="productdetails_before_pictures" additional-data="@Model.Id"></vc:widget>
                 <!--product pictures-->
@@ -86,6 +105,15 @@
                     }
 
                     <partial name="_ProductPrice" model="Model.ProductPrice" view-data="dataDictPrice" />
+
+                    @if(!string.IsNullOrEmpty(freeShippingBadge))
+                    {
+                        <div class="badges mb-2">
+                            <div class="badge bg-success">
+                                @freeShippingBadge
+                            </div>
+                        </div>
+                    }
 
                     <vc:widget widget-zone="productdetails_overview_top" additional-data="@Model.Id"></vc:widget>
 
@@ -196,7 +224,7 @@
 
                             </div>
                             @*<button type="button" class="btn theme-btn theme-btn-white rounded" style="height: 40px;"><span class="icon-sm iconify me-2" data-icon="bi:truck"></span>Estimar frete</button>*@
-                        <script asp-location="Footer" type="text/javascript">
+                            <script asp-location="Footer" type="text/javascript">
                                 $(document).ready(() => {
                                     $("#shipping-cep").on('input', (e) => {
                                         if (e.originalEvent.data !== undefined && !e.originalEvent.data.match(/\d+/g)) {
@@ -243,6 +271,11 @@
                                                     data.forEach((item) => {
                                                         $('#shipping-response').append('<div><span class="text-success">R$' + item.Rate.toFixed(2) +'</span> - <strong>' + item.Name + '</strong> - '+item.Description+'</div>')
                                                     });
+
+                                                    dataLayer.push({
+                                                        'event': 'shipping_calculation',
+                                                        'shipping_data': data
+                                                    });
                                                 }
                                             },
                                             error: function(xhr, ajaxOptions, thrownError) {
@@ -252,6 +285,7 @@
                                             complete: function () {
                                                 $('#shipping-loading').addClass('d-none');
                                                 fbq('trackCustom', 'product-shipping-calc', { cep: actualValue });
+
                                             }
                                         });
                                         return false;
@@ -261,7 +295,7 @@
                                         e.currentTarget.value = "";
                                     })
                                 });
-                        </script>
+                            </script>
                         </div>
                     </div>
 
@@ -318,7 +352,7 @@
                                             {
                                                 <tr>
                                                     <td>Fabricante</td>
-                                                    @{ 
+                                                    @{
                                                         var m = Model.ProductManufacturers.First();
                                                     }
                                                     <td><a class="d-block mt-2 theme-color-primary-dark" href="@Url.RouteUrl("Manufacturer", new { SeName = m.SeName })">@m.Name</a></td>
@@ -339,12 +373,12 @@
                                 </div>
                             }
 
-                            @if (Model.ProductTags.Any()) 
-                            { 
+                            @if (Model.ProductTags.Any())
+                            {
                                 <div class="tags col-12 mt-5">
                                     <h5>Tags</h5>
-                                    <hr/>
-                                    @foreach(var tag in Model.ProductTags)
+                                    <hr />
+                                    @foreach (var tag in Model.ProductTags)
                                     {
                                         <a class="tag-button d-inline-flex align-items-center text-uppercase small mb-2" href="@Url.RouteUrl("ProductsByTagName", new { SeName = tag.SeName })">
                                             @tag.Name
@@ -457,3 +491,37 @@
       }
     }
 </script>
+
+<!-- Google Ecommerce -->
+<script asp-location="Footer">
+    $(document).ready(() => {
+        dataLayer.push({
+            'event': 'view_item',
+            'ecommerce': {
+                'items': [
+                    {
+                        'item_name': '@Model.Name',
+                        'item_id': '@Model.Id',
+                        'price': '@Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)'
+                    }
+                ]
+            }
+        });
+
+        $('.add-to-cart-button').on('click', () => {
+            dataLayer.push({
+                'event': 'add_to_cart',
+                'ecommerce': {
+                    'items': [
+                        {
+                            'item_name': '@Model.Name',
+                            'item_id': '@Model.Id',
+                            'price': '@Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)'
+                        }
+                    ]
+                }
+            })
+        });
+    });
+</script>
+<!-- End Google Ecommerce -->
