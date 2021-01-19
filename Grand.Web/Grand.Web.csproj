@@ -67,6 +67,7 @@
     <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Light.ttf" />
     <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Medium.ttf" />
     <None Remove="Themes\Corujinha\Content\fonts\Quicksand-Regular.ttf" />
+    <None Remove="Themes\Corujinha\Content\images\banner-safe.png" />
     <None Remove="Themes\Corujinha\Content\images\banner.jpg" />
     <None Remove="Themes\Corujinha\Content\images\coupon.png" />
     <None Remove="Themes\Corujinha\Content\images\delivery-truck.png" />

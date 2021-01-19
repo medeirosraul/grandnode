@@ -175,3 +175,5 @@ Grand.Web/App_Data/TempUploads/*
 # Medeiros raul
 properties/
 Util.txt
+/Plugins/Owl.Grand.Plugin.Feed.GoogleShopping
+/Grand.Web/App_Data/content-api-key.json

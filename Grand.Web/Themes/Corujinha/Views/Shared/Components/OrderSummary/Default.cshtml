@@ -29,6 +29,13 @@
     <!-- Form -->
     @if (Model.Items.Any())
     {
+        <!-- Google Ecommerce -->
+        <script>
+            if (typeof productItems == 'undefined') {
+                productItems = new Array();
+            }
+        </script>
+        <!-- End Google Ecommerce -->
         <form asp-route="ShoppingCart" class="row" method="post" enctype="multipart/form-data" id="shopping-cart-form">
             @if (Model.Warnings.Any())
             {
@@ -73,6 +80,17 @@
                     </script>
                     foreach (var item in Model.Items)
                     {
+                        <!-- Google Ecommerce -->
+                        <script>
+                            productItems.push({
+                                'item_name': '@item.ProductName',
+                                'item_id': '@item.Id',
+                                'item_price': '@item.UnitPriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)',
+                                'quantity': @item.Quantity
+                            })
+                        </script>
+                        <!-- End Google Ecommerce -->
+
                         <div class="row">
                             <div class="picture col-auto d-flex align-items-center">
                                 <div class="square-box">
@@ -233,6 +251,37 @@
 
             @await Component.InvokeAsync("Widget", new { widgetZone = "order_summary_content_after" })
         </form>
+
+        <!-- Google Ecommerce-->
+        <script>
+            // Utilities
+            function createGuid() {
+                function S4() {
+                    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+                }
+                return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+            }
+
+            $(document).ready(() => {
+                $('.confirm-order-next-step-button').on('click', () => {
+                    var total = $('.total .value-summary strong')[0].innerHTML.replace('R$ ', '').replace(',', '.');
+                    dataLayer.push({
+                        'event': 'purchase',
+                        'ecommerce': {
+                            'purchase': {
+                                'transaction_id': createGuid(),
+                                'value': total,
+                                'currency': 'BRL',
+                                'items': productItems
+                            }
+                        }
+                    });
+
+                    fbq('track', 'Purchase', { currency: 'BRL', value: { total } });
+                });
+            });
+        </script>
+        <!-- End Google Ecommerce-->
     }
 </div>
 
@@ -326,3 +375,4 @@
         });
     });
 </script>
+

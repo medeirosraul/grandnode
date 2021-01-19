@@ -88,11 +88,11 @@
             {
                 <div class="col-sm-8 col-12 new-wrapper checkout-as-guest-or-register-block mt-2">
                     <h5 class="pt-1">
-                        <strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
+                        <strong>Finalizar como convidado ou criar cadastro</strong>
                     </h5>
-                    <div class="buttons mt-1 areYouGuest">
+                    <div class="buttons mt-1 areYouGuest d-flex justify-content-center">
                         <input type="button" class="btn theme-btn theme-btn-white rounded me-2 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
-                        <input type="button" class="btn theme-btn-primary rounded register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
+                        <input type="button" class="btn theme-btn-primary rounded" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
                     </div>
                 </div>
             }

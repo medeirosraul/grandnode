@@ -1,83 +1,6 @@
 ﻿
 /* loading spinner */
-.loading,
-.loading:after {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-}
 
-.loading {
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 10px;
-    position: relative;
-    text-indent: -9999em;
-    border-top: 5px solid rgba(255, 255, 255, 0.2);
-    border-right: 5px solid rgba(255, 255, 255, 0.2);
-    border-bottom: 5px solid rgba(255, 255, 255, 0.2);
-    border-left: 5px solid #ffffff;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation: load8 1.1s infinite linear;
-    animation: load8 1.1s infinite linear;
-}
-
-@-webkit-keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes load8 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-.loading-wrapper {
-    position: fixed;
-    background-color: #1e1e25;
-    height: 40px;
-    width: 100%;
-    z-index: 2000;
-    animation-name: loadingwrapper;
-    animation-duration: .2s;
-    animation-timing-function: ease-out;
-}
-
-@keyframes loadingwrapper {
-    0% {
-        top:-40px;
-    }
-    100% {
-        top:0;
-    }
-}
-
-@-webkit-keyframes loadingwrapper {
-    0% {
-        top: -40px;
-    }
-
-    100% {
-        top: 0;
-    }
-}
 
 /* material icons */
 
@@ -1492,7 +1415,6 @@ nav .nav-item.list-inline {
 
 .mainNav {
     background: #1e1e25;
-    border-top: 1px solid #dadada;
     clear: both;
     z-index: 998;
 }
@@ -4684,133 +4606,6 @@ span.product-quantity {
     bottom: -10px;
 }
 
-/*footer*/
-
-footer {
-    margin: 15px 0 0 0;
-    padding: 45px 0 0 0;
-    background-color: #fff;
-    width: 100%;
-    display: inline-block;
-    height: auto;
-}
-
-footer .footer-lower {
-    margin: 10px 0 0 0;
-    padding: 30px 0;
-}
-
-footer .viewBox ul {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding-left: 0;
-}
-
-footer .about-us.block {
-    color: #777;
-    font-size: 14px;
-}
-
-footer .step-title .card-bodyquote {
-    margin-bottom: 0;
-}
-
-footer .newsletter .btn i {
-    margin-right: 0;
-    padding-right: 0;
-}
-
-footer .newsletter-container {
-    background: #ececec;
-}
-
-footer .block h2 {
-    border-bottom: 1px solid #ececec;
-}
-
-footer .block h2 strong {
-    font-weight: 300;
-    text-transform: uppercase;
-}
-
-footer .block .list-group-item a,
-#newsletter-subscribe-block .strong.h3 {
-    font-size: 13px;
-    font-weight: 400;
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-}
-
-footer .block h2,
-footer .block a {
-    color: #000;
-}
-
-footer h5 {
-    text-transform: uppercase;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-footer .color-holder {
-    min-height: 8px;
-    top: 0;
-    width: 100%;
-    margin-bottom: 16px;
-}
-
-footer .list-group .list-group-item {
-    background-color: transparent;
-    padding: 1px;
-    border: 0;
-    margin-right: 15px;
-}
-
-.footer-lower {
-    border-top: 1px solid #dfdfdf;
-}
-
-footer .social-icons a span {
-    display: flex;
-    color: #17a2b8;
-    font-size: 24px;
-    transition: all .3s ease;
-    -webkit-transition: all .3s ease;
-}
-
-footer .socicon-facebook:hover {
-    color: #3b5998;
-}
-
-footer .socicon-twitter:hover {
-    color: #3b5998;
-}
-
-footer .socicon-rss:hover {
-    color: #28a745;
-}
-
-footer .socicon-googleplus:hover {
-    color: #dc4e41;
-}
-
-footer .socicon-linkedin:hover {
-    color: #0077b5;
-}
-
-footer .socicon-youtube:hover {
-    color: #b31217;
-}
-
-footer .socicon-instagram:hover {
-    color: #517fa4;
-}
-
-footer .socicon-pinterest:hover {
-    color: #bd081c
-}
-
 .socicon-facebook:before {
     content: "\e028";
 }
@@ -5354,15 +5149,6 @@ footer .socicon-pinterest:hover {
         display: none;
     }
 
-    footer .about-us.block li {
-        padding-right: 15px;
-        border-right: 1px solid #dfdfdf;
-    }
-
-        footer .about-us.block li:last-child {
-            border-right: 0;
-        }
-
     .mainNav .navbar-nav > .nav-item .nav-link {
         display: inline-flex;
         align-items: center;
@@ -5617,9 +5403,6 @@ footer .socicon-pinterest:hover {
     }
     #back-to-top {
         bottom: 75px;
-    }
-    .footer-clean + #back-to-top {
-        bottom: 15px;
     }
     .shopping-links {
         width: 100%;
@@ -6157,22 +5940,6 @@ footer .socicon-pinterest:hover {
         overflow: hidden;
     }
 
-    footer .max-100 {
-        max-width: 100% !important;
-    }
-
-    footer .list-pad {
-        padding-left: 15px !important;
-    }
-
-    footer .step-title {
-        width: 100%;
-        border-left: 0;
-        border-right: 0;
-        border-bottom: 0;
-        border-radius: 0;
-    }
-
     #ModalAddToCart .modal-dialog {
         min-width: unset;
         max-width: 90%;
@@ -6188,11 +5955,6 @@ footer .socicon-pinterest:hover {
         display: flex;
         left: -15px;
         top: -15px;
-    }
-
-    .footer .block {
-        cursor: pointer;
-        display: inline-block;
     }
 
     .product-unit-price,
@@ -6298,25 +6060,6 @@ footer .socicon-pinterest:hover {
         min-height: 130px;
     }
 
-    footer:not(.footer-clean) {
-        transform: translateY(-60px);
-        margin-top: 75px !important;
-        padding: 0;
-    }
-
-        footer .step-title {
-            text-align: center;
-            border: 0;
-        }
-
-        footer .about-us .h5 {
-            color: #212529;
-        }
-
-        footer .about-us .list-pad {
-            text-align: center;
-        }
-
     .product-simple-share .btn-
     #collapsing-navbar-2 .dropdown-menu {
         position: static;
@@ -6326,11 +6069,6 @@ footer .socicon-pinterest:hover {
     .social li {
         display: inline-flex;
         margin-right: 10px;
-    }
-
-    .footer .block {
-        cursor: pointer;
-        display: inline-block;
     }
 
     .product-unit-price,
@@ -6535,16 +6273,6 @@ footer .socicon-pinterest:hover {
         border: 0;
     }
 
-    .footer-lower {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-
-    footer .block {
-        cursor: pointer;
-        display: inline-block;
-    }
-
     .wishrow {
         margin: auto;
     }
@@ -6640,16 +6368,6 @@ footer .socicon-pinterest:hover {
 
     .topic-posts .send-pm {
         border-bottom: 1px solid #dddddd;
-    }
-
-    .footer-lower {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-
-    footer .block {
-        cursor: pointer;
-        display: inline-block;
     }
 
     .wishrow {

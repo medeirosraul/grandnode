@@ -27,8 +27,8 @@
         @await Component.InvokeAsync("Widget", new { widgetZone = "productsbytag_before_product_list", additionalData = Model.Id })
         if (Model.PagingFilteringContext.ViewMode == "grid")
         {
-            <div class="product-grid col-12 px-0">
-                <div class="form-row flex-grid">
+            <div class="product-grid col-12 px-0 border-0">
+                <div class="row flex-grid g-0">
                     @foreach (var product in Model.Products)
                     {
                         <div class="col-lg-4 col-sm-6 col-6 product-container mb-2">

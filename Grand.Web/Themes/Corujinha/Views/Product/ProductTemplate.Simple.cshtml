@@ -197,19 +197,25 @@
 
                     <!-- add to cart and actions-->
                     <div class="col-12 add-to-cart d-flex align-items-center row g-0">
-                        @{
+                        @if (Model.DisplayDiscontinuedMessage)
+                        {
+                            <h4>Produto indisponível</h4>
+                        }
+                        else
+                        {
                             var dataDictAddToCart = new ViewDataDictionary(ViewData);
                             dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                        }
-                        <partial name="_AddToCart" model="Model.AddToCart" view-data="dataDictAddToCart" />
-                        @{
+
+                            <partial name="_AddToCart" model="Model.AddToCart" view-data="dataDictAddToCart" />
+
                             var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
                             dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
                             dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+
+                            <div class="col-12 mt-2 col-lg-auto mt-lg-0">
+                                <partial name="_AddToWishlist" model="Model.AddToCart" view-data="dataDictAddToWishlist" />
+                            </div>
                         }
-                        <div class="col-12 mt-2 col-lg-auto mt-lg-0">
-                            <partial name="_AddToWishlist" model="Model.AddToCart" view-data="dataDictAddToWishlist" />
-                        </div>
                     </div>
 
                     <!-- shipping info -->
@@ -502,7 +508,8 @@
                     {
                         'item_name': '@Model.Name',
                         'item_id': '@Model.Id',
-                        'price': '@Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)'
+                        'price': @Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+                        'promotion_name': 'none'
                     }
                 ]
             }
@@ -512,11 +519,14 @@
             dataLayer.push({
                 'event': 'add_to_cart',
                 'ecommerce': {
+                    'currency': 'BRL',
+                    'value': @Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
                     'items': [
                         {
                             'item_name': '@Model.Name',
                             'item_id': '@Model.Id',
-                            'price': '@Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)'
+                            'price': @Model.ProductPrice.PriceValue.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
+                            'promotion_name': 'none'
                         }
                     ]
                 }
